@@ -1,0 +1,65 @@
+@import '../../../../common/styles/sass/_variables.scss';
+
+.card-main {
+    .card-header {
+        background-color: lighten($colorSidenav, 10%);
+        color: white;
+        font-weight: 600;
+    }
+}
+.card-container {
+    .card {
+        width: 250px;
+        display: inline-block;
+        margin: 0 15px 15px 0;
+        vertical-align: top;
+        min-height: 260px;
+        position: relative;
+
+        .card-img-top {
+            text-align: justify;
+            padding: 20px 15px;
+            color: white;
+            font-size: 1.1rem;
+
+            strong {
+                display: inline-block;
+                vertical-align: top;
+                margin: 8px 0 0 0;
+                font-weight: 600;
+                line-height: 1.4rem;
+
+                span {
+                    font-size: 1.4rem;
+                }
+            }
+
+            .fa {
+                font-size: 3rem;
+                color: white;
+            }
+        }
+
+        & > .btn {
+            bottom: 0;
+            position: absolute;
+            left: 0;
+            right: 0;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+    }
+}
+.img-empresa {
+    background-image: url('../../../../../assets/images/empresa.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 64px;
+    height: 64px;
+    display: inline-block;
+    margin: -5px 10px -10px 0px;
+}

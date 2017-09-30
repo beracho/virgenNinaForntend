@@ -1,0 +1,28 @@
+<div class="container">
+    <h2 class="page-title"><i class="fa fa-user"></i> Nuevo trámite</h2>
+    <div class="card card-main">
+        <div class="card-block">
+            <div class="alert alert-info">
+                <p><i class="fa fa-info-circle"></i> Seleccione el tipo de trámite que necesite.</p>
+                <ul>
+                    <li><strong class="text-primary">Costo Bruto de Producción:</strong> Está orientado a los productos que tienen materia prima principal de <strong>origen nacional</strong> (fabricada o producida en tierra Boliviana). Por ejemplo: alimentos procesados con frutas del país, muebles fabricados con madera nacional, textiles que trabajan con tela nacional, etc. Tendrá acceso al <strong>Margen de preferencia de 35 % en modalidad ANPE y 30 % Licitación</strong>.</li>
+                    
+                    <li><strong class="text-primary">Bien Producido en el País:</strong> Está orientado a los productos que tienen materia prima principal de <strong>origen extranjero</strong>. Por ejemplo: muebles metálicos, textiles que trabajan con tela extranjera, muebles .de melanina, etc. Tendrá acceso al <strong>Margen de preferencia de 10 % en modalidad ANPE y Licitación</strong>.</li>
+                </ul>
+            </div>
+            <div class="card-container text-center">
+                <div class="card" ng-repeat="tramite in $ctrl.tramites">
+                    <div class="card-img-top badge-info">
+                        <div class="img-prod"></div>
+                    </div>
+                    <div class="card-block">
+                        <h4 class="card-title text-center text-primary">{{ tramite.nombre }}</h4>
+                    </div>
+                    <button md-effect class="btn btn-primary btn-block btn-lg" ng-click="$ctrl.seleccionar(tramite)" type="button">
+                        <i class="fa fa-check-circle"></i> Seleccionar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="modal-header">
+  <h5 class="modal-title"><i class="fa fa-edit"></i> {{$ctrl.isEdicion? 'Actualizando Información de Parámetro' : 'Agregando Parámetro'}} </h5>
+  <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form name="form">
+    <div class="row" ng-show="!$ctrl.isEdicion">
+      <div class="col-sm-3">
+        <label>Grupo:</label>
+      </div>
+      <div class="col-sm-8">
+        <label><strong>{{$ctrl.items.grupo}}</strong></label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label>Sigla:</label>
+      </div>
+      <div class="col-sm-8">
+        <input class="form-control" name="sigla" ng-model="$ctrl.parametro.sigla" required>
+        <div ap-error ng-messages="form.sigla.$error" role="alert" ng-if="form.sigla.$touched">
+          <div ng-message="required">El campo es requerido</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label>Nombre:</label>
+      </div>
+      <div class="col-sm-8">
+        <input class="form-control" name="nombre" ng-model="$ctrl.parametro.nombre" required>
+        <div ap-error ng-messages="form.nombre.$error" role="alert" ng-if="form.nombre.$touched">
+          <div ng-message="required">El campo es requerido</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label>Descripción:</label>
+      </div>
+      <div class="col-sm-8">
+        <input class="form-control" name="descripcion" ng-model="$ctrl.parametro.descripcion" required>
+        <div ap-error ng-messages="form.descripcion.$error" role="alert" ng-if="form.descripcion.$touched">
+          <div ng-message="required">El campo es requerido</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label>Orden:</label>
+      </div>
+      <div class="col-sm-8">
+        <input class="form-control" name="orden" ng-model="$ctrl.parametro.orden" required>
+        <div ap-error ng-messages="form.orden.$error" role="alert" ng-if="form.orden.$touched">
+          <div ng-message="required">El campo es requerido</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label>Estado:</label>
+      </div>
+      <div class="col-sm-8">
+        <!--        <input class="form-control" name="estado" ng-model="$ctrl.parametro.estado" required>
+                <div ap-error ng-messages="form.estado.$error" role="alert" ng-if="form.estado.$touched">
+                  <div ng-message="required">El campo es requerido</div>
+                </div>-->
+        <select class="form-control" name="estado"  ng-model="$ctrl.parametro.estado" required >
+          <option value="ACTIVO">ACTIVO</option>
+          <option value="INACTIVO">INACTIVO</option>
+        </select>
+        <div ap-error ng-messages="form.estado.$error" role="alert" ng-if="form.estado.$touched">
+          <div ng-message="required">El campo es requerido</div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button md-effect type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()">
+    <i class="fa fa-close"></i> Cancelar
+  </button>
+  <button md-effect type="button" class="btn btn-primary" ng-click="$ctrl.ok()" ng-disabled="form.$invalid" >
+    <i class="fa fa-check"></i>  {{$ctrl.isEdicion? 'Guardar Cambios' : 'Aceptar'}} 
+  </button>
+</div>

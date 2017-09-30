@@ -1,0 +1,70 @@
+<div class="login container">
+  <div class="login-container registro">
+    <div class="login-form">
+      <div class="login-logo">
+        <div class="logo-probolivia"></div>
+        <div class="logo-promueve"></div>
+      </div>
+      <div class="login-header">
+        <i class="fa fa-pencil"></i> Crear una cuenta nueva
+      </div>
+      <div class="card-container container" >
+        <div class="row" >
+          <div class="col-lg-12 col-md-12 card-element">
+            <div class="alert alert-info text-center">
+              <!--<i class="fa fa-building-o"></i>--> 
+              <strong>REGISTRO DE ARTESANO U OTRO TIPO DE ORGANIZACIÓN</strong>
+            </div>
+            <form ng-submit="$ctrl.registrarUsuario()">
+              <div class="md-input-group">
+                <span class="md-input-group-addon"><i class="fa fa-envelope"></i></span>
+                <div class="md-form-group" md-event-label>
+                  <input ng-model="$ctrl.usuario.email" id="email"   maxlength="100" required>
+                  <label class="md-control-label">Email</label>
+                  <i class="md-bar"></i>
+                </div>
+              </div>
+
+              <div class="md-input-group">
+                <span class="md-input-group-addon"><i class="fa fa-lock"></i></span>
+                <md-input label="Elija una Contraseña" ng-model="$ctrl.usuario.contrasena" type="password" required minlength = "6" ng-keyup="$ctrl.validarInputs()" ></md-input>
+                <div class="md-input-warning" style="margin-top: -27px">{{$ctrl.mensaje1}} <span class="md-input-group-addon" ng-show="$ctrl.isContrasenaOk"><i class="fa fa-check" style="color: green" title="Correcto, las contraseñas coinciden"></i></span></div>
+              </div>
+
+              <div class="md-input-group">
+                <span class="md-input-group-addon"><i class="fa fa-lock"></i></span>
+                <md-input label="Confirmar Contraseña Elegida" ng-model="$ctrl.usuario.contrasenaConfirmacion" type="password" required minlength = "6" ng-keyup="$ctrl.validarInputs()" ></md-input>
+                <div class="md-input-warning" style="margin-top: -27px">{{$ctrl.mensaje2}} <span class="md-input-group-addon" ng-show="$ctrl.isContrasenaOk"><i class="fa fa-check" style="color: green" title="Correcto, las contraseñas coinciden"></i></span></div>
+
+              </div>
+
+              <div class="col-sm-12 text-center" >
+                <div class="form-group"  >
+                 
+<!--                  <label class="custom-control custom-radio" style=" {{$ctrl.isTipoOk? '': 'background-color: orange;color: white'}}">
+                    <input name="genero" type="radio" class="custom-control-input" ng-model="$ctrl.usuario.tipo" value="EMPRESARIO" ng-click="$ctrl.cleanEstiloTipo()" >
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">EMPRESARIO</span>
+                  </label>
+                  <label class="custom-control custom-radio" style=" {{$ctrl.isTipoOk? '': 'background-color: orange;color: white'}}" ng-click="$ctrl.cleanEstiloTipo()">
+                    <input name="genero" type="radio" class="custom-control-input" ng-model="$ctrl.usuario.tipo" value="ARTESANO" >
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">ARTESANO</span>
+                  </label>-->
+                
+                </div>
+              </div>
+              <button md-effect class="btn btn-primary btn-lg btn-block" type="submit">
+                <i class="fa fa-save"></i> REGISTRAR MIS DATOS
+              </button>
+              <p class="centerText">
+                <br/>
+                <span class="login-message"><a href="" class="text-success" ng-click="$ctrl.volverLogin()" >Regresar al inicio de sesión</a> </span>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="logo-ministerio"></div>
+    </div>
+  </div>

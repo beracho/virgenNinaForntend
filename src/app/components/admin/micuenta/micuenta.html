@@ -1,0 +1,97 @@
+<div class="container">
+  <h2 class="page-title"><i class="fa fa-cogs"></i> Detalles de <strong>cuenta</strong></h2>
+  <div class="card">
+
+    <div class="card-block">
+      <div class="col-12 col-md-12">
+        <div class="jumbotron">
+          <div class="centerText">
+            <div class="login-logo">
+              <div class="logo-probolivia"></div>
+              <div class="logo-promueve"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!--Detalles de la cuenta del usuario -->
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <h4> <i class="fa fa-user-circle"></i> Detalles de Cuenta</h4>
+            <br/>
+
+            <div class="form-group row">
+              <label  class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-form-label">Usuario:</label>
+              <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                <input class="form-control" type="text"  ng-model="$ctrl.usuario.usuario"  disabled>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label   class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-form-label">Nombres: </label>
+              <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                <input class="form-control" type="text" ng-model="$ctrl.usuario.nombres"  disabled >
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label   class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-form-label">Apellidos: </label>
+              <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                <input class="form-control" type="text" ng-model="$ctrl.usuario.apellidos"  disabled >
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label   class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-form-label">Email: </label>
+              <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                <input class="form-control" type="text" ng-model="$ctrl.usuario.email"  disabled >
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label   class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-form-label">Rol: </label>
+              <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                <input class="form-control" type="text" ng-model="$ctrl.usuario.rol.nombre"  disabled >
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label   class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-form-label">Estado: </label>
+              <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                <input class="form-control" type="text" ng-model="$ctrl.usuario.rol.estado"  disabled >
+              </div>
+            </div>
+          </div><!-- /Detalles de la cuenta del usuario -->
+
+          <!--Cambio de contraseña-->
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div ng-show="$ctrl.autChange" class="barLateralIzquierda">
+                <form ng-submit="$ctrl.cambiarContrasena()">
+                  <h4> <i class="fa fa-keyboard-o"></i> Cambio de Contraseña</h4>
+                  <br/>
+                  <div class="form-group">
+                    <label >Contraseña</label>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="" autocomplete="off" maxlength="50" ng-model="$ctrl.contrasena" required>
+                    <small style="float: right; color: red" ng-show="$ctrl.validarCampos($ctrl.contrasena)" >Debe tener mínimo 8 caracteres</small>
+                  </div>
+                  <div class="form-group {{$ctrl.isCoinciden? 'has-success' : '' }}">
+                    <label >Contraseña Nueva</label>
+                    <input type="password" name="password" class="form-control {{$ctrl.isCoinciden? 'form-control-success' : '' }}" id="passwordNuevo" placeholder="" autocomplete="off" maxlength="50" ng-model="$ctrl.contrasenaNueva" required
+                           ng-change="$ctrl.coincidenciaCampos()" >
+                    <small style="float: right; color: red" ng-show="$ctrl.validarCampos($ctrl.contrasenaNueva)" >Debe tener mínimo 8 caracteres</small>
+                  </div>
+                  <div class="form-group {{$ctrl.isCoinciden? 'has-success' : '' }}">
+                    <label>Confirmar Contraseña Nueva</label>
+                    <input type="password" name="password" class="form-control {{$ctrl.isCoinciden? 'form-control-success' : '' }}" id="passworConfirmar" placeholder="" autocomplete="off" maxlength="50" ng-model="$ctrl.contrasenaConfirmacion" required
+                           ng-change="$ctrl.coincidenciaCampos()">
+                    <small style="float: right; color: red" ng-show="$ctrl.validarCampos($ctrl.contrasenaConfirmacion)" >Debe tener mínimo 8 caracteres</small>
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="float: right"   ><i class="fa fa-key"></i> Cambiar Contraseña</button>
+                </form>
+            </div>
+          </div><!--/Cambio de contraseña-->
+
+        </div><!--/row-->
+      </div>
+
+    </div>
+  </div>
+</div>

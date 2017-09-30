@@ -1,0 +1,183 @@
+<div class="container">
+    <h2 class="page-title"><i class="fa fa-user"></i> Solicitud de certificados</h2>
+    <div class="card card-main" ng-if="$ctrl.mostrarMatriculas">
+        <div class="card-block">
+            <div class="alert alert-info" ng-if="$ctrl.matriculas.length">
+                <i class="fa fa-info-circle"></i> Seleccione una matrícula de comercio
+            </div>
+            <div class="alert alert-danger" ng-if="!$ctrl.matriculas">
+                <i class="fa fa-warn-circle"></i> No existen matrículas de comercio
+            </div>
+            <div class="card-container">
+                <div class="card" ng-repeat="matricula in $ctrl.matriculas">
+                    <div class="card-img-top badge-info">
+                        <div class="img-empresa"></div> <strong>MATRÍCULA: <br> <span>{{ matricula.matricula }}</span></strong>
+                    </div>
+                    <div class="card-block">
+                        <h4 class="card-title">{{ matricula.razon_social }}</h4>
+                    </div>
+                    <button md-effect type="button" ng-click="$ctrl.seleccionar(matricula)" class="btn btn-primary btn-block btn-lg">
+                        <i class="fa fa-check-circle"></i> Ver solicitudes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-main" ng-if="$ctrl.mostrarSolicitudes">
+        <div class="card-header">
+          MATRICULA: {{ $ctrl.matricula.matricula }} - {{ $ctrl.matricula.razon_social }}
+        </div>
+        <div class="card-block">            
+            <section>                
+                <uib-tabset active="active">
+                    <uib-tab index="0">
+                        <uib-tab-heading>
+                            <i class="fa fa-check-circle-o"></i> Productos por certificar
+                        </uib-tab-heading>
+                        <div class="alert alert-warning" ng-if="$ctrl.pendientes.length == 0">
+                            <i class="fa fa-warning"></i> No tiene ningún producto aprobado
+                        </div>
+                        <form name="form" ng-submit="$ctrl.enviar(form)" novalidate ng-if="$ctrl.pendientes.length">
+                            <section id="deposito-tramite">
+                                <header class="header-section">Depósito del trámite</header>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="control-group" ng-class="{ 'has-danger': (form.codigo_boleta.$touched || form.$submitted) && form.codigo_boleta.$invalid }">
+                                            <label for="codigo-boleta">Código boleta</label>
+                                            <input type="text" alpha-dash minlength="5" maxlength="15" class="form-control" id="codigo-boleta" required name="codigo_boleta" ng-model="$ctrl.codigo_boleta">
+                                            <div ng-messages="form.codigo_boleta.$error" class="form-error" ng-if="form.$submitted || form.codigo_boleta.$touched">
+                                                <div ng-message="required">El código boleta es obligatorio</div>
+                                                <div ng-message="minlength">El campo debe tener 5 caracteres como mínimo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="control-group" ng-class="{ 'has-danger': (form.fecha_deposito.$touched || form.$submitted) && form.fecha_deposito.$invalid }">
+                                            <label for="fecha-deposito">Fecha depósito</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" uib-datepicker-popup name="fecha_deposito"
+                                                ng-model="$ctrl.fecha_deposito" is-open="$ctrl.opened" datepicker-options="$ctrl.dateOptions"
+                                                ng-required="true" ng-change="$ctrl.validateFechaDeposito(form)"/>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="$ctrl.opened = !$ctrl.opened"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            <div ng-messages="form.fecha_deposito.$error" class="form-error" ng-if="form.$submitted || form.fecha_deposito.$touched">
+                                                <div ng-message="required">La fecha de depósito es obligatorio</div>
+                                                <div ng-message="date">No es una fecha válida</div>
+                                                <div ng-message="min_date">La fecha mínima aceptada es {{$ctrl.dateOptions.minDate| date:'dd/MM/yyyy'}}</div>
+                                                <div ng-message="max_date">La fecha máxima aceptada es {{$ctrl.dateOptions.maxDate| date:'dd/MM/yyyy'}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <header class="header-section">Datos de factura</header>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="control-group">
+                                            <label for="codigo-boleta">Razón social</label>
+                                            <p class="form-control-static">{{ $ctrl.matricula.razon_social }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="control-group">
+                                            <label for="fecha-deposito">C.I. o NIT</label>
+                                            <p class="form-control-static">{{ $ctrl.usuario.nit }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="control-group">
+                                            <label for="fecha-deposito" class="text-warning"><strong>Total a facturar</strong></label>
+                                            <p class="form-control-static text-right alert-warning border-0">{{ $ctrl.totalPago() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section id="lista-producto">
+                                <header class="header-section">Lista de productos aprobados</header>
+                                <div class="alert alert-info">
+                                    <i class="fa fa-info-circle"></i> Seleccione por lo menos un producto para su certificación
+                                </div>
+                                <table class="table table-hovered table-striped table-pendientes">
+                                    <thead>
+                                        <tr>
+                                            <td class="pendiente-form">
+                                                <label class="custom-control custom-checkbox" uib-tooltip="Seleccionar/deseleccionar todo">
+                                                    <input type="checkbox" class="custom-control-input" ng-model="$ctrl.checkSelectAll" ng-checked="$ctrl.isSelectAll()" ng-change="$ctrl.selectAll($event)" required>
+                                                    <span class="custom-control-indicator"></span>
+                                                </label>
+                                            </td>
+                                            <th>Producto</th>
+                                            <th>CUCE</th>
+                                            <th>Tipo Certificado</th>
+                                            <th>Fecha de aprobación</th>
+                                            <th>Fecha de finalización</th>
+                                            <th>Costo(Bs.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="producto in $ctrl.pendientes">
+                                            <td class="pendiente-form">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" ng-change="$ctrl.selected(producto)" ng-model="producto.select" ng-value="producto.id_producto" required>
+                                                    <span class="custom-control-indicator"></span>
+                                                </label>
+                                            </td>
+                                            <td>{{ producto.nombre_producto }}</td>
+                                            <td class="pendiente-form text-left" ng-class="{ 'has-danger': (form['cuce[' + $index + ']'].$touched || form.$submitted) && form['cuce[' + $index + ']'].$invalid }">
+                                                <input type="text" class="form-control" name="cuce[{{$index}}]" ng-required="producto.select" ng-model="producto.cuce" ng-disabled="!producto.select" placeholder="Llene el CUCE del producto aquí" focus-if="producto.select" maxlength="50">
+                                                <div ng-messages="form['cuce[' + $index + ']'].$error" class="form-error" ng-if="form.$submitted || form['cuce[' + $index + ']'].$touched">
+                                                    <div ng-message="required">El CUCE es obligatorio</div>
+                                                </div>
+                                            </td>
+                                            <td>{{ $ctrl.tipoProducto[producto.certificacion.formulario.tipo] }}</td>
+                                            <td>{{ producto.certificacion._fecha_aprobacion }}</td>
+                                            <td>{{ producto.certificacion._fecha_fin }}</td>
+                                            <td class="text-right">{{ producto.certificacion.costo_certificacion }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+                            <!-- <pre>{{ form.$error | json }}</pre> -->
+                            <div class="text-right">
+                                <button type="button" class="btn btn-dafault" ng-click="$ctrl.atras()" ng-if="$ctrl.mostrarMatriculas !== undefined">
+                                    <i class="fa fa-angle-double-left"></i> Atrás
+                                </button>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-check"></i> Enviar solicitud
+                                </button>
+                            </div>
+                        </form>
+                    </uib-tab>
+                    <!-- <uib-tab index="1">
+                        <uib-tab-heading>
+                            <i class="fa fa-check-circle"></i> Productos certificados
+                        </uib-tab-heading>
+                        <table class="table table-hovered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>CUCE</th>
+                                    <th>Certificado</th>
+                                    <th>Fecha</th>
+                                    <th>Costo(Bs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="producto in $ctrl.pendientes">
+                                    <td>{{ producto.producto }}</td>
+                                    <td>{{ producto.cuce }}</td>
+                                    <td>{{ producto.tipo }}</td>
+                                    <td>{{ producto.fecha | date:'dd/mm/yyyy' }}</td>
+                                    <td class="text-right">{{ producto.costo }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </uib-tab> -->
+                </uib-tabset>
+            </section>
+        </div>
+    </div>
+</div>

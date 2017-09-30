@@ -1,0 +1,337 @@
+<div class="container">
+  <h2 class="page-title"><i class="fa  fa-fort-awesome "></i> Razón Social: {{$ctrl.unidad_productiva.razon_social}} <small><strong> </strong></small></h2>
+  <div class="card">
+    <div class="card-block">
+      <div class="alert alert-primary">
+        <span aria-hidden="true"></span>
+        <span><strong>{{$ctrl.certificacion.tipo}} - {{$ctrl.certificacion.formulario.nombre}}</strong></span>
+      </div>
+      <div class="alert alert-primary" ng-show="$ctrl.certificacion.estado !== 'OBSERVADO'" >
+        <span aria-hidden="true"></span>
+        <i class="fa fa-info-circle"></i>
+        {{$ctrl.certificacion.estado === 'APROBADO'? 'ESTA CERTIFICACIÓN YA FUE APROBADA':  ( $ctrl.certificacion.estado === 'ENVIADO'? 'Proceso de verificación completado. Haga click en \'APROBAR\' para dar curso al trámite.':'Proceso de verificación completado. Haga click en \'SIGUIENTE\' para dar curso al trámite.' )  }}
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="alert alert-danger" ng-show="$ctrl.certificacion.observaciones && $ctrl.certificacion.estado === 'OBSERVADO'" >
+            <span aria-hidden="true"></span>
+            <i class="fa fa-info-circle"></i>
+            ESTA CERTIFICACIÓN SE ENCUENTRA OBSERVADA<br/>
+          </div>
+        </div>
+        <div class="col-md-6 card-overflow" style="color:#F35958" ng-show="$ctrl.certificacion.observaciones && $ctrl.certificacion.estado === 'OBSERVADO'" > <strong>Motivo de la observación: </strong>{{$ctrl.certificacion.observaciones}} </div>
+      </div>
+      <hr style="border-width: 3px"/>
+      <div style="padding-left: 20px">
+        <!--***-->
+        <div class="alert {{$ctrl.isDdjj? 'alert-success':'alert-warning'}}" >
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+
+          <label class="tgl" title="{{$ctrl.isDdjj? 'Observar':'Aprobar'}}">
+            <input type="checkbox" ng-checked="$ctrl.isDdjj"  ng-click="$ctrl.actualizarDdjj()"  ng-disabled="$ctrl.certificacion.estado !== 'ENVIADO' ? true : false"  />
+            <span class="tgl_body">
+              <span class="tgl_switch"></span>
+              <span class="tgl_track">
+                <span class="tgl_bgd"></span>
+                <span class="tgl_bgd tgl_bgd-negative"></span>
+              </span>
+            </span>
+          </label>
+          <!--<input type="checkbox" class="checkbox" ng-checked="$ctrl.isDdjj"  ng-click="$ctrl.actualizarDdjj( )"  ng-disabled="$ctrl.certificacion.estado !== 'ENVIADO' ? true : false" />-->
+          Declaración jurada para el registro y acreditación nacional.
+          <!--<button md-effect class="btn btn-info btn-lg btn-secondary" type="submit" style="width:  150px; margin-left: 8px;margin-top: -8px; margin-bottom: -8px" ng-click="$ctrl.verPdf()" >-->
+          <button md-effect class="btn btn-secondary" type="submit" style="width:  150px; margin-left: 8px;margin-top: -8px; margin-bottom: -8px" ng-click="$ctrl.verPdf()" >
+            <i class="fa fa-file-pdf-o"></i> Ver PDF
+          </button>
+        </div>
+        <div class="alert {{$ctrl.isSeccionCaebOk() ? 'alert-success' : 'alert-warning'}}"
+             ng-show=" ($ctrl.certificacion.formulario.tipo === 'UNIDAD_PRODUCTIVA' || $ctrl.certificacion.formulario.tipo === 'ARTESANO' || $ctrl.certificacion.formulario.tipo === 'PROVEEDOR')" >
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+
+          <!--<input type="checkbox" ng-checked="$ctrl.isSeccionCaebOk()"  ng-disabled="true" />-->
+          <label class="tgl">
+            <input type="checkbox" ng-checked="$ctrl.isSeccionCaebOk()"  ng-disabled="true" />
+            <span class="tgl_body">
+              <span class="tgl_switch"></span>
+              <span class="tgl_track">
+                <span class="tgl_bgd"></span>
+                <span class="tgl_bgd tgl_bgd-negative"></span>
+              </span>
+            </span>
+          </label>
+          Actividad económica (CAEB)
+        </div>
+        <div class="container" ng-show=" ($ctrl.certificacion.formulario.tipo === 'UNIDAD_PRODUCTIVA' || $ctrl.certificacion.formulario.tipo === 'ARTESANO' || $ctrl.certificacion.formulario.tipo === 'PROVEEDOR')">
+          <div class="row">
+            <!--PRODUCTO 1-->
+            <span class="badge badge-success">1</span>
+            <div class="col">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group ">
+                    <label>Actividad 1: </label>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="form-group" ng-class="$ctrl.actividadesEconomicas[0].descripcion_actividad.length > 30 ? 'card-overflow' : ''">
+                    <label>{{$ctrl.actividadesEconomicas[0].descripcion_actividad}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: -20px">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Producto 1: </label>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="form-group" ng-class="$ctrl.actividadesEconomicas[0].nombre_producto.length > 30 ? 'card-overflow' : ''">
+                    <label>{{$ctrl.actividadesEconomicas[0].nombre_producto}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: -20px">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Seleccionar CAEB: </label>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="form-group">
+                    <div>
+                      <i class="fa fa-search"></i>
+                      <small>Filtrar subclase</small>
+                    </div>
+                    <ui-select ng-model="$ctrl.item.selected" theme="bootstrap" title="{{$select.selected.descripcion}}"
+                               on-select = "$ctrl.asignarCaeb($ctrl.actividadesEconomicas[0], $select.selected)"
+                               ng-disabled="$ctrl.certificacion.estado !== 'ENVIADO' ? true : false"
+                               reset-search-input="false">
+                      <ui-select-match placeholder="Seleccione o busque un item..." >{{$select.selected.codigo}} - {{$select.selected.descripcion}}</ui-select-match>
+                      <ui-select-choices repeat="item in $ctrl.listadoCaeb track by $index"
+                                         refresh="$ctrl.refreshResult($select.search)"
+                                         refresh-delay="0">
+                        <span style="font-weight: bold;" ng-bind-html="(item.codigo + ' - ' + item.descripcion) | highlight: $select.search"></span>
+                        <br/><small ng-bind-html="(item.padre.padre.padre.padre.codigo + ' - ' + item.padre.padre.padre.padre.descripcion) | highlight: $select.search"></small>
+                        <br/><small ng-bind-html="(item.padre.padre.padre.codigo + ' - ' + item.padre.padre.padre.descripcion) | highlight: $select.search"></small>
+                        <br/><small ng-bind-html="(item.padre.padre.codigo + ' - ' + item.padre.padre.descripcion) | highlight: $select.search"></small>
+                        <br/><small ng-bind-html="(item.padre.codigo + ' - ' + item.padre.descripcion) | highlight: $select.search"></small>
+                        <!--<br/><small ng-bind-html="item.descripcion | highlight: $select.search"></small>-->
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-bottom: 10px">
+                <div class="card" ng-if="$ctrl.item.selected" >
+                  <div class="card-block">
+                    <h4 class="card-title">CAEB</h4>
+                    <div style="font-size: 0.85rem; line-height: 0.6">
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">Sección: </label>  {{$ctrl.item.selected.padre.padre.padre.padre.codigo}}-{{$ctrl.item.selected.padre.padre.padre.padre.descripcion}}</p>
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">División: </label>  {{$ctrl.item.selected.padre.padre.padre.codigo}}-{{$ctrl.item.selected.padre.padre.padre.descripcion}}</p>
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">Grupo: </label> {{$ctrl.item.selected.padre.padre.codigo}}-{{$ctrl.item.selected.padre.padre.descripcion}}</p>
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">Clase: </label>  {{$ctrl.item.selected.padre.codigo}}-{{$ctrl.item.selected.padre.descripcion}}</p>
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">SubClase: </label>  {{$ctrl.item.selected.codigo}}-{{$ctrl.item.selected.descripcion}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--PRODUCTO 2-->
+            <span class="badge badge-success" ng-show="$ctrl.actividadesEconomicas.length > 1" >2</span>
+            <div class="col" ng-show="$ctrl.actividadesEconomicas.length > 1">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Actividad 2: </label>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="form-group" ng-class="$ctrl.actividadesEconomicas[1].descripcion_actividad.length > 30 ? 'card-overflow' : ''">
+                    <label>{{$ctrl.actividadesEconomicas[1].descripcion_actividad}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: -20px">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Producto 2: </label>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="form-group" ng-class="$ctrl.actividadesEconomicas[1].nombre_producto.length > 30 ? 'card-overflow' : ''">
+                    <label>{{$ctrl.actividadesEconomicas[1].nombre_producto}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: -20px">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Seleccionar CAEB: </label>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="form-group">
+                    <div>
+                      <i class="fa fa-search"></i>
+                      <small>Filtrar subclase</small>
+                    </div>
+                    <ui-select ng-model="$ctrl.item2.selected" theme="bootstrap" title="{{$select.selected.descripcion}}"
+                               on-select = "$ctrl.asignarCaeb($ctrl.actividadesEconomicas[1], $select.selected)"
+                               ng-disabled="$ctrl.certificacion.estado !== 'ENVIADO' ? true : false"
+                               reset-search-input="false">
+                      <ui-select-match placeholder="Seleccione o busque un item..." >{{$select.selected.codigo}} - {{$select.selected.descripcion}}</ui-select-match>
+                      <ui-select-choices repeat="item2 in $ctrl.listadoCaeb track by $index"
+                                         refresh="$ctrl.refreshResult($select.search)"
+                                         refresh-delay="0">
+                        <span style="font-weight: bold;" ng-bind-html="(item2.codigo + ' - ' + item2.descripcion) | highlight: $select.search"></span>
+                        <br/><small ng-bind-html="(item2.padre.padre.padre.padre.codigo + ' - ' + item2.padre.padre.padre.padre.descripcion) | highlight: $select.search"></small>
+                        <br/><small ng-bind-html="(item2.padre.padre.padre.codigo + ' - ' + item2.padre.padre.padre.descripcion) | highlight: $select.search"></small>
+                        <br/><small ng-bind-html="(item2.padre.padre.codigo + ' - ' + item2.padre.padre.descripcion) | highlight: $select.search"></small>
+                        <br/><small ng-bind-html="(item2.padre.codigo + ' - ' + item2.padre.descripcion) | highlight: $select.search"></small>
+                        <!--<br/><small ng-bind-html="item2.descripcion | highlight: $select.search"></small>-->
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-bottom: 10px">
+                <div class="card" ng-if="$ctrl.item2.selected" >
+                  <div class="card-block">
+                    <h4 class="card-title">CAEB</h4>
+                    <div style="font-size: 0.85rem; line-height: 0.6">
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">Sección: </label>  {{$ctrl.item2.selected.padre.padre.padre.padre.codigo}}-{{$ctrl.item2.selected.padre.padre.padre.padre.descripcion}}</p>
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">División: </label>  {{$ctrl.item2.selected.padre.padre.padre.codigo}}-{{$ctrl.item2.selected.padre.padre.padre.descripcion}}</p>
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">Grupo: </label> {{$ctrl.item2.selected.padre.padre.codigo}}-{{$ctrl.item2.selected.padre.padre.descripcion}}</p>
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">Clase: </label>  {{$ctrl.item2.selected.padre.codigo}}-{{$ctrl.item2.selected.padre.descripcion}}</p>
+                      <p class="mt-0 pb-1 mb-2"><label class="label-primary">SubClase: </label>  {{$ctrl.item2.selected.codigo}}-{{$ctrl.item2.selected.descripcion}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--***-->
+        <div class="alert {{$ctrl.isCategorizacion? 'alert-success':'alert-warning'}}" ng-show=" ($ctrl.certificacion.formulario.tipo === 'UNIDAD_PRODUCTIVA' || $ctrl.certificacion.formulario.tipo === 'ARTESANO')" >
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+
+          <!--<input type="checkbox" ng-checked="$ctrl.isCategorizacion"  ng-click="$ctrl.actualizarCategorizacion()" ng-disabled="$ctrl.certificacion.estado !== 'ENVIADO' ? true : false" />-->
+          <label class="tgl" title="{{$ctrl.isCategorizacion? 'Observar':'Aprobar'}}">
+            <input type="checkbox" ng-checked="$ctrl.isCategorizacion"  ng-click="$ctrl.actualizarCategorizacion()" ng-disabled="$ctrl.certificacion.estado !== 'ENVIADO' ? true : false" />
+            <span class="tgl_body">
+              <span class="tgl_switch"></span>
+              <span class="tgl_track">
+                <span class="tgl_bgd"></span>
+                <span class="tgl_bgd tgl_bgd-negative"></span>
+              </span>
+            </span>
+          </label>
+          Categorización
+        </div>
+        <div class="row" ng-show=" ($ctrl.certificacion.formulario.tipo === 'UNIDAD_PRODUCTIVA' || $ctrl.certificacion.formulario.tipo === 'ARTESANO')">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-2">
+            <div class="form-group" ng-show="$ctrl.certificacion.formulario.tipo === 'UNIDAD_PRODUCTIVA'">
+              <!--<label>0.035 < L <= 0.115 </label>-->
+              <label>Índice: </label><span> {{$ctrl.unidad_productiva.indice}} </span>
+            </div>
+          </div>
+          <div class="col-sm-auto">
+            <div class="form-group">
+              <label>Resultado:  </label> <span>{{$ctrl.unidad_productiva.categorizacion}} {{$ctrl.certificacion.formulario.tipo=== 'ARTESANO'? '':'EMPRESA'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!--****************************-->
+
+        <div class="alert {{$ctrl.isCategorizacion? 'alert-success':'alert-warning'}}" ng-show="$ctrl.certificacion.formulario.tipo === 'ICAP'" >
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <label class="tgl" title="{{$ctrl.isDdjj? 'Observar':'Aprobar'}}">
+            <input type="checkbox" ng-checked="$ctrl.isDdjj"   ng-disabled=" true" />
+            <span class="tgl_body">
+              <span class="tgl_switch"></span>
+              <span class="tgl_track">
+                <span class="tgl_bgd"></span>
+                <span class="tgl_bgd tgl_bgd-negative"></span>
+              </span>
+            </span>
+          </label>
+          Servicios
+        </div>
+        <div class="row" ng-show="$ctrl.certificacion.formulario.tipo === 'ICAP'">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <!--<label>0.035 < L <= 0.115 </label>-->
+            </div>
+          </div>
+          <div class="col-sm-auto">
+            <div class="form-group">
+              <div ng-repeat="servicio in $ctrl.servicios">
+                <label>
+                  <span ng-show="$ctrl.servicios.length > 1"> {{$index + 1}}.- </span>
+                  {{servicio.servicio.parametro_padre.parametro_padre.nombre}} - {{servicio.servicio.parametro_padre.nombre}} - {{servicio.servicio.nombre}}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr style="color: black;" />
+      <ng-form name="fvali" novalidate="true">
+        <div class="row form-group panel-margin" ng-show="($ctrl.certificacion.fid_certificacion_origen === null && $ctrl.certificacion.tipo === 'RENOVACION') || $ctrl.certificacion.fid_certificacion_origen === null && $ctrl.certificacion.tipo === 'RENOVACION_EXPIRADA'">
+          <!-- Razón social/Sigla-->
+          <div class="col-md-3 text-right">
+            <label>Fecha de Vigencia del anterior certificado:</label>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group uib-input-date">
+              <input name="fecha_vigencia" maxlength="10" type="text"
+                     class="form-control"
+                     placeholder="dd/mm/aaaa" uib-datepicker-popup="{{'dd/MM/yyyy'}}"
+                     ng-model="$ctrl.fechaVigenciaAnterior"
+                     is-open="$ctrl.fecha_vigencia.is_open"
+                     datepicker-options ="$ctrl.optionsFechaInicio"
+                     ng-required="true"
+                     ng-disabled="$ctrl.certificacion.estado !== 'ENVIADO' ? true : false">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="$ctrl.fecha_vigencia.is_open = true"><i class="fa fa-calendar"></i></button>
+              </span>
+
+              <div ap-error ng-messages="fvali.fecha_vigencia.$error" role="alert" ng-if="fvali.fecha_vigencia.$touched">
+                <div ng-message="required">El campo es requerido</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </ng-form>
+
+      <div class="text-right">
+        <button type="button" md-effect class="btn btn-default" ng-click="$ctrl.volver()">
+          <i class="fa fa-arrow-left"></i> Atrás
+        </button>
+        <button uib-tooltip="Observar el documento" tooltip-placement="top"  md-effect  class="btn btn-warning" ng-click="$ctrl.observar()"
+                ng-disabled="$ctrl.certificacion.estado !== 'ENVIADO' ? true : false" ng-hide="($ctrl.certificacion.estado === 'APROBADO' || $ctrl.certificacion.estado === 'OBSERVADO')">
+          <i class="fa fa-comment-o"></i> Observar
+        </button>
+        <button uib-tooltip="Siguiente Paso" tooltip-placement="top" md-effect  class="btn btn-primary" ng-click="$ctrl.siguiente()"
+                ng-if="$ctrl.certificacion.estado === 'PENDIENTE_PAGO' || $ctrl.certificacion.estado === 'PAGADO' || $ctrl.certificacion.estado === 'APROBADO'">
+          <i class="fa fa-arrow-right"></i> Siguiente
+        </button>
+
+        <button uib-tooltip="Aprobar declaración" md-effect class="btn btn-primary" ng-click="$ctrl.aprobar()"
+                ng-disabled=" !($ctrl.isDdjj && $ctrl.isSeccionCaebOk() && $ctrl.isCategorizacion) || $ctrl.certificacion.estado === 'OBSERVADO'"
+                ng-if="$ctrl.certificacion.estado === 'ENVIADO'">
+          <i class="fa fa-check"></i> Aprobar
+        </button>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

@@ -1,0 +1,235 @@
+<div class="container">
+  <h2 class="page-title"><i class="fa  fa-fort-awesome "></i>Razón Social: {{$ctrl.unidad_productiva.razon_social}}<small><strong> </strong></small></h2>
+  <div class="card">
+    <div class="card-block">
+      <div class="alert alert-primary">
+        <span aria-hidden="true"></span>
+        <span><strong>{{$ctrl.certificacion.tipo}} - {{$ctrl.certificacion.formulario.nombre}}</strong></span>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4 form-group">
+            <label>Nombre o Razón Social:</label>
+          </div>
+          <div class="col-sm-8 form-group">
+            {{$ctrl.unidad_productiva.razon_social}}
+          </div>
+          <div class="col-sm-4 form-group">
+            <label>Representante legal:</label>
+          </div>
+          <div class="col-sm-8 form-group">
+            {{$ctrl.unidad_productiva.hist_representantes.nombre_completo}}
+          </div>
+          <div class="col-sm-4 form-group">
+            <label>Categoría: </label>
+          </div>
+          <div class="col-sm-8 form-group">
+            {{$ctrl.unidad_productiva.categorizacion}} {{$ctrl.certificacion.formulario.tipo=== 'ARTESANO'? '':'EMPRESA'}}
+          </div>
+<!--          <div class="col-sm-4 form-group">
+            <label>Rubro:</label>
+          </div>
+          <div class="col-sm-8 form-group">
+            {{$ctrl.rubro}}
+          </div>-->
+          <div class="col-sm-4 form-group">
+            <label>Número de copias:</label>
+          </div>
+          <div class="col-sm-8 form-group">
+            <input    class="form-control" ng-model="$ctrl.duplicados.length"
+                      ng-disabled="true">
+          </div>
+        </div>
+      </div>
+      <ng-form name="general_form">
+        <div class="empresa">
+          <section>
+            <!--<header class="header-section">{{$ctrl.conf.pag.sec_nombre}}</header>-->
+            <header class="header-section">DEPÓSITO DEL TRÁMITE</header>
+            <div ng-show="$ctrl.deposito.id_pago === undefined">
+              <div class="alert alert-danger" >
+                <span aria-hidden="true"></span>
+                <i class="fa fa-info-circle"></i>
+                {{$ctrl.usuario_ddjj_con_nit? 'El usuario debe llenar los datos de depósito.':'Debe llenar los datos de depósito.'}}
+              </div>
+            </div>
+            <div class="body-section">
+              <ng-form name="depositos_form">
+                <div class="row">
+                  <div class="col-md form-group">
+                    <label ng-class="{'ap-req':$ctrl.conf.pag.codigo_deposito.requerido}">{{$ctrl.conf.pag.codigo_deposito.label}}</label>
+                    <input name="codigo_deposito" alpha-dash maxlength="50" class="form-control" ng-model="$ctrl.deposito.codigo_deposito"
+                           ng-required="$ctrl.conf.pag.codigo_deposito.requerido"
+                           ng-disabled="$ctrl.usuario_ddjj_con_nit || $ctrl.certificacion.estado === 'APROBADO' || $ctrl.certificacion.estado === 'PAGADO'">
+                    <div ap-error ng-messages="depositos_form.codigo_deposito.$error" role="alert" ng-if="depositos_form.codigo_deposito.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                    </div>
+                  </div>
+                  <div class="col-md form-group">
+                    <label ng-class="{'ap-req':$ctrl.conf.pag.fecha_deposito.requerido}">{{$ctrl.conf.pag.fecha_deposito.label}}</label>
+                    <div class="input-group uib-input-date">
+                      <input name="fecha_deposito" maxlength="10"
+                             class="form-control" datepicker-append-to-body="true"
+                             placeholder="dd/mm/aaaa" uib-datepicker-popup="{{'dd/MM/yyyy'}}"
+                             ng-model="$ctrl.deposito.fecha_deposito" ng-change="$ctrl.validateFechaDeposito(depositos_form)"
+                             is-open="$ctrl.deposito.is_open" datepicker-options="$ctrl.conf.pag.fecha_deposito.options"
+                             ng-required="$ctrl.conf.pag.fecha_deposito.requerido" ng-disabled="$ctrl.usuario_ddjj_con_nit || $ctrl.certificacion.estado === 'APROBADO' || $ctrl.certificacion.estado === 'PAGADO'">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="$ctrl.deposito.is_open = true"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                    <div ap-error ng-messages="depositos_form.fecha_deposito.$error" role="alert" ng-if="depositos_form.fecha_deposito.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                      <div ng-message="date">Formato de fecha incorrecta (Ejemplo:15/02/1996)</div>
+                      <div ng-message="min_date">La fecha mínima aceptada es {{$ctrl.conf.pag.fecha_deposito.options.minDate| date:'dd/MM/yyyy'}}</div>
+                      <div ng-message="max_date">La fecha máxima aceptada es {{$ctrl.conf.pag.fecha_deposito.options.maxDate| date:'dd/MM/yyyy'}}</div>
+                    </div>
+                  </div>
+                  <div class="col-md form-group">
+                    <label ng-class="{'ap-req':$ctrl.conf.pag.nombre_razon_social.requerido}">{{$ctrl.conf.pag.nombre_razon_social.label}}</label>
+                    <input name="nombre_razon_social" maxlength="250" class="form-control" ng-model="$ctrl.deposito.nombre_razon_social"
+                           ng-required="$ctrl.conf.pag.nombre_razon_social.requerido"
+                           ng-disabled="$ctrl.usuario_ddjj_con_nit || $ctrl.certificacion.estado === 'APROBADO' || $ctrl.certificacion.estado === 'PAGADO'">
+                    <!--ng-disabled="$ctrl.usuario_ddjj_con_nit || $ctrl.certificacion.estado === 'APROBADO' || $ctrl.certificacion.estado === 'PAGADO'">-->
+                    <div ap-error ng-messages="depositos_form.nombre_razon_social.$error" role="alert" ng-if="depositos_form.nombre_razon_social.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                    </div>
+                  </div>
+                  <div class="col-md form-group">
+                    <label ng-class="{'ap-req':$ctrl.conf.pag.monto.requerido}">{{$ctrl.conf.pag.monto.label}}:</label>
+                    <input name="monto" decimal-format maxlength="15" class="form-control" ng-model="$ctrl.monto" ng-required="$ctrl.conf.pag.monto.requerido"
+                           ng-disabled="$ctrl.usuario_ddjj_con_nit || $ctrl.certificacion.estado === 'APROBADO' || true">
+                    <div ap-error ng-messages="depositos_form.monto.$error" role="alert" ng-if="depositos_form.monto.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                    </div>
+                  </div>
+                </div>
+              </ng-form>
+            </div>
+          </section>
+
+          <section>
+            <!--<header class="header-section">{{$ctrl.conf.fac.sec_nombre}}</header>-->
+            <header class="header-section">DATOS DE FACTURA</header>
+            <div class="body-section">
+              <ng-form name="factura_form">
+                <div class="row">
+                  <div class="col-md form-group" ng-if="$ctrl.conf.fac.nombre_razon_social.visible">
+                    <label ng-class="{'ap-req':$ctrl.conf.fac.nombre_razon_social.requerido}">{{$ctrl.conf.fac.nombre_razon_social.label}}:</label>
+                    <!-- <input name="nombre_razon_social" class="form-control" ng-model="$ctrl.certificacion.nombre_razon_social" ng-required="$ctrl.conf.fac.nombre_razon_social.requerido" ng-disabled="$ctrl.conf.fac.nombre_razon_social.disabled"> -->
+                    <textarea name="nombre_razon_social" maxlength="250" class="form-control" autoresize ng-model="$ctrl.datos_factura.nombre_razon_social"
+
+                              ng-required="$ctrl.conf.fac.nombre_razon_social.requerido" ng-disabled="$ctrl.usuario_ddjj_con_nit || $ctrl.certificacion.estado === 'APROBADO'"></textarea>
+                    <div ap-error ng-messages="factura_form.nombre_razon_social.$error" role="alert" ng-if="factura_form.nombre_razon_social.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                    </div>
+                  </div>
+                  <div class="col-md form-group" ng-if="$ctrl.conf.fac.nit.visible">
+                    <label ng-class="{'ap-req':$ctrl.conf.fac.nit.requerido}">{{$ctrl.conf.fac.nit.label}}:</label>
+                    <input name="nit" maxlength="20" class="form-control" ng-model="$ctrl.datos_factura.nit" ng-required="$ctrl.conf.fac.nit.requerido" ng-disabled="$ctrl.usuario_ddjj_con_nit || $ctrl.certificacion.estado === 'APROBADO'">
+                    <div ap-error ng-messages="factura_form.nit.$error" role="alert" ng-if="factura_form.nit.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md form-group" ng-if="$ctrl.conf.fac.numero_autorizacion.visible">
+                    <label ng-class="{'ap-req':$ctrl.conf.fac.numero_autorizacion.requerido}">{{$ctrl.conf.fac.numero_autorizacion.label}}:</label>
+                    <input name="numero_autorizacion" class="form-control" numeric
+                           minlength="{{$ctrl.conf.fac.numero_autorizacion.min_length}}"
+                           maxlength="{{$ctrl.conf.fac.numero_autorizacion.max_length}}"
+                           ng-model="$ctrl.datos_factura.numero_autorizacion"
+                           ng-required="$ctrl.conf.fac.numero_autorizacion.requerido"
+                           ng-disabled="!$ctrl.habilitarFac()">
+                    <div ap-error ng-messages="factura_form.numero_autorizacion.$error" role="alert" ng-if="factura_form.numero_autorizacion.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                      <div ng-message="minlength">El número debe tener {{$ctrl.conf.fac.numero_autorizacion.min_length}} o más caracteres</div>
+                      <div ng-message="maxlength">El número debe tener {{$ctrl.conf.fac.numero_autorizacion.max_length}} o menos caracteres</div>
+                    </div>
+                  </div>
+                  <!--........-->
+                  <div class="col-md form-group" ng-if="$ctrl.conf.fac.numero_factura.visible">
+                    <label ng-class="{'ap-req':$ctrl.conf.fac.numero_factura.requerido}">{{$ctrl.conf.fac.numero_factura.label}}:</label>
+                    <input name="numero_factura" class="form-control" numeric
+                           minlength="{{$ctrl.conf.fac.numero_factura.min_length}}"
+                           maxlength="{{$ctrl.conf.fac.numero_factura.max_length}}"
+                           ng-model="$ctrl.datos_factura.nro_factura"
+                           ng-required="$ctrl.conf.fac.numero_factura.requerido"
+                           ng-disabled="!$ctrl.habilitarFac()">
+                    <div ap-error ng-messages="factura_form.numero_factura.$error" role="alert" ng-if="factura_form.numero_factura.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                      <div ng-message="minlength">El número debe tener {{$ctrl.conf.fac.numero_factura.min_length}} o más caracteres</div>
+                      <div ng-message="maxlength">El número debe tener {{$ctrl.conf.fac.numero_factura.max_length}} o menos caracteres</div>
+                    </div>
+                  </div>
+                  <!--........-->
+
+                  <div class="col-md form-group" ng-if="$ctrl.conf.fac.fecha_factura.visible">
+                    <label ng-class="{'ap-req':$ctrl.conf.fac.fecha_factura.requerido}">{{$ctrl.conf.fac.fecha_factura.label}}:</label>
+                    <div class="input-group uib-input-date">
+                      <input name="fecha_factura" maxlength="10"
+                             class="form-control" datepicker-append-to-body="true"
+                             placeholder="dd/mm/aaaa" uib-datepicker-popup="{{'dd/MM/yyyy'}}"
+                             ng-model="$ctrl.datos_factura.fecha_factura" ng-change="$ctrl.validateFechaFactura(factura_form)"
+                             is-open="$ctrl.certificacion.is_open_fecha_factura" datepicker-options="$ctrl.conf.fac.fecha_factura.options"
+                             ng-required="$ctrl.conf.fac.fecha_factura.requerido"
+                             ng-disabled="!$ctrl.habilitarFac()">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="$ctrl.certificacion.is_open_fecha_factura = true"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                    <div ap-error ng-messages="factura_form.fecha_factura.$error" role="alert" ng-if="factura_form.fecha_factura.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                      <div ng-message="date">Formato de fecha incorrecta (Ejemplo:15/02/1996)</div>
+                      <div ng-message="min_date">La fecha mínima aceptada es {{$ctrl.conf.pag.fecha_deposito.options.minDate| date:'dd/MM/yyyy'}}</div>
+                      <div ng-message="max_date">La fecha máxima aceptada es {{$ctrl.conf.pag.fecha_deposito.options.maxDate| date:'dd/MM/yyyy'}}</div>
+                    </div>
+                  </div>
+                </div>
+              </ng-form>
+            </div>
+          </section>
+        </div>
+        <div class="text-right mb-3">
+          <button type="button" md-effect class="btn btn-default" ng-click="$ctrl.volver()">
+            <i class="fa fa-close"></i> Cerrar
+          </button>
+          <button type="button" md-effect  class="btn btn-primary" ng-click="$ctrl.finalizarAcreditacion(general_form)"
+                  ng-show="$ctrl.certificacion.estado === 'PENDIENTE_PAGO' || $ctrl.certificacion.estado === 'PAGADO'"
+                  ng-disabled="general_form.$invalid">
+            <i class="fa fa-check"></i> Finalizar
+          </button>
+        </div>
+      </ng-form>
+      <div>
+        <div class="alert alert-warning"  ng-hide="$ctrl.certificadoDuplicado===false">
+          <span aria-hidden="true"></span>
+          <i class="fa fa-info-circle"></i>
+          Se ha generado los certificados de registro
+        </div>
+
+        <uib-tabset active="active"  ng-hide="$ctrl.certificadoDuplicado===false">
+          <uib-tab index="$index" ng-repeat="duplicado in $ctrl.duplicados"  ng-click="$ctrl.cambiarTab(duplicado)" >
+            <uib-tab-heading>
+              <i class="fa fa-file-pdf-o"></i> {{$index + 1}}
+            </uib-tab-heading>
+            <div class="tab-container">
+
+              <div ng-show="!$ctrl.esEdge()">
+                <iframe ng-src="{{$ctrl.urlPdf}}" style="width:100%; height:550px;" frameborder="0">
+                  <p>Su navegador no soporta iframe</p>
+                </iframe>
+              </div>
+              <div>
+                <span class="login-message"><a href="" ng-click="$ctrl.descargarCertificado(duplicado)" class="text-success"> <i class="fa fa-download"></i> Descargar certificado</a></span>
+              </div>
+
+            </div>
+          </uib-tab>
+        </uib-tabset>
+
+      </div>
+
+    </div>
+  </div>
+</div>

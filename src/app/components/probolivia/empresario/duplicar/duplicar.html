@@ -1,0 +1,70 @@
+<div class="container">
+  <h2 class="page-title"><i class="fa fa-table"></i> Duplicar <small><strong>certificación</strong></small></h2>
+  <div class="card">
+    <div class="card-block">
+      <div class="d-flex justify-content-between">
+        <div class="btn-container p-2">
+          <button class="btn btn-default" md-effect type="button" ng-click="$ctrl.refresh()" uib-tooltip="Actualizar tabla"><i class="fa fa-refresh"></i></button>
+        </div>
+      </div>
+      <div class="flex form-group" uib-tooltip="Filtrar datos por departamento, NIT, matrícula, razón social, representante legal o CI">
+        <input name="filtro" maxlength="200" class="form-control" ng-model="$ctrl.filtro_bandeja" placeholder="Filtrar datos..." ng-change="$ctrl.changeFilter()">
+      </div>
+      <!--<crud-table buttons="$ctrl.buttons" permission="$ctrl.permission" url="$ctrl.url" edit-modal-controller="$ctrl.editModalController">-->
+      <!--</crud-table>-->
+      <div class="table-responsive" ng-table="$ctrl.tableParams">
+        <table class="table table-condensed table-striped table-hover">
+          <tr ng-repeat="item in $data">
+            <td data-title="'Acciones'" >
+              <button uib-tooltip="Pedir duplicado" md-effect class="btn btn-default"  ng-click="$ctrl.duplicar(item)"  >
+                <i class="fa fa-copy"></i>
+              </button>
+<!--              <button uib-tooltip="Ver certificado" md-effect class="btn btn-default"  ng-click="$ctrl.veCertificadoTabla(item)" >
+                <i class="fa fa-file"></i>
+              </button>-->
+            </td>
+            <td data-title="'Nro.'"> {{(($ctrl.tableParams.page()-1) * $ctrl.tableParams.count()) + ($index+1)}}</td>
+            <td data-title="'Departamento'">
+              {{ item.unidad_productiva.ubicaciones[0].departamento.descripcion}}
+            </td>
+            <td data-title="'Grupo'">
+              {{ $ctrl.procesar(item.certificacion.formulario.nombre)}}
+            </td>
+            <td data-title="'Tipo'">
+              {{ item.certificacion.tipo}}
+            </td>
+            <td data-title="'NIT/Matrícula'">
+              <span ng-if="item.unidad_productiva.nit || item.unidad_productiva.matricula_comercio">
+                {{ item.unidad_productiva.nit}}<br>
+                {{ item.unidad_productiva.matricula_comercio}}
+              </span>
+              <span ng-if="!item.unidad_productiva.nit && !item.unidad_productiva.matricula_comercio">
+                <i>No tiene</i>
+              </span>
+            </td>
+            <td data-title="'Razón Social'">
+              {{ item.unidad_productiva.razon_social}}
+            </td>
+            <td data-title="'Fecha'">
+              {{ item.certificacion._fecha_creacion |  date:'dd/MM/yyyy' }}
+            </td>
+            <td data-title="'Representante Legal/CI'">
+              {{item.unidad_productiva.hist_representantes.nombre_completo}}  {{item.unidad_productiva.hist_representantes.documento_identidad}}
+            </td>
+            <td data-title="'Estado'" >
+
+              <span class="badge
+                    {{item.certificacion.estado ==='ENVIADO'? 'badge-primary':
+                  (item.certificacion.estado ==='APROBADO'? 'badge-success' : ( item.certificacion.estado ==='PENDIENTE_PAGO'? 'badge-warning' :
+                  (item.certificacion.estado ==='OBSERVADO'? 'badge-danger' : ( item.certificacion.estado ==='PAGADO'? 'badge-default' : 'badge-default'))))}}
+              ">
+              {{item.certificacion.estado}}
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

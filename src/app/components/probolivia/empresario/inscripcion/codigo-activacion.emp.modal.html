@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h5 class="modal-title"><i class="fa fa-shield"></i> Código de activación</h5>
+</div>
+<form ng-submit="$ctrl.confirmar()" name="form">
+    <div class="modal-body">
+        <p class="text-justify text-primary">Acabamos de enviarle un <strong>CÓDIGO DE ACTIVACIÓN</strong> al correo electrónico <strong>{{ $ctrl.correo }}</strong>, ingrese al mismo <strong>copie</strong> o <strong>escriba</strong> su código de activación aquí para completar su registro.</p>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-8">
+                <input type="text" class="form-control text-center" id="codigo-activacion" ng-focus="true" name="codigo" ng-model="$ctrl.codigo_activacion" required placeholder="Escriba su código de activación aquí" focus-me="{{ $ctrl.focus }}" maxlength="5"  minlength="5" alpha-numeric trim-paste autocomplete="off">
+            </div>
+        </div>
+        <!-- <div class="alert alert-info">
+            <i class="fa fa-info-circle"></i> Este correo electrónico le servirá para recibir las distintas <strong>notificaciones</strong> que la plataforma le enviará.
+        </div> -->
+        <div class="alert alert-warning">
+            <i class="fa fa-exclamation-triangle"></i> El correo puede demorar unos minutos en llegar a su bandeja de entrada.
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button md-effect type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()">
+            <i class="fa fa-close"></i> Cancelar registro
+        </button>
+        <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
+            <i class="fa fa-check"></i> Confirmar código
+        </button>
+    </div>
+</form>

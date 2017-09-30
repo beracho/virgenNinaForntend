@@ -1,0 +1,144 @@
+<div class="container">
+    <div class="card">
+        <div class="card-block">
+            <div>
+                <button 
+                    uib-tooltip="Observar el documento" 
+                    tooltip-placement="top" 
+                    md-effect  class="btn btn-warning" 
+                    ng-click="$ctrl.atras()">
+                    <i class="fa fa-reply"></i> Atrás
+                </button>
+            </div>
+            <div class="card-block">            
+                <section>                
+                    <form name="form" ng-submit="$ctrl.registrarFactura(form)" novalidate>
+                        <section id="deposito-tramite">
+                            <header class="header-section">Depósito del trámite</header>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="control-group" ng-class="{ 'has-danger': (form.codigo_deposito.$touched || form.$submitted) && form.codigo_deposito.$invalid }">
+                                        <label for="codigo-boleta">Código boleta</label>
+                                        <input type="text" class="form-control" id="codigo-boleta" required name="codigo_deposito" ng-model="$ctrl.solicitud.codigo_deposito" ng-disabled="true">
+                                        <div ng-messages="form.codigo_deposito.$error" class="form-error" ng-if="form.$submitted || form.solicitud.codigo_deposito.$touched">
+                                            <div ng-message="required">El código boleta es obligatorio</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="control-group">
+                                        <label for="fecha-deposito">Fecha depósito</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="fecha_deposito" ng-model="$ctrl.solicitud.fecha_deposito" ng-required="true"  ng-disabled="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <header class="header-section">Datos de factura</header>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="control-group">
+                                        <label for="codigo-boleta">Razón social</label>
+                                        <p class="form-control-static">{{ $ctrl.solicitud.nombre_razon_social}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="control-group">
+                                        <label for="fecha-deposito">C.I. o NIT</label>
+                                        <p class="form-control-static">{{ $ctrl.solicitud.unidad_productiva.nit}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="control-group">
+                                        <label for="fecha-deposito" class="text-warning"><strong>Total a facturar</strong></label>
+                                        <p class="form-control-static text-right alert-warning border-0">{{ $ctrl.solicitud.monto }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="deposito-tramite">
+                            <header class="header-section">FACTURA (BS.)</header>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="control-group" ng-class="{ 'has-danger': (form.numero_autorizacion.$touched || form.$submitted) && form.numero_autorizacion.$invalid }">
+                                        <label class="ap-req" for="numero_autorizacion">Número de Autorización</label>
+                                        <input type="text" class="form-control" name="numero_autorizacion" ng-model="$ctrl.numero_autorizacion" required>
+                                        <div ng-messages="form.numero_autorizacion.$error" class="form-error" ng-if="form.$submitted || form.numero_autorizacion.$touched">
+                                            <div ng-message="required">El campo es requerido</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="control-group" ng-class="{ 'has-danger': (form.numero_factura.$touched || form.$submitted) && form.numero_factura.$invalid }">
+                                        <label class="ap-req" for="numero_factura">Número de factura</label>
+                                        <input type="text" class="form-control" name="numero_factura" ng-model="$ctrl.numero_factura" required/>
+                                        <div ng-messages="form.numero_factura.$error" class="form-error" ng-if="form.$submitted || form.numero_factura.$touched">
+                                            <div ng-message="required">El campo es requerido</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="control-group" ng-class="{ 'has-danger': (form.fecha_factura.$touched || form.$submitted) && form.fecha_factura.$invalid }">
+                                        <label class="ap-req" for="fecha_factura">Fecha de facturación</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup name="fecha_factura" ng-model="$ctrl.fecha_factura" is-open="$ctrl.opened" datepicker-options="$ctrl.dateOptions" ng-required="true"/>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="$ctrl.opened = !$ctrl.opened"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                        <div ng-messages="form.fecha_factura.$error" class="form-error" ng-if="form.$submitted || form.fecha_factura.$touched">
+                                            <div ng-message="required">La fecha es requerida</div>
+                                            <div ng-message="date">No es una fecha válida</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <br/>
+                        <div>
+                            <button type="submit" md-effect class="btn btn-info btn-lg btn-block">
+                                <i class="fa fa-paper-plane"></i> Finalizar
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <br/>
+                <section>                
+                    <uib-tabset active="active">
+                        <uib-tab ng-repeat="cert in $ctrl.solicitud.certificaciones_pagos">
+                            <uib-tab-heading>
+                                <i class="fa fa-file-pdf-o"></i> {{cert.certificacion.producto.nombre_producto}}
+                            </uib-tab-heading>
+                            <div>
+                                <div class="text-right">
+                                    <button class="btn btn-primary"
+                                            ng-disabled="cert.certificacion.impreso"
+                                            ng-click="$ctrl.confirmarImpresion(cert)">
+                                        <i class="fa fa-save"></i>Guardar como Impreso
+                                    </button>
+                                    <button class="btn btn-primary"
+                                            ng-disabled="cert.certificacion.impreso"
+                                            ng-click="$ctrl.imprimir(cert)">
+                                        <i class="fa fa-print"></i> Imprimir
+                                    </button>
+                                </div>
+                                <br/>
+                                <div ng-if="cert.certificacion.impreso">
+                                    <span>El documento ya fue impreso</span>
+                                </div>
+                                <div style="padding-left: 20px" ng-if="!cert.certificacion.impreso">
+                                    <iframe ng-src="{{cert.certificacion.producto.pdf_certificado}}" style="width:100%; height:550px;" frameborder="0">
+                                        <p>Su navegador no soporta iframe</p>
+                                    </iframe>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

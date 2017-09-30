@@ -1,0 +1,19 @@
+<ng-form name="input_chip_form">
+  <div class="">
+  </div>
+  <div class="ap-chips form-group">
+    <label ng-class="{'ap-req':$ctrl.ngRequired}">{{$ctrl.label}}</label>
+    <div class="row mx-0 form-control">
+        <div class="chip" ng-repeat="chip in $ctrl.ngModel">
+          <span>{{chip}}</span>
+          <i class="fa fa-close" ng-click="$ctrl.remChip($index)"></i>
+        </div>
+        <input style="width: 100%" ng-model="$ctrl.chip" placeholder="{{$ctrl.ngDisabled? '': $ctrl.ngPlaceholder}}" ng-keyup="$ctrl.keyChip($event)" ng-blur="$ctrl.onBlurChip($event)" ng-disabled="$ctrl.ngDisabled" name="ichips" uppercase ng-if="$ctrl.ngUppercase">
+        <input style="width: 100%" ng-model="$ctrl.chip" placeholder="{{$ctrl.ngDisabled? '': $ctrl.ngPlaceholder}}" ng-keyup="$ctrl.keyChip($event)"  ng-blur="$ctrl.onBlurChip($event)" ng-disabled="$ctrl.ngDisabled" name="ichips" ng-if="!$ctrl.ngUppercase" >
+        <input type="hidden" name="chips" ng-model="$ctrl.chips_model" ng-required="$ctrl.ngRequired">
+    </div>
+    <div ap-error ng-messages="input_chip_form.chips.$error" role="alert" ng-if="input_chip_form.ichips.$touched">
+      <div ng-message="required">El campo es requerido</div>
+    </div>
+  </div>
+</ng-form>

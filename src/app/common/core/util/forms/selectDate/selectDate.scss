@@ -1,0 +1,14 @@
+.select-date {
+    .day {
+        min-width: 50px;
+    }
+    .month {
+        min-width: 120px;
+        .form-group {
+            margin-bottom: 0;
+        }
+    }
+    .year {
+        min-width: 80px;
+    }
+}

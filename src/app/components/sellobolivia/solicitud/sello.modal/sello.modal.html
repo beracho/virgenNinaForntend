@@ -1,0 +1,45 @@
+<ng-form name="sello_form">
+  <div class="modal-header">
+    <h5 class="modal-title">Solicitud de sello "Hecho en Bolivia" para {{$ctrl.producto.nombre_producto.toLowerCase()}}</h5>
+    <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-ubicacion-body">
+    <div class="row">
+      <div class="col md-8">
+        <div class="alert alert-danger" ng-if="$ctrl.producto.observaciones_certificacion">
+            <h4><i class="fa fa-warning"></i> OBSERVACIONES</h4>
+            {{ $ctrl.producto.observaciones_certificacion }}
+        </div>
+        <div class="alert alert-info">
+          <i class="fa fa-info-circle"></i> Una vez completada la solicitud, en 2 dias hábiles se le enviará su certificado al correo electrónico registrado.
+        </div>
+        <div class="form-group">
+          <label class="ap-req">El sello Hecho en Bolivia se aplicará a:</label>
+        </div>
+        <div ng-repeat="lugar in $ctrl.opciones_lugar">
+          <label class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" name="lugar_sello{{$index}}" ng-model="$ctrl.producto['lugar_sello'+$index]">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{lugar}}</span>
+          </label>
+        </div>
+        
+        <div class="form-group">
+          <label>Otro lugar:</label>
+          <input name="lugar_sello_otro" alpha-dash maxlength="100" class="form-control" ng-model="$ctrl.producto.lugar_sello_otro">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button md-effect type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()">
+      <i class="fa fa-close"></i> Cerrar
+    </button>
+    <button md-effect type="button" class="btn btn-primary" ng-click="$ctrl.save(sello_form)">
+      <i class="fa fa-check"></i> Guardar
+    </button>
+  </div>
+</ng-form>

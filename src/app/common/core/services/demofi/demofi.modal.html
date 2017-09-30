@@ -1,0 +1,86 @@
+<div class="demofi-modal">
+    <div class="modal-header">
+        <h5 class="modal-title"><i class="fa fa-shield"></i> Firma de documentos</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
+    </div>
+
+    <div class="modal-body">
+        <!-- <div class="progress" ng-hide="!mostrar_progress">
+            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+        </div> -->
+        <div ng-if="iniciado === false">
+            Iniciando...
+        </div>
+        <div ng-if="iniciado === true">
+            <div ng-if="demofi_ejecutandose">
+                <span style="font-weight: bold">Token</span>
+                <span ng-if="tokens.length == 0">
+                    Ningún token conectado
+                </span>
+                <span ng-repeat="tokenName in tokens">
+                    <span>{{tokenName}}</span>
+                </span>
+            </div>
+            <!-- <div class="alert alert-danger" >
+                    <i class="fa fa-info-circle" ap></i>
+                    <span>Ningún token conectado</span>
+                </div> -->
+            <div ng-if="!demofi_ejecutandose" class="alert alert-warning" ng-if="data.certificado === null">
+                <i class="fa fa-warning"></i> <span> Demofi no se está ejecutando en su equipo o no tiene agregado el certificado de seguridad en su navegador.</span>
+                <br/>
+                <ul>
+                    <li><span>Visite el siguiente enlace para su instalación y/o configuración. Presione <a target="_blank" href="http://test.local.agetic.gob.bo/firmador/#">aquí</a>. <help message="helpMessage.demofi_no_instalado"></help></span>
+                    <li><span>Para verificar que el certificado de seguridad de Demofi se encuentra instalado. Presione <a href="#" ng-click="$ctrl.Demofi.verificarServidor()">aquí</a>.</span>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+             <!-- <img src="../../../../../assets/images/certificate.png" class="img-certificado">  -->
+            <span class="img-certificado"></span>
+            <!-- <img src="./certificate.png" class="img-certificado"> -->
+            <div class="col-md">
+                <div class="form-group">
+                    <label class="ap-req">Pin:</label>
+                    <input name="pin" type="password" class="form-control" ng-model="pin" ng-disabled="!token_conectado" required>
+                    <div ap-error ng-messages="activos_form.pin.$error" role="alert" ng-if="activos_form.pin.$touched">
+                        <div ng-message="required">El campo es requerido</div>
+                    </div>
+                </div>
+                <uib-select name="certificado" label="Certificado:" ng-model="certificado_seleccionado" items="certificados"
+                    key-value="alias" key-text="nombreComunSubject" placeholder="Seleccione..."
+                    ng-disabled="!autenticado"></uib-select>
+            </div>
+            <div class="col-md-3 py-4">
+                <button md-effect type="button" class="btn btn-secondary" ng-click="$ctrl.autenticar()" ng-disabled="!token_conectado||autenticado">
+                    <i class="fa fa-shield"></i> Autenticar
+                </button>
+            </div>
+        </div>
+
+        <ul class="list-group md-dense">
+            <li class="list-group-item" style="background: #0aa699; color:aliceblue;">
+                <strong>{{solicitudes.length}} documento{{solicitudes.length===1?'':'s'}} para firmar </strong>
+                <span>&nbsp;{{firmados}} de {{solicitudes.length}} Firmados</span>
+            </li>
+            <li class="list-group-item" ng-repeat="solicitud in solicitudes">
+                <!-- <md-icon>picture_as_pdf</md-icon> -->
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFiElEQVR4XqWXbWyT1xXHf/f6sWPHjomz4MAoWYIQKlIDmdaMdqnQ6KRSZWsFnZREpZWqTBqVuvVNqkqh1eiE1G4UtVRVNSClUAmiRMqHaZkqVGlqK7WDDthGSYEy2pImC6BCDHGc+Hm5t34eR7ZMcEzwXzrStS2f8zv/c+/V8wjyYnBwUFO+6OrqWnPkyJEPKS0KAPr7+w+vX79+FbcgrTW2baOUYmRkJNHZ2bnu6NGjH80JoKen57OOjo4WN0lJCZENAKVwHMcDSKVSAIyOjo61t7e3nT59+jCzSFIozU0pW1z/9zB66BxCSs8BFzydTiOlpKGhIbZv376/Llu2rKUUwNwlBc7uP2G3/Yzxjb9mfGIC4TMAXCc8kEgkwvLly+N79+4dmA1CXj/HkhISANW3H6sqghz+luQ358An3c5zowA8iKampnh3d7cHURKgxOwLpxSowDc5lbVfqYIcpmnmGnIhVq5cGd+zZ89AY2NjS/kjmHZJNN+JTNrYFRUQiWKA50B1dTVXrlzhxIkT7rHm5MmTDA0NUVNTE9+5c+dAPB5vKmMEefke6IQg2LXz8cVqEdMAFRmg+vp6MoU8mHA47H0XDAZpaWmJt7a2PkJeGLcEoDXi7l8gmlciE9eQUmShfD78fn8ujwvkfnb3BeDBBDMq/xRAbh+Ev/wa+/0+HLIyDCPXsRvuOhQKuWsPRgihSzlQ2gkp4dL/UcNDEJQYf3mNq20dxKoiKMfxOg8EAp4jWms3XBc8mOtlcKs6eQzbdkg8/gzz39zB2LuvYz35EgagITcSCtblH8O8PjrEZLQantyK0bqKyjdfIXFmEIoUyrlawoHSIHKa+ZN/MPXjuwhXheGPbxH85d1YWzYy0fsxlRkIRVYyezEVzWncNG3eSxj8D87Q+YzlLxMC1B0/gT/8mcimZ0llIOwVdyK/OoVe3ozV1oEWoqC5sjeh+NsBkgt+iFzzK4wLI/D3XtSH72PVRql85x3M2j6sRYsJ7XqbCz9YRLz1XjCnyncAvx808MEAzuIG5m35Del/f8a1+XXYP2/D2LSD2P43MPp7kFfHGFv1U6zFS5COhSrLASEgGATThL1vwNn/ETAtJuqXYG/fT2VzC9FgAENr9Kvd2GvXM372FOk1DxKvW4CybXS+RnEAx3FmUgaC4JP4+rpxDuzC+NcxLj3UibX5dWIL6ghqB2FZOBMT2EqhAFa3EVnzANH0JNr9rcgGLzECDeEqxPBXGC/8lqvJJOmG24lcHmPi8Re4rbYGMZktqrUuhJ4YByBXaq4AlmUhgiF8x/8Jz3UxfM99iAc3EH/2YYY3bCT6o0b01CSW4zAHuZA374CWkoqtTzGeGCdQt5D40518u/p+jIceI2RbWFozFwkh3BGXBMjd3VgW6bXr8Pe/hx7o5etHf49/3SPE/EZBkjk6MPsm1G4IgYrFAHB+txnric0oNNVC4NcaR6n8ydA6v87S59eFQgqRzS3ELAAXP8DZdAx10QSJJ7+UueR2JrRtZx/DTBPh94NhoFOp7NoNIWCmQ2jwnp7U+fPFAbjwKfq9EexxEHDDJNH2dmRNDebZswRWrEAnk5hffIGIRvEvXcrkoUOYo6Mz/i8B23WgtrY4gEKjwQuKAMjmZmSmEyMcRgcCJHbtIrZtG5gmOpHAunwZZuZATYcudRXb0yGZKQUQiZA8eBDrzBnmvfii54Z2i09N4Xz3HY5lFX0F04CaDUBU+0V4CXAihzrDkUCmuHP8OBVKEfr8c0Jr15LavRs5bx46A1Cp9UzofENoEEXfDZvuWLh9w+3ph81T5pS6KCCdJ3aY7iCdhkAAB7KdA1pKNICUKL8frRQaCkJklFJK9qdSz19TqveGAEAVsJCyVXQKJjAM5Ob0PVvMrlB1tTzsAAAAAElFTkSuQmCC" style="width: 25px; height: 30px;">
+                <p class="my-0">&nbsp;&nbsp;{{solicitud.nombre_archivo}}&nbsp;&nbsp;</p>
+                <strong>{{solicitud.estado}}</strong> 
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button md-effect type="button" class="btn btn-secondary" ng-click="$ctrl.cancelar()">
+            <i class="fa fa-close"></i> Cancelar
+        </button>
+        <button md-effect type="button" class="btn btn-primary" ng-disabled="!autenticado||firmando" ng-click="$ctrl.firmar()">
+            <i class="fa fa-check"></i> Firmar
+        </button>
+    </div>
+</div>
+
+

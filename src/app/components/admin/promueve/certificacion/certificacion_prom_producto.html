@@ -1,0 +1,144 @@
+<div class="container">
+    <div class="card">
+        <div class="card-block">
+            <div class="alert alert-primary" >
+                <span aria-hidden="true"></span>
+                <i class="fa fa-info-circle"></i>
+                <span>Proceso de verificación completado! Haga click en aprobar para dar curso al trámite</span>
+            </div>
+            <h4>Validacion de {{$ctrl.prod.certificacion.formulario.nombre}}</h4>
+
+            <div style="padding-left: 20px">    
+                <div class="alert {{$ctrl.ddjjProducto? 'alert-success':'alert-warning'}} align-middle" >
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <label class="tgl" title="{{$ctrl.ddjjProducto? 'Observar':'Aprobar'}}">
+                        <input type="checkbox" ng-model="$ctrl.ddjjProducto"/>
+                        <span class="tgl_body">
+                        <span class="tgl_switch"></span>
+                        <span class="tgl_track">
+                            <span class="tgl_bgd"></span>
+                            <span class="tgl_bgd tgl_bgd-negative"></span>
+                        </span>
+                        </span>
+                    </label>
+                    <span>Declaración jurada para el registro y acreditación nacional.</span>
+                    <button 
+                        md-effect class="btn btn-info btn-lg btn-block" 
+                        style="width:  150px; margin-left: 8px;margin-top: -8px; margin-bottom: -8px"
+                        ng-click="$ctrl.verDDJJProducto()" >
+                        <i class="fa fa-search"></i> Ver DDJJ PDF
+                    </button>
+                </div>
+                <div style="margin-left: 100px;">
+                    <span>Descripción técnica del producto.</span>
+                </div>
+                <div style="margin-left: 100px;">
+                    <span>Costo bruto de producción.</span>
+                </div>
+                <br/>
+                <!--  PARA CERTIFICACIONES DE COSTO BRUTO -->
+                <div ng-if="$ctrl.prod.certificacion.formulario.tipo==='COSTO_BRUTO'">
+                    <div ng-if="$ctrl.prod.insumos.length>0" class="alert {{$ctrl.insumoNacional? 'alert-success':'alert-warning'}}">
+                        <label class="tgl" title="{{$ctrl.insumoNacional? 'Observar':'Aprobar'}}">
+                            <input type="checkbox"  ng-model="$ctrl.insumoNacional"/>
+                            <span class="tgl_body">
+                            <span class="tgl_switch"></span>
+                            <span class="tgl_track">
+                                <span class="tgl_bgd"></span>
+                                <span class="tgl_bgd tgl_bgd-negative"></span>
+                            </span>
+                            </span>
+                        </label>
+                        <strong>Insumos Nacionales.</strong>
+                        <span> {{$ctrl.nombres_insumos_nacionales}}</span>
+                    </div>
+                    <div class="alert {{$ctrl.van? 'alert-success':'alert-warning'}}" ng-if="$ctrl.prod.insumos.length>0">
+                        <label class="tgl" title="{{$ctrl.van? 'Observar':'Aprobar'}}">
+                            <input type="checkbox" ng-model="$ctrl.van"/>
+                            <span class="tgl_body">
+                            <span class="tgl_switch"></span>
+                            <span class="tgl_track">
+                                <span class="tgl_bgd"></span>
+                                <span class="tgl_bgd tgl_bgd-negative"></span>
+                            </span>
+                            </span>
+                        </label>
+                        <span>
+                            <strong>CON </strong><span>{{$ctrl.prod.indice}} %</span><strong> >= </strong><span>{{$ctrl.prod.insumos.length>0?40:50}} %</span>
+                        </span>
+                    </div>
+                    <div class="alert {{$ctrl.van? 'alert-success':'alert-warning'}}" ng-if="$ctrl.prod.insumos.length===0">
+                        <label class="tgl" title="{{$ctrl.van? 'Observar':'Aprobar'}}">
+                            <input type="checkbox"  ng-model="$ctrl.van"/>
+                            <span class="tgl_body">
+                            <span class="tgl_switch"></span>
+                            <span class="tgl_track">
+                                <span class="tgl_bgd"></span>
+                                <span class="tgl_bgd tgl_bgd-negative"></span>
+                            </span>
+                            </span>
+                        </label>
+                        <span>
+                            <strong>VAN </strong><span>30%</span><strong> < </strong><span>{{$ctrl.prod.indice}} %</span><strong> < </strong><span>50%</span>
+                        </span>
+                        <span ng-if="$ctrl.prod.insumos.length===0">    e    </span>
+                        <span ng-if="$ctrl.prod.insumos.length===0">
+                            <strong>IN </strong><span>{{$ctrl.prod.ins}} %</span><strong> >= </strong><span>18%</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <!--  PARA CERTIFICACIONES DE BIEN PRODUCIDO -->
+                <div ng-if="$ctrl.prod.certificacion.formulario.tipo==='BIEN_PRODUCIDO'">
+                    <div ng-if="$ctrl.prod.insumos.length>0" class="alert {{$ctrl.insumoNacional? 'alert-success':'alert-warning'}}">
+                        <label class="tgl" title="{{$ctrl.insumoNacional? 'Observar':'Aprobar'}}">
+                            <input type="checkbox"  ng-model="$ctrl.insumoNacional"/>
+                            <span class="tgl_body">
+                            <span class="tgl_switch"></span>
+                            <span class="tgl_track">
+                                <span class="tgl_bgd"></span>
+                                <span class="tgl_bgd tgl_bgd-negative"></span>
+                            </span>
+                            </span>
+                        </label>
+                        <strong>Materias primas de Origen Nacional.</strong>
+                        <span> {{$ctrl.nombres_insumos_nacionales}}</span>
+                    </div>
+                    <div class="alert:'alert-warning'" ng-if="$ctrl.insumoNacional">
+                        <span>No tiene insumos nacionales</span>
+                    </div>
+                    <div class="alert {{$ctrl.van? 'alert-success':'alert-warning'}}" ng-if="$ctrl.prod.insumos.length>0">
+                        <label class="tgl" title="{{$ctrl.van? 'Observar':'Aprobar'}}">
+                            <input type="checkbox"  ng-model="$ctrl.van"/>
+                            <span class="tgl_body">
+                            <span class="tgl_switch"></span>
+                            <span class="tgl_track">
+                                <span class="tgl_bgd"></span>
+                                <span class="tgl_bgd tgl_bgd-negative"></span>
+                            </span>
+                            </span>
+                        </label>
+                        <span>
+                            <strong>VAN </strong><span>{{$ctrl.prod.indice}} %</span><strong> >= </strong><span>50%</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: right">
+                <button type="button" md-effect class="btn btn-default" ng-click="$ctrl.volver()">
+                  <i class="fa fa-arrow-left"></i> Ir a bandeja
+                </button>
+                <button uib-tooltip="Observar el documento" tooltip-placement="top"  md-effect  class="btn btn-warning" ng-click="$ctrl.rechazar()">
+                    <i class="fa fa-hand-paper-o"></i> Rechazar
+                </button>
+                <button uib-tooltip="Observar el documento" tooltip-placement="top"  md-effect  class="btn btn-warning" ng-click="$ctrl.observar()">
+                    <i class="fa fa-comment-o"></i> Observar
+                </button>
+                <button uib-tooltip="Ver certificado de aprobación" tooltip-placement="top" md-effect  class="btn btn-primary" ng-click="$ctrl.aprobar()"
+                        ng-disabled=" !($ctrl.ddjjProducto && ($ctrl.insumoNacional||$ctrl.prod.insumos.length===0) && $ctrl.van)">
+                    <i class="fa fa-arrow-right"></i> Aprobar y Enviar para firma
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

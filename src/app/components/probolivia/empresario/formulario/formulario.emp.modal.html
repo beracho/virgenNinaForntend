@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h5 class="modal-title"><i class="fa fa-money"></i> Tabla de costos</h5>
+</div>
+<div class="modal-body"> 
+  <div>
+    <p>
+      El depósito deberá realizarse a la cuenta <strong>Nº {{$ctrl.nroCuenta}}</strong> del <strong>Banco Unión</strong>.
+    </p>
+    <p>Estas tarifas corresponden únicamente a nuevos registros.</p>
+
+    <p>
+      El costo para la renovación del certificado es del 50% de la tarifa actual, siempre y cuando las Unidades Productivas lo soliciten dentro de la vigencia de su certificado. Sólo aplicable para Micro y Pequeñas empresas (MYPES).  
+    </p>
+  </div>
+
+  <table class="table table-striped table-hover table-bordered"  style="display: block; width: 100%" >
+    <thead style="display: inline-block;
+           width: 100%;
+           height: 42px">
+      <tr>
+        <th class="text-center" style="width: 150px !important">TIPO</th>
+        <th class="text-center" style="width: 170px !important">Categoria</th>
+        <th class="text-center">Monto (Bs.)</th>
+      </tr>
+    </thead>
+    <tbody style=" height: 300px;
+           display: inline-block;
+           width: 100%;
+           overflow: auto;">
+      <tr ng-repeat="escala in $ctrl.escalas">
+        <td scope="row" style="width: 150px !important"> {{escala.tipo}}</td>
+        <td  style="width: 170px !important"> {{escala.categoria}} {{escala.formulario.tipo==='UNIDAD_PRODUCTIVA'? 'EMPRESA':''}} <br/><small>{{escala.par_tipo_societario.nombre}}</small></td>
+        <td  style="width: 110px !important" class="text-right">{{escala.monto}}&nbsp;&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button md-effect type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()">
+    <i class="fa fa-close"></i> Cerrar
+  </button>
+</div>

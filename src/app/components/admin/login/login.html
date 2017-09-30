@@ -1,0 +1,57 @@
+<div class="login-container"align="center"ng-controller="login.controller">
+    <div class="jumbotron text-center"style="background-color:PowderBlue; color:Teal;"> 
+      <h1><!--<img src="./src/assets/images/epdb2015.png"class="img-rounded" alt="Cinque Terre" width="304" height="236">-->ASOCIACION CENTRO VIRGEN NIÑA - EPBD</h1>                   
+    </div>                  
+    <div class="login-form">
+      <!--<div class="login-logo">
+        <div class="epdb-logo"></div>
+            <div class="logo-promueve"></div>
+      </div>-->
+      <div class="login-header">
+        <i class="fa fa-sign-in"></i> 
+      </div>          
+      <div class="card-container container">
+        <div align="center">
+          <div class="col-lg-6 col-md-12 card-element">
+            <div class="alert alert-info text-center">
+              <i class="fa fa-building-o"aria-hidden="true"></i> <strong>VIRGEN NIÑA - epdb</strong>
+              </br>
+            </div>
+            <div class="account-wall"align="center">
+              <form ng-submit="$ctrl.signin()"align="center">
+                <div class="md-input-group">
+                  <span class="md-input-group-addon"><i class="fa fa-user"aria-hidden="true"></i></span>
+                  </br>
+                  <div class="md-form-group" md-event-label>
+                    <!--<label class="md-control-label" for="input">Usuario</label>-->
+                    <input ng-model="$ctrl.usuario" required id="usuario" type="text"placeholder="Usuario">
+                    <i class="glyphicon glyphicon-user form-control-feeback"></i>
+                    <i class="md-bar"></i>
+                  </div>
+                  </br>
+                </div>    
+                <div class="md-input-group">
+                  <span class="md-input-group-addon"><span class="img-nit" uib-tooltip="correo electrónico" tooltip-placement="left"></span></span>
+                    <div class="md-form-group" md-event-label>
+                      <!--<label class="md-control-label" for="input">Contraseña</label>-->
+                      <input ng-model="$ctrl.password"name="contraseña" id="password" required type="password" focus-if="true"placeholder="Contraseña">   
+                      <i class="glyphicon glyphicon-asterisk form-control-feeback"></i>
+                      <i class="md-bar"></i>
+                    </div>
+                </div>
+                <div class="md-input-group">
+                  <span class="md-input-group-addon"><i class="fa fa-lock"></i></span>
+                  <md-input label="Contraseña" ng-model="$ctrl.contrasena" type="password" required></md-input>
+                  </br>
+                </div>
+                <div align="center">
+                  <button align="center" md-effect class="btn btn-success btn-lg btn-block"type="submit" ng-click="login()">
+                  <i class="fa fa-sign-in"></i> Iniciar sesión
+                  </button> 
+                </div>                   
+              </form>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,74 @@
+<div class="modal-header">
+  <h5 class="modal-title"><i class="fa fa-money"></i> Depósito Bancario</h5>
+  <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<ng-form name="general_form">
+  <div class="modal-body">
+
+    <div class="alert alert-warning row mx-0" >
+      <i class="fa fa-info-circle" ></i>
+      <span class="col">
+        <p class="mb-0">A partir del envío de estos datos, podrá recoger su certificado de las oficinas de ProBolivia <br/>en 24 horas.</p>
+      </span>
+    </div>
+    <div>
+      Ingrese los datos del comprobante del depósito realizado por el costo del trámite:
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-md form-group">
+        <div class="form-group">
+          <label>Código de Boleta</label>
+          <input name="codigo" alpha-dash minlength="5" maxlength="15" ng-model="$ctrl.obj.codigo" class="form-control"  placeholder="" required>
+          <div ap-error ng-messages="general_form.codigo.$error" role="alert" ng-if="general_form.codigo.$touched">
+            <div ng-message="required">El campo es requerido</div>
+            <div ng-message="minlength">El campo debe tener 5 caracteres como mínimo</div>
+            <!-- <div ng-message="maxlength">El campo debe tener 15 caracteres como máximo</div> -->
+          </div>
+        </div>
+      </div>
+      <!--    <div class="col-md form-group">
+            <div class="form-group">
+              <label>Fecha de Depósito</label>
+              <input name="fecha_deposito" maxlength="10" class="form-control" datepicker-append-to-body="true" placeholder="dd/mm/aaaa" uib-datepicker-popup="{{'dd/MM/yyyy'}}"
+                     ng-model="$ctrl.obj.fecha_deposito" is-open="$ctrl.deposito.is_open"
+                     datepicker-options="$ctrl.conf.pag.fecha_deposito.options"
+                     close-text="Close" required/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="$ctrl.deposito.is_open = true"><i class="fa fa-calendar"></i></button>
+              </span>
+            </div>
+
+          </div>-->
+      <div class="col-md form-group">
+        <label>Fecha de Depósito</label>
+        <div class="input-group uib-input-date">
+          <input name="fecha_deposito" maxlength="10" class="form-control" datepicker-append-to-body="true" placeholder="dd/mm/aaaa"
+                 uib-datepicker-popup="{{'dd/MM/yyyy'}}" ng-model="$ctrl.obj.fecha_deposito" is-open="$ctrl.deposito.is_open" ng-change="$ctrl.validateFechaDeposito(general_form)"
+                 datepicker-options="$ctrl.conf" ng-required="true" close-text="Close"/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="$ctrl.deposito.is_open = true"><i class="fa fa-calendar"></i></button>
+          </span>
+        </div>
+        <div ap-error ng-messages="general_form.fecha_deposito.$error" role="alert" ng-if="general_form.fecha_deposito.$touched">
+          <div ng-message="required">El campo es requerido</div>
+          <div ng-message="date">Formato de fecha incorrecta (Ejemplo:15/02/1996)</div>
+          <div ng-message="min_date">La fecha mínima aceptada es {{$ctrl.conf.minDate| date:'dd/MM/yyyy'}}</div>
+          <div ng-message="max_date">La fecha máxima aceptada es {{$ctrl.conf.maxDate| date:'dd/MM/yyyy'}}</div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button md-effect type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()" >
+      <i class="fa fa-close"></i>Cancelar
+    </button>
+    <button md-effect type="button" class="btn btn-primary" ng-click="$ctrl.ok()" ng-disabled="general_form.$invalid" >
+      <i class="fa fa-check"></i> Enviar
+    </button>
+  </div>
+</ng-form>

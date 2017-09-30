@@ -1,0 +1,60 @@
+<div class="modal-header">
+    <h5 class="modal-title">
+      <i class="fa fa-paperclip"></i>
+      Importar archivo CSV
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body modal-importar-body">
+  <div class="alert alert-info">
+      Pasos para importar el archivo CSV
+  </div>
+  <div class="planilla-dialog-content">
+    <ol class="">
+        <li>
+          Descargue el <strong><i class="fa fa-file mr-1"></i> archivo base</strong> haciendo
+          <strong><a href="{{$ctrl.url.csv}}" target="_blank" download="archivo_base.csv">click aquí.</a></strong>
+        </li>
+        <li>
+          Proceda a llenar datos en el archivo proporcionado. <br/>
+          <div class="text-justify">
+              <strong>Instrucciones de llenado</strong><br/>
+              <ol class="pl-3" style="list-style: lower-alpha;">
+                <li>Utilice siempre el archivo base proporcionado.</li>
+                <li><strong>No modifique</strong> la primera fila (cabecera).</li>
+                <li><strong>No aumente columnas</strong> solamente edite las casillas respectivas.</li>
+                <li>La columna <strong>cantidad</strong> siempre debe ser un <strong>número entero</strong> sin decimales.</li>
+                <li>La columna <strong>descripción y marca</strong> permiten valores alfanuméricos que <strong>no</strong> tengan un largo <strong>mayor a 100 caracteres</strong>.</li>
+                <li>La columna <strong>precio unitario y total</strong> permiten ingresar valores numéricos con hasta dos decimales, siendo el punto <strong>(.)</strong> el caracter de separador de decimales.</li> </ol>
+          </div>
+        </li>
+        <li><strong>Guarde</strong> el archivo en formato <strong>“.csv”</strong>  empleando como separador el símbolo <strong>tabulador</strong>.</li>
+        <li><strong>Adjunte</strong> el <strong>“archivo csv”</strong> en el área de abajo</li>
+    </ol>
+  </div>
+
+  <div class="planilla-dialog-content">
+      <div class="alert alert-warning">
+          <strong>Importante.-</strong> Compruebe que el archivo que desea importar <strong>NO</strong> se encuentre abierto.
+      </div>
+      <ui-file-upload url="$ctrl.url.importar"
+                  name="archivo"
+                  on-complete-item="$ctrl.csv.onCompleteItem"
+                  types="|csv|"
+                  label="Importar"
+                  on-after-adding-file="$ctrl.onAfterAddingFile"
+                  show-danger="show_danger">
+       </ui-file-upload>
+<!--  -->
+  </div>
+</div>
+<div class="modal-footer">
+    <button md-effect type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()">
+        <i class="fa fa-close"></i> Cancelar
+    </button>
+    <button md-effect type="button" class="btn btn-primary" ng-click="$ctrl.cancel()" ng-if="$ctrl.isSuccess">
+        <i class="fa fa-check"></i> Terminar
+    </button>
+</div>

@@ -1,0 +1,110 @@
+<ng-form name="sello_form">
+  <div class="modal-header">
+    <h5 class="modal-title">Solicitud de sello "Hecho en Bolivia" <span ng-show="$ctrl.producto"> para {{$ctrl.producto.nombre_producto.toLowerCase()}}</span></h5>
+    <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-ubicacion-body" ng-if="!$ctrl.modo_solo_shb">
+    <div class="alert alert-info" ng-if="$ctrl.unidades.length">
+        <i class="fa fa-info-circle"></i> Clic en " <i class="fa fa-gg-circle"></i> USAR DATOS"  para proceder con la solicitud del sello para un nuevo producto.
+        <br /><small>Nota.- En la bandeja solo se encuentran los registros de certificados vigentes de ProBolivia.</small>
+        <br /><small>Al hacer click en una fila se usará los datos de su unidad productiva correspondiente</small>
+    </div>
+
+    <!-- <div class="card-container mb-5" ng-if="$ctrl.unidades.length">
+        <crud-table url="$ctrl.conf_cert.url"
+            query-extra="$ctrl.conf_cert.queryExtra"
+            data="$ctrl.conf_cert.data"
+            fields="$ctrl.conf_cert.fields"
+            permission="$ctrl.conf_cert.permission"
+            buttons="$ctrl.conf_cert.buttons"
+            labels="$ctrl.conf_cert.labels"
+            fks="$ctrl.conf_cert.fks"
+            hidden-fields="$ctrl.conf_cert.hiddenFields">
+        </crud-table>
+    </div> -->
+    <div class="card-container text-center" ng-if="$ctrl.unidades.length">
+      <div class="card" ng-repeat="unidad in $ctrl.unidades">
+        <div class="card-img-top badge-info text-center">
+          <div>
+            <div class="img-empresa"></div>
+          </div>
+          <strong>{{unidad.razon_social}}</strong>
+        </div>
+        <div class="card-block text-left">
+          <!-- <h4 class="card-title">{{ unidad.razon_social }}</h4> -->
+          <div ng-if="unidad.nit_matricula">
+            <strong>NIT - Matrícula: </strong><br> <span>{{ unidad.nit_matricula }}</span>
+          </div>
+          <div ng-if="unidad.representante">
+            <strong>Representante: </strong><br> <span>{{ unidad.representante }}</span>
+          </div>
+          <br><br>
+        </div>
+        <button md-effect type="button" ng-click="$ctrl.crearSolicitudSello(unidad)" class="btn btn-primary btn-block btn-lg">
+          <!-- <i class="fa fa-check-circle"></i> Usar datos -->
+          <i class="fa fa-gg-circle"></i> Usar datos
+        </button>
+      </div>
+    </div>
+  
+  </div>
+
+  <div class="modal-body modal-ubicacion-body" ng-if="$ctrl.modo_solo_shb">
+    <div class="alert alert-info" ng-if="!$ctrl.matriculas">
+        <i class="fa fa-info-circle"></i>
+        <span ng-if="$ctrl.usuario.nit && !$ctrl.matriculas">
+          No se escontraron matrículas y usted no tiene certifificaciones vigentes en PROBOLIVIA, para solicitar su sello deberá:
+        </span>
+        <span ng-if="!$ctrl.usuario.nit && !$ctrl.matriculas">
+          Usted no tiene certifificaciones vigentes en PROBOLIVIA, para solicitar su sello deberá:
+        </span>
+        <ol>
+            <li>Llenar un formulario con los datos de su empresa</li>
+            <li>Llenar un formulario con datos del producto para el cual quiere el sello</li>
+        </ol>
+        Para proceder con los pasos haga clic en aceptar
+    </div>
+    <div class="card-container" ng-if="$ctrl.matriculas">
+      <div class="alert alert-info">
+          <i class="fa fa-info-circle"></i> 
+          <span ng-if="$ctrl.matriculas.length==1">
+            Se encontró la siguiente matrícula para crear la solicitud, usted deberá:
+          </span>
+          <span ng-if="$ctrl.matriculas.length>1">
+            Se encontraron las siguientes matrículas para crear la solicitud, usted deberá:
+          </span>
+          
+          <ol>
+            <li>Llenar un formulario con los datos faltantes de su empresa</li>
+            <li>Llenar un formulario con datos del producto para el cual quiere el sello</li>
+          </ol>
+
+          Haga clic en el boton registrar de la matrícula con la que desea continuar.
+      </div>
+      <div class="text-center">
+        <div class="card" ng-repeat="matricula in $ctrl.matriculas">
+          <div class="card-img-top badge-info">
+              <div class="img-empresa"></div> <strong>MATRÍCULA: <br> <span>{{ matricula.matricula }}</span></strong>
+          </div>
+          <div class="card-block">
+              <h4 class="card-title">{{ matricula.razon_social }}</h4>
+          </div>
+          <button md-effect type="button" ng-click="$ctrl.crearSolicitud(matricula.matricula)" class="btn btn-primary btn-block btn-lg">
+              <i class="fa fa-check-circle"></i> Registrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button md-effect type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()">
+      <i class="fa fa-close"></i>  {{$ctrl.modo_solo_shb? 'Cancelar':'Cerrar'}}
+    </button>
+    <button md-effect type="button" class="btn btn-primary" ng-click="$ctrl.crearSolicitud()" ng-if="$ctrl.modo_solo_shb && !$ctrl.matriculas">
+      <i class="fa fa-check"></i> Aceptar
+    </button> 
+  </div>
+</ng-form>

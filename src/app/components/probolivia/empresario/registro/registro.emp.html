@@ -1,0 +1,909 @@
+<div class="container empresa registro">
+  <h2 class="page-title"><i class="fa fa-file-text-o"></i> Declaración Jurada - <small class="text-primary">{{ $ctrl.form.nombre}}</small></h2>
+  <div class="card card-main">
+    <div class="card-header" ng-if="$ctrl.tiene_matricula">
+      MATRÍCULA: {{ $ctrl.data.matricula}} - {{ $ctrl.data.razon_social}}
+    </div>
+    <!--<img class="card-img-top" src="http://www.fg-a.com/wallpapers/geo-shapes-black-1280b.jpg" height="50" alt="Card image cap" >-->
+    <!-- <div class="row">
+      $ctrl.data.propietario_representante {{$ctrl.data.propietario_representante}}<br>
+      $ctrl.data.emp.personeria_juridica {{$ctrl.data.emp.personeria_juridica}}<br>
+    </div> -->
+    <!-- <div> -->
+    <form ng-submit="$ctrl.declarar(registro_form)" name="registro_form" novalidate>
+      <div class="card-block">
+        <div class="alert alert-danger row mx-0" ng-if="$ctrl.certificacion.observaciones && $ctrl.certificacion.estado == 'OBSERVADO'">
+          <i class="fa fa-eye" ap></i>
+          <span class="col card-overflow" >
+            <p class="mb-0">ESTA CERTIFICACIÓN SE ENCUENTRA OBSERVADA</p>
+            <p> <strong>Motivo:</strong> {{$ctrl.certificacion.observaciones}}</p>
+          </span>
+          <i class="fa fa-close" ng-click="$ctrl.certificacion.observaciones = ''" uib-tooltip="Ocultar mensaje"></i>
+        </div>
+        <div class="alert alert-info row mx-0" ng-if="$ctrl.msjs.requireds">
+          <i class="fa fa-info-circle"></i>
+          <span class="col">
+            <p class="mb-0" ng-bind-html="$ctrl.msjs.requireds"> </p>
+          </span>
+          <i class="fa fa-close" ng-click="$ctrl.msjs.requireds = ''" uib-tooltip="Ocultar mensaje"></i>
+        </div>
+        <section ng-if="$ctrl.conf.emp.sec_visible">
+          <header class="header-section">{{$ctrl.conf.emp.sec_nombre}}</header>
+          <div class="body-section">
+            <div class="row">
+              <div class="col-md-8 ap-form">
+                <ng-form name="empresa_form">
+                  <div class="form-group" ng-if="$ctrl.conf.emp.razon_social.visible">
+                    <label ng-class="{'ap-req':$ctrl.conf.emp.razon_social.requerido}">{{$ctrl.conf.emp.razon_social.label}}:</label>
+                    <input name="razon_social" ng-model="$ctrl.data.razon_social" class="form-control" ng-required="$ctrl.conf.emp.razon_social.requerido" ng-disabled="$ctrl.conf.emp.razon_social.disabled" ng-change="$ctrl.empresaUpd()">
+                    <div ap-error ng-messages="empresa_form.razon_social.$error" role="alert" ng-if="empresa_form.razon_social.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <!--<div class="col-md form-group" ng-if="$ctrl.conf.emp.matricula_comercio.visible && $ctrl.user.id_rol == 4">-->
+                      <div class="col-md form-group" ng-if="$ctrl.conf.emp.matricula_comercio.visible">
+                      <label ng-class="{'ap-req':$ctrl.conf.emp.matricula_comercio.requerido}">{{$ctrl.conf.emp.matricula_comercio.label}}:</label>
+                      <input name="matricula_comercio" max-length="50" class="form-control" ng-model="$ctrl.data.matricula_comercio" ng-required="$ctrl.conf.emp.matricula_comercio.requerido" ng-disabled="$ctrl.conf.emp.matricula_comercio.disabled"  ng-change="$ctrl.empresaUpd()">
+                      <div ap-error ng-messages="empresa_form.matricula_comercio.$error" role="alert" ng-if="empresa_form.matricula_comercio.$touched">
+                        <div ng-message="required">El campo es requerido</div>
+                      </div>
+                    </div>
+                    <!--<div class="col-md form-group" ng-if="$ctrl.conf.emp.nit.visible && $ctrl.user.id_rol == 4">-->
+                    <div class="col-md form-group" ng-if="$ctrl.conf.emp.nit.visible">
+                      <label ng-class="{'ap-req':$ctrl.conf.emp.nit.requerido}">{{$ctrl.conf.emp.nit.label}}:</label>
+                      <input name="nit" max-length="20" class="form-control" ng-model="$ctrl.data.nit" ng-required="$ctrl.conf.emp.nit.requerido" ng-disabled="$ctrl.conf.emp.nit.disabled || $ctrl.usuario_ddjj_con_nit"  ng-change="$ctrl.empresaUpd()" numeric>
+                      <div ap-error ng-messages="empresa_form.nit.$error" role="alert" ng-if="empresa_form.nit.$touched">
+                        <div ng-message="required">El campo es requerido</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row ml-0">
+                    <div class="col-md pl-0 form-group" ng-if="$ctrl.conf.emp.fid_par_tipo_societario.visible">
+                      <select-parametro name="fid_par_tipo_societario" parametro="TIPO_SOCIETARIO"
+                                        label="{{$ctrl.conf.emp.fid_par_tipo_societario.label}}:"
+                                        ng-model="$ctrl.data.fid_par_tipo_societario"
+                                        query="&fid_formulario={{$ctrl.certificacion.fid_formulario}}"
+                                        ng-required="$ctrl.conf.emp.fid_par_tipo_societario.requerido"
+                                        ng-disabled="$ctrl.conf.emp.fid_par_tipo_societario.disabled"
+                                        ng-change="$ctrl.empresaUpd()"></select-parametro>
+                      <div ap-error ng-messages="empresa_form.fid_par_tipo_societario.$error" role="alert" ng-if="empresa_form.fid_par_tipo_societario.$touched">
+                        <div ng-message="required">El campo es requerido</div>
+                      </div>
+                    </div>
+                    <div class="col-md form-group" ng-if="$ctrl.conf.emp.anios_experiencia.visible">
+                      <label ng-class="{'ap-req':$ctrl.conf.emp.anios_experiencia.requerido}">{{$ctrl.conf.emp.anios_experiencia.label}}:</label>
+                      <input name="anios_experiencia" numeric maxlength="3"  class="form-control" ng-model="$ctrl.data.anios_experiencia" ng-change="$ctrl.empresaUpd()" ng-required="$ctrl.conf.emp.anios_experiencia.requerido" ng-disabled="$ctrl.conf.emp.anios_experiencia.disabled">
+                      <div ap-error ng-messages="empresa_form.anios_experiencia.$error" role="alert" ng-if="empresa_form.anios_experiencia.$touched">
+                        <div ng-message="required">El campo es requerido</div>
+                      </div>
+                    </div>
+                    <div class="col-md mt-a pb-3 form-group" ng-if="$ctrl.conf.emp.personeria_juridica.visible">
+                      <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" ng-model="$ctrl.data.personeria_juridica" ng-required="$ctrl.conf.emp.personeria_juridica.requerido" ng-disabled="$ctrl.conf.emp.personeria_juridica.disabled"  ng-change="$ctrl.empresaUpd()">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">{{$ctrl.conf.emp.personeria_juridica.label}}</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group" ng-if="$ctrl.conf.emp.fid_par_tipo_organizacion.visible">
+                    <select-parametro opcional="{{!$ctrl.conf.emp.fid_par_tipo_organizacion.requerido}}" name="fid_par_tipo_organizacion" parametro="TIPO_ORGANIZACION_AFILIADA" label="{{$ctrl.conf.emp.fid_par_tipo_organizacion.label}}:"
+                                      ng-model="$ctrl.data.fid_par_tipo_organizacion" ng-required="$ctrl.conf.emp.fid_par_tipo_organizacion.requerido"
+                                      query="&fid_formulario={{$ctrl.certificacion.fid_formulario}}"
+                                      ng-disabled="$ctrl.conf.emp.fid_par_tipo_organizacion.disabled" ng-change="$ctrl.empresaUpd()"></select-parametro>
+                    <div ap-error ng-messages="empresa_form.fid_par_tipo_organizacion.$error" role="alert" ng-if="empresa_form.fid_par_tipo_organizacion.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                    </div>
+                    <div>
+                      <input name="tipo_organizacion_otro" maxlength="50" class="form-control"
+                             placeholder="Ingresar Descripción, en caso de OTROS"
+                             ng-model="$ctrl.data.tipo_organizacion_otro"
+                             ng-show="$ctrl.data.fid_par_tipo_organizacion === 195" ng-if="($ctrl.data.fid_par_tipo_organizacion === 195)"
+                             required="{{$ctrl.data.fid_par_tipo_organizacion === 195}}"
+                             ng-change="$ctrl.empresaUpd()"
+                             >
+                      <div ap-error ng-messages="empresa_form.tipo_organizacion_otro.$error" role="alert" ng-if="empresa_form.tipo_organizacion_otro.$touched">
+                        <div ng-message="required">Ingrese organización afiliada</div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-form>
+              </div>
+              <div class="col-md-4 text-center">
+                <div class="fecha-creacion">
+                {{$ctrl.certificacion.tipo === "RENOVACION" ? "RENOVACIÓN" : $ctrl.certificacion.tipo}}
+                </div>
+                <div class="fecha-creacion" uib-tooltip="Fecha de creación"> {{$ctrl.certificacion._fecha_creacion| date:'dd/MM/yyyy'}} </div>
+                <button type="button" class="btn btn-warning" ng-click="$ctrl.masInformacion()" ng-if="$ctrl.tiene_matricula">Ver más información<br /> de la empresa</button>
+                <div class="alert alert-info mt-3 mx-3 pl-2">
+                  <i class="fa fa-info-circle" ></i>
+                  <span>Los datos se guardarán automáticamente.</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-md form-group" ng-if="$ctrl.conf.emp.sitio_web.visible">
+                <label ng-class="{'ap-req':$ctrl.conf.emp.sitio_web.requerido}">{{$ctrl.conf.emp.sitio_web.label}}:</label>
+                <input name="sitio_web" max-length="50" class="form-control" ng-model="$ctrl.data.sitio_web" ng-required="$ctrl.conf.emp.sitio_web.requerido" ng-disabled="$ctrl.conf.emp.sitio_web.disabled"  maxlength="100" ng-change="$ctrl.empresaUpd()">
+                <div ap-error ng-messages="empresa_form.sitio_web.$error" role="alert" ng-if="empresa_form.sitio_web.$touched">
+                  <div ng-message="required">El campo es requerido</div>
+                </div>
+              </div>
+              <div class="col-md form-group" ng-if="$ctrl.conf.emp.correo_electronico.visible">
+                <label ng-class="{'ap-req':$ctrl.conf.emp.correo_electronico.requerido}">{{$ctrl.conf.emp.correo_electronico.label}}:</label>
+                <input name="correo_electronico" max-length="20" class="form-control" ng-model="$ctrl.data.correo_electronico" ng-required="$ctrl.conf.emp.correo_electronico.requerido" ng-disabled="$ctrl.conf.emp.correo_electronico.disabled" maxlength="100"  ng-change="$ctrl.empresaUpd()"
+                       ng-keyup="$ctrl.validateMailKeyup()" >
+                <div ap-error ng-messages="empresa_form.correo_electronico.$error" role="alert" ng-if="empresa_form.correo_electronico.$touched">
+                  <div ng-message="required">El campo es requerido</div>
+                </div>
+                <div class="md-input-warning" ng-show="!$ctrl.isCorreoOk">Correo inválido</div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <section class="ap-form" ng-if="$ctrl.conf.rep.sec_visible">
+          <header class="header-section">{{$ctrl.conf.rep.sec_nombre}}</header>
+          <div class="body-section">
+            <ng-form name="representante_form">
+              <div class="row ml-0">
+                <label class="col-md-3 custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" ng-model="$ctrl.data.propietario_representante" value="PROPIETARIO" ng-change="$ctrl.representanteChange(representante_form)" ng-disabled="$ctrl.conf.emp.propietario_representante.disabled">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Propietario</span>
+                </label>
+                <label class="col-md-3 custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" ng-model="$ctrl.data.propietario_representante" value="REPRESENTANTE" ng-change="$ctrl.representanteChange(representante_form)" ng-disabled="$ctrl.conf.emp.propietario_representante.disabled">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Representante legal</span>
+                </label>
+              </div>
+              <div ng-show="$ctrl.axs.sw_propietario">
+                <documento-identidad ng-model="$ctrl.data.hist_representantes" conf="$ctrl.conf.rep"></documento-identidad>
+              </div>
+              <div ng-show="!$ctrl.axs.sw_propietario">
+                <ng-form name="rep_legal_form">
+                  <div class="row">
+                    <select-date class="col-md-5" ng-model="$ctrl.data.hist_representantes.fecha_nacimiento" label="Fecha de nacimiento:" ng-required="$ctrl.conf.rep.fecha_nacimiento.requerido" ng-disabled="$ctrl.conf.rep.fecha_nacimiento.disabled"></select-date>
+                  </div>
+                  <div class="form-group" ng-if="$ctrl.conf.rep.nombre_completo.visible">
+                    <label ng-class="{'ap-req':$ctrl.conf.rep.nombre_completo.requerido}">Representante legal:</label>
+                    <uib-select name="nombre_completo" class="select_rep_legal" ng-model="$ctrl.data.hist_representantes.representante" items="$ctrl.get.representantes" key-text="ci_nombre" placeholder="Representante legal" ng-required="$ctrl.conf.rep.nombre_completo.requerido" ng-disabled="$ctrl.conf.rep.nombre_completo.disabled"></uib-select>  
+                    <div ap-error ng-messages="rep_legal_form.nombre_completo.$error" role="alert" ng-if="rep_legal_form.nombre_completo.$touched">
+                      <div ng-message="required">El campo es requerido</div>
+                    </div>
+                  </div>
+                </ng-form>
+              </div>
+              <div class="row">
+                <div class="col-md-4 form-group">
+                  <div class="form-group mb-0"><label ng-class="{'ap-req':$ctrl.conf.rep.genero.requerido}">Género:</label></div>
+                  <label class="custom-control custom-radio">
+                    <input name="genero" type="radio" class="custom-control-input" ng-model="$ctrl.data.hist_representantes.genero" value="M" ng-required="$ctrl.conf.rep.genero.requerido" ng-disabled="$ctrl.conf.rep.genero.disabled">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Masculino</span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input name="genero" type="radio" class="custom-control-input" ng-model="$ctrl.data.hist_representantes.genero" value="F" ng-required="$ctrl.conf.rep.genero.requerido" ng-disabled="$ctrl.conf.rep.genero.disabled">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Femenino</span>
+                  </label>
+                  <div ap-error ng-messages="representante_form.genero.$error" role="alert" ng-if="representante_form.genero.$touched">
+                    <div ng-message="required">El género es requerido</div>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group" ng-if="$ctrl.conf.rep.telefono.visible">
+                  <label ng-class="{'ap-req':$ctrl.conf.rep.telefono.requerido}">{{$ctrl.conf.rep.telefono.label}}:</label>
+                  <input name="telefono" phone minlength="5" maxlength="25" class="form-control" ng-model="$ctrl.data.hist_representantes.telefono" ng-required="$ctrl.conf.rep.telefono.requerido" ng-disabled="$ctrl.conf.rep.telefono.disabled">
+                  <div ap-error ng-messages="representante_form.telefono.$error" role="alert" ng-if="representante_form.telefono.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                    <div ng-message="minlength">El número debe tener 5 o más caracteres</div>
+                    <div ng-message="maxlength">El número debe tener 25 o menos caracteres</div>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-4 pt-2 form-group" ng-if="$ctrl.conf.rep.discapacidad.visible">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" ng-model="$ctrl.data.hist_representantes.discapacidad" ng-disabled="$ctrl.conf.rep.discapacidad.disabled">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Persona con discapacidad</span>
+                  </label>
+                </div>
+              </div>
+            </ng-form>
+          </div>
+        </section>
+        <section ng-if="$ctrl.conf.ubi.sec_visible">
+          <header class="header-section">{{$ctrl.conf.ubi.sec_nombre}}</header>
+          <div class="body-section">
+            <div class="row" ng-if="!$ctrl.conf.ubi.zona.disabled">
+              <div class="pt-1 pl-2">
+                <span class="fa fa-plus btn-c-info" uib-tooltip="Registrar nueva ubicación" ng-click="$ctrl.ubicacionesAddUpd()"></span>
+              </div>
+              <div class="col-md">
+                <div class="alert alert-info">
+                  <i class="fa fa-info-circle" ap></i>
+                  <span ng-bind-html="$ctrl.msjs.ubi_add"></span>
+                </div>
+              </div>
+            </div>
+            <div class="alert alert-danger" ng-if="!$ctrl.conf.ubi.zona.disabled && $ctrl.data.ubicaciones == 0">
+              <i class="fa fa-warn-circle" ap></i>
+              <span ng-bind-html="$ctrl.msjs.ubi_req"></span>
+            </div>
+            <div class="row ubicaciones">
+              <div class="col-md-4 px-0" ng-repeat="item in $ctrl.data.ubicaciones">
+                <div class="card">
+                  <header class="card-header row">
+                    Ubicación {{$index + 1}}
+                    <span class="col"></span>
+                    <div class="icon-group-card-header">
+                      <i class="fa fa-edit text-success" uib-tooltip="Editar" ng-click="$ctrl.ubicacionesAddUpd($index, item)"></i>
+                      <i class="fa fa-trash text-danger" uib-tooltip="Eliminar" ng-click="$ctrl.ubicacionesDel($index, item)"></i>
+                    </div>
+                  </header>
+                  <div class="card-block">
+                    <div class="form-group">
+                      <label>{{$ctrl.conf.ubi.fid_departamento.label}}:</label>
+                      <span>{{item.departamento.descripcion}}</span>
+                    </div>
+                    <div class="form-group">
+                      <label>{{$ctrl.conf.ubi.fid_provincia.label}}:</label>
+                      <span>{{item.provincia.nombre}}</span>
+                    </div>
+                    <div class="form-group">
+                      <label>{{$ctrl.conf.ubi.fid_municipio.label}}:</label>
+                      <span>{{item.municipio.nombre}}</span>
+                    </div>
+                    <div class="form-group" ng-if="item.zona" ng-class="item.zona.length > 30 ? 'card-overflow' : ''">
+                      <label>{{$ctrl.conf.ubi.zona.label}}:</label>
+                      <span>{{item.zona}}</span>
+                    </div>
+                    <div class="form-group" ng-if="item.avenida_calle" ng-class="item.avenida_calle.length > 30 ? 'card-overflow' : ''">
+                      <label>{{$ctrl.conf.ubi.avenida_calle.label}}:</label>
+                      <span>{{item.avenida_calle}}</span>
+                    </div>
+                    <div class="form-group" ng-if="item.numero">
+                      <label>{{$ctrl.conf.ubi.numero.label}}:</label>
+                      <span>{{item.numero}}</span>
+                    </div>
+                    <div class="form-group" ng-if="item.telefonos">
+                      <label>{{$ctrl.conf.ubi.telefono.label}}:</label>
+                      <span>{{item.telefonos.split('|').join(', ')}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section ng-if="$ctrl.conf.act_eco.sec_visible && $ctrl.axs.init_productos">
+          <header class="header-section">{{$ctrl.conf.act_eco.sec_nombre}}</header>
+          <div class="body-section ap-form">
+            <div class="row" ng-if="$ctrl.conf.emp.tipo_actividad_economica.visible">
+              <div class="col-md-4 form-group">
+                <label ng-class="{'ap-req':$ctrl.conf.emp.tipo_actividad_economica.requerido}">{{$ctrl.conf.emp.tipo_actividad_economica.label}}:</label>
+              </div>
+              <label class="col-md-3 custom-control custom-radio">
+                <input name="tipo_actividad_economica" type="radio" class="custom-control-input" ng-model="$ctrl.data.tipo_actividad_economica" value="TRANSFORMACION" ng-required="$ctrl.conf.emp.tipo_actividad_economica.requerido" ng-click="$ctrl.empresaUpd()" ng-disabled="$ctrl.conf.emp.tipo_actividad_economica.disabled">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Transformación</span>
+              </label>
+              <label class="col-md-3 custom-control custom-radio">
+                <input name="tipo_actividad_economica" type="radio" class="custom-control-input" ng-model="$ctrl.data.tipo_actividad_economica" value="SERVICIOS" ng-required="$ctrl.conf.emp.tipo_actividad_economica.requerido" ng-click="$ctrl.empresaUpd()" ng-disabled="$ctrl.conf.emp.tipo_actividad_economica.disabled">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Servicios</span>
+              </label>
+            </div>
+            <ng-form name="productos_form1">
+              <div class="form-group" ng-if="$ctrl.conf.act_eco.fid_par_clasificacion_artesanal.visible">
+                <select-parametro name="fid_par_clasificacion_artesanal" parametro="CLASIFICACION_ARTESANAL" label="{{$ctrl.conf.act_eco.fid_par_clasificacion_artesanal.label}}:" ng-model="$ctrl.data.producto1.fid_par_clasificacion_artesanal" ng-change="$ctrl.productosUpd(productos_form1, 1)" ng-required="$ctrl.conf.act_eco.fid_par_clasificacion_artesanal.requerido"  ng-disabled="$ctrl.conf.act_eco.fid_par_clasificacion_artesanal.disabled"></select-parametro>
+                <div ap-error ng-messages="productos_form1.fid_par_clasificacion_artesanal.$error" role="alert" ng-if="productos_form1.fid_par_clasificacion_artesanal.$touched">
+                  <div ng-message="required">El campo es requerido</div>
+                </div>
+              </div>
+              <div class="form-group" ng-if="$ctrl.conf.act_eco.descripcion_actividad.visible">
+                <label ng-class="{'ap-req':$ctrl.conf.act_eco.descripcion_actividad.requerido}">{{$ctrl.conf.act_eco.descripcion_actividad.label}}:</label>
+                <input name="descripcion_actividad" maxlength="250" class="form-control" ng-model="$ctrl.data.producto1.descripcion_actividad" ng-change="$ctrl.productosUpd(productos_form1, 1)" ng-required="$ctrl.conf.act_eco.descripcion_actividad.requerido" ng-disabled="$ctrl.conf.act_eco.descripcion_actividad.disabled">
+                <div ap-error ng-messages="productos_form1.descripcion_actividad.$error" role="alert" ng-if="productos_form1.descripcion_actividad.$touched">
+                  <div ng-message="required">El campo es requerido</div>
+                </div>
+              </div>
+              <div class="row no-gutters">
+                <div class="col form-group" ng-if="$ctrl.conf.act_eco.nombre_producto.visible">
+                  <label ng-class="{'ap-req':$ctrl.conf.act_eco.nombre_producto.requerido}">{{$ctrl.conf.act_eco.nombre_producto.label}}:</label>
+                  <input name="nombre_producto" maxlength="250" class="form-control" ng-model="$ctrl.data.producto1.nombre_producto" ng-change="$ctrl.productosUpd(productos_form1, 1)" ng-required="$ctrl.conf.act_eco.nombre_producto.requerido" ng-disabled="$ctrl.conf.act_eco.nombre_producto.disabled">
+                  <div ap-error ng-messages="productos_form1.nombre_producto.$error" role="alert" ng-if="productos_form1.nombre_producto.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-group" ng-if="$ctrl.conf.act_eco.anio_inicio.visible">
+                  <label ng-class="{'ap-req':$ctrl.conf.act_eco.anio_inicio.requerido}">{{$ctrl.conf.act_eco.anio_inicio.label}}:</label>
+                  <input name="anio_inicio" numeric maxlength="4" class="form-control" ng-model="$ctrl.data.producto1.anio_inicio" ng-change="$ctrl.productosUpd(productos_form1, 1)" ng-required="$ctrl.conf.act_eco.anio_inicio.requerido" ng-disabled="$ctrl.conf.act_eco.anio_inicio.disabled">
+                  <div ap-error ng-messages="productos_form1.anio_inicio.$error" role="alert" ng-if="productos_form1.anio_inicio.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                    <div ng-message="min_year">El año debe ser mayor o igual a 1825</div>
+                    <div ng-message="max_year">El año debe ser menor o igual a {{$ctrl.year_now}}</div>
+                  </div>
+                </div>
+                <div class="col-md-5 form-group" ng-if="$ctrl.conf.act_eco.cantidad_promedio.visible">
+                  <label ng-class="{'ap-req':$ctrl.conf.act_eco.cantidad_promedio.requerido}">{{$ctrl.conf.act_eco.cantidad_promedio.label}}:</label>
+                  <input name="cantidad_promedio" numeric maxlength="8" class="form-control" ng-model="$ctrl.data.producto1.cantidad_promedio" ng-change="$ctrl.productosUpd(productos_form1, 1)" ng-required="$ctrl.conf.act_eco.cantidad_promedio.requerido" ng-disabled="$ctrl.conf.act_eco.cantidad_promedio.disabled">
+                  <div ap-error ng-messages="productos_form1.cantidad_promedio.$error" role="alert" ng-if="productos_form1.cantidad_promedio.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group" ng-if="$ctrl.conf.act_eco.fid_par_unidad_medida.visible">
+                  <select-parametro name="fid_par_unidad_medida" parametro="UNIDAD_MEDIDA" label="{{$ctrl.conf.act_eco.fid_par_unidad_medida.label}}:"
+                                    ng-model="$ctrl.data.producto1.fid_par_unidad_medida"
+                                    ng-change="$ctrl.productosUpd(productos_form1, 1)"
+                                    ng-required="$ctrl.conf.act_eco.fid_par_unidad_medida.requerido"
+                                    ng-disabled="$ctrl.conf.act_eco.fid_par_unidad_medida.disabled"></select-parametro>
+                  <!--{{$ctrl.data.producto1.fid_par_unidad_medida}}-->
+                  <div ap-error ng-messages="productos_form1.fid_par_unidad_medida.$error" role="alert" ng-if="productos_form1.fid_par_unidad_medida.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                  </div>
+
+                  <input name="unidad_medida_text1" maxlength="50" class="form-control" ng-model="$ctrl.data.producto1.unidad_medida" placeholder="Ingresar Descripción"
+                         ng-show="$ctrl.data.producto1.fid_par_unidad_medida === 700" ng-if="($ctrl.data.producto1.fid_par_unidad_medida === 700)"
+                         required="{{$ctrl.data.producto1.fid_par_unidad_medida === 700}}"
+                         ng-change="$ctrl.productosUpd(productos_form1, 1)"
+                         >
+                  <div ap-error ng-messages="productos_form1.unidad_medida_text1.$error" role="alert" ng-if="productos_form1.unidad_medida_text1.$touched">
+                    <div ng-message="required">Ingrese unidad de medida</div>
+                  </div>
+                </div>
+              </div>
+            </ng-form>
+          </div>
+          <div class="body-section ap-form" ng-if="$ctrl.conf.act_eco.visible2">
+            <div class="ap-divider mt-1 mb-3"></div>
+            <div class="alert alert-info" ng-if="$ctrl.certificacion.estado == 'NUEVO' && $ctrl.msjs.act_eco2_op">
+              <i class="fa fa-info-circle" ap></i>
+              <span ng-bind-html="$ctrl.msjs.act_eco2_op"></span>
+            </div>
+            <div class="text-right">
+              <button type="button" class="btn btn-danger btn-sm" ng-if="$ctrl.data.producto2.id_producto || $ctrl.data.tipo_actividad_economica_secundaria" ng-click="$ctrl.productosDel(2)" uib-tooltip="Eliminar actividad económica secundaria"><i class="fa fa-trash"></i>Eliminar</button>
+            </div>
+            <div class="row pt-2" ng-if="$ctrl.conf.emp.tipo_actividad_economica_secundaria.visible">
+              <div class="col-md-4 form-group">
+                <label ng-class="{'ap-req':$ctrl.axs.conf.prod_2}">{{$ctrl.conf.emp.tipo_actividad_economica_secundaria.label}}:</label>
+              </div>
+              <label class="col-md-3 custom-control custom-radio">
+                <input name="tipo_actividad_economica_secundaria" type="radio" class="custom-control-input" ng-model="$ctrl.data.tipo_actividad_economica_secundaria" value="TRANSFORMACION" ng-required="$ctrl.axs.conf.prod_2" ng-click="$ctrl.empresaUpd()" ng-disabled="$ctrl.conf.emp.tipo_actividad_economica_secundaria.disabled">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Transformación</span>
+              </label>
+              <label class="col-md-3 custom-control custom-radio">
+                <input name="tipo_actividad_economica_secundaria" type="radio" class="custom-control-input" ng-model="$ctrl.data.tipo_actividad_economica_secundaria" value="SERVICIOS" ng-required="$ctrl.axs.conf.prod_2" ng-click="$ctrl.empresaUpd()" ng-disabled="$ctrl.conf.emp.tipo_actividad_economica_secundaria.disabled">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Servicios</span>
+              </label>
+            </div>
+            <ng-form name="productos_form2">
+              <div class="form-group" ng-if="$ctrl.conf.act_eco.fid_par_clasificacion_artesanal2.visible">
+                <select-parametro name="fid_par_clasificacion_artesanal" parametro="CLASIFICACION_ARTESANAL" opcional="true" label="{{$ctrl.conf.act_eco.fid_par_clasificacion_artesanal2.label}}:" ng-model="$ctrl.data.producto2.fid_par_clasificacion_artesanal" ng-change="$ctrl.productosUpd(productos_form2, 2)" ng-required="$ctrl.axs.conf.prod_2" ng-disabled="$ctrl.conf.act_eco.fid_par_clasificacion_artesanal2.disabled"></select-parametro>
+                <div ap-error ng-messages="productos_form2.fid_par_clasificacion_artesanal.$error" role="alert" ng-if="productos_form2.fid_par_clasificacion_artesanal.$touched">
+                  <div ng-message="required">El campo es requerido</div>
+                </div>
+              </div>
+              <div class="form-group" ng-if="$ctrl.conf.act_eco.descripcion_actividad2.visible">
+                <label ng-class="{'ap-req':$ctrl.axs.conf.prod_2}">{{$ctrl.conf.act_eco.descripcion_actividad2.label}}:</label>
+                <input name="descripcion_actividad" maxlength="250" class="form-control" ng-model="$ctrl.data.producto2.descripcion_actividad" ng-change="$ctrl.productosUpd(productos_form2, 2)" ng-required="$ctrl.axs.conf.prod_2" ng-disabled="$ctrl.conf.act_eco.descripcion_actividad2.disabled">
+                <div ap-error ng-messages="productos_form2.descripcion_actividad.$error" role="alert" ng-if="productos_form2.descripcion_actividad.$touched">
+                  <div ng-message="required">El campo es requerido</div>
+                </div>
+              </div>
+              <div class="row no-gutters">
+                <div class="col form-group" ng-if="$ctrl.conf.act_eco.nombre_producto2.visible">
+                  <label ng-class="{'ap-req':$ctrl.axs.conf.prod_2}">{{$ctrl.conf.act_eco.nombre_producto2.label}}:</label>
+                  <input name="nombre_producto" maxlength="250" class="form-control" ng-model="$ctrl.data.producto2.nombre_producto" ng-change="$ctrl.productosUpd(productos_form2, 2)" ng-required="$ctrl.axs.conf.prod_2" ng-disabled="$ctrl.conf.act_eco.nombre_producto2.disabled">
+                  <div ap-error ng-messages="productos_form2.nombre_producto.$error" role="alert" ng-if="productos_form2.nombre_producto.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-group" ng-if="$ctrl.conf.act_eco.anio_inicio2.visible">
+                  <label ng-class="{'ap-req':$ctrl.axs.conf.prod_2}">{{$ctrl.conf.act_eco.anio_inicio2.label}}:</label>
+                  <input name="anio_inicio" numeric maxlength="4" class="form-control" ng-model="$ctrl.data.producto2.anio_inicio" ng-change="$ctrl.productosUpd(productos_form2, 2)" ng-required="$ctrl.axs.conf.prod_2" ng-disabled="$ctrl.conf.act_eco.anio_inicio2.disabled">
+                  <div ap-error ng-messages="productos_form2.anio_inicio.$error" role="alert" ng-if="productos_form2.anio_inicio.$touched && $ctrl.axs.conf.prod_2">
+                    <div ng-message="required">El campo es requerido</div>
+                    <div ng-message="min_year">El año debe ser mayor o igual a 1825</div>
+                    <div ng-message="max_year">El año debe ser menor o igual a {{$ctrl.year_now}}</div>
+                  </div>
+                </div>
+                <div class="col-md-5 form-group" ng-if="$ctrl.conf.act_eco.cantidad_promedio2.visible">
+                  <label ng-class="{'ap-req':$ctrl.axs.conf.prod_2}">{{$ctrl.conf.act_eco.cantidad_promedio2.label}}:</label>
+                  <input name="cantidad_promedio" numeric maxlength="8" class="form-control" ng-model="$ctrl.data.producto2.cantidad_promedio" ng-change="$ctrl.productosUpd(productos_form2, 2)" ng-required="$ctrl.axs.conf.prod_2" ng-disabled="$ctrl.conf.act_eco.cantidad_promedio2.disabled">
+                  <div ap-error ng-messages="productos_form2.cantidad_promedio.$error" role="alert" ng-if="productos_form2.cantidad_promedio.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group" ng-if="$ctrl.conf.act_eco.fid_par_unidad_medida2.visible">
+                  <select-parametro name="fid_par_unidad_medida" parametro="UNIDAD_MEDIDA" label="{{$ctrl.conf.act_eco.fid_par_unidad_medida2.label}}:" ng-model="$ctrl.data.producto2.fid_par_unidad_medida" ng-change="$ctrl.productosUpd(productos_form2, 2)" ng-required="$ctrl.axs.conf.prod_2" ng-disabled="$ctrl.conf.act_eco.fid_par_unidad_medida2.disabled"></select-parametro>
+                  <div ap-error ng-messages="productos_form2.fid_par_unidad_medida.$error" role="alert" ng-if="productos_form2.fid_par_unidad_medida.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                  </div>
+                  <!--*********************-->
+                  <input name="unidad_medida_text2" maxlength="50" class="form-control" ng-model="$ctrl.data.producto2.unidad_medida" placeholder="Ingresar Descripción"
+                         ng-show="$ctrl.data.producto2.fid_par_unidad_medida === 700" ng-if="($ctrl.data.producto2.fid_par_unidad_medida === 700)"
+                         required="{{$ctrl.data.producto2.fid_par_unidad_medida === 700}}"
+                         ng-change="$ctrl.productosUpd(productos_form2, 2)"
+                         >
+                  <div ap-error ng-messages="productos_form2.unidad_medida_text2.$error" role="alert" ng-if="productos_form2.unidad_medida_text2.$touched">
+                    <div ng-message="required">Ingrese unidad de medida</div>
+                  </div>
+                </div>
+              </div>
+            </ng-form>
+          </div>
+        </section>
+
+        <section ng-if="$ctrl.conf.rec.sec_visible">
+          <header class="header-section">{{$ctrl.conf.rec.sec_nombre}}</header>
+          <div class="body-section">
+            <div class="alert alert-danger" ng-if="!$ctrl.data.personal_hombres_total && !$ctrl.data.personal_mujeres_total && !$ctrl.data.personal_hombres_discapacitados && !$ctrl.data.personal_mujeres_discapacitados">
+              <i class="fa fa-info-circle" ap></i>
+              <span ng-bind-html="$ctrl.msjs.rec_personal"></span>
+            </div>
+            <ng-form name="personal_form">
+              <div class="table-ap">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Personal</th>
+                      <th>Permanente</th>
+                      <th>Eventual</th>
+                      <th>Familiar</th>
+                      <th>Persona con discapacidad</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="align-middle">Hombres</td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_hombres_permanente" numeric maxlength="5" class="form-control" ng-model="$ctrl.data.personal_hombres_permanente" ng-required="$ctrl.conf.rec.personal_hombres_permanente.requerido" ng-change="$ctrl.personalUpd()" ng-disabled="$ctrl.conf.rec.personal_hombres_permanente.disabled">
+                          <div ap-error ng-messages="personal_form.personal_hombres_permanente.$error" role="alert" ng-if="personal_form.personal_hombres_permanente.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_hombres_eventual" numeric maxlength="5" class="form-control" ng-model="$ctrl.data.personal_hombres_eventual" ng-required="$ctrl.conf.rec.personal_hombres_eventual.requerido" ng-change="$ctrl.personalUpd()" ng-disabled="$ctrl.conf.rec.personal_hombres_eventual.disabled">
+                          <div ap-error ng-messages="personal_form.personal_hombres_eventual.$error" role="alert" ng-if="personal_form.personal_hombres_eventual.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_hombres_familiar" numeric maxlength="5" class="form-control" ng-model="$ctrl.data.personal_hombres_familiar" ng-required="$ctrl.conf.rec.personal_hombres_familiar.requerido" ng-change="$ctrl.personalUpd()" ng-disabled="$ctrl.conf.rec.personal_hombres_familiar.disabled">
+                          <div ap-error ng-messages="personal_form.personal_hombres_familiar.$error" role="alert" ng-if="personal_form.personal_hombres_familiar.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_hombres_discapacitados" numeric maxlength="5" class="form-control" ng-model="$ctrl.data.personal_hombres_discapacitados" ng-required="$ctrl.conf.rec.personal_hombres_discapacitados.requerido" ng-change="$ctrl.personalUpd()" ng-disabled="$ctrl.conf.rec.personal_hombres_discapacitados.disabled">
+                          <div ap-error ng-messages="personal_form.personal_hombres_discapacitados.$error" role="alert" ng-if="personal_form.personal_hombres_discapacitados.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_hombres_total" numeric class="form-control" ng-model="$ctrl.data.personal_hombres_total" ng-required="$ctrl.conf.rec.personal_hombres_total.requerido" disabled>
+                          <div ap-error ng-messages="personal_form.personal_hombres_total.$error" role="alert" ng-if="personal_form.personal_hombres_total.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="align-middle">Mujeres</td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_mujeres_permanente" numeric maxlength="5" class="form-control" ng-model="$ctrl.data.personal_mujeres_permanente" ng-required="$ctrl.conf.rec.personal_mujeres_permanente.requerido" ng-change="$ctrl.personalUpd()" ng-disabled="$ctrl.conf.rec.personal_mujeres_permanente.disabled">
+                          <div ap-error ng-messages="personal_form.personal_mujeres_permanente.$error" role="alert" ng-if="personal_form.personal_mujeres_permanente.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_mujeres_eventual" numeric maxlength="5" class="form-control" ng-model="$ctrl.data.personal_mujeres_eventual" ng-required="$ctrl.conf.rec.personal_mujeres_eventual.requerido" ng-change="$ctrl.personalUpd()" ng-disabled="$ctrl.conf.rec.personal_mujeres_eventual.disabled">
+                          <div ap-error ng-messages="personal_form.personal_mujeres_eventual.$error" role="alert" ng-if="personal_form.personal_mujeres_eventual.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_mujeres_familiar" numeric maxlength="5" class="form-control" ng-model="$ctrl.data.personal_mujeres_familiar" ng-required="$ctrl.conf.rec.personal_mujeres_familiar.requerido" ng-change="$ctrl.personalUpd()" ng-disabled="$ctrl.conf.rec.personal_mujeres_familiar.disabled">
+                          <div ap-error ng-messages="personal_form.personal_mujeres_familiar.$error" role="alert" ng-if="personal_form.personal_mujeres_familiar.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_mujeres_discapacitados" numeric maxlength="5" class="form-control" ng-model="$ctrl.data.personal_mujeres_discapacitados" ng-required="$ctrl.conf.rec.personal_mujeres_discapacitados.requerido" ng-change="$ctrl.personalUpd()" ng-disabled="$ctrl.conf.rec.personal_mujeres_discapacitados.disabled">
+                          <div ap-error ng-messages="personal_form.personal_mujeres_discapacitados.$error" role="alert" ng-if="personal_form.personal_mujeres_discapacitados.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input name="personal_mujeres_total" numeric class="form-control" ng-model="$ctrl.data.personal_mujeres_total" ng-required="$ctrl.conf.rec.personal_mujeres_total.requerido" disabled>
+                          <div ap-error ng-messages="personal_form.personal_mujeres_total.$error" role="alert" ng-if="personal_form.personal_mujeres_total.$touched">
+                            <div ng-message="required">El campo es requerido</div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-form>
+          </div>
+        </section>
+
+        <section ng-if="$ctrl.conf.act_pro.sec_visible">
+          <header class="header-section">{{$ctrl.conf.act_pro.sec_nombre}}</header>
+          <div class="body-section">
+            <div class="alert alert-info">
+              <i class="fa fa-info-circle" ap></i>
+              <span ng-bind-html="$ctrl.msjs.act_pro_add"></span>
+            </div>
+            <ng-form name="activos_form">
+              <div class="row" ng-if="!$ctrl.conf.act_pro.cantidad.disabled">
+                <div class="table-ap col">
+                  <table class="table mb-0">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="form-group">
+                            <label ng-class="{'ap-req':$ctrl.conf.act_pro.cantidad.requerido}">{{$ctrl.conf.act_pro.cantidad.label}}:</label>
+                            <input name="cantidad" numeric maxlength="8" class="form-control" ng-model="$ctrl.axs.item_activo.cantidad" ng-required="$ctrl.conf.act_pro.cantidad.requerido" ng-keyup="$ctrl.activosTotalUpd()" ng-blur="$ctrl.activosBlur('cantidad-message', activos_form)">
+                            <div id="cantidad-message" ap-error ng-messages="activos_form.cantidad.$error" role="alert" ng-if="activos_form.cantidad.$touched">
+                              <div ng-message="required">El campo es requerido</div>
+                            </div>
+
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-group">
+                            <label ng-class="{'ap-req':$ctrl.conf.act_pro.descripcion.requerido}">{{$ctrl.conf.act_pro.descripcion.label}}:</label>
+                            <input name="descripcion" maxlength="100" class="form-control" ng-model="$ctrl.axs.item_activo.descripcion" ng-required="$ctrl.conf.act_pro.descripcion.requerido" ng-blur="$ctrl.activosBlur('descripcion-message', activos_form)">
+                            <div id="descripcion-message" ap-error ng-messages="activos_form.descripcion.$error" role="alert" ng-if="activos_form.descripcion.$touched">
+                              <div ng-message="required">El campo es requerido</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-group">
+                            <label ng-class="{'ap-req':$ctrl.conf.act_pro.marca.requerido}">{{$ctrl.conf.act_pro.marca.label}}:</label>
+                            <input name="marca" maxlength="100" class="form-control" ng-model="$ctrl.axs.item_activo.marca" ng-required="$ctrl.conf.act_pro.marca.requerido" ng-blur="$ctrl.activosBlur('marca-message', activos_form)">
+                            <div id="marca-message" ap-error ng-messages="activos_form.marca.$error" role="alert" ng-if="activos_form.marca.$touched">
+                              <div ng-message="required">El campo es requerido</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-group">
+                            <label ng-class="{'ap-req':$ctrl.conf.act_pro.precio_unitario.requerido}">{{$ctrl.conf.act_pro.precio_unitario.label}}:</label>
+                            <input name="precio_unitario" decimal-format maxlength="11" class="form-control" ng-model="$ctrl.axs.item_activo.precio_unitario" ng-required="$ctrl.conf.act_pro.precio_unitario.requerido" ng-keyup="$ctrl.activosTotalUpd()" ng-blur="$ctrl.activosBlur('precio_unitario-message', activos_form)">
+                            <div id="precio_unitario-message" ap-error ng-messages="activos_form.precio_unitario.$error" role="alert" ng-if="activos_form.precio_unitario.$touched">
+                              <div ng-message="required">El campo es requerido</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-group">
+                            <label ng-class="{'ap-req':$ctrl.conf.act_pro.total.requerido}">{{$ctrl.conf.act_pro.total.label}}:</label>
+                            <input name="total" class="form-control" ng-model="$ctrl.axs.item_activo.total" ng-required="$ctrl.conf.act_pro.total.requerido" disabled>
+                            <div id="total-message" ap-error ng-messages="activos_form.total.$error" role="alert" ng-if="activos_form.total.$touched">
+                              <div ng-message="required">El campo es requerido</div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="mt-3 pt-2 pr-2">
+                  <span class="fa fa-check btn-c-info" uib-tooltip="Agregar a la lista" ng-click="$ctrl.activosSave(activos_form)" ng-if="!$ctrl.axs.item_activo.id_activo_productivo"></span>
+                  <span class="fa fa-pencil btn-c-info" uib-tooltip="Editar" ng-click="$ctrl.activosSave(activos_form)" ng-if="$ctrl.axs.item_activo.id_activo_productivo"></span>
+                  <span class="fa fa-minus btn-c-info bg-danger" uib-tooltip="Cancelar" ng-click="$ctrl.activosUpdCancel(activos_form)" ng-if="$ctrl.axs.item_activo.id_activo_productivo"></span>
+                </div>
+              </div>
+            </ng-form>
+            <div class="row mx-0 mt-3 mb-2">
+              <!-- <button type="button" class="btn btn-info btn-sm" ng-if="!$ctrl.conf.act_pro.cantidad.disabled" ng-click="$ctrl.activosDelAll()" uib-tooltip="Eliminar todo">
+                <i class="fa fa-trash"></i>
+                Eliminar todo
+              </button> -->
+              <div ng-if="$ctrl.axs.activos.total > $ctrl.axs.activos.limit">
+                <input uib-tooltip="Filtrar por {{$ctrl.conf.act_pro.descripcion.label|lowercase}}" placeholder="Filtrar" class="form-control" ng-model="$ctrl.axs.activos.filter" ng-change="$ctrl.activosPagUpd('page')">
+              </div>
+              <div class="col"></div>
+              <div class="my-a">
+                <button type="button" class="btn btn-info btn-sm" ng-if="!$ctrl.conf.act_pro.cantidad.disabled" ng-click="$ctrl.activosImportar()">
+                  <i class="fa fa-paperclip"></i>
+                  Importar CSV
+                </button>
+              </div>
+            </div>
+
+            <div class="table-ap" ng-if="$ctrl.axs.activos.count > 0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="text-right">Nro</th>
+                    <th class="text-right">{{$ctrl.conf.act_pro.cantidad.label}}</th>
+                    <th>{{$ctrl.conf.act_pro.descripcion.label}}</th>
+                    <th>{{$ctrl.conf.act_pro.marca.label}}</th>
+                    <th class="text-right">{{$ctrl.conf.act_pro.precio_unitario.label}}</th>
+                    <th class="text-right">{{$ctrl.conf.act_pro.total.label}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in $ctrl.data.activos_productivos">
+                    <td class="icon-group">
+                      <i class="fa fa-edit text-success" uib-tooltip="Editar activo" ng-click="$ctrl.activosUpd($index, item)"></i>
+                      <i class="fa fa-trash text-danger" uib-tooltip="Eliminar activo" ng-click="$ctrl.activosDel($index, item)"></i>
+                    </td>
+                    <td class="table-ap-text text-right">{{ (($ctrl.axs.activos.page - 1) * $ctrl.axs.activos.limit) + ($index + 1)}}</td>
+                    <td class="table-ap-text text-right">{{item.cantidad|currency:'':0}}</td>
+                    <td class="table-ap-text">{{item.descripcion}}</td>
+                    <td class="table-ap-text">{{item.marca}}</td>
+                    <td class="table-ap-text text-right">{{item.precio_unitario|currency:''}}</td>
+                    <td class="table-ap-text text-right">{{item.total|currency:''}}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td class="text-right pt-2" colspan="6">Total</td>
+                    <td class="table-ap-text pt-2 text-right">{{$ctrl.axs.activos.total|currency:''}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="table-ap-pagination row" ng-if="$ctrl.data.activos_productivos.length > 0">
+              <div class="col my-a">
+                Página {{$ctrl.axs.activos.page}} de {{$ctrl.axs.activos.total_pages}}
+              </div>
+              <div class="col btn-group justify-content-center">
+                <button type="button" class="btn btn-default py-1 px-3" uib-tooltip="Inicio" ng-click="$ctrl.activosPagUpd('aa')" ng-disabled="$ctrl.axs.activos.page == 1">
+                  <i class="fa fa-angle-double-left"></i>
+                </button>
+                <button type="button" class="btn btn-default py-1 px-3" uib-tooltip="anterior" ng-click="$ctrl.activosPagUpd('a')" ng-disabled="$ctrl.axs.activos.page == 1">
+                  <i class="fa fa-angle-left"></i>
+                </button>
+                <input numeric maxlength="{{$ctrl.axs.activos.max_length_pages}}"  uib-tooltip="Página" class="form-control" ng-model="$ctrl.axs.activos.page" ng-change="$ctrl.activosPagUpd('page')" ng-click="$ctrl.activosPageSelect($event)">
+                <button type="button" class="btn btn-default py-1 px-3" uib-tooltip="siguiente" ng-click="$ctrl.activosPagUpd('s')" ng-disabled="$ctrl.axs.activos.page == $ctrl.axs.activos.total_pages">
+                  <i class="fa fa-angle-right"></i>
+                </button>
+                <button type="button" class="btn btn-default py-1 px-3" uib-tooltip="Final" ng-click="$ctrl.activosPagUpd('ss')" ng-disabled="$ctrl.axs.activos.page == $ctrl.axs.activos.total_pages">
+                  <i class="fa fa-angle-double-right"></i>
+                </button>
+              </div>
+              <div class="col limit row m-0">
+                <span class="col"></span>
+                <label class="my-a">Filas por página</label>
+                <select class="form-control" ng-model="$ctrl.axs.activos.limit" ng-change="$ctrl.activosPagUpd('l');">
+                  <option ng-repeat="item in $ctrl.axs.activos.limit_options" ng-value="item">{{item}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="ap-form" ng-if="$ctrl.conf.inf.sec_visible">
+          <header class="header-section">{{$ctrl.conf.inf.sec_nombre}}</header>
+          <div class="body-section">
+            <ng-form name="informacion_form">
+              <div class="form-group row" ng-if="$ctrl.conf.inf.ingresos_anuales_venta.visible">
+                <label class="col-md" ng-class="{'ap-req':$ctrl.conf.inf.ingresos_anuales_venta.requerido}">{{$ctrl.conf.inf.ingresos_anuales_venta.label}}:</label>
+                <div class="col-md pl-0">
+                  <input name="ingresos_anuales_venta" decimal-format maxlength="13" class="form-control" ng-model="$ctrl.data.ingresos_anuales_venta" ng-change="$ctrl.informacionValidityMax('ingresos_anuales_venta')" ng-required="$ctrl.conf.inf.ingresos_anuales_venta.requerido" ng-disabled="$ctrl.conf.inf.ingresos_anuales_venta.disabled" autocomplete="off">
+                  <div ap-error ng-messages="informacion_form.ingresos_anuales_venta.$error" role="alert" ng-if="informacion_form.ingresos_anuales_venta.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                    <div ng-message="max_num">El valor máximo permitido es 9999999999.99</div>
+                  </div>
+                  <div style="font-size:0.7rem; text-align:justify;" ng-if="$ctrl.data.ingresos_anuales_venta">
+                    {{$ctrl.numToWord.transformar($ctrl.data.ingresos_anuales_venta)}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row" ng-if="$ctrl.conf.inf.importaciones_anuales.visible">
+                <label class="col-md" ng-class="{'ap-req':$ctrl.conf.inf.importaciones_anuales.requerido}">{{$ctrl.conf.inf.importaciones_anuales.label}}:</label>
+                <div class="col-md pl-0">
+                  <input name="importaciones_anuales" decimal-format maxlength="13" class="form-control" ng-model="$ctrl.data.importaciones_anuales" ng-change="$ctrl.informacionValidityMax('importaciones_anuales')" ng-required="$ctrl.conf.inf.importaciones_anuales.requerido" ng-disabled="$ctrl.conf.inf.importaciones_anuales.disabled" autocomplete="off">
+                  <div ap-error ng-messages="informacion_form.importaciones_anuales.$error" role="alert" ng-if="informacion_form.importaciones_anuales.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                    <div ng-message="max_num">El valor máximo permitido es 9999999999.99</div>
+                  </div>
+                  <div style="font-size:0.7rem; text-align:justify;" ng-if="$ctrl.data.importaciones_anuales">
+                    {{$ctrl.numToWord.transformar($ctrl.data.importaciones_anuales)}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row" ng-if="$ctrl.conf.inf.exportaciones_anuales_venta.visible">
+                <label class="col-md" ng-class="{'ap-req':$ctrl.conf.inf.exportaciones_anuales_venta.requerido}">{{$ctrl.conf.inf.exportaciones_anuales_venta.label}}:</label>
+                <div class="col-md pl-0">
+                  <input name="exportaciones_anuales_venta" decimal-format maxlength="13" class="form-control" ng-model="$ctrl.data.exportaciones_anuales_venta" ng-change="$ctrl.informacionValidityMax('exportaciones_anuales_venta')" ng-required="$ctrl.conf.inf.exportaciones_anuales_venta.requerido" ng-disabled="$ctrl.conf.inf.exportaciones_anuales_venta.disabled" autocomplete="off">
+                  <div ap-error ng-messages="informacion_form.exportaciones_anuales_venta.$error" role="alert" ng-if="informacion_form.exportaciones_anuales_venta.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                    <div ng-message="max_num">El valor máximo permitido es 9999999999.99</div>
+                  </div>
+                  <div style="font-size:0.7rem; text-align:justify;" ng-if="$ctrl.data.exportaciones_anuales_venta">
+                    {{$ctrl.numToWord.transformar($ctrl.data.exportaciones_anuales_venta)}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row" ng-if="$ctrl.conf.inf.patrimonio_creacion.visible">
+                <label class="col-md" ng-class="{'ap-req':$ctrl.conf.inf.patrimonio_creacion.requerido}">{{$ctrl.conf.inf.patrimonio_creacion.label}}:</label>
+                <div class="col-md pl-0">
+                  <input name="patrimonio_creacion" decimal-format maxlength="13" class="form-control" ng-model="$ctrl.data.patrimonio_creacion" ng-change="$ctrl.informacionValidityMax('patrimonio_creacion')" ng-required="$ctrl.conf.inf.patrimonio_creacion.requerido" ng-disabled="$ctrl.conf.inf.patrimonio_creacion.disabled" autocomplete="off">
+                  <div ap-error ng-messages="informacion_form.patrimonio_creacion.$error" role="alert" ng-if="informacion_form.patrimonio_creacion.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                    <div ng-message="max_num">El valor máximo permitido es 9999999999.99</div>
+                  </div>
+                  <div style="font-size:0.7rem; text-align:justify;" ng-if="$ctrl.data.patrimonio_creacion">
+                    {{$ctrl.numToWord.transformar($ctrl.data.patrimonio_creacion)}}
+                  </div>
+                </div>
+              </div>
+            </ng-form>
+          </div>
+        </section>
+
+        <section ng-if="$ctrl.conf.cob.sec_visible">
+          <header class="header-section">{{$ctrl.conf.cob.sec_nombre}}</header>
+          <div class="body-section">
+            <div class="alert alert-danger" ng-if="!$ctrl.data.cobertura_departamento">
+              <i class="fa fa-info-circle" ap></i>
+              <span ng-bind-html="$ctrl.msjs.cob_zero"></span>
+            </div>
+            <div class="col-md form-group">
+              <div class="row">
+                <div class="col-md-4" ng-repeat="item in $ctrl.get.departamentos">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" ng-model="item.selected" ng-disabled="$ctrl.conf.cob.cobertura_departamento.disabled"  ng-change="$ctrl.coberturasUpd()">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">{{item.descripcion}}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section ng-if="$ctrl.conf.ser.sec_visible">
+          <header class="header-section">{{$ctrl.conf.ser.sec_nombre}}</header>
+          <div class="body-section ap-form">
+            <ng-form name="servicios_form1">
+              <div class="row">
+                <div class="col-md form-group mb-0">
+                  <uib-select
+                    name="fid_par_servicio_p"
+                    ng-model="$ctrl.data.servicio1.fid_par_servicio_p"
+                    items="$ctrl.get.servicios"
+                    label="Servicio principal"
+                    group-by="parent_nom_formated"
+                    key-value="id_parametro"
+                    key-text="nom_formated"
+                    placeholder="Seleccione..."
+                    ng-disabled="$ctrl.conf.ser.fid_par_servicio.disabled"
+                    ng-required="$ctrl.conf.ser.fid_par_servicio.requerido">
+                  </uib-select>
+                  <div ap-error ng-messages="servicios_form1.fid_par_servicio_p.$error" role="alert" ng-if="servicios_form1.fid_par_servicio_p.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                    <div ng-message="repetido">El servicio principal debe ser distinto al servicio secundario</div>
+                  </div>
+                </div>
+                <div class="col-md form-group mb-0">
+                  <uib-select
+                    name="fid_par_servicio"
+                    ng-model="$ctrl.data.servicio1.fid_par_servicio"
+                    items="$ctrl.get.servicios1"
+                    label="Opción principal"
+                    key-value="id_parametro"
+                    key-text="nombre"
+                    placeholder="Seleccione..."
+                    ng-disabled="$ctrl.conf.ser.fid_par_servicio.disabled"
+                    ng-required="$ctrl.conf.ser.fid_par_servicio.requerido">
+                  </uib-select>
+                  <div ap-error ng-messages="servicios_form1.fid_par_servicio.$error" role="alert" ng-if="servicios_form1.fid_par_servicio.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label ng-class="{'ap-req':$ctrl.conf.ser.descripcion.requerido}">Descripción principal</label>
+                <input name="descripcion" maxlength="200" class="form-control" ng-model="$ctrl.data.servicio1.descripcion" ng-change="$ctrl.serviciosUpd(1)" ng-required="$ctrl.conf.ser.descripcion.requerido" ng-disabled="$ctrl.conf.ser.parametricas_servicios_capacitacion.disabled">
+                <div ap-error ng-messages="servicios_form1.descripcion.$error" role="alert" ng-if="servicios_form1.descripcion.$touched">
+                  <div ng-message="required">El campo es requerido</div>
+                </div>
+              </div>
+            </ng-form>
+          </div>
+          <div class="body-section ap-form">
+            <div class="ap-divider mb-3"></div>
+            <ng-form name="servicios_form2">
+              <div class="text-right mb-2">
+                <button type="button" class="btn btn-sm" ng-if="$ctrl.data.servicio2.id_ddjj_servicio" ng-click="$ctrl.serviciosSwap()" uib-tooltip="Convertir a servicio principal"><i class="fa fa-exchange"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" ng-if="$ctrl.axs.conf.serv_2" ng-click="$ctrl.serviciosDel(2)"><i class="fa fa-trash"></i>Eliminar</button>
+              </div>
+              <div class="row">
+                <div class="col-md form-group mb-0">
+                  <uib-select
+                    name="fid_par_servicio_p"
+                    ng-model="$ctrl.data.servicio2.fid_par_servicio_p"
+                    items="$ctrl.get.servicios"
+                    label="Servicio secundario"
+                    group-by="parent_nom_formated"
+                    key-value="id_parametro"
+                    key-text="nom_formated"
+                    placeholder="Seleccione..."
+                    ng-disabled="$ctrl.conf.ser.fid_par_servicio.disabled"
+                    ng-required="$ctrl.axs.conf.serv_2">
+                  </uib-select>
+                  <div ap-error ng-messages="servicios_form2.fid_par_servicio_p.$error" role="alert" ng-if="servicios_form2.fid_par_servicio_p.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                    <div ng-message="repetido">El servicio secundario debe ser distinto al servicio principal</div>
+                  </div>
+                </div>
+                <div class="col-md form-group mb-0">
+                  <uib-select
+                    name="fid_par_servicio"
+                    ng-model="$ctrl.data.servicio2.fid_par_servicio"
+                    items="$ctrl.get.servicios2"
+                    label="Opción secundaria"
+                    key-value="id_parametro"
+                    key-text="nombre"
+                    placeholder="Seleccione..."
+                    ng-disabled="$ctrl.conf.ser.fid_par_servicio.disabled"
+                    ng-required="$ctrl.axs.conf.serv_2">
+                  </uib-select>
+                  <div ap-error ng-messages="servicios_form2.fid_par_servicio.$error" role="alert" ng-if="servicios_form2.fid_par_servicio.$touched">
+                    <div ng-message="required">El campo es requerido</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label ng-class="{'ap-req':$ctrl.axs.conf.serv_2}">Descripción secundaria</label>
+                <input name="descripcion" maxlength="200" class="form-control" ng-model="$ctrl.data.servicio2.descripcion" ng-change="$ctrl.serviciosUpd(2)" ng-required="$ctrl.axs.conf.serv_2" ng-disabled="$ctrl.conf.ser.descripcion.disabled">
+                <div ap-error ng-messages="servicios_form2.descripcion.$error" role="alert" ng-if="servicios_form2.descripcion.$touched">
+                  <div ng-message="required">El campo es requerido</div>
+                </div>
+              </div>
+            </ng-form>
+          </div>
+        </section>
+      </div>
+
+      <div class="card-footer text-right">
+        <button type="button" class="btn btn-dafault" ng-click="$ctrl.atras()">
+          <i class="fa fa-angle-double-left"></i> Atrás
+        </button>
+        <button type="submit" class="btn btn-primary">
+          {{$ctrl.isForm('SHB_UNIDAD')? 'Continuar': 'Guardar y declarar'}}
+          <i class="fa fa-angle-double-right"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

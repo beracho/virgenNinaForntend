@@ -1,0 +1,24 @@
+<div class="container">
+    <h2 class="page-title"><i class="fa fa-user"></i> Certificados</h2>
+    <div class="card">
+        <div class="card-block">
+            <div class="alert alert-info">
+                <i class="fa fa-info-circle"></i> Estos son sus certificados
+            </div>
+            <div class="card-container text-center">
+                <div class="card" ng-repeat="certificado in $ctrl.certificados">
+                    <div class="card-img-top badge-info">
+                        <div class="img-form"></div>
+                    </div>
+                    <div class="card-block">
+                        <h4 class="card-title text-center">{{ certificado.nombre }}</h4>
+                        <!-- <p>{{ certificado.nombre }}</p> -->
+                        <button md-effect class="btn btn-primary btn-block btn-lg" ng-click="$ctrl.seleccionar(certificado)" type="button">
+                            <i class="fa fa-check-circle"></i> Seleccionar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

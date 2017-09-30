@@ -1,0 +1,15 @@
+.table-pendientes {
+    .pendiente-form {
+        padding: 1px 0 0 0;
+        text-align: center;
+    }
+    .custom-control {
+        margin: 8px 0 0 8px;
+    }
+    thead .custom-control {
+        margin: 8px 0 0 8px;
+    }
+    .form-control {
+
+    }
+}

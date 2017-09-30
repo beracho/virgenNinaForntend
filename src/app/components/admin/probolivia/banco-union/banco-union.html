@@ -1,0 +1,42 @@
+<div class="container">
+  <h2 class="page-title text-center"><i class="fa fa-table"></i> Formulario para actualizar datos de Banco Unión</h2>
+
+  <form ng-submit="$ctrl.enviar(bancoUnionForm)" name="bancoUnionForm" novalidate>
+    <div class="card">
+      <div class="card-block d-flex justify-content-center">
+        <div style="width: 420px;">
+          <div class="col-md form-group" ng-if="$ctrl.conf.nro_cuenta.visible">
+            <label ng-class="{'ap-req':$ctrl.conf.nro_cuenta.requerido}">{{$ctrl.conf.nro_cuenta.label}}</label>
+            <input name="nro_cuenta" class="form-control" ng-model="$ctrl.data.nro_cuenta" ng-required="$ctrl.conf.nro_cuenta.requerido" ng-disabled="$ctrl.conf.nro_cuenta.disabled" autocomplete="new-password">
+            <div ap-error ng-messages="bancoUnionForm.nro_cuenta.$error" role="alert" ng-if="bancoUnionForm.nro_cuenta.$touched">
+              <div ng-message="required">El campo es requerido</div>
+            </div>
+          </div>
+          <div class="col-md form-group" ng-if="$ctrl.conf.contrasena.visible">
+            <label ng-class="{'ap-req':$ctrl.conf.contrasena.requerido}">{{$ctrl.conf.contrasena.label}}</label>
+            <input name="contrasena" type="password" class="form-control" ng-model="$ctrl.data.contrasena" ng-required="$ctrl.conf.contrasena.requerido" ng-disabled="$ctrl.conf.contrasena.disabled" autocomplete="new-password">
+            <div ap-error ng-messages="bancoUnionForm.contrasena.$error" role="alert" ng-if="bancoUnionForm.contrasena.$touched">
+              <div ng-message="required">El campo es requerido</div>
+            </div>
+          </div>
+          <!-- <div class="col-md form-group" ng-if="$ctrl.conf.rdx.visible">
+            <label ng-class="{'ap-req':$ctrl.conf.rdx.requerido}">{{$ctrl.conf.rdx.label}}:</label>
+            <input name="rdx" class="form-control" placeholder="Autogenerado al llenar Nro. de cuenta y contraseña" ng-model="$ctrl.data.rdx" ng-required="$ctrl.conf.rdx.requerido" ng-disabled="$ctrl.conf.rdx.disabled">
+            <div ap-error ng-messages="bancoUnionForm.rdx.$error" role="alert" ng-if="bancoUnionForm.rdx.$touched">
+              <div ng-message="required">El campo es requerido</div>
+            </div>
+          </div> -->
+          <div class="col-md text-right">
+            <!-- <button type="button" class="btn btn-dafault" ng-click="$ctrl.atras()">
+              <i class="fa fa-angle-double-left"></i> Atrás
+            </button> -->
+            <button type="submit" class="btn btn-primary">
+              Enviar
+              <i class="fa fa-angle-double-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

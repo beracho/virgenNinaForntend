@@ -1,0 +1,21 @@
+.card-verificacion{
+  margin-top: 3%;
+}
+
+.verificacion-logo {
+    line-height: 50px;
+    box-shadow: none;
+    position: relative;
+}
+.verificacion-logo {
+    top: 10px;
+    right: 0;
+    height: 3%;
+    margin-top: 3%;
+    background: #d82431;
+    color: white;
+    padding: 0 15px;
+    line-height: 50px;
+    border-radius: 5px 5px 0 0;
+    transition: width 1s ease 0s;
+}

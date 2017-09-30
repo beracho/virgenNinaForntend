@@ -1,0 +1,41 @@
+<div class="container">
+  <h2 class="page-title"><i class="fa fa-user"></i> Formulario de Declaración Jurada para el registro de Acreditación Nacional</h2>
+  <div class="card card-main">
+    <div class="card-header" ng-if="$ctrl.matricula">
+      MATRÍCULA: {{ $ctrl.matricula.matricula}} - {{ $ctrl.matricula.razon_social}}
+    </div>
+    <div class="card-block">
+      <div class="alert alert-info">
+        <i class="fa fa-info-circle"></i> Seleccione un formulario de acuerdo al <strong>tipo</strong> de <strong>Declaración Jurada</strong> que necesite.
+      </div>
+      <div class="alert alert-warning">
+        <i class="fa fa-info-circle"></i> Recuerde realizar el depósito bancario del costo del trámite en Banco Unión. <strong><a href="" ng-click="$ctrl.verTablaCostos()">Ver tabla de costos</a></strong>
+      </div>
+      <div class="alert alert-danger" ng-if="$ctrl.show_actualizar_matricula">
+        <i class="fa fa-info-circle"></i> No se pudieron obtener sus matrículas de comercio, es probable que deba realizar una actualización de sus matrículas correspondientes.
+      </div>
+      <div class="card-container text-center">
+        <div class="card" ng-repeat="formulario in $ctrl.formularios">
+          <div class="card-img-top badge-info">
+            <div class="img-form"></div>
+          </div>
+          <div class="card-block">
+            <h4 class="card-title text-center text-primary">{{ formulario.nombre}}</h4>
+            <!-- <p>{{ formulario.nombre }}</p> -->
+
+            <!--<small> <i class="fa fa-file-pdf-o"></i> Manual de Usuario</small>-->
+            <span><a href="" ng-click="$ctrl.descargarManual(formulario.tipo)" class="text-primary" title="Descargar manual de usuario para: {{formulario.nombre}}"><small> <i class="fa fa-file-pdf-o"></i> Manual de Usuario</small></a></span>
+          </div>
+          <button md-effect class="btn btn-primary btn-block btn-lg" ng-click="$ctrl.seleccionarOpcion(formulario)" type="button">
+            <i class="fa fa-check-circle"></i> Seleccionar
+          </button>
+        </div>
+      </div>
+      <div class="btn-container text-right" ng-if="$ctrl.show_button_back">
+        <button md-effect class="btn btn-default" type="button" ng-click="$ctrl.atras()">
+          <i class="fa fa-angle-double-left"></i> Volver a matrículas
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
