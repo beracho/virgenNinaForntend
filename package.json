@@ -1,30 +1,18 @@
 {
   "name": "app",
-  "version": "1.0.0",
-  "description": "frontend del sistema de seguimiento de control documental Centro Virgen Niña",
+  "version": "0.1.0",
+  "description": "Proyecto Base Frontend",
   "main": "server.js",
-  "dependencies": {
-    "angular": "^1.6.1",
-    "angular-file-upload": "^2.5.0",
-    "angular-formly": "^8.4.1",
-    "angular-formly-templates-bootstrap": "^6.4.0",
-    "angular-leaflet-directive": "^0.10.0",
-    "angular-loading-bar": "^0.9.0",
-    "angular-messages": "^1.6.4",
-    "angular-resource": "^1.6.2",
-    "angular-sanitize": "^1.6.2",
-    "angular-toastr": "^2.1.1",
-    "angular-translate": "^2.14.0",
-    "angular-ui-router": "^1.0.0-rc.1",
-    "api-check": "^7.5.5",
-    "bootstrap": "4.0.0-alpha.6",
-    "compression": "^1.6.2",
-    "connect-gzip-static": "^2.0.0",
-    "cors": "^2.8.1",
-    "satellizer": "^0.15.5",
-    "ui-select": "^0.19.6",
-    "express": "^4.15.4"
+  "scripts": {
+    "build": "webpack --colors --display-error-details --progress",
+    "start": "webpack-dev-server --history-api-fallback --inline --progress --colors",
+    "server": "node server"
   },
+  "keywords": [
+    "Frontend"
+  ],
+  "author": "ogutierrez@agetic.gob.bo",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-loader": "^6.2.10",
@@ -63,18 +51,26 @@
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@bitbucket.org/mecaloquis/viniepodo-frontend.git"
-  },
-  "keywords": [
-    "Frontend"
-  ],
-  "author": "Luz Alejandra Fernandez Cabrera",
-  "license": "MIT",
-  "homepage": "https://bitbucket.org/mecaloquis/viniepodo-frontend#readme"
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-file-upload": "^2.5.0",
+    "angular-formly": "^8.4.1",
+    "angular-formly-templates-bootstrap": "^6.4.0",
+    "angular-leaflet-directive": "^0.10.0",
+    "angular-loading-bar": "^0.9.0",
+    "angular-messages": "^1.6.4",
+    "angular-resource": "^1.6.2",
+    "angular-sanitize": "^1.6.2",
+    "angular-toastr": "^2.1.1",
+    "angular-translate": "^2.14.0",
+    "angular-ui-router": "^1.0.0-rc.1",
+    "api-check": "^7.5.5",
+    "bootstrap": "4.0.0-alpha.6",
+    "compression": "^1.6.2",
+    "connect-gzip-static": "^2.0.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.1",
+    "satellizer": "^0.15.5",
+    "ui-select": "^0.19.6"
+  }
 }

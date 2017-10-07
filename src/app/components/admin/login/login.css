@@ -59,8 +59,8 @@ body {
   }
 }
 
-.logo-probolivia {
-  background-image: url('../../../../assets/images/logo-probolivia.png');
+.epdb-logo {
+  background-image: url('../../../../assets/images/epdb-logo.png');
   background-repeat: no-repeat;
   background-size: 100%;
   display: inline-block;
@@ -68,8 +68,8 @@ body {
   width: 100px;
 }
 
-.logo-promueve {
-  background-image: url('../../../../assets/images/logo-promueve.png');
+.epdb2015 {
+  background-image: url('../../../../assets/images/epdb2015.png');
   background-repeat: no-repeat;
   background-size: 100%;
   display: inline-block;
@@ -101,7 +101,7 @@ body {
   }
 
   .logo-ministerio {
-    background-image: url('../../../../assets/images/logo-ministerio.png');
+    background-image: url('../../../../assets/images/epdb.png');
     background-size: 100%;
     background-repeat: no-repeat;
     width: 220px;

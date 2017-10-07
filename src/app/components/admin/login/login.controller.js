@@ -1,4 +1,5 @@
 'use strict';
+
 import modalController from './login.modal.controller.js';
 import modalTemplate from './login.modal.html';
 
@@ -19,7 +20,7 @@ class LoginController {
     this.isTipoOk = true;
   }
 
- /* $onInit() {
+  $onInit() {
     this.$rootScope.auth = false;
     this.nitCheck = true;
     this.isCorreoOk = true;
@@ -50,14 +51,14 @@ class LoginController {
       menu: false,
       sidenav: false,
     });
-  }*/
+  }
 
   signin() {
     this.Auth.signin({
       email: this.usuario2,
       usuario: this.usuario2,
       contrasena: this.contrasena2,
-//    tipo: this.tipo,
+//      tipo: this.tipo,
       path: 'empresa',
       pathLogin: 'login',
       menu: false,
@@ -65,8 +66,8 @@ class LoginController {
     });
   }
 
-  /*signinAdmin() {
-    this.Auth.signin({
+  signinAdmin() {
+      this.Auth.signin({
       usuario: this.usuario,
       contrasena: this.contrasena,
       path: 'dashboard',
@@ -109,21 +110,10 @@ class LoginController {
       controller: modalController,
       data: {}
     });
+
+
   }
 
+}
 
-
-
-(function(window, angular, isUndefined){
-  angular.module('app')
-  .controller('loginCtrl',['$scope','$http'],function($scope,$http){
-    $scope.login = function(user){
-      $http.post('/api/user/create',user).then(function(response){
-        console.log(response)
-      }, function(err){
-        console.error(err);
-      })
-    };
-  })
-})(window,window.angular);*/
-}export default LoginController;
+export default LoginController;

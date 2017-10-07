@@ -5,7 +5,7 @@ let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 let ngAnnotatePlugin  = require('ng-annotate-webpack-plugin');
 let path              = require('path');
-//let fs = require('fs');
+let fs = require('fs');
 
 // let configWebpack = require('./config');
 let configWebpack = JSON.parse(fs.readFileSync('config.json', 'utf8'));

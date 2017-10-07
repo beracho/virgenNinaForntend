@@ -2,10 +2,5 @@ node_modules
 dist
 npm-debug.log*
 nbproject
-routes
-bin
-app.2js
-app.js
-config.json.sample
-
-
+config.json
+gitlive.sh
