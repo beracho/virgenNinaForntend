@@ -45,7 +45,7 @@ body {
   position: relative;
 
   .md-input-group-addon {
-    color: #404040;
+    color: #34b5aa;
     display: inline-block;
     font-size: 1.6rem;
     position: absolute;
@@ -60,7 +60,7 @@ body {
 }
 
 .epdb-logo {
-  background-image: url('../../../../assets/images/epdb-logo.png');
+  background-image: url('../../../../assets/images/epdb1.png');
   background-repeat: no-repeat;
   background-size: 100%;
   display: inline-block;
@@ -73,8 +73,8 @@ body {
   background-repeat: no-repeat;
   background-size: 100%;
   display: inline-block;
-  height: 70px;
-  width: 80px;
+  height: 60px;
+  width: 100px;
 }
 
 .login {
@@ -101,12 +101,12 @@ body {
   }
 
   .logo-ministerio {
-    background-image: url('../../../../assets/images/epdb.png');
+    background-image: url('../../../../assets/images/epdb-logo2.png');
     background-size: 100%;
     background-repeat: no-repeat;
-    width: 220px;
-    height: 80px;
-    margin: 15px auto 0;
+    width: 250px;
+    height: 250px;
+    margin: 20px auto 0;
   }
 
   .alert {

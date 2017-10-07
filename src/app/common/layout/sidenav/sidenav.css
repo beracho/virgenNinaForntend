@@ -93,7 +93,7 @@ app-sidenav.sidenav-close {
     }
 
     &-logo {
-        color: #f0f0f0;
+        color: #309191;
         display: inline-block;
         font-size: 20px;
         height: var(--height-navbar);
@@ -103,7 +103,7 @@ app-sidenav.sidenav-close {
         position: relative;
 
         &-probolivia {
-            background-image: url('../../../../assets/images/logo-probolivia.png');
+            background-image: url('../../../../assets/images/epdb2015.png');
             background-repeat: no-repeat;
             background-size: 100%;
             display: inline-block;
@@ -115,7 +115,7 @@ app-sidenav.sidenav-close {
         }
 
         &-promueve {
-            background-image: url('../../../../assets/images/logo-promueve.png');
+            background-image: url('../../../../assets/images/epdb-logo2.png');
             background-repeat: no-repeat;
             background-size: 100%;
             display: inline-block;
@@ -128,7 +128,7 @@ app-sidenav.sidenav-close {
     }
 
     &-title {
-        color: $colorPrimary;
+        color: #309191;
         display: inline-block;
         display: none;
         font-size: 1.3rem;
@@ -141,7 +141,7 @@ app-sidenav.sidenav-close {
     }
 
     &-user {
-        background-color: lighten($colorWarning, 23%);
+        background-color: lighten(#34B5AA, 23%);
         font-size: 0;
         height: var(--height-user);
         left: 0;
@@ -154,7 +154,7 @@ app-sidenav.sidenav-close {
 
         &-photo { 
             border: 3px solid white;
-            color: white;
+            color: #f28f3f;
             display: inline-block;
             font-size: 36px;
             height: 50px;
@@ -187,7 +187,7 @@ app-sidenav.sidenav-close {
             font-size: .85rem;
             line-height: 1rem;
             margin: 0;
-            color: #555555;
+            color: #34B5AA;
             font-weight: 500;
             display: block;
             width: 175px;
@@ -203,6 +203,7 @@ app-sidenav.sidenav-close {
     }
 
     &-menu {
+        
         list-style: none;
         padding: 0;
         margin: 0;
@@ -220,7 +221,7 @@ app-sidenav.sidenav-close {
 
     &-item {
         border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        color: white;
+        color: #E6E95D;
         display: block;
         font-size: .9rem;
         min-height: 50px;
@@ -232,7 +233,7 @@ app-sidenav.sidenav-close {
 
         &:hover, &:active, &:focus {
             background-color: darken($colorSidenav, 8%);
-            color: #f0f0f0;
+            color: #f28f3f;
             text-decoration: none;
             outline: 0;
             transition: all 0.2s ease 0s;
@@ -259,7 +260,7 @@ app-sidenav.sidenav-close {
     }
 
     &-submenu {
-        background-color: darken(white, 0%);
+        background-color: darken(#f28f3f, 0%);
         list-style: none;
         margin: 0;
         padding: 0;
@@ -268,7 +269,7 @@ app-sidenav.sidenav-close {
         transition: all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
         &-item {
-            color: #555555;
+            color: #f28f3f;
             display: block;
             font-size: .85rem;
             line-height: 44px;
@@ -276,7 +277,7 @@ app-sidenav.sidenav-close {
             transition: all 0.2s ease 0s;
 
             &:hover, &:active, &:focus, &.active {
-                background-color: darken(white, 5%);
+                background-color: darken(#f28f3f, 5%);
                 border-left: 5px solid lighten($colorSidenav, 5%);
                 color: $colorSidenav;
                 text-decoration: none;
