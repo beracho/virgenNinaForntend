@@ -6,7 +6,7 @@ import './footer.css';
 const FooterComponent = {
     template: `
         <footer class="footer text-info">
-            Agetic {{ $ctrl.year }}
+            viniepodo 1.0.0
         </footer>
     `,
     controller
