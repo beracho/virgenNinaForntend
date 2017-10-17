@@ -36,9 +36,15 @@ class DocumentoIdentidadController {
     }
 
     nombreDel () {
+      delete this.ngModel.lugar_documento_identidad;
+      delete this.ngModel.genero;
       delete this.ngModel.nombres;
       delete this.ngModel.primer_apellido;
       delete this.ngModel.segundo_apellido;
+      delete this.ngModel.casado_apellido;
+      delete this.ngModel.genero;
+      delete this.ngModel.direccion;
+      delete this.ngModel.telefono;
       delete this.ngModel.id_persona;
     }
 
@@ -46,7 +52,7 @@ class DocumentoIdentidadController {
         return angular.isUndefined(this.ngModel.documento_identidad)  || !this.Datetime.isDate(this.ngModel.fecha_nacimiento);
     }
 
-    search() {
+    /*search() {
       // this.Message.loading("Buscando datos en el SEGIP, esta operación puede demorar.");
       var ci, complemento, datos;
       if (this.ngModel.documento_identidad.indexOf('-') !== -1) {
@@ -58,7 +64,7 @@ class DocumentoIdentidadController {
       }
       // this.$log.log(ci,complemento,datos);
 
-      this.DataService.get(`persona/servicio/segip/?ci=${ci}&fecha_nacimiento=${this.Datetime.format(this.ngModel.fecha_nacimiento,'YYYY/MM/dd')}${complemento?'&complemento='+complemento.toUpperCase():''}`)
+     /* this.DataService.get(`persona/servicio/segip/?ci=${ci}&fecha_nacimiento=${this.Datetime.format(this.ngModel.fecha_nacimiento,'YYYY/MM/dd')}${complemento?'&complemento='+complemento.toUpperCase():''}`)
       .then( response => {
         // this.$log.log(response);
         this.nombreDel();
@@ -68,8 +74,8 @@ class DocumentoIdentidadController {
           this.ngModel.nombres = response.nombres;
           this.ngModel.id_persona = response.id_persona;
         }
-      });
+      });*/
     }
-}
+
 
 export default DocumentoIdentidadController;
