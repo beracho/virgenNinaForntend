@@ -32,10 +32,15 @@
         </div>
       </div> -->
       <div class="col-sm-4">
+        <ng-form name=formag>
         <div class="form-group">
           <label for="email">Correo electrónico:</label>
-          <input class="form-control" id="email" placeholder="Correo electrónico" ng-model="$ctrl.usuario.email" required ng-readonly="$ctrl.items.esEdicion && $ctrl.usuario.estado != 'PENDIENTE'">
+          <input type="email" ng-model="model.correo" name="correo"class="form-control" id="email" placeholder="Correo electrónico" ng-model="$ctrl.usuario.email" required ng-readonly="$ctrl.items.esEdicion && $ctrl.usuario.estado != 'PENDIENTE'">
+          <div ap-error ng-messages="formag.correo.$error" role="alert" ng-if="formag.correo.$touched">
+              <div ng-message="required">El campo debe tener el formato de un correo electrónico</div>
+            </div>
         </div>
+        </ng-form>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
