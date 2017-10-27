@@ -19,6 +19,8 @@ class DocumentoIdentidadController {
       if (!this.ngModel) this.ngModel = {};
 
       this.initDefault('tipo_documento', 'CARNET_IDENTIDAD');
+      //Departamentos
+      this.cargarDepartamentos();
     }
 
     isCI () {
@@ -52,6 +54,15 @@ class DocumentoIdentidadController {
         return angular.isUndefined(this.ngModel.documento_identidad)  || !this.Datetime.isDate(this.ngModel.fecha_nacimiento);
     }
 
+    cargarDepartamentos() {
+      this.DataService.get('codigoDeptos')
+      .then(response => {
+        if (response) {
+          this.lugar_expedicion = response;
+        }
+      });
+    }
+
     /*search() {
       // this.Message.loading("Buscando datos en el SEGIP, esta operación puede demorar.");
       var ci, complemento, datos;
@@ -75,7 +86,7 @@ class DocumentoIdentidadController {
           this.ngModel.id_persona = response.id_persona;
         }
       });*/
-    }
+  }
 
 
 export default DocumentoIdentidadController;

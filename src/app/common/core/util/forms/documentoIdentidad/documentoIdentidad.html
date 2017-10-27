@@ -34,7 +34,10 @@
       </div>
       <div class="form-group">
         <label class="ap-req">Lugar de expedición:</label>
-        <input name="lugar_documento_identidad" passport uppercase maxlength="25" class="form-control" ng-model="$ctrl.ngModel.lugar_documento_identidad" required maxlength="15" ng-disabled="$ctrl.ngDisabled">
+        <select class="form-control" ng-model="$ctrl.departamento">
+        <option ng-repeat="departamento in $ctrl.lugar_expedicion" ng-value="departamento.id">  {{departamento.abreviacion}} </option>
+        </select>
+        <!-- <input name="lugar_documento_identidad" passport uppercase maxlength="25" class="form-control" ng-model="$ctrl.ngModel.lugar_documento_identidad" required maxlength="15" ng-disabled="$ctrl.ngDisabled"> -->
         <!-- <help message="$root.helpMessage.documento_identidad" position="bottom"></help> -->
         <div ap-error ng-messages="doc_identidad_form.lugar_documento_identidad.$error" role="alert" ng-if="doc_identidad_form.lugar_documento_identidad.$touched">
           <div ng-message="required">El campo es requerido</div>
