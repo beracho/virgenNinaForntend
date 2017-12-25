@@ -1,18 +1,18 @@
-let express = require('express');
-let compression = require('compression');
-let serve = express();
-let app = express();
-let gzipStatic = require('connect-gzip-static');
-let fs = require('fs');
-let cors = require('cors');
-let dir = './dist';
-let config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+const express = require('express');
+const compression = require('compression');
+const serve = express();
+const app = express();
+const gzipStatic = require('connect-gzip-static');
+const fs = require('fs');
+const cors = require('cors');
+const config = require('./config');
 
-let port = config.port;
-let appName = config.subDomain;
+const dir = './dist';
+const port = config.build.portServer;
+const appName = config.build.assetsPublicPath;
 
 if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
+  fs.mkdirSync(dir);
 }
 
 serve.use(appName, app);
@@ -23,16 +23,8 @@ app.use(gzipStatic(__dirname + '/dist'));
 // Begin Fake auth
 serve.use(cors());
 serve.post('/auth', (req, res) => {
-    let data = JSON.parse(fs.readFileSync('data-auth.example.json', 'utf8'));
-    res.send(data);
-});
-
-serve.get('/test', (req, res) => {
-    res.send({
-        count: 2,
-        results: [{ name: 'christian', age: 21 }, { name: 'anthony', age: 88 }],
-        page: 1
-    });
+  let data = JSON.parse(fs.readFileSync('data-auth.sample.json', 'utf8'));
+  res.send(data);
 });
 // End Fake auth
 

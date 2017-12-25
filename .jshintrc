@@ -1,9 +1,0 @@
-{
-  "esversion": 6,
-  "node": true,
-  "globals": {
-   "angular": true,
-   "document": true,
-   "window": true
-  }
-}

@@ -1,4 +1,4 @@
-# Instalación General en el Servidor PROBOLIVIA (FRONTEND)
+# Instalación General en el Servidor (FRONTEND)
 
 Se realizaron distintas instalaciones en el servidor de TEST Debian, a continuación las configuraciones realizadas en dicho servidor.
 
@@ -70,71 +70,8 @@ $ sudo  apt-get install curl
 $ sudo  apt-get install wget
 ```
 
-## Instalación NVM, Node y NPM
-
-Desinstalar alguna versión existente de nvm:
-```
-$ sudo rm -rf $NVM_DIR ~/.npm
-```
-Salir de la terminal:
-> **CTRL** + **d** o **exit**
-
-Descargar el instalador de nvm y renombrarlo con "install_nvm.sh":
-```
-$ curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.24.0/install.sh -o install_nvm.sh
-```
-
-Verifica su existencia si el archivo se descargó satisfactoriamente:
-```
-$ nano install_nvm.sh
-```
-
-Ejecuta el instalador
-```
-$ bash install_nvm.sh
-```
-
-Reiniciar la consola para que surtan efecto los cambios
-> **CTRL** + **d** o **exit**
-
-Verificar la existencia de nvm
-```
-$ nvm --version
-```
-
-Descargar la versión de node deseada **(la versión LTS)**:
-```
-$ nvm install 6.9.0 o nvm install v6.9.0
-```
-
-`**NOTA**`
-Es posible que posteriormente se tenga el siguiente problema al tratar de levantar la aplicación:
-```
-/usr/bin/env: node: No such file or directory
-```
-
-**`Sólo si se tuviera dicho problema, ejecutar lo siguiente:`**
-```sh
-$  which node # Devolverá por ejemplo:
-/home/usuario/.nvm/versions/node/v6.9.0/bin/node
- $ sudo ln -s "$(which node)" /usr/bin/node
-```
-
-NOTA: De acuerdo a la distribución/versión del sistema operativo el comando which puede variar de `which node` a `which nodejs`.
-
-
-#### Instalar npm
-Para instalar npm:
-```
-$ sudo apt-get install npm
-```
-
-## Instalación necesaria para pruebas
-
-Para ejecutar los tests, necesitamos instalar mocha de manera global:
-```
-$ npm install -g mocha
-```
+## Instalación de Nodejs
+Visitar la página https://github.com/nodesource/distributions#debinstall para su instalación o para la instalación manual ir a https://github.com/nodesource/distributions#debmanual, se debe instalar la versión 6.9.x (LTS) de Nodejs.
 
 ## Automatización de procesos
 Para automatizar la ejecución de la aplicación se utilizó **Supervisor**.
