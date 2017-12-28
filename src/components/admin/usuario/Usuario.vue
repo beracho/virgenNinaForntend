@@ -1,446 +1,348 @@
 <template>
-  <section>
-    <h3 class="info--text"><v-icon info>person_outline</v-icon> {{$t('user.title') }}</h3>
-    <v-card>
-      <v-card-text>
-        <crud-table
-          :headers="headers"
-          :url="url"
-          :filters="filters"
-        >
-          <template slot="buttons">
-            <v-tooltip bottom>
-              <v-btn primary dark
-                @click.native.stop="openModal()"
-                slot="activator"
-              ><v-icon dark>person_add</v-icon> {{$t('common.add') }}</v-btn>
-              <span>{{$t('user.add')}}</span>
-            </v-tooltip>
-          </template>
+<div>
+  <v-btn dark @click.native="dialog = true">
+    {{$t('usuarios.newUser') }}
+    <v-icon right dark>add_circle</v-icon>
+  </v-btn>
+  <!-- TABLA DE DATOS -->
+  <v-data-table v-bind:headers="headersAsinacion" v-bind:items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('usuarios.usersPerPage')">
+    <!-- <template slot="headerCell" scope="props">
+      <span v-tooltip:bottom="{ 'html': props.header.text }">
+        {{ props.header.text }}
+      </span>
+    </template> -->
+    <template slot="items" slot-scope="props">
+      <td class="text-xs-right">
+        <!-- <v-tooltip bottom> -->
+          <v-btn icon dark color="primary" @click.native="abreDialog(props.item.id_usuario)">
+            <v-icon>edit</v-icon>
+          </v-btn>
+          <!-- <span>Editar usuario</span>
+        </v-tooltip>
+        <v-tooltip bottom> -->
+          <v-btn v-if="props.item.estado !== 'ACTIVO'" icon dark color="primary" @click.native="reenviarCorreo(props.item.id_usuario, props.item.email)">
+            <v-icon>send</v-icon>
+          </v-btn>
+          <!-- <span>Reenviar activación</span>
+        </v-tooltip> -->
+      </td>
+      <td>{{ props.item.persona.nombres }}</td>
+      <td>{{ props.item.persona.primer_apellido }}</td>
+      <td>{{ props.item.persona.segundo_apellido }}</td>
+      <td>{{ props.item.email}}</td>
+      <td>{{ props.item.usuarios_roles[0].rol.nombre}}</td>
+      <td>{{ props.item.estado}} </td>
+    </template>
+  </v-data-table>
 
-          <template slot="form" slot-scope="props">
-            <v-card-title class="headline">
-              <v-icon>{{ form.id ? 'person' : 'person_add' }}</v-icon> {{ form.id ? $t('user.crud.editUser') : $t('user.crud.addUser') }}
-              <v-btn icon @click.native="$store.commit('closeModal')">
-                <v-icon>close</v-icon>
-              </v-btn>
-            </v-card-title>
-            <form @submit.prevent="save">
-              <v-alert info v-if="form.nombre" hide-icon value="true" class="datos-usuario">
-                {{ form.nombre }} <br>
-                <small>
-                  <strong>Nombre de usuario: </strong> {{ form.usuarioLogin }} <br>
-                  <strong>C.I.: </strong> {{ form.ci }} {{ form.complemento }} <br>
-                  <strong>Fecha de nacimiento: </strong> {{ $datetime.toString(form.fechaNacimiento) }} <br>
-                  <strong>Entidad: </strong> {{ entidadUsuario }}
-                </small>
+  <!-- <div> -->
+    <!-- VENTANA DE NUEVO USUARIO -->
+    <v-layout row wrap align-center>
+      <v-dialog v-model="dialog" persistent width="1200px">
+        <!-- <v-btn dark class="seccion" slot="activator">
+          Nuevo Usuario
+          <v-icon right dark>add_circle</v-icon>
+        </v-btn> -->
+        <v-card>
+          <v-card-title class="headline">
+            <v-icon right>account_circle</v-icon>
+            {{$t('usuarios.adding') }}
+          </v-card-title>
+          <v-layout row>
+            <v-flex xs10 offset-xs1>
+              <v-alert color="primary" icon="account_box" value="true">
+                {{$t('usuarios.personalData') }}
               </v-alert>
-              <v-card-text>
-                <div v-if="!form.id">
-                  <v-select
-                    :items="entidades"
-                    v-model="form.entidad"
-                    label="Entidad"
-                    item-text="descripcion"
-                    item-value="id"
-                    autocomplete
-                    noDataText="No hay resultados"
-                    :error="$v.form.entidad.$error"
-                    @input="$v.form.entidad.$touch()"
-                    :error-messages="errors.entidad"
-                    ></v-select>
-                </div>
-
-                <v-select
-                  :items="roles"
-                  v-model="form.rol"
-                  label="Rol"
-                  item-text="text"
-                  item-value="id"
-                  :error="$v.form.rol.$error"
-                  @input="$v.form.rol.$touch()"
-                  :error-messages="errors.rol"
-                  ></v-select>
-
-                <div v-if="!form.id">
-                  <v-text-field
-                    label="Nombre de usuario"
-                    append-icon="person"
-                    v-model="form.usuarioLogin"
-                    maxlength="20"
-                    :error="$v.form.usuarioLogin.$error"
-                    @input="$v.form.usuarioLogin.$touch()"
-                    :error-messages="errors.usuarioLogin"
-                    autocomplete="off"
-                    ></v-text-field>
-                </div>
-
-                <v-text-field
-                  v-if="form.usuarioLogin != usuario || !form.id"
-                  label="Contraseña"
-                  type="password"
-                  v-model="form.password"
-                  :append-icon="getIcon"
-                  :append-icon-cb="changeIcon"
-                  :type="hidePass ? 'password' : 'text'"
-                  maxlength="100"
-                  :error="$v.form.password.$error"
-                  @input="$v.form.password.$touch()"
-                  :error-messages="errors.password"
-                  autocomplete="off"
-                  ></v-text-field>
-
-                <div v-if="!form.id">
-                  <v-layout row wrap>
-                    <v-flex xs7>
+              {{$t('usuarios.enterPersonalData') }}
+              <form @submit.prevent="editarUsuario">
+                <v-layout row wrap>
+                  <v-flex xs4>
+                    <v-text-field :label="$t('usuarios.firstLastName')" v-model="form.persona.primer_apellido"></v-text-field>
+                  </v-flex>
+                  <v-flex xs4>
+                    <v-text-field :label="$t('usuarios.secondLastName')" v-model="form.persona.segundo_apellido"></v-text-field>
+                  </v-flex>
+                  <v-flex xs4>
+                    <v-text-field :label="$t('usuarios.names')" v-model="form.persona.nombres"></v-text-field>
+                  </v-flex>
+                  <v-flex xs4>
+                    <v-text-field :label="$t('usuarios.id')" v-model="form.persona.ci" @keydown.native="$filter.numeric($event)" required></v-text-field>
+                  </v-flex>
+                  <v-flex xs2>
+                    <v-select v-bind:items="lugarCi" v-model="form.persona.lugar" :label="$t('usuarios.place')" item-text="abreviacion" item-value="abreviacion"></v-select>
+                  </v-flex>
+                  <v-flex xs6>
+                    <v-radio-group v-model="form.persona.genero" :label="$t('usuarios.gender')" :mandatory="true" row>
+                      <v-radio :label="$t('usuarios.male')" value="M"></v-radio>
+                      <v-radio :label="$t('usuarios.female')" value="F"></v-radio>
+                    </v-radio-group>
+                  </v-flex>
+                  <v-flex xs4>
+                    <v-menu
+                      lazy
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      :nudge-right="40"
+                      max-width="290px"
+                      min-width="290px"
+                    >
                       <v-text-field
-                        label="Cédula de identidad"
-                        v-model="form.ci"
-                        maxlength="20"
-                        :error="$v.form.ci.$error"
-                        @input="$v.form.ci.$touch()"
-                        :error-messages="errors.ci"
-                        ></v-text-field>
-                    </v-flex>
+                        slot="activator"
+                        :label="$t('usuarios.bornDate')"
+                        v-model="form.persona.fecha_nacimiento"
+                        prepend-icon="event"
+                        readonly
+                      ></v-text-field>
+                      <v-date-picker v-model="form.persona.fecha_nacimiento" locale="es" no-title scrollable actions>
+                        <template slot-scope="{ save, cancel }">
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn flat color="primary" @click="cancel">Cancelar</v-btn>
+                            <v-btn flat color="primary" @click="save">Seleccionar</v-btn>
+                          </v-card-actions>
+                        </template>
+                      </v-date-picker>
+                    </v-menu>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-alert color="primary" icon="label" value="true">
+                      {{$t('usuarios.userData')}}
+                    </v-alert>
+                    {{$t('usuarios.enterUserData')}}
+                  </v-flex>
+                  <v-flex xs6>
+                    <v-text-field :label="$t('usuarios.email')" v-model="form.email"></v-text-field>
+                  </v-flex>
+                  <v-flex xs6>
+                    <v-select v-bind:items="roles" v-model="form.tipo" :label="$t('usuarios.rol')" item-text="nombre" item-value="id_rol"></v-select>
+                  </v-flex>
+                </v-layout>
+              </form>
+            </v-flex>
+          </v-layout>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="cancel" dark @click.native="dialog = false">{{$t('usuarios.cancel')}}
+              <v-icon right>cancel</v-icon>
+            </v-btn>
+            <v-btn class="seccion" dark v-on:click="agregaUsuario">{{$t('usuarios.save')}}
+              <v-icon right>done</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
 
-                    <v-flex xs5>
-                      <v-text-field
-                        label="Complemento"
-                        v-model="form.complemento"
-                        maxlength="2"
-                        ></v-text-field>
-                    </v-flex>
-                  </v-layout>
-                  <select-date label="Fecha de nacimiento" :required="true" v-if="showDate"></select-date>
-                </div>
-              </v-card-text>
-              <v-alert color="info" value="true" v-if="form.usuarioLogin == usuario && form.id">
-                Puede cambiar su contraseña yendo a: <br> <router-link to="/account" class="white--text"><strong><v-icon dark class="icon-small">person</v-icon> {{ $t('app.account') }}</strong></router-link>.
+    <!-- VENTANA DE EDICIÓN DE USUARIO -->
+    <v-layout row>
+      <v-dialog v-model="dialogEdicion" width="1200px">
+        <v-card>
+          <v-card-title class="headline">
+            <v-icon right>account_circle</v-icon>
+            {{$t('usuarios.adding')}}
+          </v-card-title>
+          <v-layout row>
+            <v-flex xs10 offset-xs1>
+              <v-alert color="primary" icon="label" value="true">
+                {{$t('usuarios.userData')}}
               </v-alert>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn @click.native="$store.commit('closeModal');"><v-icon>cancel</v-icon> {{$t('common.cancel') }}</v-btn>
-                <v-btn color="primary" type="submit"><v-icon dark>check</v-icon> {{$t('common.save') }}</v-btn>
-              </v-card-actions>
-            </form>
-          </template>
-
-          <template slot="items" slot-scope="items">
-            <td>
-              <v-btn icon small v-if="items.item.rol.id != 3"
-                @click.native="editItem(items.item.usuarioNominal.usuarioLogin)"><v-icon>edit</v-icon></v-btn>
-            </td>
-            <td :class="{ 'text-xs-center': usuario == items.item.usuarioNominal.usuarioLogin }">
-                <v-tooltip right>
-                  <v-switch v-model="items.item.active" value="ACTIVE"
-                    @change="changeActive(items.item, items.item.usuarioNominal.usuarioLogin)"
-                    v-if="usuario != items.item.usuarioNominal.usuarioLogin && items.item.rol.id != 3"
-                    slot="activator"
-                    color="info"></v-switch>
-                  <span>Activar/desactivar registro</span>
-                </v-tooltip>
-              <v-tooltip right>
-                <router-link
-                  to="/account"
-                  v-if="usuario == items.item.usuarioNominal.usuarioLogin"
-                  slot="activator">
-                  <v-icon>person</v-icon>
-                </router-link>
-                <span>Este usuario soy yo, clic aquí para ir a mi cuenta.</span>
-              </v-tooltip>
-            </td>
-            <td>{{ items.item.usuarioNominal.usuarioLogin }}</td>
-            <td>
-              {{ items.item.usuarioNominal.persona.nombre }} <br>
-              <small>
-                <strong>{{ items.item.usuarioNominal.persona.tipoDocumento }}:</strong>
-                {{ items.item.usuarioNominal.persona.numeroDocumento }} {{ items.item.usuarioNominal.persona.complemento }}
-                </small>
-            </td>
-            <td>{{ items.item.entidad.descripcion }}</td>
-            <td>{{ items.item.rol.rol }}</td>
-            <td>
-              <v-alert success hide-icon :value="true" v-if="items.item.estado == 'VERIFICADO'">
-                {{ items.item.estado }}
-              </v-alert>
-              <v-alert warning hide-icon :value="true" v-if="items.item.estado == 'INACTIVO'">
-                {{ items.item.estado }}
-              </v-alert>
-            </td>
-          </template>
-        </crud-table>
-      </v-card-text>
-    </v-card>
-  </section>
+              <form @submit.prevent="editaUsuario">
+                <v-layout row wrap>
+                  <v-flex xs6>
+                    <v-text-field :label="$t('usuarios.email')" v-model="form1.email"></v-text-field>
+                  </v-flex>
+                  <v-flex xs6>
+                    <v-select v-bind:items="roles" v-model="form1.tipo" :label="$t('usuarios.rol')" item-text="nombre" item-value="id_rol"></v-select>
+                  </v-flex>
+                </v-layout>
+              </form>
+            </v-flex>
+          </v-layout>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" dark @click.native="dialogEdicion = false">{{$t('usuarios.cancel')}}
+              <v-icon right>cancel</v-icon>
+            </v-btn>
+            <v-btn class="seccion" dark v-on:click="editarUsuario(idUsuario)">{{$t('usuarios.edit')}}
+              <v-icon right>done</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
+  </div>
 </template>
+
 <script>
-
-import CrudTable from '@/common/util/crud-table/CrudTable.vue';
-import crud from '@/common/util/crud-table/mixins/crud-table';
-import errorsHandler from '@/common/mixins/errorsHandler';
-import Auth from '@/components/admin/auth/mixins/auth';
-import SelectDate from '@/common/util/SelectDate.vue';
-import { required } from 'vuelidate/lib/validators';
-
-export default {
-  mixins: [ crud, errorsHandler, Auth ],
-  created () {
-    this.user = this.$storage.getUser();
-    this.usuario = this.user.usuario;
-    this.entidades = [];
-    this.$service.get('entidades?limite=-1')
-    .then(response => {
-      if (response && response.datos) {
-        this.entidades = response.datos;
-      }
-    });
-    this.roles = [
-      { id: 1, text: 'ADMINISTRADOR' },
-      { id: 2, text: 'ENTIDAD' }
-    ];
-  },
-  data () {
-    return {
-      dateFormat: val => {
-        let date = new Date(val).toISOString().substr(0, 10).split('-');
-        return [date[2], date[1], date[0]].join('/');
-      },
-      url: 'usuarios',
-      headers: [
-        { text: this.$t('user.crud.edit'), sortable: false },
-        { text: this.$t('common.active'), sortable: false },
-        { text: this.$t('user.crud.user'), value: 'usuarioLogin' },
-        { text: this.$t('user.crud.userData'), value: 'nombre' },
-        { text: this.$t('user.crud.entity'), value: 'descripcionEntidad' },
-        { text: this.$t('user.crud.role'), value: 'rol' },
-        { text: this.$t('user.crud.status'), value: 'estado' }
-      ],
-      hidePass: true,
-      form: {
-        'entidad': '',
-        'rol': '',
-        'usuarioLogin': '',
-        'password': '',
-        'ci': '',
-        'complemento': '',
-        'fechaNacimiento': ''
-      },
-      errors: {
-        entidad: [],
-        rol: [],
-        usuarioLogin: [],
-        password: [],
-        ci: [],
-        complemento: [],
-        fechaNacimiento: []
-      },
-      filters: [
-        {
-          field: 'usuarioLogin',
-          label: this.$t('user.crud.user'),
-          type: 'text'
+  /* eslint-disable semi */
+  export default {
+    // name: 'bandeja-tecnicos',
+    data () {
+      return {
+        // Variables creación usuarios
+        dialog: false,
+        form: {
+          persona: {
+            'ci': '',
+            'lugar': '',
+            'fecha_nacimiento': '',
+            'nombres': '',
+            'primer_apellido': '',
+            'segundo_apellido': '',
+            'genero': ''
+          },
+          'email': '',
+          'tipo': ''
         },
-        {
-          field: 'nombre',
-          label: this.$t('user.crud.userData'),
-          type: 'text'
+        // Variables edición usuarios
+        dialogEdicion: false,
+        form1: {
+          'email': '',
+          'tipo': ''
         },
-        {
-          field: 'descripcion',
-          label: this.$t('user.crud.entity'),
-          type: 'text'
+        idusuario: '',
+        // Variables lista tabla
+        roles: [],
+        lugarCi: [],
+        asignaciones: [],
+        totalItems: 0,
+        pagination: {
+          sortBy: null
         },
-        {
-          field: 'rol',
-          label: this.$t('user.crud.role'),
-          type: 'select',
-          items: [
-            { value: '', text: 'TODOS' },
-            { value: 'ADMINISTRADOR', text: 'ADMINISTRADOR' },
-            { value: 'ENTIDAD', text: 'ENTIDAD' },
-            { value: 'BUSA', text: 'BUSA' }
-          ]
-        },
-        {
-          field: 'estado',
-          label: this.$t('user.crud.status'),
-          type: 'select',
-          items: [
-            { value: '', text: 'TODOS' },
-            { value: 'VERIFICADO', text: 'VERIFICADO' },
-            { value: 'INACTIVO', text: 'INACTIVO' }
-          ]
-        }
-      ],
-      usuario: null,
-      menu: false,
-      modal: false,
-      showDate: false
-    };
-  },
-  validations: {
-    form: {
-      entidad: {
-        required
-      },
-      rol: {
-        required
-      },
-      usuarioLogin: {
-        required
-      },
-      password: {
-        required
-      },
-      ci: {
-        required
-      },
-      fechaNacimiento: {
-      }
-    }
-  },
-  methods: {
-    changeIcon () {
-      if (this.form.password.length) {
-        this.hidePass = !this.hidePass;
+        headersAsinacion: [
+          {text: this.$t('usuarios.headAccions'), value: ''},
+          {text: this.$t('usuarios.names'), value: 'nombres'},
+          {text: this.$t('usuarios.firstLastName'), value: 'primer_apellido'},
+          {text: this.$t('usuarios.secondLastName'), value: 'segundo_apellido'},
+          {text: this.$t('usuarios.email'), value: 'email'},
+          {text: this.$t('usuarios.rol'), value: 'rol'},
+          {text: this.$t('usuarios.headEstate'), value: 'estado'}
+        ]
       }
     },
-    openModal (data = {}) {
-      this.$v.form.$reset();
-      this.showDate = false;
-      this.$nextTick(function () {
-        this.showDate = true;
-      });
-      if (data.id) {
-        this.form = {
-          id: data.id,
-          entidad: data.entidad.id,
-          rol: data.rol.id,
-          usuarioLogin: data.usuarioNominal.usuarioLogin,
-          password: '',
-          nombre: data.usuarioNominal.persona.nombre,
-          ci: data.usuarioNominal.persona.numeroDocumento,
-          complemento: data.usuarioNominal.persona.complemento,
-          fechaNacimiento: data.usuarioNominal.persona.fechaNacimiento
-        };
-      } else {
-        this.form = {
-          'entidad': '',
-          'rol': '',
-          'usuarioLogin': '',
-          'password': '',
-          'ci': '',
-          'complemento': '',
-          'fechaNacimiento': ''
-        };
-      }
-      this.$store.commit('openModal');
-    },
-    save () {
-      this.$v.form.$touch();
-      this.$store.commit('setTouch', true);
-
-      let valid = !this.$v.form.$invalid;
-      if (this.form.id && this.usuario === this.form.usuarioLogin) {
-        valid = !this.$filter.empty(this.form.rol);
-      }
-      if (valid) {
-        let data = null;
-        if (this.form.id) {
-          data = {
-            transicion: 'editar',
-            rol: {
-              id: this.form.rol
-            }
-          };
-          if (this.usuario !== this.form.usuarioLogin) {
-            data.usuarioNominal = {
-              password: this.form.password
-            };
-          }
-        } else {
-          if (!this.$store.state.selectDate) {
-            return false;
-          }
-          data = {
-            transicion: 'crear',
-            usuarioNominal: {
-              usuarioLogin: this.form.usuarioLogin,
-              password: this.form.password,
-              persona: {
-                ci: this.form.ci,
-                fechaNacimiento: this.dateFormat(this.$store.state.selectDate),
-                complemento: this.form.complemento || ''
-              }
-            },
-            entidad: {
-              id: this.form.entidad
-            },
-            rol: {
-              id: this.form.rol
-            }
-          };
-        }
-        this.$service[this.form.id ? 'patch' : 'post'](this.url + (this.form.id ? `/${this.form.usuarioLogin}` : ''), data)
-        .then(response => {
-          if (response) {
-            if (this.usuario === this.form.usuarioLogin) {
-              this.$message.warning('Debe iniciar su sesión nuevamente porque sus permisos han cambiado.');
-              this.logout();
+    watch: {
+      pagination: {
+        handler () {
+          let sorting = '';
+          if (this.pagination.sortBy != null && this.pagination.descending != null) {
+            if (this.pagination.descending) {
+              sorting = `&order=-${this.pagination.sortBy}`
             } else {
-              this.$store.commit('closeModal');
-              this.updateList();
-              this.$message.success();
-              this.$store.commit('setSelectDate', null);
+              sorting = `&order=${this.pagination.sortBy}`;
             }
           }
-        });
+          this.$service.get(`usuarios?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}${sorting}`) // TODO Apagar el incendio
+          .then(response => {
+            this.asignaciones = response.datos.rows;
+            this.totalItems = response.datos.count;
+          })
+        },
+        deep: true
       }
-    }
-  },
-  components: {
-    CrudTable,
-    SelectDate
-  },
-  computed: {
-    getIcon () {
-      return this.form.password.length === 0 ? 'lock' : this.hidePass ? 'visibility' : 'visibility_off';
     },
-
-    entidadUsuario () {
-      if (this.entidades) {
-        for (let i in this.entidades) {
-          if (this.entidades[i].id === this.form.entidad) {
-            return this.entidades[i].descripcion;
-          }
+    created () {
+      this.$service.get(`roles`)
+      .then(response => {
+        this.roles = response.datos;
+        return this.$service.get(`codigoDeptos`);
+      })
+      .then(response => {
+        this.lugarCi = response.datos;
+      })
+      this.cargarAsignaciones();
+    },
+    methods: {
+      agregaUsuario () {
+        // valida
+        if (this.form.email !== '' && this.form.tipo !== '' && this.form.persona.ci !== '' &&
+        this.form.persona.fecha_nacimiento !== '' && this.form.persona.nombres !== '' &&
+        this.form.persona.primer_apellido !== '' && this.form.persona.segundo_apellido !== '' &&
+        this.form.persona.genero !== '') {
+          // Crea usuario
+          this.$service.post(`usuarios`, {
+            'usuario': {
+              'email': this.form.email,
+              'fid_rol': this.form.tipo
+            },
+            'persona': {
+              'ci': this.form.persona.ci,
+              'lugar': this.form.persona.lugar,
+              'fecha_nacimiento': this.form.persona.fecha_nacimiento,
+              'genero': this.form.persona.genero,
+              'nombres': this.form.persona.nombres,
+              'primer_apellido': this.form.persona.primer_apellido,
+              'segundo_apellido': this.form.persona.segundo_apellido
+            }
+          }).then(respuesta => {
+            this.form.persona.ci = '';
+            this.form.persona.fecha_nacimiento = '';
+            this.form.persona.nombres = '';
+            this.form.persona.primer_apellido = '';
+            this.form.persona.segundo_apellido = '';
+            this.form.persona.lugar = '';
+            this.form.persona.genero = '';
+            this.form.email = '';
+            this.form.tipo = '';
+            this.dialog = false
+            this.cargarAsignaciones();
+          });
+        } else {
+          this.$message.error('Debe llenar el formulario para guardar.');
         }
+      },
+      abreDialog (idUser) { // Reenvía correo de activación
+        this.idUsuario = idUser;
+        this.dialogEdicion = !this.dialogEdicion;
+        let emailUsuario = '';
+        let rolUsuario = '';
+        this.asignaciones.map(valor => {
+          if (valor.id_usuario === idUser) {
+            emailUsuario = valor.email;
+            rolUsuario = valor.fid_rol;
+          }
+        })
+        this.form1.email = emailUsuario;
+        this.form1.tipo = rolUsuario;
+      },
+      editarUsuario (idUsuario) { // Edita un usuario existente
+        // valida
+        if (this.form1.email !== '' && this.form1.tipo !== '') {
+          // Crea usuario
+          this.$service.put(`usuarios/${idUsuario}`, {
+            'usuario': {
+              'fid_rol': this.form1.tipo,
+              'email': this.form1.email
+            }
+          }).then(respuesta => {
+            this.form1.email = '';
+            this.form1.tipo = '';
+            this.dialogEdicion = false
+            this.cargarAsignaciones();
+          });
+        } else {
+          this.$message.error('Debe llenar los datos para guardar.');
+        }
+      },
+      reenviarCorreo (idUsuario, email) { // Reenvía correo de activación
+        this.$service.post(`usuarios/reenviar`, {
+          'usuario': {
+            'id_usuario': idUsuario
+          }
+        }).then(respuesta => {
+          this.$message.success('Hemos enviado un correo de activación de cuenta a ' + email);
+        }).catch(() => {
+          this.$message.error('Fallo al enviar correo.');
+        });
+      },
+      cargarAsignaciones () { // Carga lista de usuarios
+        this.$service.get(`usuarios?limit=5&page=1`) // TODO Apagar el incendio
+          .then(response => {
+            this.asignaciones = response.datos.rows;
+            this.count = response.datos.count;
+          })
       }
-      return '';
-    }
-  },
-  watch: {
-    '$v.form.entidad.$error': function (val) {
-      this.errorHandler(this.$v.form.entidad, this.errors.entidad);
-    },
-    '$v.form.rol.$error': function (val) {
-      this.errorHandler(this.$v.form.rol, this.errors.rol);
-    },
-    '$v.form.usuarioLogin.$error': function (val) {
-      this.errorHandler(this.$v.form.usuarioLogin, this.errors.usuarioLogin);
-    },
-    '$v.form.password.$error': function (val) {
-      this.errorHandler(this.$v.form.password, this.errors.password);
-    },
-    '$v.form.ci.$error': function (val) {
-      this.errorHandler(this.$v.form.ci, this.errors.ci);
-    },
-    '$v.form.fechaNacimiento.$error': function (val) {
-      this.errorHandler(this.$v.form.fechaNacimiento, this.errors.fechaNacimiento);
-    },
-    '$store.state.modal': function (val) {
-      this.resetForm(this.errors);
-      this.$v.form.$reset();
     }
   }
-};
 </script>

@@ -7,7 +7,7 @@ export default {
   validate,
   menu,
   app: {
-    title: 'App',
+    title: 'Sistema Virgen Niña',
     account: 'Mi cuenta',
     settings: 'Configuración',
     logOut: 'Cerrar sesión'
@@ -21,6 +21,41 @@ export default {
     login: 'Ingresar',
     noAccount: '¿No tienes una cuenta?',
     signUp: 'Registrate aquí'
+  },
+  loginAdmin: {
+    title: 'Inicia tu sesión',
+    user: 'Nombre de usuario',
+    password: 'Contraseña',
+    rememberMe: 'Recuerdame',
+    forgotPass: '¿Se te olvidó tu contraseña?',
+    login: 'Ingresar',
+    noAccount: '¿No tienes una cuenta?',
+    signUp: 'Registrate aquí'
+  },
+  usuarios: {
+    newUser: 'Nuevo Usuario',
+    usersPerPage: 'Usuarios por página',
+    adding: 'Agregando usuario',
+    personalData: 'Datos Personales.',
+    enterPersonalData: 'Ingrese los datos personales para agregarlo al sistema.',
+    firstLastName: 'Primer apellido',
+    secondLastName: 'Segundo apellido',
+    names: 'Nombres',
+    id: 'Cédula de identidad',
+    place: 'Lugar',
+    gender: 'Género',
+    male: 'Masculino',
+    female: 'Femenino',
+    bornDate: 'Fecha de nacimiento',
+    userData: 'Datos de la cuenta de usuario.',
+    enterUserData: 'Asigne un correo electrónico y un rol a la persona.',
+    email: 'Correo Electrónico',
+    rol: 'Rol de usuario',
+    cancel: 'Cancelar',
+    save: 'Guardar',
+    edit: 'Editar',
+    headAccions: 'Acciones',
+    headEstate: 'Estado'
   },
   common: {
     add: 'Agregar',

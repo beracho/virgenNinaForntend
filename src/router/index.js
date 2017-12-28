@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Dashboard from '@/components/admin/Dashboard';
+// Auth
 import Login from '@/components/admin/auth/Login';
+import LoginAdmin from '@/components/admin/auth/LoginAdmin';
 import AppNotFound from '@/common/layout/pages/AppNotFound';
 import AppForbidden from '@/common/layout/pages/AppForbidden';
 import AppError from '@/common/layout/pages/AppError';
@@ -23,6 +25,11 @@ export default new VueRouter({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/loginAdmin',
+      name: 'LoginAdmin',
+      component: LoginAdmin
     },
     {
       path: '/usuarios',

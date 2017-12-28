@@ -61,6 +61,9 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <div class="login-lang">
+      <app-lang></app-lang>
+    </div>
   </section>
 </template>
 

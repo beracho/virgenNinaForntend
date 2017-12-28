@@ -3,13 +3,18 @@
 export default {
   methods: {
     login (data) {
-      this.$http.post(this.$authUrl, {
+      this.$http.post(this.$authUrl, data.tipo ? {
+        tipo: data.tipo,
         usuario: data.username,
-        password: data.password
+        contrasena: data.password
+      } : {
+        nit: data.nit,
+        usuario: data.username,
+        contrasena: data.password
       }).then(response => {
         if (response.data) {
           let menu = response.data.menu;
-          let usuario = response.data.usuario;
+          let usuario = response.data.user;
           let token = response.data.token;
           let sidenav = data.sidenav === undefined ? true : data.sidenav;
 
@@ -22,13 +27,9 @@ export default {
           this.$store.state.sidenav = sidenav;
 
           this.$store.state.auth = true;
-          if (usuario.idRol === 2) {
-            data.redirect = 'tramite';
-          }
-
           this.timerSession();
 
-          this.$router.push(data.redirect || '/');
+          this.$router.push(response.data.menuEntrar);
         }
       }).catch(() => {
         this.$message.error('Usuario y/o contraseña inválida');
