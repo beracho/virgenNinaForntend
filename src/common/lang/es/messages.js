@@ -16,18 +16,18 @@ export default {
     title: 'Inicia tu sesión',
     user: 'Nombre de usuario',
     password: 'Contraseña',
-    rememberMe: 'Recuerdame',
-    forgotPass: '¿Se te olvidó tu contraseña?',
+    rememberMe: 'Recuérdame',
+    forgotPass: '¿Olvidó su contraseña?',
     login: 'Ingresar',
     noAccount: '¿No tienes una cuenta?',
     signUp: 'Registrate aquí'
   },
   loginAdmin: {
-    title: 'Inicia tu sesión',
+    title: 'Inicia sesión de Administrador',
     user: 'Nombre de usuario',
     password: 'Contraseña',
-    rememberMe: 'Recuerdame',
-    forgotPass: '¿Se te olvidó tu contraseña?',
+    rememberMe: 'Recuérdame',
+    forgotPass: '¿Olvidó su contraseña?',
     login: 'Ingresar',
     noAccount: '¿No tienes una cuenta?',
     signUp: 'Registrate aquí'
@@ -55,7 +55,23 @@ export default {
     save: 'Guardar',
     edit: 'Editar',
     headAccions: 'Acciones',
-    headEstate: 'Estado'
+    headEstate: 'Estado',
+    emailRequired: 'El correo electrónico es requerido',
+    emailValid: 'No es un correo electrónico válido',
+    errorFillForm: 'Debe llenar el formulario para guardar.',
+    successSendEmail: 'Hemos enviado un correo de activación de cuenta a ',
+    errorSendEmail: 'Fallo al enviar correo.'
+  },
+  confirm: {
+    title: 'Por favor, ingrese su contraseña',
+    password: 'Contraseña',
+    confirmPassword: 'Repita contraseña',
+    home: 'Volver',
+    accept: 'Actualizar contraseña',
+    errorFieldsNotEqual: 'Los campos de contraseña no son iguales.',
+    errorFieldRequired: 'El campo de contraseña es requerido.',
+    errorFieldMinLength: 'La contraseña debe tener como mínimo 8 caracteres.',
+    errorFieldMaxLength: 'La contraseña debe tener como máximo 20 caracteres.'
   },
   common: {
     add: 'Agregar',

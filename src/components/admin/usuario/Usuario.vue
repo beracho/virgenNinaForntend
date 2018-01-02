@@ -51,10 +51,10 @@
           <v-layout row>
             <v-flex xs10 offset-xs1>
               <v-alert color="primary" icon="account_box" value="true">
-                {{$t('usuarios.personalData') }}
+                <strong>{{$t('usuarios.personalData') }}</strong><br>
+                {{$t('usuarios.enterPersonalData') }}
               </v-alert>
-              {{$t('usuarios.enterPersonalData') }}
-              <form @submit.prevent="editarUsuario">
+              <v-form v-model="validForm" ref="form" lazy-validation>
                 <v-layout row wrap>
                   <v-flex xs4>
                     <v-text-field :label="$t('usuarios.firstLastName')" v-model="form.persona.primer_apellido"></v-text-field>
@@ -108,18 +108,18 @@
                   </v-flex>
                   <v-flex xs12>
                     <v-alert color="primary" icon="label" value="true">
-                      {{$t('usuarios.userData')}}
+                      <strong>{{$t('usuarios.userData')}}</strong><br>
+                      {{$t('usuarios.enterUserData')}}
                     </v-alert>
-                    {{$t('usuarios.enterUserData')}}
                   </v-flex>
                   <v-flex xs6>
-                    <v-text-field :label="$t('usuarios.email')" v-model="form.email"></v-text-field>
+                    <v-text-field :label="$t('usuarios.email')" v-model="form.email" :rules="emailRules"></v-text-field>
                   </v-flex>
                   <v-flex xs6>
                     <v-select v-bind:items="roles" v-model="form.tipo" :label="$t('usuarios.rol')" item-text="nombre" item-value="id_rol"></v-select>
                   </v-flex>
                 </v-layout>
-              </form>
+              </v-form>
             </v-flex>
           </v-layout>
           <v-card-actions>
@@ -127,7 +127,7 @@
             <v-btn color="cancel" dark @click.native="dialog = false">{{$t('usuarios.cancel')}}
               <v-icon right>cancel</v-icon>
             </v-btn>
-            <v-btn class="seccion" dark v-on:click="agregaUsuario">{{$t('usuarios.save')}}
+            <v-btn class="primary" flat :disabled="!validForm" @click="agregaUsuario">{{$t('usuarios.save')}}
               <v-icon right>done</v-icon>
             </v-btn>
           </v-card-actions>
@@ -162,10 +162,10 @@
           </v-layout>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" dark @click.native="dialogEdicion = false">{{$t('usuarios.cancel')}}
+            <v-btn class="seccion" dark @click.native="dialogEdicion = false">{{$t('usuarios.cancel')}}
               <v-icon right>cancel</v-icon>
             </v-btn>
-            <v-btn class="seccion" dark v-on:click="editarUsuario(idUsuario)">{{$t('usuarios.edit')}}
+            <v-btn class="primary" dark v-on:click="editarUsuario(idUsuario)">{{$t('usuarios.edit')}}
               <v-icon right>done</v-icon>
             </v-btn>
           </v-card-actions>
@@ -183,6 +183,7 @@
       return {
         // Variables creación usuarios
         dialog: false,
+        validForm: true,
         form: {
           persona: {
             'ci': '',
@@ -219,6 +220,15 @@
           {text: this.$t('usuarios.email'), value: 'email'},
           {text: this.$t('usuarios.rol'), value: 'rol'},
           {text: this.$t('usuarios.headEstate'), value: 'estado'}
+        ],
+        // rules
+        // nameRules: [
+        //   (v) => !!v || 'El nombre es requerido',
+        //   (v) => v.length <= 25 || 'Name must be less than 25 characters'
+        // ],
+        emailRules: [
+          (v) => !!v || this.$t('usuarios.emailRequired'),
+          (v) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || this.$t('usuarios.emailValid')
         ]
       }
     },
@@ -233,10 +243,11 @@
               sorting = `&order=${this.pagination.sortBy}`;
             }
           }
-          this.$service.get(`usuarios?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}${sorting}`) // TODO Apagar el incendio
+          const rutaUsuarios = (this.pagination.rowsPerPage === -1) ? `usuarios` : `usuarios?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}${sorting}`;
+          this.$service.get(rutaUsuarios) // TODO Apagar el incendio
           .then(response => {
-            this.asignaciones = response.datos.rows;
-            this.totalItems = response.datos.count;
+            this.asignaciones = response.datos.rows ? response.datos.rows : response.datos;
+            this.totalItems = response.datos.count ? response.datos.count : response.datos.lenght;
           })
         },
         deep: true
@@ -289,7 +300,7 @@
             this.cargarAsignaciones();
           });
         } else {
-          this.$message.error('Debe llenar el formulario para guardar.');
+          this.$message.error(this.$t('usuarios.errorFillForm'));
         }
       },
       abreDialog (idUser) { // Reenvía correo de activación
@@ -322,7 +333,7 @@
             this.cargarAsignaciones();
           });
         } else {
-          this.$message.error('Debe llenar los datos para guardar.');
+          this.$message.error(this.$t('usuarios.errorFillForm'));
         }
       },
       reenviarCorreo (idUsuario, email) { // Reenvía correo de activación
@@ -331,9 +342,9 @@
             'id_usuario': idUsuario
           }
         }).then(respuesta => {
-          this.$message.success('Hemos enviado un correo de activación de cuenta a ' + email);
+          this.$message.success(this.$t('usuarios.successSendEmail') + email);
         }).catch(() => {
-          this.$message.error('Fallo al enviar correo.');
+          this.$message.error(this.$t('usuarios.errorSendEmail'));
         });
       },
       cargarAsignaciones () { // Carga lista de usuarios
