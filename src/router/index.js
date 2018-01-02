@@ -8,6 +8,9 @@ import AppNotFound from '@/common/layout/pages/AppNotFound';
 import AppForbidden from '@/common/layout/pages/AppForbidden';
 import AppError from '@/common/layout/pages/AppError';
 import Usuario from '@/components/admin/usuario/Usuario';
+import ConfirmarCuenta from '@/components/admin/account/confirmarCuenta';
+import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
+import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
 import Account from '@/components/admin/account/Account';
 
 import Entidad from '@/components/admin/entidad/Entidad';
@@ -35,6 +38,21 @@ export default new VueRouter({
       path: '/usuarios',
       name: 'Usuario',
       component: Usuario
+    },
+    {
+      path: '/confirmarCuenta',
+      name: 'ConfirmarCuenta',
+      component: ConfirmarCuenta
+    },
+    {
+      path: '/bandejaInscritos',
+      name: 'BandejaInscritos',
+      component: BandejaInscritos
+    },
+    {
+      path: '/registroInscripcion',
+      name: 'RegistroInscripcion',
+      component: RegistroInscripcion
     },
     {
       path: '/account',
