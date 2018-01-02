@@ -53,8 +53,12 @@ export default {
       store.commit('setDefault');
       let route = this.$router.currentRoute.path;
       let redirect = 'login';
-      if (['/loginAdmin'].indexOf(route) !== -1) {
-        redirect = route.substring(1);
+      if (['/loginAdmin', '/confirmarCuenta'].indexOf(route) !== -1) {
+        if (this.$router.currentRoute.query !== {}) {
+          redirect = this.$router.currentRoute.fullPath;
+        } else {
+          redirect = route.substring(1);
+        }
       }
       router.push(redirect);
     },
