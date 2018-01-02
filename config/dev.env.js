@@ -5,7 +5,7 @@ module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   API_URL: '"http://localhost:4000/api/v1/"',
   AUTH_URL: '"http://localhost:4000/autenticar"',
-  NO_AUTH_URL: '"http://localhost:4000/"',
+  NO_API_URL: '"http://localhost:4000/"',
   ONBEFOREUNLOAD: false,
   DEBUG_MODE: true
 })

@@ -47,6 +47,7 @@ Vue.use(Message, { timeout: 6000 });
 Vue.use(Service, {
   apiUrl: process.env.API_URL,
   authUrl: process.env.AUTH_URL,
+  noApiUrl: process.env.NO_API_URL,
   authToken: process.env.AUTH_TOKEN
   /* filterResponse: (response, Message) => {
     if (response.datos) {

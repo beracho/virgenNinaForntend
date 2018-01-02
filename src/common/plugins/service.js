@@ -17,6 +17,7 @@ export default {
     // config
     const apiUrl = config && config.apiUrl ? config.apiUrl : '';
     const authUrl = config && config.authUrl ? config.authUrl : '';
+    const noApiUrl = config && config.noApiUrl ? config.noApiUrl : '';
     const authToken = config && config.authToken ? config.authToken : 'Bearer';
 
     // Plugins
@@ -258,5 +259,6 @@ export default {
     Vue.prototype.$http = axios;
     Vue.prototype.$apiUrl = apiUrl;
     Vue.prototype.$authUrl = authUrl;
+    Vue.prototype.$noApiUrl = noApiUrl;
   }
 };
