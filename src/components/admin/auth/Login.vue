@@ -56,9 +56,9 @@
             </v-layout>
           </v-container>
         </v-card-title>
-        <v-card-title class="info">
+        <!-- <v-card-title class="info">
           <a href="">{{$t('login.signUp') }}</a>
-        </v-card-title>
+        </v-card-title> -->
       </form>
     </v-card>
     <div class="login-lang">
