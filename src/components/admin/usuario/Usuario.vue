@@ -69,7 +69,7 @@
                     <v-text-field :label="$t('usuarios.id')" v-model="form.persona.ci" @keydown.native="$filter.numeric($event)" required></v-text-field>
                   </v-flex>
                   <v-flex xs2>
-                    <v-select v-bind:items="lugarCi" v-model="form.persona.lugar" :label="$t('usuarios.place')" item-text="abreviacion" item-value="abreviacion"></v-select>
+                    <v-select v-bind:items="lugarCi" v-model="form.persona.lugar" :label="$t('usuarios.place')" item-text="codigo_ine" item-value="abreviacion"></v-select>
                   </v-flex>
                   <v-flex xs6>
                     <v-radio-group v-model="form.persona.genero" :label="$t('usuarios.gender')" :mandatory="true" row>
@@ -124,10 +124,10 @@
           </v-layout>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="cancel" dark @click.native="dialog = false">{{$t('usuarios.cancel')}}
+            <v-btn color="cancel" dark @click.native="dialog = false">{{$t('common.cancel')}}
               <v-icon right>cancel</v-icon>
             </v-btn>
-            <v-btn class="primary" flat :disabled="!validForm" @click="agregaUsuario">{{$t('usuarios.save')}}
+            <v-btn class="primary" flat :disabled="!validForm" @click="agregaUsuario">{{$t('common.save')}}
               <v-icon right>done</v-icon>
             </v-btn>
           </v-card-actions>
@@ -162,10 +162,10 @@
           </v-layout>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="seccion" dark @click.native="dialogEdicion = false">{{$t('usuarios.cancel')}}
+            <v-btn class="seccion" dark @click.native="dialogEdicion = false">{{$t('common.cancel')}}
               <v-icon right>cancel</v-icon>
             </v-btn>
-            <v-btn class="primary" dark v-on:click="editarUsuario(idUsuario)">{{$t('usuarios.edit')}}
+            <v-btn class="primary" dark v-on:click="editarUsuario(idUsuario)">{{$t('common.edit')}}
               <v-icon right>done</v-icon>
             </v-btn>
           </v-card-actions>
@@ -213,13 +213,13 @@
           sortBy: null
         },
         headersAsinacion: [
-          {text: this.$t('usuarios.headAccions'), value: ''},
+          {text: this.$t('common.actions'), value: ''},
           {text: this.$t('usuarios.names'), value: 'nombres'},
           {text: this.$t('usuarios.firstLastName'), value: 'primer_apellido'},
           {text: this.$t('usuarios.secondLastName'), value: 'segundo_apellido'},
           {text: this.$t('usuarios.email'), value: 'email'},
           {text: this.$t('usuarios.rol'), value: 'rol'},
-          {text: this.$t('usuarios.headEstate'), value: 'estado'}
+          {text: this.$t('common.status'), value: 'estado'}
         ],
         // rules
         // nameRules: [

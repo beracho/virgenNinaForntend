@@ -257,8 +257,8 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-radio-group v-model="form.sociales.saludDisponible" :label="$t('inscriptionRegister.healthAvailability')" :mandatory="true" row>
-                    <v-radio :label="$t('inscriptionRegister.yes')" value="si"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.no')" value="no"></v-radio>
+                    <v-radio :label="$t('common.yes')" value="si"></v-radio>
+                    <v-radio :label="$t('common.no')" value="no"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs8>
@@ -271,20 +271,20 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-radio-group v-model="form.sociales.comunicacion" :label="$t('inscriptionRegister.comunication')" :mandatory="true" row>
-                    <v-radio :label="$t('inscriptionRegister.yes')" value="si"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.no')" value="no"></v-radio>
+                    <v-radio :label="$t('common.yes')" value="si"></v-radio>
+                    <v-radio :label="$t('common.no')" value="no"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs4>
                   <v-radio-group v-model="form.sociales.motriz" :label="$t('inscriptionRegister.motriz')" :mandatory="true" row>
-                    <v-radio :label="$t('inscriptionRegister.yes')" value="si"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.no')" value="no"></v-radio>
+                    <v-radio :label="$t('common.yes')" value="si"></v-radio>
+                    <v-radio :label="$t('common.no')" value="no"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs4>
                   <v-radio-group v-model="form.sociales.mental" :label="$t('inscriptionRegister.mental')" :mandatory="true" row>
-                    <v-radio :label="$t('inscriptionRegister.yes')" value="si"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.no')" value="no"></v-radio>
+                    <v-radio :label="$t('common.yes')" value="si"></v-radio>
+                    <v-radio :label="$t('common.no')" value="no"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs4>
@@ -309,8 +309,8 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-radio-group v-model="form.sociales.electricidadDisponible" :label="$t('inscriptionRegister.electricityService')" :mandatory="true" row>
-                    <v-radio :label="$t('inscriptionRegister.yes')" value="si"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.no')" value="no"></v-radio>
+                    <v-radio :label="$t('common.yes')" value="si"></v-radio>
+                    <v-radio :label="$t('common.no')" value="no"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs8>
@@ -338,8 +338,8 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-radio-group v-model="form.sociales.salarioTrabajo" :label="$t('inscriptionRegister.payWork')" :mandatory="true" row>
-                    <v-radio :label="$t('inscriptionRegister.yes')" value="si"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.no')" value="no"></v-radio>
+                    <v-radio :label="$t('common.yes')" value="si"></v-radio>
+                    <v-radio :label="$t('common.no')" value="no"></v-radio>
                   </v-radio-group>
                 </v-flex>
 
