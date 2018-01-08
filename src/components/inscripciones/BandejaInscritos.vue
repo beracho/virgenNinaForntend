@@ -176,9 +176,11 @@
 </template>
 
 <script>
+  import Comps from '../comps';
   /* eslint-disable semi */
   export default {
     // name: 'bandeja-tecnicos',
+    mixins: [ Comps ],
     data () {
       return {
         // Variables creación usuarios
@@ -254,6 +256,7 @@
       }
     },
     created () {
+      this.hasPermission('bandejaInscritos');
       // this.$service.get(`roles`)
       // .then(response => {
       //   this.roles = response.datos;

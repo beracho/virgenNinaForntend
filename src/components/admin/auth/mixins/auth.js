@@ -14,12 +14,14 @@ export default {
       }).then(response => {
         if (response.data) {
           let menu = response.data.menu;
+          let menuEntrar = response.data.menuEntrar;
           let usuario = response.data.user;
           let token = response.data.token;
           let sidenav = data.sidenav === undefined ? true : data.sidenav;
 
           this.$storage.setUser(usuario);
           this.$storage.set('menu', menu);
+          this.$storage.set('menuEntrar', menuEntrar);
           this.$storage.set('token', token);
           this.$storage.set('sidenav', sidenav);
 
@@ -29,7 +31,7 @@ export default {
           this.$store.state.auth = true;
           this.timerSession();
 
-          this.$router.push(response.data.menuEntrar);
+          this.$router.push(menuEntrar);
         }
       }).catch(() => {
         this.$message.error('Usuario y/o contraseña inválida');
@@ -49,6 +51,7 @@ export default {
       this.$storage.remove('menu');
       this.$storage.remove('token');
       this.$storage.remove('sidenav');
+      this.$storage.remove('actualPage');
 
       store.commit('setDefault');
       let route = this.$router.currentRoute.path;

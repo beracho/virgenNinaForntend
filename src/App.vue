@@ -49,8 +49,11 @@
         }
 
         this.timerSession();
-
-        this.$router.push('/');
+        let currentSite = '/';
+        if (this.$store.state.auth === true) {
+          currentSite = this.$storage.get('actualPage');
+        }
+        this.$router.push(currentSite);
       } else {
         this.logout();
       }

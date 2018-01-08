@@ -437,9 +437,10 @@
 import { required } from 'vuelidate/lib/validators';
 import AppLang from '@/common/layout/AppLang';
 import errorsHandler from '@/common/mixins/errorsHandler';
+import Comps from '../comps';
 
 export default {
-  mixins: [ errorsHandler ],
+  mixins: [ Comps, errorsHandler ],
   data () {
     return {
       validForm: true,
@@ -473,6 +474,9 @@ export default {
       hidePass: true,
       remember: false
     };
+  },
+  created () {
+    this.hasPermission('registroInscripcion');
   },
   methods: {
     changeIcon () {

@@ -5,5 +5,7 @@ export default {
   usuarios: 'Usuarios',
   usuariosAplicacion: 'Aplicaciones',
   cpt: 'Códigos de Pago de Trámites',
-  tramite: 'Trámites'
+  tramite: 'Trámites',
+  bandejaInscritos: 'Bandeja de inscritos',
+  registroInscripcion: 'Registro de nuevo estudiante'
 };
