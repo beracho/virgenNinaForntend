@@ -215,13 +215,13 @@
           sortBy: null
         },
         headersAsinacion: [
-          {text: this.$t('usuarios.headAccions'), value: ''},
+          {text: this.$t('common.actions'), value: ''},
           {text: this.$t('usuarios.names'), value: 'nombres'},
           {text: this.$t('usuarios.firstLastName'), value: 'primer_apellido'},
           {text: this.$t('usuarios.secondLastName'), value: 'segundo_apellido'},
           {text: this.$t('usuarios.email'), value: 'email'},
           {text: this.$t('usuarios.rol'), value: 'rol'},
-          {text: this.$t('usuarios.headEstate'), value: 'estado'}
+          {text: this.$t('common.status'), value: 'estado'}
         ],
         // rules
         nameRules: [

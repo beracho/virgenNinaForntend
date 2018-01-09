@@ -279,7 +279,7 @@
             },
             'persona': {
               'ci': this.form.persona.ci,
-              'lugar': this.form.persona.lugar,
+              'lugar': this.form.persona.lugar.codigo_ine,
               'fecha_nacimiento': this.form.persona.fecha_nacimiento,
               'genero': this.form.persona.genero,
               'nombres': this.form.persona.nombres,

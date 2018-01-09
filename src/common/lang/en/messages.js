@@ -33,7 +33,7 @@ export default {
     signUp: 'Sign up'
   },
   usuarios: {
-    newUser: 'Nuevo Usuario',
+    newUser: 'New user',
     usersPerPage: 'Usuarios por página',
     adding: 'Agregando usuario',
     personalData: 'Datos Personales.',
