@@ -124,10 +124,10 @@
           </v-layout>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="cancel" dark @click.native="dialog = false">{{$t('usuarios.cancel')}}
+            <v-btn color="cancel" dark @click.native="dialog = false">{{$t('common.cancel')}}
               <v-icon right>cancel</v-icon>
             </v-btn>
-            <v-btn class="primary" flat :disabled="!validForm" @click="agregaUsuario">{{$t('usuarios.save')}}
+            <v-btn class="primary" flat :disabled="!validForm" @click="agregaUsuario">{{$t('common.save')}}
               <v-icon right>done</v-icon>
             </v-btn>
           </v-card-actions>
@@ -162,10 +162,10 @@
           </v-layout>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="seccion" dark @click.native="dialogEdicion = false">{{$t('usuarios.cancel')}}
+            <v-btn class="seccion" dark @click.native="dialogEdicion = false">{{$t('common.cancel')}}
               <v-icon right>cancel</v-icon>
             </v-btn>
-            <v-btn class="primary" dark v-on:click="editarUsuario(idUsuario)">{{$t('usuarios.edit')}}
+            <v-btn class="primary" dark v-on:click="editarUsuario(idUsuario)">{{$t('common.edit')}}
               <v-icon right>done</v-icon>
             </v-btn>
           </v-card-actions>
