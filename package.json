@@ -1,8 +1,8 @@
 {
-  "name": "proyecto-base-frontend-vue",
+  "name": "sistema_control_documental",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "Omar Gutierrez <ogutierrez@agetic.gob.bo>",
+  "description": "Frontend del sistema de control documental del Centro Asociación Virgen Niña",
+  "author": "Adrian Marcelo Berazain Mallea <b.beracho@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

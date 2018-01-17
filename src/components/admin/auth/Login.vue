@@ -40,25 +40,24 @@
           </v-container>
         </v-card-title>
         <v-card-actions>
-          <v-btn color="primary" block large type="submit">{{$t('login.login') }}</v-btn>
-        </v-card-actions>
-        <v-card-title>
           <v-container fluid>
-            <v-layout row class="login-options">
-              <v-flex xs5>
-                <v-checkbox :label="$t('login.rememberMe')" v-model="remember" color="primary"></v-checkbox>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <v-btn color="primary" block large type="submit">{{$t('login.login') }}</v-btn>
               </v-flex>
-              <v-flex xs7>
+              <!-- <v-flex xs5>
+                <v-checkbox :label="$t('login.rememberMe')" v-model="remember" color="primary"></v-checkbox>
+              </v-flex> -->
+              <v-flex xs12>
                 <div class="text-xs-right">
-                  <a href=""><v-icon>lock_outline</v-icon> {{$t('login.forgotPass') }}</a>
+                  <a href=""><v-icon>lock_outline</v-icon>{{$t('login.forgotPass') }}</a>
                 </div>
               </v-flex>
             </v-layout>
           </v-container>
+        </v-card-actions>
+        <v-card-title class="info">
         </v-card-title>
-        <!-- <v-card-title class="info">
-          <a href="">{{$t('login.signUp') }}</a>
-        </v-card-title> -->
       </form>
     </v-card>
     <div class="login-lang">
