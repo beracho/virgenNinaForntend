@@ -38,9 +38,6 @@ export default {
     adding: 'Agregando usuario',
     personalData: 'Datos Personales.',
     enterPersonalData: 'Ingrese los datos personales para agregarlo al sistema.',
-    firstLastName: 'Primer apellido',
-    secondLastName: 'Segundo apellido',
-    names: 'Nombres',
     id: 'Cédula de identidad',
     place: 'Lugar',
     gender: 'Género',
@@ -67,6 +64,10 @@ export default {
     errorFieldRequired: 'El campo de contraseña es requerido.',
     errorFieldMinLength: 'La contraseña debe tener como mínimo 8 caracteres.',
     errorFieldMaxLength: 'La contraseña debe tener como máximo 20 caracteres.'
+  },
+  inscriptions: {
+    newStudent: 'Nuevo estudiante',
+    csv: 'Cargar CSV'
   },
   inscriptionRegister: {
     tittle: 'Registro de inscripción de estudiantes',
@@ -102,7 +103,7 @@ export default {
     documentTipe: 'Tipo de documento',
     ci: 'Cédula de identidad',
     passport: 'Pasaporte',
-    documentPlace: 'Lugar de CI',
+    documentPlace: 'Lugar de documento',
     rude: 'Código estudiantil RUDE',
     procedenceUnit: 'Unidad educativa de procedencia',
     bornCertificate: 'Certificado de nacimiento',
@@ -140,7 +141,8 @@ export default {
     discapacityTipe: 'La discapacidad es:',
     born: 'De nacimiento',
     adquired: 'Adquirida',
-    hereditary: 'Heredada',
+    inherited: 'Heredada',
+    none: 'Ninguna',
     basicServicesAcces: 'Acceso a servicios básicos',
     waterProcedence: 'El agua de su casa proviene de:',
     netConexion: 'Conexión de red',
@@ -191,7 +193,10 @@ export default {
     active: 'Activo',
     edit: 'Editar',
     status: 'Estado',
-    actions: 'Acciones'
+    actions: 'Acciones',
+    firstLastName: 'Primer apellido',
+    secondLastName: 'Segundo apellido',
+    names: 'Nombres'
   },
   entity: {
     title: 'Entidades',

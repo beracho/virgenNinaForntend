@@ -175,6 +175,8 @@ export default {
         if (states.indexOf(status) === -1) {
           if (status === 408 || status === 504) {
             return data;
+          } else if (error.response.status === 412 && t(error.response.data.mensaje)) {
+            Message.error(t(error.response.data.mensaje));
           } else if (errorsLangEs[status]) {
             Message.error(parseError(data) || t('status') || t('unknown'));
           } else {

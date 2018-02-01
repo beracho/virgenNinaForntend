@@ -16,5 +16,8 @@ export default {
   'cancelRequest': 'Petición cancelada.',
   'validation': 'Error de validación',
   'unknown': 'Ocurrió un error desconocido, intente más tarde.',
-  'sessionExpired': 'Su sesión ha expirado, ingrese nuevamente.'
+  'sessionExpired': 'Su sesión ha expirado, ingrese nuevamente.',
+  // '412': error interno del sistema
+  'noData': 'No se encontraron elementos de la busqueda',
+  'rudeInUse': 'El RUDE ingresado se encuentra asociado a otro estudiante'
 };
