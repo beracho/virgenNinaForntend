@@ -30,6 +30,7 @@
           <!-- <span>Reenviar activación</span>
         </v-tooltip> -->
       </td>
+      <td>{{ props.item.ci }}</td>
       <td>{{ props.item.nombres }}</td>
       <td>{{ props.item.primer_apellido }}</td>
       <td>{{ props.item.segundo_apellido }}</td>
@@ -118,6 +119,7 @@
         },
         headersAsinacion: [
           {text: this.$t('common.actions'), value: ''},
+          {text: this.$t('inscriptionRegister.ci'), value: 'ci'},
           {text: this.$t('common.names'), value: 'nombres'},
           {text: this.$t('common.firstLastName'), value: 'primer_apellido'},
           {text: this.$t('common.secondLastName'), value: 'segundo_apellido'},
@@ -140,15 +142,28 @@
           let sorting = '';
           if (this.pagination.sortBy != null && this.pagination.descending != null) {
             if (this.pagination.descending) {
-              sorting = `&order=-${this.pagination.sortBy}`
+              sorting = `order=-`;
             } else {
-              sorting = `&order=${this.pagination.sortBy}`;
+              sorting = `order=`;
+            }
+            if (this.pagination.sortBy === 'ci') {
+              sorting = `${sorting}documento_identidad`;
+            } else {
+              sorting = `${sorting}${this.pagination.sortBy}`;
             }
           }
-          const rutaEstudiantes = (this.pagination.rowsPerPage === -1) ? `estudiantes` : `estudiantes?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}${sorting}`;
+          let rutaEstudiantes;
+          if (this.pagination.rowsPerPage === -1) {
+            rutaEstudiantes = sorting === '' ? `estudiantes` : `estudiantes?${sorting}`;
+          } else {
+            rutaEstudiantes = sorting === '' ? `estudiantes?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}` : `estudiantes?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}&${sorting}`;
+          }
           this.$service.get(rutaEstudiantes)
           .then(response => {
             this.asignaciones = response.datos.rows ? response.datos.rows : response.datos;
+            this.asignaciones.forEach(function (element) {
+              element.ci = element.documento_identidad + ' ' + element.lugar_documento_identidad;
+            }, this);
             this.totalItems = response.datos.count ? response.datos.count : response.datos.lenght;
           })
         },

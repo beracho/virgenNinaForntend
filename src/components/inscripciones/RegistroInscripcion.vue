@@ -234,7 +234,7 @@
                   <h4>{{$t('inscriptionRegister.health') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.salud.centro_salud" :label="$t('inscriptionRegister.healthAvailability')" :mandatory="true" column>
+                  <v-radio-group v-model="form.salud.centro_salud" :label="$t('inscriptionRegister.healthAvailability')" :mandatory="true" row>
                     <v-radio :label="$t('common.yes')" :value="true"></v-radio>
                     <v-radio :label="$t('common.no')" :value="false"></v-radio>
                   </v-radio-group>
@@ -243,19 +243,19 @@
                   <v-text-field :label="$t('inscriptionRegister.frecuency')" v-model="form.salud.frecuencia_medica"></v-text-field>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.salud.discapacidad_comunicacion" :label="$t('inscriptionRegister.comunication')" :mandatory="true" column>
+                  <v-radio-group v-model="form.salud.discapacidad_comunicacion" :label="$t('inscriptionRegister.comunication')" :mandatory="true" row>
                     <v-radio :label="$t('common.yes')" :value="true"></v-radio>
                     <v-radio :label="$t('common.no')" :value="false"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.salud.discapacidad_motriz" :label="$t('inscriptionRegister.motriz')" :mandatory="true" column>
+                  <v-radio-group v-model="form.salud.discapacidad_motriz" :label="$t('inscriptionRegister.motriz')" :mandatory="true" row>
                     <v-radio :label="$t('common.yes')" :value="true"></v-radio>
                     <v-radio :label="$t('common.no')" :value="false"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.salud.discapacidad_mental" :label="$t('inscriptionRegister.mental')" :mandatory="true" column>
+                  <v-radio-group v-model="form.salud.discapacidad_mental" :label="$t('inscriptionRegister.mental')" :mandatory="true" row>
                     <v-radio :label="$t('common.yes')" :value="true"></v-radio>
                     <v-radio :label="$t('common.no')" :value="false"></v-radio>
                   </v-radio-group>
@@ -282,7 +282,7 @@
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.servicios_basicos.acceso_electricidad" :label="$t('inscriptionRegister.electricityService')" :mandatory="true" column>
+                  <v-radio-group v-model="form.servicios_basicos.acceso_electricidad" :label="$t('inscriptionRegister.electricityService')" :mandatory="true" row>
                     <v-radio :label="$t('common.yes')" :value="true"></v-radio>
                     <v-radio :label="$t('common.no')" :value="false"></v-radio>
                   </v-radio-group>
