@@ -261,12 +261,14 @@
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.salud.discapacidad_origen" :label="$t('inscriptionRegister.discapacityTipe')" :mandatory="true" column>
-                    <v-radio :label="$t('inscriptionRegister.born')" :value="'BORN'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.adquired')" :value="'ADQUIRED'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.inherited')" :value="'INHERITED'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.none')" :value="'NONE'"></v-radio>
-                  </v-radio-group>
+                  <v-select
+                    v-bind:items="discapacidadOrigen"
+                    item-text="name"
+                    item-value="value"
+                    v-model="form.salud.discapacidad_origen"
+                    :label="$t('inscriptionRegister.discapacityTipe')"
+                    autocomplete
+                  ></v-select>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.basicServicesAcces') }}</h4>
@@ -699,6 +701,7 @@ export default {
       opcionesIF: [],
       opcionesTW: [],
       opcionesTT: [],
+      discapacidadOrigen: [],
       // Apoderados
       padres: [],
       //
@@ -708,10 +711,15 @@ export default {
   },
   created () {
     this.hasPermission('registroInscripcion');
+    this.discapacidadOrigen = [
+      {name: this.$t('inscriptionRegister.born'), value: 'BORN'},
+      {name: this.$t('inscriptionRegister.adquired'), value: 'ADQUIRED'},
+      {name: this.$t('inscriptionRegister.inherited'), value: 'INHERITED'},
+      {name: this.$t('inscriptionRegister.none'), value: 'NONE'}];
     this.$service.get(`unidadesEducativas`)
-    // Carga los pioc
     .then(respuesta => {
       this.opcionesUE = respuesta.datos;
+      // Carga los pioc
       return this.$service.get(`piocs`);
     })
     .then(respuesta => {
