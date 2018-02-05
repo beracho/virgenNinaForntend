@@ -273,29 +273,30 @@
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.basicServicesAcces') }}</h4>
                 </v-flex>
-                <v-flex xs4>
-                  <v-radio-group v-model="form.servicios_basicos.origen_agua" :label="$t('inscriptionRegister.waterProcedence')" :mandatory="true" column>
-                    <v-radio :label="$t('inscriptionRegister.netConexion')" :value="'netConexion'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.publicWater')" :value="'publicWater'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.deliveryCar')" :value="'deliveryCar'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.well')" :value="'well'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.river')" :value="'river'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.other')" :value="'other'"></v-radio>
-                  </v-radio-group>
+                <v-flex xs6>
+                  <v-select
+                    v-bind:items="opcionesWaterOrigin"
+                    item-text="nombre"
+                    item-value="value"
+                    v-model="form.servicios_basicos.origen_agua"
+                    :label="$t('inscriptionRegister.waterProcedence')"
+                    autocomplete
+                  ></v-select>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs6>
+                  <v-select
+                    v-bind:items="opcionesWaterDestiny"
+                    item-text="nombre"
+                    item-value="value"
+                    v-model="form.servicios_basicos.destino_agua"
+                    :label="$t('inscriptionRegister.drain')"
+                    autocomplete
+                  ></v-select>
+                </v-flex>
+                <v-flex xs8 offset-xs2>
                   <v-radio-group v-model="form.servicios_basicos.acceso_electricidad" :label="$t('inscriptionRegister.electricityService')" :mandatory="true" row>
                     <v-radio :label="$t('common.yes')" :value="true"></v-radio>
                     <v-radio :label="$t('common.no')" :value="false"></v-radio>
-                  </v-radio-group>
-                </v-flex>
-                <v-flex xs4>
-                  <v-radio-group v-model="form.servicios_basicos.destino_agua" :label="$t('inscriptionRegister.drain')" :mandatory="true" column>
-                    <v-radio :label="$t('inscriptionRegister.sewer')" :value="'sewer'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.septicTank')" :value="'septicTank'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.blindWell')" :value="'blindWell'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.street')" :value="'street'"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.river')" :value="'river'"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs12>
@@ -702,6 +703,9 @@ export default {
       opcionesTW: [],
       opcionesTT: [],
       discapacidadOrigen: [],
+      // Paramétricas
+      opcionesWaterOrigin: [],
+      opcionesWaterDestiny: [],
       // Apoderados
       padres: [],
       //
@@ -746,6 +750,35 @@ export default {
     .then(respuesta => {
       this.opcionesMunicipioNacimiento = respuesta.datos;
       this.opcionesMunicipioDireccion = respuesta.datos;
+      // Carga las opciones de paramétricas
+      return this.$service.get(`parametrosRude`);
+    })
+    .then(respuesta => {
+      respuesta.datos.forEach(function (element) {
+        let auxi = {};
+        switch (element.grupo) {
+          case 'water_origin':
+            auxi = {
+              value: element.nombre,
+              nombre: this.$t(`inscriptionRegister.${element.nombre}`)
+            };
+            this.opcionesWaterOrigin.push(auxi);
+            break;
+          case 'water_destiny':
+            auxi = {
+              value: element.nombre,
+              nombre: this.$t(`inscriptionRegister.${element.nombre}`)
+            };
+            this.opcionesWaterDestiny.push(auxi);
+            break;
+          default:
+            break;
+        }
+      }, this);
+      console.log('------------------');
+      console.log(JSON.stringify(this.opcionesWaterOrigin));
+      console.log('------------------');
+      console.log(JSON.stringify(this.opcionesWaterDestiny));
     });
     // default example values
     this.form.unidadEducativa.nombre = 1;
