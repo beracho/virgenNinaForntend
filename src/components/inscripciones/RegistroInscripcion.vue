@@ -303,13 +303,15 @@
                   <h4>{{$t('inscriptionRegister.work') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.workActivity')" v-model="form.empleo.actividad_laboral"></v-text-field>
-                  <!-- <v-select
-                    v-bind:items="opcionesAT"
+                  <!-- <v-text-field :label="$t('inscriptionRegister.workActivity')" v-model="form.empleo.actividad_laboral"></v-text-field> -->
+                  <v-select
+                    v-bind:items="opcionesActividad"
+                    item-text="nombre"
+                    item-value="value"
                     v-model="form.empleo.actividad_laboral"
                     :label="$t('inscriptionRegister.workActivity')"
                     autocomplete
-                  ></v-select> -->
+                  ></v-select>
                 </v-flex>
                 <v-flex xs4>
                   <v-text-field :label="$t('inscriptionRegister.workDays')" v-model="form.empleo.dias_trabajo"></v-text-field>
@@ -706,6 +708,7 @@ export default {
       // Paramétricas
       opcionesWaterOrigin: [],
       opcionesWaterDestiny: [],
+      opcionesActividad: [],
       // Apoderados
       padres: [],
       //
@@ -760,25 +763,28 @@ export default {
           case 'water_origin':
             auxi = {
               value: element.nombre,
-              nombre: this.$t(`inscriptionRegister.${element.nombre}`)
+              nombre: this.$t(`parameters.${element.nombre}`)
             };
             this.opcionesWaterOrigin.push(auxi);
             break;
           case 'water_destiny':
             auxi = {
               value: element.nombre,
-              nombre: this.$t(`inscriptionRegister.${element.nombre}`)
+              nombre: this.$t(`parameters.${element.nombre}`)
             };
             this.opcionesWaterDestiny.push(auxi);
+            break;
+          case 'activity_rude':
+            auxi = {
+              value: element.nombre,
+              nombre: this.$t(`parameters.${element.nombre}`)
+            };
+            this.opcionesActividad.push(auxi);
             break;
           default:
             break;
         }
       }, this);
-      console.log('------------------');
-      console.log(JSON.stringify(this.opcionesWaterOrigin));
-      console.log('------------------');
-      console.log(JSON.stringify(this.opcionesWaterDestiny));
     });
     // default example values
     this.form.unidadEducativa.nombre = 1;
