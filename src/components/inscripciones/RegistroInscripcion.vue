@@ -1,10 +1,5 @@
 <template>
   <v-layout row wrap align-center>
-    <!-- <v-dialog v-model="dialog" persistent width="1200px"> -->
-      <!-- <v-btn dark class="seccion" slot="activator">
-        Nuevo Usuario
-        <v-icon right dark>add_circle</v-icon>
-      </v-btn> -->
       <v-flex xs12>
       <v-card>
         <v-card-title class="headline">
@@ -76,7 +71,6 @@
                   <h4>{{$t('inscriptionRegister.subBorn') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.country')" v-model="form.nacimiento.pais"></v-text-field> -->
                   <v-select
                     v-bind:items="opcionesPaisNacimiento"
                     item-text="nombre"
@@ -87,7 +81,6 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs4>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.departamento')" v-model="form.nacimiento.departamento"></v-text-field> -->
                   <v-select
                     @change= "actualizaDepartamento(this)"
                     v-bind:items="opcionesDepartamentoNacimiento"
@@ -99,7 +92,6 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs4>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.provincia')" v-model="form.nacimiento.provincia"></v-text-field> -->
                   <v-select
                     v-bind:items="opcionesProvinciaNacimiento"
                     item-text="nombre"
@@ -110,7 +102,6 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs4>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.localidad')" v-model="form.nacimiento.municipio"></v-text-field> -->
                   <v-select
                     v-bind:items="opcionesMunicipioNacimiento"
                     item-text="nombre"
@@ -165,7 +156,6 @@
                   </v-alert>
                 </v-flex>
                 <v-flex xs4>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.provincia')" v-model="form.direccion.provincia"></v-text-field> -->
                   <v-select
                     v-bind:items="opcionesProvinciaDireccion"
                     item-text="nombre"
@@ -176,7 +166,6 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs4>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.municipio')" v-model="form.direccion.municipio"></v-text-field> -->
                   <v-select
                     v-bind:items="opcionesMunicipioDireccion"
                     item-text="nombre"
@@ -233,32 +222,34 @@
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.health') }}</h4>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs6>
                   <v-radio-group v-model="form.salud.centro_salud" :label="$t('inscriptionRegister.healthAvailability')" :mandatory="true" row>
                     <v-radio :label="$t('common.yes')" :value="true"></v-radio>
                     <v-radio :label="$t('common.no')" :value="false"></v-radio>
                   </v-radio-group>
                 </v-flex>
-                <v-flex xs8>
+                <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.frecuency')" v-model="form.salud.frecuencia_medica"></v-text-field>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.salud.discapacidad_comunicacion" :label="$t('inscriptionRegister.comunication')" :mandatory="true" row>
-                    <v-radio :label="$t('common.yes')" :value="true"></v-radio>
-                    <v-radio :label="$t('common.no')" :value="false"></v-radio>
-                  </v-radio-group>
+                  <v-select
+                    v-bind:items="tipoDiscapacidad"
+                    item-text="nombre"
+                    item-value="id_parametro"
+                    v-model="form.salud.tipo_discapacidad"
+                    :label="$t('inscriptionRegister.disability')"
+                    autocomplete
+                  ></v-select>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.salud.discapacidad_motriz" :label="$t('inscriptionRegister.motriz')" :mandatory="true" row>
-                    <v-radio :label="$t('common.yes')" :value="true"></v-radio>
-                    <v-radio :label="$t('common.no')" :value="false"></v-radio>
-                  </v-radio-group>
-                </v-flex>
-                <v-flex xs4>
-                  <v-radio-group v-model="form.salud.discapacidad_mental" :label="$t('inscriptionRegister.mental')" :mandatory="true" row>
-                    <v-radio :label="$t('common.yes')" :value="true"></v-radio>
-                    <v-radio :label="$t('common.no')" :value="false"></v-radio>
-                  </v-radio-group>
+                  <v-select
+                    v-bind:items="subtipoDiscapacidad"
+                    item-text="nombre"
+                    item-value="id_parametro"
+                    v-model="form.salud.subtipo_discapacidad"
+                    :label="$t('inscriptionRegister.subDisability')"
+                    autocomplete
+                  ></v-select>
                 </v-flex>
                 <v-flex xs4>
                   <v-select
@@ -266,7 +257,7 @@
                     item-text="name"
                     item-value="value"
                     v-model="form.salud.discapacidad_origen"
-                    :label="$t('inscriptionRegister.discapacityTipe')"
+                    :label="$t('inscriptionRegister.disabilityTipe')"
                     autocomplete
                   ></v-select>
                 </v-flex>
@@ -303,7 +294,6 @@
                   <h4>{{$t('inscriptionRegister.work') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.workActivity')" v-model="form.empleo.actividad_laboral"></v-text-field> -->
                   <v-select
                     v-bind:items="opcionesActividad"
                     item-text="nombre"
@@ -328,15 +318,8 @@
                 </v-flex>
                 <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.internetAccess')" v-model="form.comunicacion_transporte.acceso_internet"></v-text-field>
-                  <!-- <v-select
-                    :label="$t('inscriptionRegister.internetAccess')"
-                    v-bind:items="opcionesIA"
-                    v-model="form.comunicacion_transporte.acceso_internet"
-                    multiple
-                  ></v-select> -->
                 </v-flex>
                 <v-flex xs6>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.internetFrecuency')" v-model="form.comunicacion_transporte.frecuencia_internet"></v-text-field> -->
                   <v-select
                     v-bind:items="opcionesInternetFrecuencia"
                     item-text="nombre"
@@ -347,7 +330,6 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.transportWay')" v-model="form.comunicacion_transporte.medio_transporte"></v-text-field> -->
                   <v-select
                     v-bind:items="opcionesTransporte"
                     item-text="nombre"
@@ -358,7 +340,6 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
-                  <!-- <v-text-field :label="$t('inscriptionRegister.transportTime')" v-model="form.comunicacion_transporte.duracion_transporte"></v-text-field> -->
                   <v-select
                     v-bind:items="opcionesTiempoTransporte"
                     item-text="nombre"
@@ -476,14 +457,6 @@
                     :label="$t('inscriptionRegister.level')"
                     autocomplete
                   ></v-select>
-                  <!-- <v-radio-group v-model="form.nivel" :label="$t('inscriptionRegister.primaryLevel')" :mandatory="true" column>
-                    <v-radio :label="'1°'" value="p1"></v-radio>
-                    <v-radio :label="'2°'" value="p2"></v-radio>
-                    <v-radio :label="'3°'" value="p3"></v-radio>
-                    <v-radio :label="'4°'" value="p4"></v-radio>
-                    <v-radio :label="'5°'" value="p5"></v-radio>
-                    <v-radio :label="'6°'" value="p6"></v-radio>
-                  </v-radio-group> -->
                 </v-flex>
                 <v-flex xs4>
                   <v-select
@@ -494,14 +467,6 @@
                     :label="$t('inscriptionRegister.grade')"
                     autocomplete
                   ></v-select>
-                  <!-- <v-radio-group v-model="form.nivel" :label="$t('inscriptionRegister.secondaryLevel')" :mandatory="true" column>
-                    <v-radio :label="'1°'" value="s1"></v-radio>
-                    <v-radio :label="'2°'" value="s2"></v-radio>
-                    <v-radio :label="'3°'" value="s3"></v-radio>
-                    <v-radio :label="'4°'" value="s4"></v-radio>
-                    <v-radio :label="'5°'" value="s5"></v-radio>
-                    <v-radio :label="'6°'" value="s6"></v-radio>
-                  </v-radio-group> -->
                 </v-flex>
                 <v-flex xs4>
                   <v-select
@@ -537,7 +502,6 @@
                   </v-alert>
                 </v-flex>
                   <v-flex sx6>
-                    <!-- <v-text-field   ></v-text-field> -->
                     <v-select
                       v-bind:items="opcionesUE"
                       v-model="form.unidadEducativa.nombre"
@@ -586,7 +550,6 @@
         </v-container>
       </v-card>
       </v-flex>
-    <!-- </v-dialog> -->
   </v-layout>
 </template>
 
@@ -662,10 +625,8 @@ export default {
         salud: {
           centro_salud: '',
           frecuencia_medica: '',
-          discapacidad_comunicacion: '',
-          discapacidad_motriz: '',
-          discapacidad_mental: '',
-          discapacidad_otra: '',
+          tipo_discapacidad: '',
+          subtipo_discapacidad: '',
           discapacidad_origen: ''
         },
         servicios_basicos: {
@@ -727,6 +688,9 @@ export default {
       opcionesTransporte: [],
       opcionesInternetFrecuencia: [],
       opcionesTiempoTransporte: [],
+      opcionesDiscapacidad: [],
+      tipoDiscapacidad: [],
+      subtipoDiscapacidad: [],
       // Apoderados
       padres: [],
       //
@@ -839,16 +803,24 @@ export default {
             };
             this.opcionesTiempoTransporte.push(auxi);
             break;
+          case 'disability':
+            auxi = {
+              id_parametro: element.id_parametro,
+              value: element.nombre,
+              nombre: this.$t(`disability.${element.nombre}`),
+              padre: element.fid_parametro_padre
+            };
+            this.opcionesDiscapacidad.push(auxi);
+            if (element.orden === 1) {
+              this.tipoDiscapacidad.push(auxi);
+            } else {
+              this.subtipoDiscapacidad.push(auxi);
+            }
+            break;
           default:
             break;
         }
       }, this);
-      console.log('----------------------------');
-      console.log(JSON.stringify(this.opcionesTransporte));
-      console.log('----------------------------');
-      console.log(JSON.stringify(this.opcionesInternetFrecuencia));
-      console.log('----------------------------');
-      console.log(JSON.stringify(this.opcionesTiempoTransporte));
     });
     // default example values
     this.form.unidadEducativa.nombre = 1;
@@ -946,11 +918,12 @@ export default {
               // salud
               this.form.salud.centro_salud = consulta.estudiante.registro.centro_salud;
               this.form.salud.frecuencia_medica = consulta.estudiante.registro.frecuencia_medica;
-              this.form.salud.discapacidad_comunicacion = consulta.estudiante.discapacidad_comunicacion;
-              this.form.salud.discapacidad_motriz = consulta.estudiante.discapacidad_motriz;
-              this.form.salud.discapacidad_mental = consulta.estudiante.discapacidad_mental;
-              this.form.salud.discapacidad_otra = consulta.estudiante.discapacidad_otra;
               this.form.salud.discapacidad_origen = consulta.estudiante.discapacidad_origen;
+              if (consulta.estudiante.fid_discapacidad >= 75) {
+                this.form.salud.subtipo_discapacidad = consulta.estudiante.fid_discapacidad;
+              } else {
+                this.form.salud.tipo_discapacidad = consulta.estudiante.fid_discapacidad;
+              }
               // servicios básicos
               this.form.servicios_basicos.origen_agua = consulta.estudiante.registro.origen_agua;
               this.form.servicios_basicos.acceso_electricidad = consulta.estudiante.registro.acceso_electricidad;
