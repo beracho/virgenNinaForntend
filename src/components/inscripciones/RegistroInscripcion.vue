@@ -468,45 +468,50 @@
                   </v-alert>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.nivel" :label="$t('inscriptionRegister.initialLevel')" :mandatory="true" column>
-                    <v-radio :label="'1°'" value="i1"></v-radio>
-                    <v-radio :label="'2°'" value="i2"></v-radio>
-                  </v-radio-group>
-                </v-flex>
-                <v-flex xs4>
-                  <v-radio-group v-model="form.nivel" :label="$t('inscriptionRegister.primaryLevel')" :mandatory="true" column>
+                  <v-select
+                    v-bind:items="opcionesNivel"
+                    item-text="name"
+                    item-value="value"
+                    v-model="form.registroInscripcion.nivel"
+                    :label="$t('inscriptionRegister.level')"
+                    autocomplete
+                  ></v-select>
+                  <!-- <v-radio-group v-model="form.nivel" :label="$t('inscriptionRegister.primaryLevel')" :mandatory="true" column>
                     <v-radio :label="'1°'" value="p1"></v-radio>
                     <v-radio :label="'2°'" value="p2"></v-radio>
                     <v-radio :label="'3°'" value="p3"></v-radio>
                     <v-radio :label="'4°'" value="p4"></v-radio>
                     <v-radio :label="'5°'" value="p5"></v-radio>
                     <v-radio :label="'6°'" value="p6"></v-radio>
-                  </v-radio-group>
+                  </v-radio-group> -->
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group v-model="form.nivel" :label="$t('inscriptionRegister.secondaryLevel')" :mandatory="true" column>
+                  <v-select
+                    v-bind:items="opcionesGrado"
+                    item-text="name"
+                    item-value="value"
+                    v-model="form.registroInscripcion.grado"
+                    :label="$t('inscriptionRegister.grade')"
+                    autocomplete
+                  ></v-select>
+                  <!-- <v-radio-group v-model="form.nivel" :label="$t('inscriptionRegister.secondaryLevel')" :mandatory="true" column>
                     <v-radio :label="'1°'" value="s1"></v-radio>
                     <v-radio :label="'2°'" value="s2"></v-radio>
                     <v-radio :label="'3°'" value="s3"></v-radio>
                     <v-radio :label="'4°'" value="s4"></v-radio>
                     <v-radio :label="'5°'" value="s5"></v-radio>
                     <v-radio :label="'6°'" value="s6"></v-radio>
-                  </v-radio-group>
+                  </v-radio-group> -->
                 </v-flex>
-                <v-flex xs6>
-                  <v-radio-group v-model="form.nivel" :label="$t('inscriptionRegister.nivelation')" :mandatory="true" column>
-                    <v-radio :label="'1'" value="r1"></v-radio>
-                    <v-radio :label="'2'" value="r2"></v-radio>
-                    <v-radio :label="'3'" value="r3"></v-radio>
-                    <v-radio :label="'4'" value="r4"></v-radio>
-                  </v-radio-group>
-                </v-flex>
-                <v-flex xs6>
-                  <v-radio-group v-model="form.turno" :label="$t('inscriptionRegister.turn')" :mandatory="true" column>
-                    <v-radio :label="$t('inscriptionRegister.morning')" value="manana"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.afternoon')" value="tarde"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.evening')" value="noche"></v-radio>
-                  </v-radio-group>
+                <v-flex xs4>
+                  <v-select
+                    v-bind:items="opcionesTurno"
+                    item-text="name"
+                    item-value="value"
+                    v-model="form.registroInscripcion.turno"
+                    :label="$t('inscriptionRegister.turn')"
+                    autocomplete
+                  ></v-select>
                 </v-flex>
                 <v-flex xs12>
                   <v-radio-group v-model="form.paralelo" :label="$t('inscriptionRegister.paralel')" :mandatory="true" row>
@@ -648,7 +653,11 @@ export default {
           internetAcces: '',
           internetFrecuency: '',
           transportWay: '',
-          transportTime: ''
+          transportTime: '',
+          nivel: '',
+          grado: '',
+          paralelo: '',
+          turno: ''
         },
         salud: {
           centro_salud: '',
@@ -708,6 +717,9 @@ export default {
       opcionesTW: [],
       opcionesTT: [],
       discapacidadOrigen: [],
+      opcionesNivel: [],
+      opcionesGrado: [],
+      opcionesTurno: [],
       // Paramétricas
       opcionesWaterOrigin: [],
       opcionesWaterDestiny: [],
@@ -729,6 +741,25 @@ export default {
       {name: this.$t('inscriptionRegister.adquired'), value: 'ADQUIRED'},
       {name: this.$t('inscriptionRegister.inherited'), value: 'INHERITED'},
       {name: this.$t('inscriptionRegister.none'), value: 'NONE'}];
+    this.opcionesNivel = [
+      {name: this.$t('inscriptionRegister.initial'), value: 'INICIAL'},
+      {name: this.$t('inscriptionRegister.primary'), value: 'PRIMARIA'},
+      {name: this.$t('inscriptionRegister.secondary'), value: 'SECUNDARIA'},
+      {name: this.$t('inscriptionRegister.lag'), value: 'REZAGO'}
+    ];
+    this.opcionesGrado = [
+      {name: '1°', value: 1},
+      {name: '2°', value: 2},
+      {name: '3°', value: 3},
+      {name: '4°', value: 4},
+      {name: '5°', value: 5},
+      {name: '6°', value: 6}
+    ];
+    this.opcionesTurno = [
+      {name: this.$t('inscriptionRegister.morning'), value: 'MAÑANA'},
+      {name: this.$t('inscriptionRegister.afternoon'), value: 'TARDE'},
+      {name: this.$t('inscriptionRegister.evening'), value: 'NOCHE'}
+    ];
     this.$service.get(`unidadesEducativas`)
     .then(respuesta => {
       this.opcionesUE = respuesta.datos;
