@@ -336,34 +336,37 @@
                   ></v-select> -->
                 </v-flex>
                 <v-flex xs6>
-                  <v-text-field :label="$t('inscriptionRegister.internetFrecuency')" v-model="form.comunicacion_transporte.frecuencia_internet"></v-text-field>
-                  <!-- <v-select
-                    v-bind:items="opcionesIF"
+                  <!-- <v-text-field :label="$t('inscriptionRegister.internetFrecuency')" v-model="form.comunicacion_transporte.frecuencia_internet"></v-text-field> -->
+                  <v-select
+                    v-bind:items="opcionesInternetFrecuencia"
+                    item-text="nombre"
+                    item-value="value"
                     v-model="form.comunicacion_transporte.frecuencia_internet"
                     :label="$t('inscriptionRegister.internetFrecuency')"
-                    single-line
-                    bottom
-                  ></v-select> -->
+                    autocomplete
+                  ></v-select>
                 </v-flex>
                 <v-flex xs6>
-                  <v-text-field :label="$t('inscriptionRegister.transportWay')" v-model="form.comunicacion_transporte.medio_transporte"></v-text-field>
-                  <!-- <v-select
-                    v-bind:items="opcionesTW"
+                  <!-- <v-text-field :label="$t('inscriptionRegister.transportWay')" v-model="form.comunicacion_transporte.medio_transporte"></v-text-field> -->
+                  <v-select
+                    v-bind:items="opcionesTransporte"
+                    item-text="nombre"
+                    item-value="value"
                     v-model="form.comunicacion_transporte.medio_transporte"
                     :label="$t('inscriptionRegister.transportWay')"
-                    single-line
-                    bottom
-                  ></v-select> -->
+                    autocomplete
+                  ></v-select>
                 </v-flex>
                 <v-flex xs6>
-                  <v-text-field :label="$t('inscriptionRegister.transportTime')" v-model="form.comunicacion_transporte.duracion_transporte"></v-text-field>
-                  <!-- <v-select
-                    v-bind:items="opcionesTT"
+                  <!-- <v-text-field :label="$t('inscriptionRegister.transportTime')" v-model="form.comunicacion_transporte.duracion_transporte"></v-text-field> -->
+                  <v-select
+                    v-bind:items="opcionesTiempoTransporte"
+                    item-text="nombre"
+                    item-value="value"
                     v-model="form.comunicacion_transporte.duracion_transporte"
                     :label="$t('inscriptionRegister.transportTime')"
-                    single-line
-                    bottom
-                  ></v-select> -->
+                    autocomplete
+                  ></v-select>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
@@ -709,6 +712,9 @@ export default {
       opcionesWaterOrigin: [],
       opcionesWaterDestiny: [],
       opcionesActividad: [],
+      opcionesTransporte: [],
+      opcionesInternetFrecuencia: [],
+      opcionesTiempoTransporte: [],
       // Apoderados
       padres: [],
       //
@@ -781,10 +787,37 @@ export default {
             };
             this.opcionesActividad.push(auxi);
             break;
+          case 'transport':
+            auxi = {
+              value: element.nombre,
+              nombre: this.$t(`parameters.${element.nombre}`)
+            };
+            this.opcionesTransporte.push(auxi);
+            break;
+          case 'internet_frecuency':
+            auxi = {
+              value: element.nombre,
+              nombre: this.$t(`parameters.${element.nombre}`)
+            };
+            this.opcionesInternetFrecuencia.push(auxi);
+            break;
+          case 'transport_time':
+            auxi = {
+              value: element.nombre,
+              nombre: this.$t(`parameters.${element.nombre}`)
+            };
+            this.opcionesTiempoTransporte.push(auxi);
+            break;
           default:
             break;
         }
       }, this);
+      console.log('----------------------------');
+      console.log(JSON.stringify(this.opcionesTransporte));
+      console.log('----------------------------');
+      console.log(JSON.stringify(this.opcionesInternetFrecuencia));
+      console.log('----------------------------');
+      console.log(JSON.stringify(this.opcionesTiempoTransporte));
     });
     // default example values
     this.form.unidadEducativa.nombre = 1;
