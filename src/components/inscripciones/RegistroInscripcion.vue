@@ -460,6 +460,7 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-select
+                  v-if="form.registroInscripcion.nivel !== ''"
                     v-bind:items="opcionesGrado"
                     item-text="name"
                     item-value="value"
@@ -710,14 +711,6 @@ export default {
       {name: this.$t('inscriptionRegister.primary'), value: 'PRIMARIA'},
       {name: this.$t('inscriptionRegister.secondary'), value: 'SECUNDARIA'},
       {name: this.$t('inscriptionRegister.lag'), value: 'REZAGO'}
-    ];
-    this.opcionesGrado = [
-      {name: '1°', value: 1},
-      {name: '2°', value: 2},
-      {name: '3°', value: 3},
-      {name: '4°', value: 4},
-      {name: '5°', value: 5},
-      {name: '6°', value: 6}
     ];
     this.opcionesTurno = [
       {name: this.$t('inscriptionRegister.morning'), value: 'MAÑANA'},
@@ -1048,6 +1041,46 @@ export default {
       .then(respuesta => {
         this.form.direccion.provincia = respuesta.datos[0].id_dpa;
       });
+    },
+    'form.registroInscripcion.nivel': function () {
+      switch (this.form.registroInscripcion.nivel) {
+        case 'INICIAL':
+          this.opcionesGrado = [
+            {name: '1°', value: 1},
+            {name: '2°', value: 2}
+          ];
+          break;
+        case 'PRIMARIA':
+          this.opcionesGrado = [
+            {name: '1°', value: 1},
+            {name: '2°', value: 2},
+            {name: '3°', value: 3},
+            {name: '4°', value: 4},
+            {name: '5°', value: 5},
+            {name: '6°', value: 6}
+          ];
+          break;
+        case 'SECUNDARIA':
+          this.opcionesGrado = [
+            {name: '1°', value: 1},
+            {name: '2°', value: 2},
+            {name: '3°', value: 3},
+            {name: '4°', value: 4},
+            {name: '5°', value: 5},
+            {name: '6°', value: 6}
+          ];
+          break;
+        case 'REZAGO':
+          this.opcionesGrado = [
+            {name: '1°', value: 1},
+            {name: '2°', value: 2},
+            {name: '3°', value: 3},
+            {name: '4°', value: 4}
+          ];
+          break;
+        default:
+          break;
+      }
     },
     'form.salud.tipo_discapacidad': function () {
       this.subtipoDiscapacidad = [];
