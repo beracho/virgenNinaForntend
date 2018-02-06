@@ -243,6 +243,7 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-select
+                    v-if="form.salud.tipo_discapacidad !== ''"
                     v-bind:items="subtipoDiscapacidad"
                     item-text="nombre"
                     item-value="id_parametro"
@@ -1024,16 +1025,19 @@ export default {
     }
   },
   watch: {
-    'form.password': function (val) {
-      if (val.length === 0) {
-        this.hidePass = true;
-      }
-    },
-    '$v.form.username.$error': function (val) {
-      this.errorHandler(this.$v.form.username, this.errors.username);
-    },
-    '$v.form.password.$error': function (val) {
-      this.errorHandler(this.$v.form.password, this.errors.password);
+    'form.salud.tipo_discapacidad': function () {
+      this.subtipoDiscapacidad = [];
+      this.opcionesDiscapacidad.forEach(function (element) {
+        if (element.padre === this.form.salud.tipo_discapacidad) {
+          const auxi = {
+            id_parametro: element.id_parametro,
+            value: element.value,
+            nombre: this.$t(`disability.${element.value}`),
+            padre: element.padre
+          };
+          this.subtipoDiscapacidad.push(auxi);
+        }
+      }, this);
     }
   }
 };
