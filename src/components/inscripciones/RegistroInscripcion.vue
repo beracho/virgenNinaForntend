@@ -82,7 +82,6 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-select
-                    @change= "actualizaDepartamento(this)"
                     v-bind:items="opcionesDepartamentoNacimiento"
                     item-text="nombre"
                     item-value="id_dpa"
@@ -993,19 +992,6 @@ export default {
       });
     },
     actualizaDepartamento (esto) {
-      console.log('---------------------');
-      console.log(Object.keys(esto));
-      console.log(this.form.nacimiento.departamento);
-      this.$service.get(`dpaNivel?dpaHijos=${this.form.nacimiento.departamento}`)
-        .then(respuesta => {
-          this.opcionesPaisNacimiento = respuesta.datos;
-          console.log(respuesta.datos);
-        });
-      this.$service.get(`dpaNivel?dpaPadre=${this.form.nacimiento.departamento}`)
-        .then(respuesta => {
-          this.opcionesPaisNacimiento = respuesta.datos;
-          console.log(respuesta.datos);
-        });
     }
   },
   components: { AppLang },
@@ -1025,6 +1011,44 @@ export default {
     }
   },
   watch: {
+    'form.nacimiento.departamento': function () {
+      this.$service.get(`dpaHijos?id_dpa=${this.form.nacimiento.departamento}`)
+        .then(respuesta => {
+          this.opcionesProvinciaNacimiento = respuesta.datos;
+          return this.$service.get(`dpaPadre?id_dpa=${this.form.nacimiento.departamento}`);
+        })
+        .then(respuesta => {
+          this.form.nacimiento.pais = respuesta.datos[0].id_dpa;
+        });
+    },
+    'form.nacimiento.provincia': function () {
+      this.$service.get(`dpaHijos?id_dpa=${this.form.nacimiento.provincia}`)
+        .then(respuesta => {
+          this.opcionesMunicipioNacimiento = respuesta.datos;
+          return this.$service.get(`dpaPadre?id_dpa=${this.form.nacimiento.provincia}`);
+        })
+        .then(respuesta => {
+          this.form.nacimiento.departamento = respuesta.datos[0].id_dpa;
+        });
+    },
+    'form.nacimiento.municipio': function () {
+      this.$service.get(`dpaPadre?id_dpa=${this.form.nacimiento.municipio}`)
+      .then(respuesta => {
+        this.form.nacimiento.provincia = respuesta.datos[0].id_dpa;
+      });
+    },
+    'form.direccion.provincia': function () {
+      this.$service.get(`dpaHijos?id_dpa=${this.form.direccion.provincia}`)
+        .then(respuesta => {
+          this.opcionesMunicipioDireccion = respuesta.datos;
+        });
+    },
+    'form.direccion.municipio': function () {
+      this.$service.get(`dpaPadre?id_dpa=${this.form.direccion.municipio}`)
+      .then(respuesta => {
+        this.form.direccion.provincia = respuesta.datos[0].id_dpa;
+      });
+    },
     'form.salud.tipo_discapacidad': function () {
       this.subtipoDiscapacidad = [];
       this.opcionesDiscapacidad.forEach(function (element) {
