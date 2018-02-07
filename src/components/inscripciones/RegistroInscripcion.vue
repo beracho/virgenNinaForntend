@@ -480,7 +480,7 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs12>
-                  <v-radio-group v-model="form.paralelo" :label="$t('inscriptionRegister.paralel')" :mandatory="true" row>
+                  <v-radio-group v-model="form.registroInscripcion.paralelo" :label="$t('inscriptionRegister.paralel')" :mandatory="true" row>
                     <v-radio :label="'A'" value="a"></v-radio>
                     <v-radio :label="'B'" value="b"></v-radio>
                     <v-radio :label="'C'" value="c"></v-radio>
@@ -574,6 +574,7 @@ export default {
           sie: ''
         },
         unidadEducativaAnterior: {
+          id: '',
           codSie: '',
           nombreUnidad: ''
         },
@@ -614,10 +615,6 @@ export default {
         registroInscripcion: {
           idioma: '',
           idiomas: '',
-          internetAcces: '',
-          internetFrecuency: '',
-          transportWay: '',
-          transportTime: '',
           nivel: '',
           grado: '',
           paralelo: '',
@@ -645,9 +642,6 @@ export default {
           frecuencia_internet: '',
           medio_transporte: '',
           duracion_transporte: ''
-        },
-        relacionEstudiante: {
-
         },
         apoderados: []
       },
@@ -889,10 +883,15 @@ export default {
               this.form.persona.pioc = consulta.estudiante.registro.pioc.id_pioc;
               // nacimiento
               this.form.nacimiento.fecha_nacimiento = consulta.fecha_nacimiento.substring(0, consulta.fecha_nacimiento.indexOf('T')); // get posicion T y cortar
-              this.form.nacimiento.municipio = consulta.lugar_nacimiento.municipio;
-              this.form.nacimiento.provincia = consulta.lugar_nacimiento.provincia;
-              this.form.nacimiento.departamento = consulta.lugar_nacimiento.departamento;
-              this.form.nacimiento.pais = consulta.lugar_nacimiento.pais;
+              if (consulta.lugar_nacimiento.municipio) {
+                this.form.nacimiento.municipio = consulta.lugar_nacimiento.municipio;
+              } else if (consulta.lugar_nacimiento.provincia) {
+                this.form.nacimiento.provincia = consulta.lugar_nacimiento.provincia;
+              } else if (consulta.lugar_nacimiento.departamento) {
+                this.form.nacimiento.departamento = consulta.lugar_nacimiento.departamento;
+              } else {
+                this.form.nacimiento.pais = consulta.lugar_nacimiento.pais;
+              }
               this.form.nacimiento.nOficialia = consulta.estudiante.registro.oficialia;
               this.form.nacimiento.nLibro = consulta.estudiante.registro.libro;
               this.form.nacimiento.nPartida = consulta.estudiante.registro.partida;
@@ -958,6 +957,24 @@ export default {
                   src: '/static/images/' + (tutor.persona_es.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg')
                 };
                 this.padres.push(obj);
+              }, this);
+              // Unidades educativas
+              consulta.unidades_educativas.forEach(function (element) {
+                if (element.gestion === '2018') {
+                  this.form.unidadEducativa.nombre = element.fid_unidad_educativa;
+                  this.form.registroInscripcion.nivel = element.nivel;
+                  this.form.registroInscripcion.grado = element.grado;
+                  this.form.registroInscripcion.turno = element.turno;
+                  this.form.registroInscripcion.paralelo = element.paralelo;
+                  if (this.form.unidadEducativa.nombre !== '') {
+                    this.buscaUnidadEducativa('search');
+                  }
+                }
+                if (element.gestion === '2017') {
+                  this.form.unidadEducativaAnterior.id = element.fid_unidad_educativa;
+                  this.form.unidadEducativaAnterior.codSie = element.unidad_educativa.sie;
+                  this.form.unidadEducativaAnterior.nombreUnidad = element.unidad_educativa.nombre;
+                }
               }, this);
             });
           // } else {
@@ -1046,36 +1063,36 @@ export default {
       switch (this.form.registroInscripcion.nivel) {
         case 'INICIAL':
           this.opcionesGrado = [
-            {name: '1°', value: 1},
-            {name: '2°', value: 2}
+            {name: '1°', value: '1'},
+            {name: '2°', value: '2'}
           ];
           break;
         case 'PRIMARIA':
           this.opcionesGrado = [
-            {name: '1°', value: 1},
-            {name: '2°', value: 2},
-            {name: '3°', value: 3},
-            {name: '4°', value: 4},
-            {name: '5°', value: 5},
-            {name: '6°', value: 6}
+            {name: '1°', value: '1'},
+            {name: '2°', value: '2'},
+            {name: '3°', value: '3'},
+            {name: '4°', value: '4'},
+            {name: '5°', value: '5'},
+            {name: '6°', value: '6'}
           ];
           break;
         case 'SECUNDARIA':
           this.opcionesGrado = [
-            {name: '1°', value: 1},
-            {name: '2°', value: 2},
-            {name: '3°', value: 3},
-            {name: '4°', value: 4},
-            {name: '5°', value: 5},
-            {name: '6°', value: 6}
+            {name: '1°', value: '1'},
+            {name: '2°', value: '2'},
+            {name: '3°', value: '3'},
+            {name: '4°', value: '4'},
+            {name: '5°', value: '5'},
+            {name: '6°', value: '6'}
           ];
           break;
         case 'REZAGO':
           this.opcionesGrado = [
-            {name: '1°', value: 1},
-            {name: '2°', value: 2},
-            {name: '3°', value: 3},
-            {name: '4°', value: 4}
+            {name: '1°', value: '1'},
+            {name: '2°', value: '2'},
+            {name: '3°', value: '3'},
+            {name: '4°', value: '4'}
           ];
           break;
         default:
