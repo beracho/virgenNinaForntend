@@ -70,6 +70,8 @@ export default {
     csv: 'Cargar CSV'
   },
   inscriptionRegister: {
+    createNew: 'Crear nueva',
+    createNewSchool: 'Crear nueva Unidad Educativa',
     tittle: 'Registro de inscripción de estudiantes',
     subtitle1: 'Datos de la unidad educativa',
     dependency: 'Dependencia de la unidad educativa',
@@ -79,7 +81,6 @@ export default {
     comunitary: 'comunitaria',
     convein: 'de convenio',
     private: 'privada',
-    nameEducative: 'Nombre de la unidad educativa',
     educativeDistrit: 'Distrito educativo',
     subtitle2: 'Datos del estudiante',
     subNames: 'Nombres y apellidos',
@@ -231,6 +232,8 @@ export default {
     required: 'Campo obligatorio',
     cancel: 'Cancelar',
     save: 'Guardar',
+    select: 'Seleccionar',
+    close: 'Cerrar',
     yes: 'si',
     no: 'no',
     rowsPage: 'Filas por página',

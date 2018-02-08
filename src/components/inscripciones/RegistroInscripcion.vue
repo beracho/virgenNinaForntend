@@ -1,4 +1,5 @@
 <template>
+  <div>
   <v-layout row wrap align-center>
       <v-flex xs12>
       <v-card>
@@ -50,10 +51,17 @@
                   <h4>{{$t('inscriptionRegister.procedenceUnit') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.codSie')" v-model="form.unidadEducativaAnterior.codSie"></v-text-field>
+                  <v-select
+                    v-bind:items="todosUE"
+                    item-text="resumen"
+                    item-value="id_unidad_educativa"
+                    v-model="form.unidadEducativaAnterior.id"
+                    :label="$t('inscriptionRegister.codSie')"
+                    autocomplete
+                  ></v-select>
                 </v-flex>
                 <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.nameEducativeUnit')" v-model="form.unidadEducativaAnterior.nombreUnidad"></v-text-field>
+                  <v-btn block color="primary" @click="windowUE = true">{{$t('inscriptionRegister.createNew')}}</v-btn>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.subNames') }}</h4>
@@ -132,8 +140,8 @@
                         <template slot-scope="{ save, cancel }">
                           <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="cancel">Cancelar</v-btn>
-                            <v-btn flat color="primary" @click="save">Seleccionar</v-btn>
+                            <v-btn flat color="primary" @click="cancel">{{$t('common.cancel')}}</v-btn>
+                            <v-btn flat color="primary" @click="save">{{$t('common.select')}}</v-btn>
                           </v-card-actions>
                         </template>
                       </v-date-picker>
@@ -508,7 +516,7 @@
                       v-model="form.unidadEducativa.nombre"
                       item-text="nombre"
                       item-value="id_unidad_educativa"
-                      :label="$t('inscriptionRegister.nameEducative')"
+                      :label="$t('inscriptionRegister.nameEducativeUnit')"
                       :disabled="searchUE"
                       autocomplete
                     ></v-select>
@@ -551,7 +559,44 @@
         </v-container>
       </v-card>
       </v-flex>
+  <!-- VENTANA DE CREACIÓN DE UNIDAD EDUCATIVA -->
+      <v-dialog v-model="windowUE" max-width="800px">
+        <v-card>
+          <v-card-title>
+            {{$t('inscriptionRegister.createNewSchool')}}
+          </v-card-title>
+          <v-card-text>
+            <v-layout row wrap>
+              <v-flex xs6>
+                <v-text-field :label="$t('inscriptionRegister.codSie')" v-model="form1.sie"></v-text-field>
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field :label="$t('inscriptionRegister.nameEducativeUnit')" v-model="form1.nombre"></v-text-field>
+              </v-flex>
+              <v-flex xs6>
+                <v-select
+                  v-bind:items="dependency"
+                  item-text="name"
+                  item-value="value"
+                  v-model="form1.dependencia"
+                  :label="$t('inscriptionRegister.dependency')"
+                  autocomplete
+                ></v-select>
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field :label="$t('inscriptionRegister.educativeDistrit')" v-model="form1.distrito"></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click.stop="windowUE=false">{{$t('common.close')}}</v-btn>
+          <v-btn color="primary" @click.stop="agregaUnidadEducativa()">{{$t('common.save')}}</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
   </v-layout>
+  </div>
 </template>
 
 <script>
@@ -566,6 +611,12 @@ export default {
   data () {
     return {
       validForm: true,
+      form1: {
+        sie: '',
+        nombre: '',
+        dependencia: '',
+        distrito: ''
+      },
       form: {
         unidadEducativa: {
           dependencia: '',
@@ -653,7 +704,10 @@ export default {
       disableOptionsUE: true,
       searchUE: false,
       chargingUE: true,
+      todosUE: [],
       opcionesUE: [],
+      windowUE: false,
+      dependency: [],
       // Registro Estudiante
       disableOptionsRE: true,
       searchRE: false,
@@ -711,9 +765,21 @@ export default {
       {name: this.$t('inscriptionRegister.afternoon'), value: 'TARDE'},
       {name: this.$t('inscriptionRegister.evening'), value: 'NOCHE'}
     ];
+    this.dependency = [
+      {name: this.$t('inscriptionRegister.public'), value: 'public'},
+      {name: this.$t('inscriptionRegister.comunitary'), value: 'comunitary'},
+      {name: this.$t('inscriptionRegister.convein'), value: 'convein'},
+      {name: this.$t('inscriptionRegister.private'), value: 'private'}
+    ];
     this.$service.get(`unidadesEducativas`)
     .then(respuesta => {
-      this.opcionesUE = respuesta.datos;
+      this.todosUE = respuesta.datos;
+      this.todosUE.forEach(function (element) {
+        element.resumen = (element.sie ? 'Sie: ' + element.sie : '') + (element.nombre ? ' Nombre: ' + element.nombre : '');
+        if (element.id_unidad_educativa === 1 || element.id_unidad_educativa === 2 || element.id_unidad_educativa === 3) {
+          this.opcionesUE.push(element);
+        }
+      }, this);
       // Carga los pioc
       return this.$service.get(`piocs`);
     })
@@ -852,6 +918,12 @@ export default {
       } else {
         this.$message.error(this.$t('inscriptionRegister.errorNameField'));
       }
+    },
+    agregaUnidadEducativa () {
+      this.$service.post(`unidadEducativa`, this.form1)
+      .then(respuesta => {
+        console.log(JSON.stringify(respuesta));
+      });
     },
     buscaEstudiante (action) {
       if (this.form.persona.documento_identidad && this.form.persona.lugar_documento_identidad && this.form.persona.tipo_documento) {
