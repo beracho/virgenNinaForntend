@@ -88,6 +88,7 @@ export default {
     firstLastName: 'Primer apellido',
     secondLastName: 'Segundo apellido',
     names: 'Nombres',
+    relation: 'Parentezco',
     country: 'Pais',
     provincia: 'Provincia',
     municipio: 'Municipio',

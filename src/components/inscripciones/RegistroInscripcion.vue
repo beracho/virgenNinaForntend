@@ -385,10 +385,10 @@
                     </v-card-media>
                     <v-card-actions class="white">
                       <v-spacer></v-spacer>
-                      <v-btn icon>
+                      <!-- <v-btn icon>
                         <v-icon>visibility</v-icon>
-                      </v-btn>
-                      <v-btn icon>
+                      </v-btn> -->
+                      <v-btn icon v-on:click="windowA = true, formA = padre, edita = true">
                         <v-icon>edit</v-icon>
                       </v-btn>
                       <v-icon>face</v-icon>
@@ -413,7 +413,7 @@
                               size="150px"
                               class="grey lighten-4"
                             >
-                              <img src="/static/images/plus.png" alt="avatar">
+                              <img src="/static/images/unknown.png" alt="avatar">
                             </v-avatar>
                           </v-flex>
                         </v-layout>
@@ -421,33 +421,12 @@
                     </v-card-media>
                     <v-card-actions class="white">
                       <v-spacer></v-spacer>
-                      <v-btn icon>
+                      <v-btn icon v-on:click="windowA = true, formA = formAux">
                         <v-icon>add</v-icon>
                       </v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
-                <!-- <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.firstLastName')" v-model="form.persona.primer_apellido"></v-text-field>
-                </v-flex>
-                <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.secondLastName')" v-model="form.persona.segundo_apellido"></v-text-field>
-                </v-flex>
-                <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.names')" v-model="form.persona.nombres"></v-text-field>
-                </v-flex>
-                <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.ci')" v-model="form.persona.ci"></v-text-field>
-                </v-flex>
-                <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.language')" v-model="form.persona.idioma"></v-text-field>
-                </v-flex>
-                <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.profession')" v-model="form.persona.profesion"></v-text-field>
-                </v-flex>
-                <v-flex xs4>
-                  <v-text-field :label="$t('inscriptionRegister.maxEducation')" v-model="form.persona.nivelEducacion"></v-text-field>
-                </v-flex> -->
               </v-layout>
 
               <v-layout row wrap>
@@ -568,23 +547,23 @@
           <v-card-text>
             <v-layout row wrap>
               <v-flex xs6>
-                <v-text-field :label="$t('inscriptionRegister.codSie')" v-model="form1.sie"></v-text-field>
+                <v-text-field :label="$t('inscriptionRegister.codSie')" v-model="formUE.sie"></v-text-field>
               </v-flex>
               <v-flex xs6>
-                <v-text-field :label="$t('inscriptionRegister.nameEducativeUnit')" v-model="form1.nombre"></v-text-field>
+                <v-text-field :label="$t('inscriptionRegister.nameEducativeUnit')" v-model="formUE.nombre"></v-text-field>
               </v-flex>
               <v-flex xs6>
                 <v-select
                   v-bind:items="dependency"
                   item-text="name"
                   item-value="value"
-                  v-model="form1.dependencia"
+                  v-model="formUE.dependencia"
                   :label="$t('inscriptionRegister.dependency')"
                   autocomplete
                 ></v-select>
               </v-flex>
               <v-flex xs6>
-                <v-text-field :label="$t('inscriptionRegister.educativeDistrit')" v-model="form1.distrito"></v-text-field>
+                <v-text-field :label="$t('inscriptionRegister.educativeDistrit')" v-model="formUE.distrito"></v-text-field>
               </v-flex>
             </v-layout>
           </v-card-text>
@@ -595,7 +574,87 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-  </v-layout>
+  <!-- VENTANA DE CREACIÓN DE PERSONAS -->
+      <v-dialog v-model="windowA" max-width="800px" persistent>
+        <v-card>
+          <v-card-title>
+            {{$t('inscriptionRegister.createNewSchool')}}
+          </v-card-title>
+          <v-card-text>
+            <v-layout row wrap>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.firstLastName')" v-model="formA.primer_apellido"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.secondLastName')" v-model="formA.segundo_apellido"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.names')" v-model="formA.nombres"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :disabled="edita" :label="$t('inscriptionRegister.ci')" v-model="formA.documento_identidad"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :disabled="edita" :label="$t('inscriptionRegister.documentPlace')" v-model="formA.lugar_documento_identidad"></v-text-field>
+              </v-flex>
+                <v-flex xs4>
+                  <v-menu
+                      lazy
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      :nudge-right="40"
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <v-text-field
+                        slot="activator"
+                        :label="$t('inscriptionRegister.bornDate')"
+                        v-model="formA.fecha_nacimiento"
+                        prepend-icon="event"
+                        readonly
+                      ></v-text-field>
+                      <v-date-picker v-model="formA.fecha_nacimiento" locale="es" no-title scrollable actions>
+                        <template slot-scope="{ save, cancel }">
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn flat color="primary" @click="cancel">{{$t('common.cancel')}}</v-btn>
+                            <v-btn flat color="primary" @click="save">{{$t('common.select')}}</v-btn>
+                          </v-card-actions>
+                        </template>
+                      </v-date-picker>
+                    </v-menu>
+              </v-flex>
+              <v-flex xs4>
+                <v-radio-group v-model="formA.genero" :label="$t('usuarios.gender')" row>
+                  <v-radio :label="$t('usuarios.male')" :value="'M'"></v-radio>
+                  <v-radio :label="$t('usuarios.female')" :value="'F'"></v-radio>
+                </v-radio-group>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.relation')" v-model="formA.relation"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.language')" v-model="formA.idioma_materno"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.profession')" v-model="formA.ocupacion_actual"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.maxEducation')" v-model="formA.grado_instruccion"></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click.stop="cerrarTutor()">{{$t('common.close')}}</v-btn>
+          <v-btn v-if="edita" color="primary" @click.stop="agregaTutor('edita')">{{$t('common.save')}}</v-btn>
+          <v-btn v-if="!edita" color="primary" @click.stop="agregaTutor('nuevo')">{{$t('common.save')}}</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
   </div>
 </template>
 
@@ -611,11 +670,25 @@ export default {
   data () {
     return {
       validForm: true,
-      form1: {
+      formUE: {
         sie: '',
         nombre: '',
         dependencia: '',
         distrito: ''
+      },
+      formAux: {},
+      formA: {
+        primer_apellido: '',
+        segundo_apellido: '',
+        nombres: '',
+        documento_identidad: '',
+        lugar_documento_identidad: '',
+        relation: '',
+        idioma_materno: '',
+        ocupacion_actual: '',
+        grado_instruccion: '',
+        genero: '',
+        fecha_nacimiento: ''
       },
       form: {
         unidadEducativa: {
@@ -741,6 +814,8 @@ export default {
       tipoDiscapacidad: [],
       subtipoDiscapacidad: [],
       // Apoderados
+      edita: false,
+      windowA: false,
       padres: [],
       //
       hidePass: true,
@@ -920,10 +995,82 @@ export default {
       }
     },
     agregaUnidadEducativa () {
-      this.$service.post(`unidadEducativa`, this.form1)
+      this.$service.post(`unidadEducativa`, this.formUE)
       .then(respuesta => {
-        console.log(JSON.stringify(respuesta));
+        if (respuesta.finalizado) {
+          this.form.unidadEducativaAnterior.id = respuesta.datos.id_unidad_educativa;
+          this.windowUE = false;
+          return this.$service.get(`unidadesEducativas`);
+        } else {
+          return false;
+        }
+      })
+      .then(respuesta => {
+        if (respuesta) {
+          this.todosUE = respuesta.datos;
+          this.todosUE.forEach(function (element) {
+            element.resumen = (element.sie ? 'Sie: ' + element.sie : '') + (element.nombre ? ' Nombre: ' + element.nombre : '');
+            if (element.id_unidad_educativa === 1 || element.id_unidad_educativa === 2 || element.id_unidad_educativa === 3) {
+              this.opcionesUE.push(element);
+            }
+          }, this);
+        }
       });
+    },
+    cerrarTutor () {
+      this.windowA = false;
+      if (!this.edita) {
+        this.formAux = this.formA;
+      }
+      this.edita = false;
+    },
+    agregaTutor (accion) {
+      let obj = {};
+      if (accion === 'edita') {
+        this.padres.forEach(function (element) {
+          if (this.formA.id === element.id_parentezco) {
+            element.id = this.formA.id;
+            element.cargado = true;
+            element.relation = this.formA.relation;
+            element.descripcion = null;
+            element.tipo_documento = 'CARNET_IDENTIDAD';
+            element.documento_identidad = this.formA.documento_identidad;
+            element.lugar_documento_identidad = this.formA.lugar_documento_identidad;
+            element.fecha_nacimiento = this.formA.fecha_nacimiento;
+            element.nombres = this.formA.nombres;
+            element.primer_apellido = this.formA.primer_apellido;
+            element.segundo_apellido = this.formA.segundo_apellido;
+            element.casada_apellido = null;
+            element.genero = this.formA.genero;
+            element.idioma_materno = this.formA.idioma_materno;
+            element.ocupacion_actual = this.formA.ocupacion_actual;
+            element.grado_instruccion = this.formA.grado_instruccion;
+            element.discapacidad = false;
+            element.src = '/static/images/' + (this.formA.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg');
+          }
+        }, this);
+        this.edita = false;
+      };
+      if (accion === 'nuevo') {
+        obj = {
+          cargado: false,
+          relation: this.formA.relation,
+          tipo_documento: 'CARNET_IDENTIDAD',
+          documento_identidad: this.formA.documento_identidad,
+          lugar_documento_identidad: this.formA.lugar_documento_identidad,
+          fecha_nacimiento: this.formA.fecha_nacimiento,
+          nombres: this.formA.nombres,
+          primer_apellido: this.formA.primer_apellido,
+          segundo_apellido: this.formA.segundo_apellido,
+          genero: this.formA.genero,
+          idioma_materno: this.formA.idioma_materno,
+          ocupacion_actual: this.formA.ocupacion_actual,
+          grado_instruccion: this.formA.grado_instruccion,
+          src: '/static/images/' + (this.formA.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg')
+        };
+        this.padres.push(obj);
+      }
+      this.windowA = false;
     },
     buscaEstudiante (action) {
       if (this.form.persona.documento_identidad && this.form.persona.lugar_documento_identidad && this.form.persona.tipo_documento) {
@@ -1006,7 +1153,10 @@ export default {
               this.padres = [];
               this.form.apoderados.forEach(function (tutor) {
                 const obj = {
-                  relacion: tutor.relacion,
+                  id: tutor.id_parentezco,
+                  id_persona: tutor.fid_persona_es,
+                  cargado: true,
+                  relation: tutor.relacion,
                   descripcion: tutor.descripcion,
                   tipo_documento: tutor.persona_es.tipo_documento,
                   documento_identidad: tutor.persona_es.documento_identidad,
@@ -1021,8 +1171,8 @@ export default {
                   casada_apellido: tutor.persona_es.casada_apellido,
                   genero: tutor.persona_es.genero,
                   nombre_completo: tutor.persona_es.nombre_completo,
-                  idioma_materno: tutor.persona_es.idioma_materno,
                   idiomas: tutor.persona_es.idiomas,
+                  idioma_materno: tutor.persona_es.idioma_materno,
                   ocupacion_actual: tutor.persona_es.ocupacion_actual,
                   grado_instruccion: tutor.persona_es.grado_instruccion,
                   discapacidad: tutor.persona_es.discapacidad,
@@ -1068,12 +1218,11 @@ export default {
       }
     },
     guardarInscripcion () {
+      this.form.apoderados = this.padres;
       this.$service.put(`registroRude`, this.form)
       .then(respuesta => {
         console.log(JSON.stringify(respuesta));
       });
-    },
-    actualizaDepartamento (esto) {
     }
   },
   components: { AppLang },
