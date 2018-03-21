@@ -19,8 +19,10 @@ import Modal from '@/common/plugins/modal/modal';
 import Datetime from '@/common/plugins/datetime';
 import Filter from '@/common/plugins/filter';
 import messages from '@/common/lang/';
+import FileUpload from 'v-file-upload';
 
 // Vendor
+Vue.use(FileUpload);
 Vue.use(Vuetify);
 Vue.use(Vuelidate);
 Vue.use(VueProgressBar, {

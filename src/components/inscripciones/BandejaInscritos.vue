@@ -1,10 +1,11 @@
 <template>
 <div>
+  <div>
   <v-btn dark @click.native="nuevaInscripcion">
     {{$t('inscriptions.newStudent') }}
     <v-icon right dark>add_circle</v-icon>
   </v-btn>
-  <v-btn dark @click.native="cargarCsv">
+  <v-btn dark @click.native="csv= true">
     {{$t('inscriptions.csv') }}
     <v-icon right dark>file_upload</v-icon>
   </v-btn>
@@ -30,14 +31,16 @@
           <!-- <span>Reenviar activación</span>
         </v-tooltip> -->
       </td>
-      <td>{{ props.item.ci }}</td>
+      <td>{{ props.item.codigo }}</td>
       <td>{{ props.item.nombres }}</td>
       <td>{{ props.item.primer_apellido }}</td>
       <td>{{ props.item.segundo_apellido }}</td>
       <td>{{ props.item.estado}} </td>
     </template>
   </v-data-table>
+  </div>
 
+  <div>
     <!-- VENTANA DE EDICIÓN DE USUARIO -->
     <v-layout row>
       <v-dialog v-model="dialogEdicion" width="1200px">
@@ -75,11 +78,57 @@
         </v-card>
       </v-dialog>
     </v-layout>
+
+    <!-- VENTANA DE CARGA DE CSV -->
+    <v-layout row>
+      <v-dialog v-model="csv" width="700px">
+        <v-card>
+          <v-card-title class="headline">
+            <v-icon right>account_circle</v-icon>
+            {{$t('inscriptions.loadCsv')}}
+          </v-card-title>
+          <v-layout row>
+            <v-flex xs10 offset-xs1>
+              <v-alert color="primary" icon="label" value="true">
+                {{$t('inscriptions.stepLoad')}}
+              </v-alert>
+              <form @submit.prevent="editaUsuario">
+                <v-layout row wrap>
+                  <v-flex xs6 offset-xs3>
+                    <file-upload
+                      :url='urlCsv'
+                      :thumb-url='thumbUrl'
+                      :headers="headersCsv"
+                      @success="onSuccess"
+                      @error="onError"
+                      accept='.csv'
+                      :btn-label="$t('inscriptions.csv')"
+                      :btn-uploading-label="$t('inscriptions.uploadingCsv')">
+                    </file-upload>
+                  </v-flex>
+                </v-layout>
+              </form>
+            </v-flex>
+          </v-layout>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn v-if="true" class="seccion" dark @click.native="csv = false">{{$t('common.cancel')}}
+              <v-icon right>cancel</v-icon>
+            </v-btn>
+            <v-btn class="primary" dark v-on:click="cargarCsv()">{{$t('common.edit')}}
+              <v-icon right>done</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
+  </div>
   </div>
 </template>
 
 <script>
   import Comps from '../comps';
+  // import { FileUploadService } from 'v-file-upload';
   /* eslint-disable semi */
   export default {
     // name: 'bandeja-tecnicos',
@@ -104,11 +153,14 @@
         },
         // Variables edición usuarios
         dialogEdicion: false,
+        csv: false,
         form1: {
           'email': '',
           'tipo': ''
         },
         idusuario: '',
+        urlCsv: '',
+        headersCsv: {'access-token': '<your-token>'},
         // Variables lista tabla
         roles: [],
         lugarCi: [],
@@ -119,7 +171,7 @@
         },
         headersAsinacion: [
           {text: this.$t('common.actions'), value: ''},
-          {text: this.$t('inscriptionRegister.ci'), value: 'ci'},
+          {text: this.$t('common.code'), value: 'codigo'},
           {text: this.$t('common.names'), value: 'nombres'},
           {text: this.$t('common.firstLastName'), value: 'primer_apellido'},
           {text: this.$t('common.secondLastName'), value: 'segundo_apellido'},
@@ -136,6 +188,8 @@
         ]
       }
     },
+    components: {
+    },
     watch: {
       pagination: {
         handler () {
@@ -146,8 +200,8 @@
             } else {
               sorting = `order=`;
             }
-            if (this.pagination.sortBy === 'ci') {
-              sorting = `${sorting}documento_identidad`;
+            if (this.pagination.sortBy === 'codigo') {
+              sorting = `${sorting}codigo`;
             } else {
               sorting = `${sorting}${this.pagination.sortBy}`;
             }
@@ -171,6 +225,9 @@
       }
     },
     created () {
+      this.headersCsv = {'Authorization': `Bearer ${this.$storage.get('token')}`};
+      this.urlCsv = this.$apiUrl + 'importarEstudiantes';
+      // this.urlUploadCsv = this.$apiUrl + 'carga_archivo?id=' + this.$storage.get('representanteLegal') + '&valor=REPRESENTANTE';
       // this.hasPermission('bandejaInscritos');
       // this.$service.get(`roles`)
       // .then(response => {
@@ -183,6 +240,41 @@
       // this.cargarAsignaciones();
     },
     methods: {
+      // mySaveMethod (file) {
+      //   let fileUpload = new FileUploadService(
+      //     this.urlCsv,
+      //     this.headersCsv,
+      //     this.onProgress
+      //   )
+      //   fileUpload
+      //     .upload(file, { doc_id: 1 })
+      //     .then(e => {
+      //       console.log('entra');
+      //       // Handle success
+      //     })
+      //     .catch(e => {
+      //       console.log('error');
+      //       // Handle error
+      //     })
+      // },
+      onError (error) {
+        console.log('error: ' + error);
+        this.$message.error('Error al cargar el archivo.');
+      },
+      onSuccess (success) {
+        this.$message.success('Datos cargados correctamente.');
+      },
+      // onProgress (progress) {
+      //   console.log('progress: ' + JSON.stringify(progress));
+      //   // Handdle the progress
+      // },
+      thumbUrl (file) {
+        return file.myThumbUrlProperty
+      },
+      // onFileChange (file) {
+      //   // Handle files like:
+      //   this.fileUploadedCsv = file
+      // },
       nuevaInscripcion () {
         this.$router.push('registroInscripcion');
       },
@@ -242,7 +334,7 @@
         // valida
         if (this.form1.email !== '' && this.form1.tipo !== '') {
           // Crea usuario
-          this.$service.put(`usuarios/${idUsuario}`, {
+          this.$service.put(`cursos`, {
             'usuario': {
               'fid_rol': this.form1.tipo,
               'email': this.form1.email

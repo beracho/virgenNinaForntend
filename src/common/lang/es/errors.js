@@ -19,5 +19,13 @@ export default {
   'sessionExpired': 'Su sesión ha expirado, ingrese nuevamente.',
   // '412': error interno del sistema
   'noData': 'No se encontraron elementos de la busqueda',
-  'rudeInUse': 'El RUDE ingresado se encuentra asociado a otro estudiante'
+  'rudeInUse': 'El RUDE ingresado se encuentra asociado a otro estudiante',
+  // Cargado de csv
+  'wrongFormat': 'Formato incorrecto, revisar las instrucciones.',
+  'noCsvSent': 'No se encontraron los datos relacionados al archivo.',
+  'notACsvFile': 'El archivo enviado no se encuentra en formato CSV, leer las instrucciones.',
+  // Menu de cursos
+  'courseNameRepeated': 'Nombre del curso repetido.',
+  'invalidParalelFormat': 'Formato de paralelo incorrecto.',
+  'noIdCourseSend': 'No se envió el id del curso.'
 };
