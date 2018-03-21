@@ -5,7 +5,7 @@
     {{$t('inscriptions.newStudent') }}
     <v-icon right dark>add_circle</v-icon>
   </v-btn>
-  <v-btn dark @click.native="csv= true">
+  <v-btn dark @click.native="csvWindow= true">
     {{$t('inscriptions.csv') }}
     <v-icon right dark>file_upload</v-icon>
   </v-btn>
@@ -81,7 +81,7 @@
 
     <!-- VENTANA DE CARGA DE CSV -->
     <v-layout row>
-      <v-dialog v-model="csv" width="700px">
+      <v-dialog v-model="csvWindow" width="700px">
         <v-card>
           <v-card-title class="headline">
             <v-icon right>account_circle</v-icon>
@@ -112,12 +112,12 @@
           </v-layout>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn v-if="true" class="seccion" dark @click.native="csv = false">{{$t('common.cancel')}}
+            <v-btn v-if="true" class="seccion" dark @click.native="csvWindow = false">{{$t('common.cancel')}}
               <v-icon right>cancel</v-icon>
             </v-btn>
-            <v-btn class="primary" dark v-on:click="cargarCsv()">{{$t('common.edit')}}
+            <!-- <v-btn class="primary" dark v-on:click="cargarCsv()">{{$t('common.edit')}}
               <v-icon right>done</v-icon>
-            </v-btn>
+            </v-btn> -->
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -153,7 +153,7 @@
         },
         // Variables edición usuarios
         dialogEdicion: false,
-        csv: false,
+        csvWindow: false,
         form1: {
           'email': '',
           'tipo': ''
@@ -263,6 +263,8 @@
       },
       onSuccess (success) {
         this.$message.success('Datos cargados correctamente.');
+        this.cargarAsignaciones();
+        this.csvWindow = false;
       },
       // onProgress (progress) {
       //   console.log('progress: ' + JSON.stringify(progress));
