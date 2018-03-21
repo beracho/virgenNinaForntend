@@ -65,9 +65,25 @@ export default {
     errorFieldMinLength: 'La contraseña debe tener como mínimo 8 caracteres.',
     errorFieldMaxLength: 'La contraseña debe tener como máximo 20 caracteres.'
   },
+  courses: {
+    newCourse: 'Nuevo curso',
+    name: 'Nombre',
+    gestion: 'Gestión',
+    ages: 'Edades',
+    coursesPerPage: 'Cursos por página',
+    creatingNewCourse: 'Creando curso nuevo',
+    editCourse: 'Editando curso',
+    courseData: 'Datos del curso',
+    teacher: 'Maestro',
+    minimalAge: 'Edad mínima',
+    maximalAge: 'Edad máxima'
+  },
   inscriptions: {
     newStudent: 'Nuevo estudiante',
-    csv: 'Cargar CSV'
+    loadCsv: 'Carga archivo CSV',
+    stepLoad: 'Pasos para subir el archivo CSV',
+    csv: 'Cargar CSV',
+    uploadingCsv: 'Subiendo archivo.'
   },
   inscriptionRegister: {
     createNew: 'Crear nueva',
@@ -235,8 +251,9 @@ export default {
     save: 'Guardar',
     select: 'Seleccionar',
     close: 'Cerrar',
-    yes: 'si',
-    no: 'no',
+    yes: 'Si',
+    no: 'No',
+    code: 'Código',
     rowsPage: 'Filas por página',
     updateList: 'Actualizar esta lista',
     filters: 'Filtros/búsqueda',

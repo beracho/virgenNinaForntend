@@ -57,13 +57,13 @@
               <v-form v-model="validForm" ref="form" lazy-validation>
                 <v-layout row wrap>
                   <v-flex xs4>
-                    <v-text-field :label="$t('usuarios.firstLastName')" v-model="form.persona.primer_apellido"></v-text-field>
+                    <v-text-field :label="$t('common.firstLastName')" v-model="form.persona.primer_apellido"></v-text-field>
                   </v-flex>
                   <v-flex xs4>
-                    <v-text-field :label="$t('usuarios.secondLastName')" v-model="form.persona.segundo_apellido"></v-text-field>
+                    <v-text-field :label="$t('common.secondLastName')" v-model="form.persona.segundo_apellido"></v-text-field>
                   </v-flex>
                   <v-flex xs4>
-                    <v-text-field :label="$t('usuarios.names')" v-model="form.persona.nombres"></v-text-field>
+                    <v-text-field :label="$t('common.names')" v-model="form.persona.nombres"></v-text-field>
                   </v-flex>
                   <v-flex xs4>
                     <v-text-field :label="$t('usuarios.id')" v-model="form.persona.ci" @keydown.native="$filter.numeric($event)" required></v-text-field>
@@ -214,9 +214,9 @@
         },
         headersAsinacion: [
           {text: this.$t('common.actions'), value: ''},
-          {text: this.$t('usuarios.names'), value: 'nombres'},
-          {text: this.$t('usuarios.firstLastName'), value: 'primer_apellido'},
-          {text: this.$t('usuarios.secondLastName'), value: 'segundo_apellido'},
+          {text: this.$t('common.names'), value: 'nombres'},
+          {text: this.$t('common.firstLastName'), value: 'primer_apellido'},
+          {text: this.$t('common.secondLastName'), value: 'segundo_apellido'},
           {text: this.$t('usuarios.email'), value: 'email'},
           {text: this.$t('usuarios.rol'), value: 'rol'},
           {text: this.$t('common.status'), value: 'estado'}
