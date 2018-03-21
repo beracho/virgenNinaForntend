@@ -11,6 +11,7 @@ import Usuario from '@/components/admin/usuario/Usuario';
 import ConfirmarCuenta from '@/components/admin/account/confirmarCuenta';
 import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
 import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
+import Cursos from '@/components/inscripciones/Cursos';
 import Account from '@/components/admin/account/Account';
 
 import Entidad from '@/components/admin/entidad/Entidad';
@@ -48,6 +49,11 @@ export default new VueRouter({
       path: '/bandejaInscritos',
       name: 'BandejaInscritos',
       component: BandejaInscritos
+    },
+    {
+      path: '/cursos',
+      name: 'Cursos',
+      component: Cursos
     },
     {
       path: '/registroInscripcion',

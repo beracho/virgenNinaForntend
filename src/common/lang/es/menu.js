@@ -7,5 +7,6 @@ export default {
   cpt: 'Códigos de Pago de Trámites',
   tramite: 'Trámites',
   bandejaInscritos: 'Bandeja de inscritos',
+  cursos: 'Administración de cursos',
   registroInscripcion: 'Registro de nuevo estudiante'
 };
