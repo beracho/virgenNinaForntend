@@ -12,6 +12,9 @@
           <v-btn icon dark color="primary" @click.native="abreDialog(props.item.id_curso)">
             <v-icon>edit</v-icon>
           </v-btn>
+          <v-btn icon dark color="primary" @click.native="listaEstudiantesDialog(props.item.id_curso)">
+            <v-icon>visibility</v-icon>
+          </v-btn>
       </td>
       <td>{{ props.item.nombre }}</td>
       <td>{{ props.item.paralelo }}</td>
@@ -154,6 +157,39 @@
         </v-card>
       </v-dialog>
     </v-layout>
+
+    <!-- VENTANA DE ESTUDIANTES POR CURSO -->
+    <v-layout row>
+      <v-dialog v-model="vistaEstudiantesDialog" width="1200px" persistent>
+        <v-card>
+          <v-card-title class="headline">
+            <v-icon right>book</v-icon>
+            {{$t('courses.studentsPerCourse')}}
+          </v-card-title>
+          <v-layout row>
+            <v-flex xs10 offset-xs1>
+              <v-data-table v-bind:headers="headersEstudiantesPorCurso" v-bind:items="asignacionesEstudiantesPorCurso" v-bind:pagination.sync="paginationEstudiantes" :total-items="totalEstudiantes" class="elevation-1" :rows-per-page-text="$t('courses.studentsPerCourse')">
+                <template slot="items" slot-scope="props">
+                  <td>{{ props.item.codigo }}</td>
+                  <td>{{ props.item.nombres }}</td>
+                  <td>{{ props.item.primer_apellido }}</td>
+                  <td>{{ props.item.segundo_apellido }}</td>
+                </template>
+              </v-data-table>
+            </v-flex>
+          </v-layout>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn class="seccion" dark @click.native="vistaEstudiantesDialog = false">{{$t('common.cancel')}}
+              <v-icon right>cancel</v-icon>
+            </v-btn>
+            <v-btn class="primary" dark v-on:click="editarCurso(idCursoAEditar)">{{$t('common.edit')}}
+              <v-icon right>done</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
   </div>
   </div>
 </template>
@@ -198,6 +234,8 @@
           'grado': ''
         },
         idCursoAEditar: '',
+        // Variables lista de estudiantes
+        vistaEstudiantesDialog: false,
         // Variables lista tabla
         roles: [],
         lugarCi: [],
@@ -212,6 +250,17 @@
           {text: this.$t('inscriptionRegister.paralel'), value: 'paralelo'},
           {text: this.$t('courses.gestion'), value: 'gestion'},
           {text: this.$t('courses.ages'), value: 'edades'}
+        ],
+        asignacionesEstudiantesPorCurso: [],
+        totalEstudiantes: 0,
+        paginationEstudiantes: {
+          sortBy: null
+        },
+        headersEstudiantesPorCurso: [
+          {text: this.$t('common.code'), value: 'codigo'},
+          {text: this.$t('inscriptionRegister.names'), value: 'nombres'},
+          {text: this.$t('inscriptionRegister.firstLastName'), value: 'primer_apellido'},
+          {text: this.$t('inscriptionRegister.secondLastName'), value: 'segundo_apellido'}
         ],
         // rules
         nameRules: [
@@ -361,6 +410,15 @@
           .then(response => {
             this.asignaciones = response.datos.rows;
             this.count = response.datos.count;
+          })
+      },
+      listaEstudiantesDialog (idCurso) {
+        this.vistaEstudiantesDialog = true;
+        this.$service.get(`estudiantesCurso?idCurso=${idCurso}`)
+          .then(response => {
+            this.asignacionesEstudiantesPorCurso = response.datos;
+            this.totalEstudiantes = response.datos.length;
+            this.paginationEstudiantes.rowsPerPage = response.datos.length;
           })
       }
     }

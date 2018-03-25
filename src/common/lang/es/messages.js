@@ -55,7 +55,7 @@ export default {
     errorSendEmail: 'Fallo al enviar correo.'
   },
   confirm: {
-    title: 'Por favor, ingrese su contraseña',
+    title: 'Por favor, ingrese su nueva contraseña',
     password: 'Contraseña',
     confirmPassword: 'Repita contraseña',
     home: 'Volver',
@@ -74,6 +74,7 @@ export default {
     creatingNewCourse: 'Creando curso nuevo',
     editCourse: 'Editando curso',
     courseData: 'Datos del curso',
+    studentsPerCourse: 'Estudiantes por curso',
     teacher: 'Maestro',
     minimalAge: 'Edad mínima',
     maximalAge: 'Edad máxima'
