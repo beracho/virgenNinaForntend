@@ -15,7 +15,7 @@
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-alert color="primary" icon="school" value="true">
-                    <strong>{{$t('inscriptionRegister.subtitle2') }}</strong><br>
+                    <strong>{{$t('inscriptions.studentData') }}</strong><br>
                   </v-alert>
                 </v-flex>
                 <v-flex xs12>

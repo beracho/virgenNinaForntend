@@ -77,14 +77,20 @@ export default {
     studentsPerCourse: 'Estudiantes por curso',
     teacher: 'Maestro',
     minimalAge: 'Edad mínima',
-    maximalAge: 'Edad máxima'
+    maximalAge: 'Edad máxima',
+    ageRange: 'Rango de edad',
+    thisYearCourses: 'Cursos de la gestión actual'
   },
   inscriptions: {
     newStudent: 'Nuevo estudiante',
     loadCsv: 'Carga archivo CSV',
     stepLoad: 'Pasos para subir el archivo CSV',
     csv: 'Cargar CSV',
-    uploadingCsv: 'Subiendo archivo.'
+    uploadingCsv: 'Subiendo archivo.',
+    courseAssignation: 'Asignación de curso',
+    studentData: 'Datos del estudiante',
+    studentsPerPage: 'Estudiantes por curso',
+    noData: 'Sin datos'
   },
   inscriptionRegister: {
     createNew: 'Crear nueva',
@@ -99,7 +105,6 @@ export default {
     convein: 'de convenio',
     private: 'privada',
     educativeDistrit: 'Distrito educativo',
-    subtitle2: 'Datos del estudiante',
     subNames: 'Nombres y apellidos',
     subBorn: 'Lugar y fecha de nacimiento',
     firstLastName: 'Primer apellido',
@@ -267,7 +272,8 @@ export default {
     actions: 'Acciones',
     firstLastName: 'Primer apellido',
     secondLastName: 'Segundo apellido',
-    names: 'Nombres'
+    names: 'Nombres',
+    description: 'Descripción'
   },
   entity: {
     title: 'Entidades',
