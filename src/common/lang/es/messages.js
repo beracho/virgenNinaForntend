@@ -89,7 +89,7 @@ export default {
     uploadingCsv: 'Subiendo archivo.',
     courseAssignation: 'Asignación de curso',
     studentData: 'Datos del estudiante',
-    studentsPerPage: 'Estudiantes por curso',
+    studentsPerPage: 'Estudiantes por página',
     noData: 'Sin datos'
   },
   inscriptionRegister: {
