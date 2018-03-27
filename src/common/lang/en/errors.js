@@ -16,5 +16,16 @@ export default {
   'cancelRequest': 'Request was canceled',
   'validation': 'Validation error',
   'unknown': 'An unknown error occurred, try later.',
-  'sessionExpired': 'Your session has expired, login again.'
+  'sessionExpired': 'Your session has expired, login again.',
+  // '412': error interno del sistema
+  'noData': 'No search items were found',
+  'rudeInUse': 'RUDE is already assigned to a student',
+  // Cargado de csv
+  'wrongFormat': 'Incorrect format, review the instructions.',
+  'noCsvSent': 'No data related to file was found.',
+  'notACsvFile': 'Not a CSV file, read the instructions.',
+  // Menu de cursos
+  'courseNameRepeated': 'Repeated course name.',
+  'invalidParalelFormat': 'Incorrect paralel format.',
+  'noIdCourseSend': 'Course id was not sent.'
 };

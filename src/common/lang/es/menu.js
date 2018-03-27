@@ -8,5 +8,7 @@ export default {
   tramite: 'Trámites',
   bandejaInscritos: 'Bandeja de inscritos',
   cursos: 'Administración de cursos',
-  registroInscripcion: 'Registro RUDE de estudiante'
+  registroInscripcion: 'Registro RUDE de estudiante',
+  inscriptions: 'INSCRIPCIONES',
+  administration: 'ADMINISTRACIÓN'
 };

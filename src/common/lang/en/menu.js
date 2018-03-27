@@ -5,5 +5,10 @@ export default {
   usuarios: 'Users',
   usuariosAplicacion: 'Applications',
   cpt: 'Paperwork payment codes (CPTs)',
-  tramite: 'Paperwork'
+  tramite: 'Paperwork',
+  bandejaInscritos: 'Enrolled tray',
+  cursos: 'Courses administration',
+  registroInscripcion: 'Student RUDE record',
+  inscriptions: 'INSCRIPTIONS',
+  administration: 'ADMINISTRATION'
 };
