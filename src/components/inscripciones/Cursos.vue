@@ -180,10 +180,7 @@
           </v-layout>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="seccion" dark @click.native="vistaEstudiantesDialog = false">{{$t('common.cancel')}}
-              <v-icon right>cancel</v-icon>
-            </v-btn>
-            <v-btn class="primary" dark v-on:click="editarCurso(idCursoAEditar)">{{$t('common.edit')}}
+            <v-btn class="primary" dark v-on:click="vistaEstudiantesDialog=false">{{$t('common.accept')}}
               <v-icon right>done</v-icon>
             </v-btn>
           </v-card-actions>

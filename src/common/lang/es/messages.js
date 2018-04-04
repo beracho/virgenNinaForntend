@@ -255,6 +255,7 @@ export default {
     required: 'Campo obligatorio',
     cancel: 'Cancelar',
     save: 'Guardar',
+    accept: 'Aceptar',
     select: 'Seleccionar',
     close: 'Cerrar',
     yes: 'Si',

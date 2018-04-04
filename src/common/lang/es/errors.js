@@ -18,6 +18,15 @@ export default {
   'unknown': 'Ocurrió un error desconocido, intente más tarde.',
   'sessionExpired': 'Su sesión ha expirado, ingrese nuevamente.',
   // '412': error interno del sistema
+  'userSentNotFound': 'No se encontró el usuario enviado.',
+  'mustAddPersonInformation': 'Debe agregar datos de persona.',
+  'mustAddUserInformation': 'Debe agregar datos de usuario.',
+  'userUnderage': 'El usuario ingresado es menor de edad.',
+  'userRequiredNotFound': 'No se ha encontrado al usuario solicitado.',
+  'incorrectCode': 'El código ingresado no es correcto.',
+  'codeExpired': 'El código de activación ha caducado.',
+  'passwordMinimunCharacter': 'La contraseña debe contar con al menos 8 caracteres.',
+  'userExistsAlready': 'Ya existe un usuario ACTIVO asociado a la persona seleccionada. Por favor verifique sus datos.',
   'noData': 'No se encontraron elementos de la busqueda',
   'rudeInUse': 'El RUDE ingresado se encuentra asociado a otro estudiante',
   // Cargado de csv

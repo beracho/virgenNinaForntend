@@ -155,7 +155,7 @@ Puede ver un reporte detallado de los archivos minificados para producción ejec
 ```sh
 $ npm run build --report
 ```
-Luego ingresar a `http://localhost:8080`
+Luego ingresar a `http://localhost:4000`
 
 ## Configuración de **supervisor**
 Si se desea hacer correr la aplicación mediante `supervisor` se debe realizar la siguiente configuración:

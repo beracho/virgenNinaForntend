@@ -116,10 +116,14 @@
                   username: this.$router.currentRoute.query.usuario
                 });
               }
+            })
+            .catch(error => {
+              if (this.$t('error.' + error.response.data.mensaje) !== undefined) {
+                this.$message.error(this.$t('error.' + error.response.data.mensaje));
+              } else {
+                this.$message.error('error.' + error.response.data.mensaje);
+              }
             });
-            // .then(respuesta => {
-
-            // })
           } else {
             this.$message.error(this.$t('confirm.errorFieldsNotEqual'));
           }
