@@ -131,7 +131,7 @@ export default {
 
 // $sidenavWidth: 250px;
 $colorLink: lighten($success, 40%);
-$bgSidenav: darken($info, 42%);
+$bgSidenav: darken($secondary, 90%);
 $bgLinkHover: lighten($bgSidenav, 10%);
 $bgSubMenu: darken($bgSidenav, 6%);
 $colorLinkHover: #ffffff;
@@ -255,17 +255,17 @@ aside.navigation-drawer--open + nav + .content--wrap > .content {
 
 // User
 .sidenav-user {
-  background: transparent url(../../../static/images/mountains.png) no-repeat;
+  background: transparent url(../../../static/images/children.jpg) no-repeat;
   min-height: 105px;
   background-size: 100% auto;
   border-bottom: 1px solid lighten($bgSidenav, 8%);
 }
 
 .sidenav-user__photo {
-  background-color: $success;
+  background-color: $secondary;
   border-radius: 50%;
   border: 2px solid white;
-  color: white;
+  color: $third;
   display: inline-block;
   font-size: 2.6rem;
   height: 52px;
@@ -276,7 +276,7 @@ aside.navigation-drawer--open + nav + .content--wrap > .content {
 }
 
 .sidenav-user__name {
-  color: white;
+  color: $third;
   font-size: 0.9rem;
   line-height: 1.3rem;
   margin: 15px 0 0 -10px;
@@ -292,7 +292,7 @@ aside.navigation-drawer--open + nav + .content--wrap > .content {
 }
 
 .sidenav-user__email {
-  color: $colorLink;
+  color: $error;
   font-size: .85rem;
   padding: 3px 12px;
   text-align: right;

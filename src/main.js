@@ -20,10 +20,22 @@ import Datetime from '@/common/plugins/datetime';
 import Filter from '@/common/plugins/filter';
 import messages from '@/common/lang/';
 import FileUpload from 'v-file-upload';
+// import colors from 'vuetify/es5/util/colors';
 
 // Vendor
 Vue.use(FileUpload);
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#00A36F',
+    secondary: '#571606',
+    third: '#FFB300',
+    accent: '#8c9eff',
+    success: '#09B629',
+    error: '#b71c1c',
+    warning: '#F0860B',
+    info: '#1e88e5'
+  }
+});
 Vue.use(Vuelidate);
 Vue.use(VueProgressBar, {
   color: '#52d1e1',

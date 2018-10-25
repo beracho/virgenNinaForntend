@@ -56,7 +56,7 @@
             </v-layout>
           </v-container>
         </v-card-actions>
-        <v-card-title class="info">
+        <v-card-title class="primary">
         </v-card-title>
       </form>
     </v-card>
