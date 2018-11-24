@@ -250,6 +250,10 @@ export default {
     visualIntellectual: 'Visual intellectual',
     other: 'Others'
   },
+  generalFollowUp: {
+    searchBy: 'Search by',
+    searchText: 'Search text'
+  },
   common: {
     add: 'Add',
     required: 'Required',

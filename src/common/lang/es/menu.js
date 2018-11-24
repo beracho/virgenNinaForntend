@@ -10,5 +10,7 @@ export default {
   cursos: 'Administración de cursos',
   registroInscripcion: 'Registro RUDE de estudiante',
   inscriptions: 'INSCRIPCIONES',
-  administration: 'ADMINISTRACIÓN'
+  administration: 'ADMINISTRACIÓN',
+  seguimientoMedico: 'SEGUIMIENTO MULTIDISCIPLINARIO',
+  controlMedico: 'CONTROL MÉDICO'
 };

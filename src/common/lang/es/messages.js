@@ -250,6 +250,10 @@ export default {
     visualIntellectual: 'Visual intelectual',
     other: 'Otros'
   },
+  generalFollowUp: {
+    searchBy: 'Busqueda por',
+    searchText: 'Texto de busqueda'
+  },
   common: {
     add: 'Agregar',
     required: 'Campo obligatorio',

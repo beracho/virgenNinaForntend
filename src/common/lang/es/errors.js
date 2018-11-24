@@ -21,6 +21,7 @@ export default {
   'userSentNotFound': 'No se encontró el usuario enviado.',
   'mustAddPersonInformation': 'Debe agregar datos de persona.',
   'mustAddUserInformation': 'Debe agregar datos de usuario.',
+  'mustAddSearchInformation': 'Debe agregar datos de búsqueda.',
   'userUnderage': 'El usuario ingresado es menor de edad.',
   'userRequiredNotFound': 'No se ha encontrado al usuario solicitado.',
   'incorrectCode': 'El código ingresado no es correcto.',
