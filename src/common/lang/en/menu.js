@@ -6,9 +6,13 @@ export default {
   usuariosAplicacion: 'Applications',
   cpt: 'Paperwork payment codes (CPTs)',
   tramite: 'Paperwork',
-  bandejaInscritos: 'Enrolled tray',
-  cursos: 'Courses administration',
-  registroInscripcion: 'Student RUDE record',
-  inscriptions: 'INSCRIPTIONS',
-  administration: 'ADMINISTRATION'
+  bandejaInscritos: 'Enrolled Tray',
+  cursos: 'Courses Administration',
+  registroInscripcion: 'Student RUDE Record',
+  inscriptions: 'Inscriptions',
+  administration: 'Administration',
+  medicalFollowUp: 'MEDICAL FOLLOW UP',
+  controlMedico: 'Medical Control',
+  kidList: 'KID LIST',
+  search: 'Kid Search'
 };

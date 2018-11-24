@@ -13,6 +13,7 @@ import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
 import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
 import Cursos from '@/components/inscripciones/Cursos';
 import ControlMedico from '@/components/atencionMedica/controlMedico';
+import busquedaNiños from '@/components/atencionMedica/busquedaNino';
 import Account from '@/components/admin/account/Account';
 
 import Entidad from '@/components/admin/entidad/Entidad';
@@ -65,6 +66,11 @@ export default new VueRouter({
       path: '/controlMedico',
       name: 'ControlMedico',
       component: ControlMedico
+    },
+    {
+      path: '/kidSearch',
+      name: 'KidSearch',
+      component: busquedaNiños
     },
     {
       path: '/account',
