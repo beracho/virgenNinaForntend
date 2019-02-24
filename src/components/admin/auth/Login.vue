@@ -50,7 +50,7 @@
               </v-flex> -->
               <v-flex xs12>
                 <div class="text-xs-right">
-                  <a href=""><v-icon>lock_outline</v-icon>{{$t('login.forgotPass') }}</a>
+                  <a href="/#/newPassword"><v-icon>lock_outline</v-icon>{{$t('login.forgotPass') }}</a>
                 </div>
               </v-flex>
             </v-layout>

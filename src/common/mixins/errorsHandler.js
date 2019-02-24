@@ -20,6 +20,16 @@ export default {
           this.$util.removeItem(arr, this.$t('validate.url'));
         }
       }
+
+      if (errors.email !== undefined) {
+        if (!errors.email) {
+          if (arr.indexOf(this.$t('validate.email')) === -1) {
+            arr.push(this.$t('validate.email'));
+          }
+        } else {
+          this.$util.removeItem(arr, this.$t('validate.email'));
+        }
+      }
     },
 
     resetForm (obj) {

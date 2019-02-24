@@ -32,6 +32,12 @@ export default {
     noAccount: '¿No tienes una cuenta?',
     signUp: 'Registrate aquí'
   },
+  newPassword: {
+    title: 'Reiniciar contraseña',
+    email: 'Correo electrónico',
+    send: 'Enviar',
+    backToLogin: 'Volver a login'
+  },
   usuarios: {
     newUser: 'Nuevo Usuario',
     usersPerPage: 'Usuarios por página',

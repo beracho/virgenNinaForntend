@@ -32,6 +32,12 @@ export default {
     noAccount: 'No account?',
     signUp: 'Sign up'
   },
+  newPassword: {
+    title: 'Reset password',
+    email: 'Email address',
+    send: 'Send',
+    backToLogin: 'Return to login'
+  },
   usuarios: {
     newUser: 'New user',
     usersPerPage: 'Users per page',

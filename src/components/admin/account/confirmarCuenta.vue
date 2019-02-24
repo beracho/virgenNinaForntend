@@ -109,7 +109,7 @@
               usuario: this.$router.currentRoute.query.usuario
             })
             .then(respuesta => {
-              this.$message.success(respuesta.data.mensaje);
+              this.$message.success(this.$router.currentRoute.path === '/restaurar' ? 'Contraseña actualizada' : respuesta.data.mensaje);
               if (respuesta.data.finalizado) {
                 this.login({
                   password: this.contrasena,

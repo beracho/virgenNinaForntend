@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Dashboard from '@/components/admin/Dashboard';
 // Auth
 import Login from '@/components/admin/auth/Login';
+import NewPassword from '@/components/admin/account/newPassword';
 import LoginAdmin from '@/components/admin/auth/LoginAdmin';
 import AppNotFound from '@/common/layout/pages/AppNotFound';
 import AppForbidden from '@/common/layout/pages/AppForbidden';
@@ -33,6 +34,11 @@ export default new VueRouter({
       component: Login
     },
     {
+      path: '/newPassword',
+      name: 'NewPassword',
+      component: NewPassword
+    },
+    {
       path: '/loginAdmin',
       name: 'LoginAdmin',
       component: LoginAdmin
@@ -45,6 +51,11 @@ export default new VueRouter({
     {
       path: '/confirmarCuenta',
       name: 'ConfirmarCuenta',
+      component: ConfirmarCuenta
+    },
+    {
+      path: '/restaurar',
+      name: 'SetPassword',
       component: ConfirmarCuenta
     },
     {
