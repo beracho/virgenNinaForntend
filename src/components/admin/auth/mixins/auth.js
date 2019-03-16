@@ -71,9 +71,10 @@ export default {
       this.$store.commit('SET_TIME', process.env.TIME_SESSION_EXPIRED * 60);
       this.$store.state.sessionInterval = window.setInterval(() => {
         this.$store.commit('TIME_DECREASE');
-        if (this.$store.state.time <= 0) {
+        if (this.$store.state.time && this.$store.state.time <= 0) {
           this.$message.warning('Su sesión ha sido cerrada automáticamente después de ' + process.env.TIME_SESSION_EXPIRED + ' minutos de inactividad.', '¡Sesión cerrada!', { timeout: 30000 });
           this.logout();
+          this.$store.state.time = undefined;
         }
       }, 1000);
     }
