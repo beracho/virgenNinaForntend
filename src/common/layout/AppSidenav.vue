@@ -26,7 +26,7 @@
       </div>
     </div>
     <v-list dense id="sidenav-menu">
-      <template v-for="(item, i) in menu">
+      <template v-for="(item, i) in menu" v-if="item.visible">
         <v-list-group v-if="item.submenu" v-model="item.model" no-action>
           <v-list-tile slot="item" @click="send(item.url, item.submenu)" :data-url="item.url">
             <v-list-tile-action>

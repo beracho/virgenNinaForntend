@@ -28,12 +28,9 @@
   <v-data-table v-bind:headers="headersAsinacion" v-bind:items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
     <template slot="items" slot-scope="props">
       <td class="text-xs-right">
-        <!-- <v-tooltip bottom> -->
-          <v-btn icon dark color="primary" @click.native="datosEstudiante(props.item.id_usuario, props.item.email)">
+          <v-btn icon dark color="primary" @click.native="abrirCarpeta(props.item)">
             <v-icon>folder</v-icon>
           </v-btn>
-          <!-- <span>Utilizar folder</span> -->
-        <!-- </v-tooltip> -->
       </td>
       <td>{{ props.item.codigo }}</td>
       <td>{{ props.item.nombres }}</td>
@@ -46,10 +43,8 @@
 </template>
 
 <script>
-  import Comps from '../comps';
   /* eslint-disable semi */
   export default {
-    mixins: [ Comps ],
     data () {
       return {
         // Busqueda de estudiante
@@ -169,6 +164,15 @@
         } else {
           this.$message.error(this.$t('error.mustAddSearchInformation'));
         }
+      },
+      abrirCarpeta (userData) {
+        if (this.$storage.exist('menu')) {
+          let nuevoMenu = this.$storage.get('menu');
+          nuevoMenu[0].visible = false;
+          nuevoMenu[1].visible = true;
+          // this.recargaMenu(nuevoMenu);
+        }
+        this.$router.push('controlMedico');
       }
       // onError (error) {
       //   console.log('error: ' + error);

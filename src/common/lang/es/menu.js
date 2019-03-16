@@ -13,6 +13,6 @@ export default {
   administration: 'Administración',
   medicalFollowUp: 'SEGUIMIENTO MULTIDISCIPLINARIO',
   controlMedico: 'Control Médico',
-  kidList: 'LISTA DE NIÑOS',
-  kidSearch: 'Search'
+  listaNinos: 'LISTA DE NIÑOS',
+  busquedaNino: 'Búsqueda'
 };

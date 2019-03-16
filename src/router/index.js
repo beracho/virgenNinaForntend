@@ -79,8 +79,8 @@ export default new VueRouter({
       component: ControlMedico
     },
     {
-      path: '/kidSearch',
-      name: 'KidSearch',
+      path: '/busquedaNino',
+      name: 'BusquedaNino',
       component: busquedaNiños
     },
     {

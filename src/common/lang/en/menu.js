@@ -13,6 +13,6 @@ export default {
   administration: 'Administration',
   medicalFollowUp: 'MEDICAL FOLLOW UP',
   controlMedico: 'Medical Control',
-  kidList: 'KID LIST',
+  listaNinos: 'KID LIST',
   search: 'Kid Search'
 };

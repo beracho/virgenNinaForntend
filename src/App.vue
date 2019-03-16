@@ -1,6 +1,6 @@
 <template>
   <v-app id="app" :class="{ 'app-login': !auth }">
-    <app-sidenav v-if="auth && sidenav"></app-sidenav>
+    <app-sidenav v-if="auth && sidenav" :key="watchMenu"></app-sidenav>
     <app-navbar v-if="auth"></app-navbar>
     <v-content v-if="main">
       <app-breadcrumbs v-if="auth"></app-breadcrumbs>
@@ -91,6 +91,13 @@
         this.$Progress.finish();
       });
     },
+    methods: {
+      recargaMenu (newMenu) {
+        this.$storage.set('menu', newMenu);
+        console.log('entra');
+        this.watchMenu += 1;
+      }
+    },
     components: {
       AppNavbar,
       AppSidenav,
@@ -119,7 +126,8 @@
     },
     data () {
       return {
-        transitionName: ''
+        transitionName: '',
+        watchMenu: 0
       };
     }
   };
