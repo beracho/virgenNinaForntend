@@ -16,5 +16,7 @@ export default {
   'cancelRequest': 'Mayiwi tukuyaña.',
   'validation': 'Janiwa walikiti.',
   'unknown': 'Janiwa jani walt\'awi yatiskiti, ukatjaru yant\'ama.',
-  'sessionExpired': 'Sart\'awimaxa tukusxiwa, machaqata mantanim.'
+  'sessionExpired': 'Sart\'awimaxa tukusxiwa, machaqata mantanim.',
+  // Registros medicos
+  'wrongUrl': 'Ruta incorrecta'
 };

@@ -27,5 +27,7 @@ export default {
   // Menu de cursos
   'courseNameRepeated': 'Repeated course name.',
   'invalidParalelFormat': 'Incorrect paralel format.',
-  'noIdCourseSend': 'Course id was not sent.'
+  'noIdCourseSend': 'Course id was not sent.',
+  // Registros medicos
+  'wrongUrl': 'Wrong address'
 };
