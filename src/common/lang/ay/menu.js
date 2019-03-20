@@ -5,5 +5,19 @@ export default {
   usuarios: 'Atamiri jaqi',
   usuariosAplicacion: 'Wakiyawinaka',
   cpt: 'Qillqa phuqhawi sarañanakata',
-  tramite: 'Sarañanaka'
+  tramite: 'Sarañanaka',
+  bandejaInscritos: 'Bandeja de Inscritos',
+  cursos: 'Administración de Cursos',
+  registroInscripcion: 'Registro RUDE de Estudiante',
+  inscriptions: 'Inscripciones',
+  administration: 'Administración',
+  medicalFollowUp: 'SEGUIMIENTO MULTIDISCIPLINARIO',
+  controlMedico: 'Control Médico',
+  listaNinos: 'LISTA DE NIÑOS',
+  busquedaNino: 'Búsqueda',
+  datosEstudiante: 'Datos personales',
+  registrosArchivados: 'Folder de registros',
+  registroSimple: 'Registro sencillo',
+  registroEspecialidad: 'Registro elaborado',
+  registroSemestral: 'Registro semestral'
 };

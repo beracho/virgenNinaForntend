@@ -14,5 +14,10 @@ export default {
   medicalFollowUp: 'SEGUIMIENTO MULTIDISCIPLINARIO',
   controlMedico: 'Control Médico',
   listaNinos: 'LISTA DE NIÑOS',
-  busquedaNino: 'Búsqueda'
+  busquedaNino: 'Búsqueda',
+  datosEstudiante: 'Datos personales',
+  registrosArchivados: 'Folder de registros',
+  registroSimple: 'Registro sencillo',
+  registroEspecialidad: 'Registro elaborado',
+  registroSemestral: 'Registro semestral'
 };

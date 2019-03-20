@@ -13,6 +13,7 @@ import ConfirmarCuenta from '@/components/admin/account/confirmarCuenta';
 import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
 import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
 import Cursos from '@/components/inscripciones/Cursos';
+import DatosEstudiante from '@/components/atencionMedica/datosEstudiante';
 import ControlMedico from '@/components/atencionMedica/controlMedico';
 import busquedaNiños from '@/components/atencionMedica/busquedaNino';
 import Account from '@/components/admin/account/Account';
@@ -77,6 +78,11 @@ export default new VueRouter({
       path: '/controlMedico',
       name: 'ControlMedico',
       component: ControlMedico
+    },
+    {
+      path: '/datosEstudiante',
+      name: 'DatosEstudiante',
+      component: DatosEstudiante
     },
     {
       path: '/busquedaNino',

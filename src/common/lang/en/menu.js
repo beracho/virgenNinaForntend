@@ -14,5 +14,10 @@ export default {
   medicalFollowUp: 'MEDICAL FOLLOW UP',
   controlMedico: 'Medical Control',
   listaNinos: 'KID LIST',
-  search: 'Kid Search'
+  busquedaNino: 'Kid Search',
+  datosEstudiante: 'Personal data',
+  registrosArchivados: 'Follow up folder',
+  registroSimple: 'Simple record',
+  registroEspecialidad: 'Elaborate record',
+  registroSemestral: 'Semester registration'
 };
