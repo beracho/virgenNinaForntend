@@ -171,8 +171,12 @@
           nuevoMenu[0].visible = false;
           nuevoMenu[1].visible = true;
           // this.recargaMenu(nuevoMenu);
+          this.$storage.set('menu', nuevoMenu);
+          this.$storage.set('nino', userData);
+          this.$router.push('datosEstudiante');
+        } else {
+          this.$message.error(this.$t('error.wrongUrl'));
         }
-        this.$router.push('controlMedico');
       }
       // onError (error) {
       //   console.log('error: ' + error);
