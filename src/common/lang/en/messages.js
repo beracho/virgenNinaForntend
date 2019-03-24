@@ -258,7 +258,11 @@ export default {
   },
   generalFollowUp: {
     searchBy: 'Search by',
-    searchText: 'Search text'
+    searchText: 'Search text',
+    date: 'Date',
+    newStandartRegistry: 'New standar registry',
+    observation: 'Observations',
+    intervention: 'Interventions'
   },
   common: {
     add: 'Add',
@@ -283,7 +287,8 @@ export default {
     firstLastName: 'Surname',
     secondLastName: 'Second surname',
     names: 'Names',
-    description: 'Description'
+    description: 'Description',
+    clear: 'Clear'
   },
   entity: {
     title: 'Entities',
@@ -324,5 +329,6 @@ export default {
       addUser: 'Add user',
       editUser: 'Edit user'
     }
-  }
+  },
+  months: ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 };

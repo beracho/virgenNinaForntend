@@ -79,6 +79,14 @@ export default {
     errorFieldMinLength: 'La contraseña debe tener como mínimo 8 caracteres.',
     errorFieldMaxLength: 'La contraseña debe tener como máximo 20 caracteres.'
   },
+  generalFollowUp: {
+    searchBy: 'Busqueda por',
+    searchText: 'Texto de busqueda',
+    date: 'Fecha',
+    newStandartRegistry: 'Nuevo registro simple',
+    observation: 'Obervaciones',
+    intervention: 'Intervenciones'
+  },
   common: {
     add: `Yapt'aña`,
     required: `Qillqañatakipuni`,
@@ -91,7 +99,8 @@ export default {
     active: `Q'apha`,
     edit: 'Qillqsuña',
     status: 'Estado',
-    actions: `Lurañanaka`
+    actions: `Lurañanaka`,
+    clear: 'Limpiar'
   },
   entity: {
     title: `Jach'a utanaka`,
@@ -132,5 +141,6 @@ export default {
       addUser: 'Agregar usuario',
       editUser: 'Editar usuario'
     }
-  }
+  },
+  months: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
 };

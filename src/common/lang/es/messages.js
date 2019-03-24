@@ -258,7 +258,11 @@ export default {
   },
   generalFollowUp: {
     searchBy: 'Busqueda por',
-    searchText: 'Texto de busqueda'
+    searchText: 'Texto de busqueda',
+    date: 'Fecha',
+    newStandartRegistry: 'Nuevo registro simple',
+    observation: 'Obervaciones',
+    intervention: 'Intervenciones'
   },
   common: {
     add: 'Agregar',
@@ -284,7 +288,8 @@ export default {
     firstLastName: 'Primer apellido',
     secondLastName: 'Segundo apellido',
     names: 'Nombres',
-    description: 'Descripción'
+    description: 'Descripción',
+    clear: 'Limpiar'
   },
   entity: {
     title: 'Entidades',
@@ -325,5 +330,6 @@ export default {
       addUser: 'Agregar usuario',
       editUser: 'Editar usuario'
     }
-  }
+  },
+  months: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
 };
