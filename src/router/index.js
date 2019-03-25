@@ -15,7 +15,7 @@ import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion'
 import Cursos from '@/components/inscripciones/Cursos';
 import busquedaNiños from '@/components/atencionMedica/busquedaNino';
 import DatosEstudiante from '@/components/atencionMedica/datosEstudiante';
-import ControlMedico from '@/components/atencionMedica/controlMedico';
+import RegistrosArchivados from '@/components/atencionMedica/registrosArchivados';
 import RegistroSimple from '@/components/atencionMedica/registroSimple';
 import Account from '@/components/admin/account/Account';
 
@@ -76,9 +76,9 @@ export default new VueRouter({
       component: RegistroInscripcion
     },
     {
-      path: '/controlMedico',
-      name: 'ControlMedico',
-      component: ControlMedico
+      path: '/registrosArchivados',
+      name: 'RegistrosArchivados',
+      component: RegistrosArchivados
     },
     {
       path: '/datosEstudiante',
