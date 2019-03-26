@@ -8,7 +8,7 @@
           <h3>{{this.datosEstudiante.nombres + ' ' +  this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
         </v-flex>
         <v-flex xs4>
-          <v-btn dark block color="red" @click.native="close()">Cerrar archivador</v-btn>
+          <v-btn dark block color="red" @click.native="cerrarCarpeta()">Cerrar archivador</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -100,6 +100,19 @@
       limpiarCampos () {
         this.formularioRegistro.observacion = '';
         this.formularioRegistro.intervencion = '';
+      },
+      cerrarCarpeta (userData) {
+        if (this.$storage.exist('menu')) {
+          let nuevoMenu = this.$storage.get('menu');
+          nuevoMenu[0].visible = true;
+          nuevoMenu[1].visible = false;
+          // this.recargaMenu(nuevoMenu);
+          this.$storage.set('menu', nuevoMenu);
+          this.$storage.set('nino', {});
+          this.$router.push('busquedaNino');
+        } else {
+          this.$message.error(this.$t('error.wrongUrl'));
+        }
       }
     }
   }

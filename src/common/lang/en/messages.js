@@ -262,7 +262,10 @@ export default {
     date: 'Date',
     newStandartRegistry: 'New standar registry',
     observation: 'Observations',
-    intervention: 'Interventions'
+    intervention: 'Interventions',
+    notRegistered: 'Not registered',
+    address: 'Address',
+    age: 'Age'
   },
   common: {
     add: 'Add',

@@ -6,7 +6,7 @@
         <h3>Folder de {{this.datosEstudiante.nombres}}</h3>
       </v-flex>
       <v-flex xs4>
-        <v-btn dark block color="red" @click.native="close()">Cerrar archivador</v-btn>
+        <v-btn dark block color="red" @click.native="cerrarCarpeta()">Cerrar archivador</v-btn>
       </v-flex>
     </v-layout>
     <v-card-title class="headline">
@@ -29,10 +29,33 @@
           <b>{{ this.$t('inscriptionRegister.secondLastName') }}: </b> {{this.datosEstudiante.segundo_apellido}} 
         </v-flex>
         <v-flex xs4>
-          <b>{{ this.$t('inscriptionRegister.ci') }}: </b> {{this.datosEstudiante.ci}} 
+          <b>{{ this.$t('inscriptionRegister.ci') }}: </b> {{this.datosEstudiante.ci == 'null null' ? this.$t('generalFollowUp.notRegistered') : this.datosEstudiante.ci}} 
         </v-flex>
         <v-flex xs4>
-          <b>Código: </b> {{this.datosEstudiante.codigo}} 
+          <b>{{ this.$t('entity.crud.code') }}: </b> {{this.datosEstudiante.codigo}} 
+        </v-flex>
+        <v-flex xs4></v-flex>
+        <v-flex xs4>
+          <b>{{ this.$t('generalFollowUp.address') }}: </b> {{}} 
+        </v-flex>
+        <v-flex xs4>
+          <b>{{ this.$t('usuarios.bornDate') }}: </b> {{}} 
+        </v-flex>
+        <v-flex xs4>
+          <b>{{ this.$t('generalFollowUp.age') }}: </b> {{}} 
+        </v-flex>
+        <v-flex xs4>
+          <b>{{ this.$t('usuarios.gender') }}: </b> {{}} 
+        </v-flex>
+        <v-flex xs4>
+          <b>{{ this.$t('inscriptionRegister.telefon') }}: </b> {{}} 
+        </v-flex>
+        <v-flex xs4></v-flex>
+        <v-flex xs4>
+          <b>Unidad educativa: </b> {{}} 
+        </v-flex>
+        <v-flex xs4>
+          <b>Curso: </b> {{}} 
         </v-flex>
       </v-layout>
     </v-container>
@@ -69,6 +92,19 @@
         this.maximizeDataPanel = true;
       },
       focus (boton) {
+      },
+      cerrarCarpeta (userData) {
+        if (this.$storage.exist('menu')) {
+          let nuevoMenu = this.$storage.get('menu');
+          nuevoMenu[0].visible = true;
+          nuevoMenu[1].visible = false;
+          // this.recargaMenu(nuevoMenu);
+          this.$storage.set('menu', nuevoMenu);
+          this.$storage.set('nino', {});
+          this.$router.push('busquedaNino');
+        } else {
+          this.$message.error(this.$t('error.wrongUrl'));
+        }
       }
     }
   }

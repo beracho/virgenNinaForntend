@@ -125,7 +125,7 @@ export default {
     zona: 'Villa / Zona',
     street: 'Calle / Avenida',
     number: 'N° de domicilio',
-    telefon: 'Telefono',
+    telefon: 'Teléfono',
     cellphone: 'Celular',
     bornDate: 'Fecha de nacimiento',
     identity: 'Documento de identificación',
@@ -262,7 +262,10 @@ export default {
     date: 'Fecha',
     newStandartRegistry: 'Nuevo registro simple',
     observation: 'Obervaciones',
-    intervention: 'Intervenciones'
+    intervention: 'Intervenciones',
+    notRegistered: 'No registrado',
+    address: 'Dirección',
+    age: 'Edad'
   },
   common: {
     add: 'Agregar',

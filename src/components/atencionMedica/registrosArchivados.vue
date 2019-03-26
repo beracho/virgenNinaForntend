@@ -8,7 +8,7 @@
           <h3>{{this.datosEstudiante.nombres + ' ' +  this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
         </v-flex>
         <v-flex xs4>
-          <v-btn dark block color="red" @click.native="close()">Cerrar archivador</v-btn>
+          <v-btn dark block color="red" @click.native="cerrarCarpeta()">Cerrar archivador</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -51,11 +51,17 @@
       <v-data-table v-bind:headers="headersAsinacion" v-bind:items="registros" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
         <template slot="items" slot-scope="props">
           <td>{{ new Date(props.item._fecha_creacion).getDate() + ' - ' + $t('months[' + new Date(props.item._fecha_creacion).getMonth() + ']') + ' - ' + new Date(props.item._fecha_creacion).getFullYear() }}</td>
-          <td>{{ props.item._usuario_creacion }}</td>
-          <td>{{ props.item.tipo }}</td>
+          <td>{{ props.item.usuario.nombre_completo }}</td>
+          <td>{{ props.item.tipo === 'simple' ? 'seguimiento' : props.item.tipo }}</td>
           <td class="text-xs-right">
-            <v-btn icon dark color="primary" @click.native="datosEstudiante(props.item.id_usuario, props.item.email)">
+            <v-btn icon dark color="primary" @click.native="verRegistro(props.item.id_usuario, props.item.email)">
               <v-icon>filter_none</v-icon>
+            </v-btn>
+            <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editaRegistro(props.item.id_usuario, props.item.email)">
+              <v-icon>edit</v-icon>
+            </v-btn>
+            <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="red" @click.native="eliminaRegistro(props.item)">
+              <v-icon>delete</v-icon>
             </v-btn>
           </td>
         </template>
@@ -194,7 +200,7 @@
           area = element.nombre;
         }
       });
-      this.$service.get(`registros?area=${area}`)
+      this.$service.get(`registros?area=${area}&estudiante=${this.datosEstudiante.codigo}`)
       .then(response => {
         this.registros = response.datos.rows ? response.datos.rows : response.datos;
       })
@@ -204,7 +210,7 @@
         this.areas.forEach((element, index) => {
           if (boton === index) {
             element.seleccionado = true;
-            this.$service.get(`registros?area=${element.nombre}`)
+            this.$service.get(`registros?area=${element.nombre}&estudiante=${this.datosEstudiante.codigo}`)
             .then(response => {
               this.registros = response.datos.rows ? response.datos.rows : response.datos;
             })
@@ -212,10 +218,24 @@
             element.seleccionado = false;
           }
         });
+      },
+      cerrarCarpeta (userData) {
+        if (this.$storage.exist('menu')) {
+          let nuevoMenu = this.$storage.get('menu');
+          nuevoMenu[0].visible = true;
+          nuevoMenu[1].visible = false;
+          // this.recargaMenu(nuevoMenu);
+          this.$storage.set('menu', nuevoMenu);
+          this.$storage.set('nino', {});
+          this.$router.push('busquedaNino');
+        } else {
+          this.$message.error(this.$t('error.wrongUrl'));
+        }
+      },
+      eliminaRegistro (item) {
+      },
+      editarRegistro (item) {
       }
-      // buscaEstudiante () {
-      //   if (this.busqueda.aBuscar !== undefined && this.busqueda.aBuscar !== '') {
-      //     let rutaEstudiantes = '';
       //     if (this.pagination.rowsPerPage === -1) {
       //       rutaEstudiantes = `estudiantes?tipobusqueda=${JSON.stringify(this.tiposBusqueda[this.busqueda.tipo].valor)}&buscar=${this.busqueda.aBuscar}`;
       //     } else {
