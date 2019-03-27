@@ -11,7 +11,7 @@ export default {
   registroInscripcion: 'Registro RUDE de Estudiante',
   inscriptions: 'Inscripciones',
   administration: 'Administración',
-  medicalFollowUp: 'SEGUIMIENTO MULTIDISCIPLINARIO',
+  medicalFollowUp: 'SEGUIMIENTO',
   controlMedico: 'Control Médico',
   listaNinos: 'LISTA DE NIÑOS',
   busquedaNino: 'Búsqueda',

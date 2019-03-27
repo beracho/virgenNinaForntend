@@ -28,17 +28,19 @@
     <v-list dense id="sidenav-menu">
       <template v-for="(item, i) in menu" v-if="item.visible">
         <v-list-group v-if="item.submenu" v-model="item.model" no-action>
-          <v-list-tile slot="item" @click="send(item.url, item.submenu)" :data-url="item.url">
-            <v-list-tile-action>
-              <v-icon color="warning">{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>
-                {{ getLabel(item) }}
-              </v-list-tile-title>
-              <v-icon>{{ item.model ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</v-icon>
-            </v-list-tile-content>
-          </v-list-tile>
+          <template v-slot:activator>
+            <v-list-tile slot="item" @click="send(item.url, item.submenu)" :data-url="item.url">
+              <v-list-tile-action>
+                <v-icon color="warning">{{ item.icon }}</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  {{ getLabel(item) }}
+                </v-list-tile-title>
+                <!-- <v-icon>{{ item.model ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</v-icon> -->
+              </v-list-tile-content>
+            </v-list-tile>
+          </template>
           <v-list-tile v-for="(child, i) in item.submenu" :key="i" @click="send(child.url)" :data-url="child.url">
             <v-list-tile-action v-if="child.icon">
               <v-icon>{{ child.icon }}</v-icon>
@@ -259,6 +261,7 @@ aside.navigation-drawer--open + nav + .content--wrap > .content {
   min-height: 105px;
   background-size: 100% auto;
   border-bottom: 1px solid lighten($bgSidenav, 8%);
+  margin-top:20%;
 }
 
 .sidenav-user__photo {

@@ -11,7 +11,7 @@ export default {
   registroInscripcion: 'Student RUDE Record',
   inscriptions: 'Inscriptions',
   administration: 'Administration',
-  medicalFollowUp: 'MEDICAL FOLLOW UP',
+  medicalFollowUp: 'FOLLOW UP',
   controlMedico: 'Medical Control',
   listaNinos: 'KID LIST',
   busquedaNino: 'Kid Search',

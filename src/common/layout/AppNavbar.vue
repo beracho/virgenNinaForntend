@@ -24,7 +24,7 @@
     <v-tooltip bottom>
       <v-btn icon @click="fullscreen()" class="btn-fullscreen" slot="activator">
         <v-icon>fullscreen</v-icon>
-        <v-icon>fullscreen_exit</v-icon>
+        <!-- <v-icon>fullscreen_exit</v-icon> -->
       </v-btn>
       <span>Pantalla completa</span>
     </v-tooltip>
