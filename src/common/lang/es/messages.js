@@ -260,9 +260,9 @@ export default {
     searchBy: 'Busqueda por',
     searchText: 'Texto de busqueda',
     date: 'Fecha',
-    newStandartRegistry: 'Nuevo registro simple',
-    observation: 'Obervaciones',
-    intervention: 'Intervenciones',
+    newStandartRegistry: 'Nuevo registro de seguimiento',
+    observation: 'Obervación',
+    intervention: 'Intervención',
     notRegistered: 'No registrado',
     address: 'Dirección',
     age: 'Edad'

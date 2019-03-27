@@ -17,7 +17,7 @@ export default {
   busquedaNino: 'Búsqueda',
   datosEstudiante: 'Datos personales',
   registrosArchivados: 'Folder de registros',
-  registroSimple: 'Registro sencillo',
+  registroSimple: 'Hoja de seguimiento',
   registroEspecialidad: 'Registro elaborado',
   registroSemestral: 'Registro semestral'
 };

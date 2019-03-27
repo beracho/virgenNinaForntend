@@ -17,7 +17,7 @@ export default {
   busquedaNino: 'Kid Search',
   datosEstudiante: 'Personal data',
   registrosArchivados: 'Follow up folder',
-  registroSimple: 'Simple record',
+  registroSimple: 'Follow up page',
   registroEspecialidad: 'Elaborate record',
   registroSemestral: 'Semester registration'
 };

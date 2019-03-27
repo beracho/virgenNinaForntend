@@ -260,9 +260,9 @@ export default {
     searchBy: 'Search by',
     searchText: 'Search text',
     date: 'Date',
-    newStandartRegistry: 'New standar registry',
-    observation: 'Observations',
-    intervention: 'Interventions',
+    newStandartRegistry: 'New follow up registry',
+    observation: 'Observation',
+    intervention: 'Intervention',
     notRegistered: 'Not registered',
     address: 'Address',
     age: 'Age'
