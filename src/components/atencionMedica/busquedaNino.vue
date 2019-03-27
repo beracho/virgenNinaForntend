@@ -25,8 +25,8 @@
     </v-layout>
   </v-container>
   <!-- TABLA DE DATOS -->
-  <v-data-table v-bind:headers="headersAsinacion" v-bind:items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
-    <template slot="items" slot-scope="props">
+  <v-data-table :headers="headersAsinacion" :items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
+    <template v-slot:items="props">
       <td class="text-xs-right">
           <v-btn icon dark color="primary" @click.native="abrirCarpeta(props.item)">
             <v-icon>folder</v-icon>

@@ -46,7 +46,7 @@
               id="password"
               append-icon="lock"
               :append-icon="getIcon"
-              :append-icon-cb="changeIcon"
+              @click:append="changeIcon"
               :type="hidePass ? 'password' : 'text'"
               v-model="form.password"
               maxlength="100"

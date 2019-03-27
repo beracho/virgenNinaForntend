@@ -48,7 +48,7 @@
           <v-btn id="8" dark block class="elevation-0" :color="areas[8].seleccionado ? 'black' : 'primary'" @click.native="focus(8)">Trabajo Social</v-btn>
         </v-flex>
       </v-layout>
-      <v-data-table v-bind:headers="headersAsinacion" v-bind:items="registros" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
+      <v-data-table :headers="headersAsinacion" :items="registros" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
         <template slot="items" slot-scope="props">
           <td>{{ new Date(props.item._fecha_creacion).getDate() + ' - ' + $t('months[' + new Date(props.item._fecha_creacion).getMonth() + ']') + ' - ' + new Date(props.item._fecha_creacion).getFullYear() }}</td>
           <td>{{ props.item.usuario.nombre_completo }}</td>
