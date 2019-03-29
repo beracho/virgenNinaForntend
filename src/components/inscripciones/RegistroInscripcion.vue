@@ -578,7 +578,7 @@
       <v-dialog v-model="windowA" max-width="800px" persistent>
         <v-card>
           <v-card-title>
-            {{$t('inscriptionRegister.createNewSchool')}}
+            {{$t('inscriptionRegister.tutorData')}}
           </v-card-title>
           <v-card-text>
             <v-layout row wrap>
