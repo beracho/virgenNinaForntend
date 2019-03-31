@@ -25,19 +25,20 @@
                   <v-radio-group :disabled="searchRE" v-model="form.persona.tipo_documento" :label="$t('inscriptionRegister.documentTipe')" :mandatory="true" column>
                     <v-radio :label="$t('inscriptionRegister.ci')" :disabled="searchRE" value="CARNET_IDENTIDAD"></v-radio>
                     <v-radio :label="$t('inscriptionRegister.passport')" :disabled="searchRE" value="PASAPORTE"></v-radio>
+                    <v-radio :label="$t('common.code')" :disabled="searchRE" value="CODIGO"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs4>
                   <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentNumber')" v-model="form.persona.documento_identidad"></v-text-field>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs4 v-if="!codeChosen">
                   <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field>
                 </v-flex>
                 <v-flex sx4 offset-xs8>
-                  <v-btn v-if="!searchRE" class="primary" block flat v-on:click="buscaEstudiante('search')">{{$t('common.search')}}
+                  <v-btn v-if="!searchRE" class="primary" block flat v-on:click="buscaEstudiante('search', false)">{{$t('common.search')}}
                     <v-icon right> search </v-icon>
                   </v-btn>
-                  <v-btn v-if="searchRE" class="primary" block flat v-on:click="buscaEstudiante('restore')">{{$t('common.change')}}
+                  <v-btn v-if="searchRE" class="primary" block flat v-on:click="buscaEstudiante('restore', false)">{{$t('common.change')}}
                     <v-icon right> cached </v-icon>
                   </v-btn>
                 </v-flex>
@@ -782,6 +783,7 @@ export default {
       windowUE: false,
       dependency: [],
       // Registro Estudiante
+      codeChosen: false,
       disableOptionsRE: true,
       searchRE: false,
       chargingRE: true,
@@ -846,6 +848,11 @@ export default {
       {name: this.$t('inscriptionRegister.convein'), value: 'convein'},
       {name: this.$t('inscriptionRegister.private'), value: 'private'}
     ];
+    if (this.$route.query.codigo) {
+      this.buscaEstudiante('search', true);
+      this.form.persona.tipo_documento = 'CODIGO';
+      this.form.persona.documento_identidad = this.$route.query.codigo;
+    }
     this.$service.get(`unidadesEducativas`)
     .then(respuesta => {
       this.todosUE = respuesta.datos;
@@ -950,11 +957,6 @@ export default {
         }
       }, this);
     });
-    // default example values
-    this.form.unidadEducativa.nombre = 1;
-    this.form.persona.documento_identidad = '0000015';
-    this.form.persona.lugar_documento_identidad = 'LP';
-    this.form.persona.tipo_documento = 'CARNET_IDENTIDAD';
   },
   methods: {
     getUnidadesEducativas () {
@@ -1072,11 +1074,15 @@ export default {
       }
       this.windowA = false;
     },
-    buscaEstudiante (action) {
-      if (this.form.persona.documento_identidad && this.form.persona.lugar_documento_identidad && this.form.persona.tipo_documento) {
-        if (action === 'search') {
+    buscaEstudiante (action, onload) {
+      if (action === 'search') {
+        if ((this.form.persona.documento_identidad && this.form.persona.lugar_documento_identidad && this.form.persona.tipo_documento) || onload) {
+          let ruta = `estudiantes?tipo_documento=${this.form.persona.tipo_documento}&documento_identidad=${this.form.persona.documento_identidad}&lugar_documento_identidad=${this.form.persona.lugar_documento_identidad}`;
+          if (onload) {
+            ruta = `estudiantes?codigo=${this.$route.query.codigo}`;
+          }
           // if (this.form.unidadEducativa.nombre !== -1) {
-          this.$service.get(`estudiantes?tipo_documento=${this.form.persona.tipo_documento}&documento_identidad=${this.form.persona.documento_identidad}&lugar_documento_identidad=${this.form.persona.lugar_documento_identidad}`)
+          this.$service.get(ruta)
             .then(respuesta => {
               var consulta = {};
               if (!respuesta) {
@@ -1202,19 +1208,19 @@ export default {
           // } else {
           //   this.disableOptionsUE = false;
           // }
+        } else {
+          this.$message.error(this.$t('inscriptionRegister.errorNameField'));
         }
-        if (action === 'restore') {
-          this.searchRE = false;
-          if (!this.disableOptionsUE) {
-            this.disableOptionsUE = true;
-          } else {
-            // this.form.unidadEducativa.nombre = null;
-            // this.form.unidadEducativa.dependencia = null;
-            // this.form.unidadEducativa.distrito = null;
-          }
+      }
+      if (action === 'restore') {
+        this.searchRE = false;
+        if (!this.disableOptionsUE) {
+          this.disableOptionsUE = true;
+        } else {
+          // this.form.unidadEducativa.nombre = null;
+          // this.form.unidadEducativa.dependencia = null;
+          // this.form.unidadEducativa.distrito = null;
         }
-      } else {
-        this.$message.error(this.$t('inscriptionRegister.errorNameField'));
       }
     },
     guardarInscripcion () {
@@ -1242,6 +1248,13 @@ export default {
     }
   },
   watch: {
+    'form.persona.tipo_documento': function () {
+      if (this.form.persona.tipo_documento === 'CODIGO') {
+        this.codeChosen = true;
+      } else {
+        this.codeChosen = false;
+      }
+    },
     'form.nacimiento.departamento': function () {
       this.$service.get(`dpaHijos?id_dpa=${this.form.nacimiento.departamento}`)
         .then(respuesta => {

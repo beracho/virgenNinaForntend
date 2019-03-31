@@ -13,18 +13,12 @@
   <v-data-table v-bind:headers="headersAsinacion" v-bind:items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
     <template slot="items" slot-scope="props">
       <td class="text-xs-right">
-        <!-- <v-tooltip bottom> -->
-          <v-btn icon dark color="primary" @click.native="asignacionCurso(props.item)">
-            <v-icon>edit</v-icon>
-          </v-btn>
-          <!-- <span>Asignar Curso</span>
-        </v-tooltip> -->
-        <!-- <v-tooltip bottom> -->
-          <!-- <v-btn v-if="props.item.estado === 'PREINSCRITO'" icon dark color="primary" @click.native="inscripcion(props.item.id_usuario, props.item.email)">
-            <v-icon>airplay</v-icon>
-          </v-btn> -->
-          <!-- <span>Reenviar activación</span>
-        </v-tooltip> -->
+        <v-btn icon dark color="primary" @click.native="asignacionCurso(props.item)">
+          <v-icon>school</v-icon>
+        </v-btn>
+        <v-btn icon dark color="primary" @click.native="editarEstudiante(props.item)">
+          <v-icon>edit</v-icon>
+        </v-btn>
       </td>
       <td>{{ props.item.codigo }}</td>
       <td>{{ props.item.nombres }}</td>
@@ -260,6 +254,9 @@
           this.formAsignacionCurso.ci = this.$t('inscriptions.noData');
         }
         this.dialogAsignacionCurso = !this.dialogAsignacionCurso;
+      },
+      editarEstudiante (datos) {
+        this.$router.push('registroInscripcion?codigo=' + datos.codigo);
       },
       enviaAsignacionCurso () { // Envía datos de la nueva asignación
         // valida
