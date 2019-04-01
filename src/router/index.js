@@ -17,6 +17,18 @@ import busquedaNiños from '@/components/atencionMedica/busquedaNino';
 import DatosEstudiante from '@/components/atencionMedica/datosEstudiante';
 import RegistrosArchivados from '@/components/atencionMedica/registrosArchivados';
 import RegistroSimple from '@/components/atencionMedica/registroSimple';
+import RegistroSemestral from '@/components/atencionMedica/registroSemestral';
+import RegistroEvaluacionEducacion from '@/components/atencionMedica/registroEvaluacionEducacion';
+import RegistroEvaluacionFisioterapia from '@/components/atencionMedica/registroEvaluacionFisioterapia';
+import RegistroEvaluacionFonoaudiologia from '@/components/atencionMedica/registroEvaluacionFonoaudiologia';
+import RegistroEvaluacionMedicinaGeneral from '@/components/atencionMedica/registroEvaluacionMedicinaGeneral';
+import RegistroEvaluacionNutricion from '@/components/atencionMedica/registroEvaluacionNutricion';
+import RegistroEvaluacionOdontologia from '@/components/atencionMedica/registroEvaluacionOdontologia';
+import RegistroEvaluacionPsicologia from '@/components/atencionMedica/registroEvaluacionPsicologia';
+import RegistroEvaluacionPsicomotricidad from '@/components/atencionMedica/registroEvaluacionPsicomotricidad';
+import RegistroEvaluacionPsicopedagogia from '@/components/atencionMedica/registroEvaluacionPsicopedagogia';
+import RegistroEvaluacionTerapiaOcupacional from '@/components/atencionMedica/registroEvaluacionTerapiaOcupacional';
+import RegistroEvaluacionTrabajoSocial from '@/components/atencionMedica/registroEvaluacionTrabajoSocial';
 import Account from '@/components/admin/account/Account';
 
 import Entidad from '@/components/admin/entidad/Entidad';
@@ -89,6 +101,66 @@ export default new VueRouter({
       path: '/registroSimple',
       name: 'RegistroSimple',
       component: RegistroSimple
+    },
+    {
+      path: '/registroSemestral',
+      name: 'RegistroSemestral',
+      component: RegistroSemestral
+    },
+    {
+      path: '/registroEvaluacionEducacion',
+      name: 'RegistroEvaluacionEducacion',
+      component: RegistroEvaluacionEducacion
+    },
+    {
+      path: '/registroEvaluacionFisioterapia',
+      name: 'RegistroEvaluacionFisioterapia',
+      component: RegistroEvaluacionFisioterapia
+    },
+    {
+      path: '/registroEvaluacionFonoaudiologia',
+      name: 'RegistroEvaluacionFonoaudiologia',
+      component: RegistroEvaluacionFonoaudiologia
+    },
+    {
+      path: '/registroEvaluacionMedicinaGeneral',
+      name: 'RegistroEvaluacionMedicinaGeneral',
+      component: RegistroEvaluacionMedicinaGeneral
+    },
+    {
+      path: '/registroEvaluacionNutricion',
+      name: 'RegistroEvaluacionNutricion',
+      component: RegistroEvaluacionNutricion
+    },
+    {
+      path: '/registroEvaluacionOdontologia',
+      name: 'RegistroEvaluacionOdontologia',
+      component: RegistroEvaluacionOdontologia
+    },
+    {
+      path: '/registroEvaluacionPsicologia',
+      name: 'RegistroEvaluacionPsicologia',
+      component: RegistroEvaluacionPsicologia
+    },
+    {
+      path: '/registroEvaluacionPsicomotricidad',
+      name: 'RegistroEvaluacionPsicomotricidad',
+      component: RegistroEvaluacionPsicomotricidad
+    },
+    {
+      path: '/registroEvaluacionPsicopedagogia',
+      name: 'RegistroEvaluacionPsicopedagogia',
+      component: RegistroEvaluacionPsicopedagogia
+    },
+    {
+      path: '/registroEvaluacionTerapiaOcupacional',
+      name: 'RegistroEvaluacionTerapiaOcupacional',
+      component: RegistroEvaluacionTerapiaOcupacional
+    },
+    {
+      path: '/registroEvaluacionTrabajoSocial',
+      name: 'RegistroEvaluacionTrabajoSocial',
+      component: RegistroEvaluacionTrabajoSocial
     },
     {
       path: '/busquedaNino',

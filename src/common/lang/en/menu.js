@@ -18,6 +18,16 @@ export default {
   datosEstudiante: 'Personal data',
   registrosArchivados: 'Follow up folder',
   registroSimple: 'Follow up page',
-  registroEspecialidad: 'Elaborate record',
+  registroEvaluacionEducacion: 'Evaluation page',
+  registroEvaluacionFisioterapia: 'Evaluation page',
+  registroEvaluacionFonoaudiologia: 'Evaluation page',
+  registroEvaluacionMedicinaGeneral: 'Evaluation page',
+  registroEvaluacionNutricion: 'Evaluation page',
+  registroEvaluacionOdontologia: 'Evaluation page',
+  registroEvaluacionPsicologia: 'Evaluation page',
+  registroEvaluacionPsicomotricidad: 'Evaluation page',
+  registroEvaluacionPsicopedagogia: 'Evaluation page',
+  registroEvaluacionTerapiaOcupacional: 'Evaluation page',
+  registroEvaluacionTrabajoSocial: 'Evaluation page',
   registroSemestral: 'Semester registration'
 };

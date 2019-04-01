@@ -18,6 +18,16 @@ export default {
   datosEstudiante: 'Datos personales',
   registrosArchivados: 'Folder de registros',
   registroSimple: 'Hoja de seguimiento',
-  registroEspecialidad: 'Registro elaborado',
+  registroEvaluacionEducacion: 'Hoja de evaluación',
+  registroEvaluacionFisioterapia: 'Hoja de evaluación',
+  registroEvaluacionFonoaudiologia: 'Hoja de evaluación',
+  registroEvaluacionMedicinaGeneral: 'Hoja de evaluación',
+  registroEvaluacionNutricion: 'Hoja de evaluación',
+  registroEvaluacionOdontologia: 'Hoja de evaluación',
+  registroEvaluacionPsicologia: 'Hoja de evaluación',
+  registroEvaluacionPsicomotricidad: 'Hoja de evaluación',
+  registroEvaluacionPsicopedagogia: 'Hoja de evaluación',
+  registroEvaluacionTerapiaOcupacional: 'Hoja de evaluación',
+  registroEvaluacionTrabajoSocial: 'Hoja de evaluación',
   registroSemestral: 'Registro semestral'
 };
