@@ -141,6 +141,7 @@
             this.dialogAsignacionCurso = false
             this.limpiarCampos();
             this.$message.success('Registro creado exitosamente');
+            this.$router.push('registrosArchivados');
           })
           .catch(() => {
             this.$message.error('Error an la creación del registro');

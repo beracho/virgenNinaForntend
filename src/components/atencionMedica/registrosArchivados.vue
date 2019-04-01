@@ -13,44 +13,41 @@
       </v-layout>
     </v-container>
     <br>
+    <v-card>
+      <v-card-title class="headline">
+        <v-icon right>search</v-icon>
+        <h2 class="headline mb-0">Parámetros de búsqueda</h2>
+        <v-spacer></v-spacer>
+        <v-btn icon dark color="primary" @click.native="generalDataPanel?minimize():maximize()">
+          <v-icon>{{generalDataPanel?"remove":"add"}}</v-icon>
+        </v-btn>
+      </v-card-title>
+      <v-container fluid v-if="generalDataPanel">
+        <v-layout row wrap>
+          <v-flex xs4>
+            <v-select
+              v-bind:items="areas"
+              item-text="text"
+              item-value="value"
+              v-model="search.area"
+              label="Área"
+            ></v-select>
+          </v-flex>
+          <v-flex xs4>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card>
     <!-- TABLA DE DATOS -->
     <v-card>
       <v-card-title class="headline">
         <v-icon right>list</v-icon>
         <h2 class="headline mb-0">Documentos</h2>
       </v-card-title>
-      <v-layout row wrap primary>
-        <v-flex xs4>
-          <v-btn id="0" dark block class="elevation-0" :color="areas[0].seleccionado ? 'black' : 'primary'" @click.native="focus(0)">Psicomotricidad</v-btn>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn id="1" dark block class="elevation-0" :color="areas[1].seleccionado ? 'black' : 'primary'" @click.native="focus(1)">Fisioterapia</v-btn>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn id="2" dark block class="elevation-0" :color="areas[2].seleccionado ? 'black' : 'primary'" @click.native="focus(2)">Fonoaudiología</v-btn>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn id="3" dark block class="elevation-0" :color="areas[3].seleccionado ? 'black' : 'primary'" @click.native="focus(3)">Nutrición</v-btn>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn id="4" dark block class="elevation-0" :color="areas[4].seleccionado ? 'black' : 'primary'" @click.native="focus(4)">Psicología</v-btn>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn id="5" dark block class="elevation-0" :color="areas[5].seleccionado ? 'black' : 'primary'" @click.native="focus(5)">Odontología</v-btn>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn id="6" dark block class="elevation-0" :color="areas[6].seleccionado ? 'black' : 'primary'" @click.native="focus(6)">Psicopedagogía</v-btn>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn id="7" dark block class="elevation-0" :color="areas[7].seleccionado ? 'black' : 'primary'" @click.native="focus(7)">Medicina General</v-btn>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn id="8" dark block class="elevation-0" :color="areas[8].seleccionado ? 'black' : 'primary'" @click.native="focus(8)">Trabajo Social</v-btn>
-        </v-flex>
-      </v-layout>
       <v-data-table :headers="headersAsinacion" :items="registros" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
         <template slot="items" slot-scope="props">
-          <td>{{ new Date(props.item._fecha_creacion).getDate() + ' - ' + $t('months[' + new Date(props.item._fecha_creacion).getMonth() + ']') + ' - ' + new Date(props.item._fecha_creacion).getFullYear() }}</td>
+          <td>{{ getDate(props.item._fecha_creacion) }}</td>
+          <!-- <td>{{ new Date(props.item._fecha_creacion).getDate() + ' - ' + $t('months[' + new Date(props.item._fecha_creacion).getMonth() + ']') + ' - ' + new Date(props.item._fecha_creacion).getFullYear() }}</td> -->
           <td>{{ props.item.usuario.nombre_completo }}</td>
           <td>{{ props.item.tipo === 'simple' ? 'seguimiento' : props.item.tipo }}</td>
           <td class="text-xs-right">
@@ -79,45 +76,57 @@
     data () {
       return {
         headers: {'access-token': '<your-token>'},
+        generalDataPanel: true,
         // Opciones de area
         areas: [
           {
-            nombre: 'psicomotricidad',
-            seleccionado: true
+            value: 'psicomotricidad',
+            text: 'Psicomotricidad'
           },
           {
-            nombre: 'fisioterapia',
-            seleccionado: false
+            value: 'fisioterapia',
+            text: 'Fisioterapia'
           },
           {
-            nombre: 'fonoaudiologia',
-            seleccionado: false
+            value: 'fonoaudiologia',
+            text: 'Fonoaudiología'
           },
           {
-            nombre: 'nutricion',
-            seleccionado: false
+            value: 'nutricion',
+            text: 'Nutrición'
           },
           {
-            nombre: 'psicologia',
-            seleccionado: false
+            value: 'psicologia',
+            text: 'Psicología'
           },
           {
-            nombre: 'odontologia',
-            seleccionado: false
+            value: 'odontologia',
+            text: 'Odontología'
           },
           {
-            nombre: 'psicopedagogia',
-            seleccionado: false
+            value: 'psicopedagogia',
+            text: 'Psicopedagogía'
           },
           {
-            nombre: 'medicina general',
-            seleccionado: false
+            value: 'medicina general',
+            text: 'Medicina General'
           },
           {
-            nombre: 'trabajo social',
-            seleccionado: false
+            value: 'trabajo social',
+            text: 'Trabajo Social'
+          },
+          {
+            value: 'educacion',
+            text: 'Educación'
+          },
+          {
+            value: 'terapia ocupacional',
+            text: 'Terapia ocupacional'
           }
         ],
+        search: {
+          area: ''
+        },
         // Listado de estudiantes
         datosEstudiante: {},
         registros: [],
@@ -146,6 +155,12 @@
     components: {
     },
     watch: {
+      'search.area': function () {
+        this.$service.get(`registros?area=${this.search.area.value}&estudiante=${this.datosEstudiante.codigo}`)
+        .then(response => {
+          this.registros = response.datos.rows ? response.datos.rows : response.datos;
+        })
+      },
       pagination: {
         handler () {
           // let sorting = '';
@@ -194,16 +209,12 @@
     created () {
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
-      let area = '';
-      this.areas.forEach(element => {
-        if (element.seleccionado) {
-          area = element.nombre;
+      let areaActual = this.$storage.get('user');
+      this.areas.forEach(area => {
+        if (area.text === areaActual.rol.area) {
+          this.search.area = area;
         }
       });
-      this.$service.get(`registros?area=${area}&estudiante=${this.datosEstudiante.codigo}`)
-      .then(response => {
-        this.registros = response.datos.rows ? response.datos.rows : response.datos;
-      })
     },
     methods: {
       focus (boton) {
@@ -219,6 +230,12 @@
           }
         });
       },
+      minimize (cardNumber) {
+        this.generalDataPanel = false;
+      },
+      maximize (cardNumber) {
+        this.generalDataPanel = true;
+      },
       cerrarCarpeta (userData) {
         if (this.$storage.exist('menu')) {
           let nuevoMenu = this.$storage.get('menu');
@@ -232,24 +249,14 @@
           this.$message.error(this.$t('error.wrongUrl'));
         }
       },
+      getDate (dateString) {
+        let date = dateString ? new Date(dateString) : new Date();
+        return (date.getDate() + ' - ' + this.$t('months[' + date.getMonth() + ']') + ' - ' + date.getFullYear());
+      },
       eliminaRegistro (item) {
       },
       editarRegistro (item) {
       }
-      //     if (this.pagination.rowsPerPage === -1) {
-      //       rutaEstudiantes = `estudiantes?tipobusqueda=${JSON.stringify(this.tiposBusqueda[this.busqueda.tipo].valor)}&buscar=${this.busqueda.aBuscar}`;
-      //     } else {
-      //       rutaEstudiantes = `estudiantes?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}&tipobusqueda=${JSON.stringify(this.tiposBusqueda[this.busqueda.tipo].valor)}&buscar=${this.busqueda.aBuscar}`;
-      //     }
-      //     this.$service.get(rutaEstudiantes)
-      //     .then(response => {
-      //       this.asignaciones = response.datos.rows;
-      //       this.count = response.datos.count;
-      //     })
-      //   } else {
-      //     this.$message.error(this.$t('error.mustAddSearchInformation'));
-      //   }
-      // }
     }
   }
 </script>
