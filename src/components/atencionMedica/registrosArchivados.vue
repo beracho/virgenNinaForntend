@@ -1,71 +1,123 @@
 <template>
   <div>
-    <v-container>
-      <v-layout row wrap>
-        <v-flex xs1>
-        </v-flex>
-        <v-flex xs7>
-          <h3>{{this.datosEstudiante.nombres + ' ' +  this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn dark block color="red" @click.native="cerrarCarpeta()">Cerrar archivador</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
-    <br>
-    <v-card>
-      <v-card-title class="headline">
-        <v-icon right>search</v-icon>
-        <h2 class="headline mb-0">Parámetros de búsqueda</h2>
-        <v-spacer></v-spacer>
-        <v-btn icon dark color="primary" @click.native="generalDataPanel?minimize():maximize()">
-          <v-icon>{{generalDataPanel?"remove":"add"}}</v-icon>
-        </v-btn>
-      </v-card-title>
-      <v-container fluid v-if="generalDataPanel">
+    <div>
+      <v-container>
         <v-layout row wrap>
-          <v-flex xs4>
-            <v-select
-              v-bind:items="areas"
-              item-text="text"
-              item-value="value"
-              v-model="search.area"
-              label="Área"
-            ></v-select>
+          <v-flex xs1>
+          </v-flex>
+          <v-flex xs7>
+            <h3>{{this.datosEstudiante.nombres + ' ' +  this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
           </v-flex>
           <v-flex xs4>
+            <v-btn dark block color="red" @click.native="cerrarCarpeta()">Cerrar archivador</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
-    </v-card>
-    <!-- TABLA DE DATOS -->
-    <v-card>
-      <v-card-title class="headline">
-        <v-icon right>list</v-icon>
-        <h2 class="headline mb-0">Documentos</h2>
-      </v-card-title>
-      <v-data-table :headers="headersAsinacion" :items="registros" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
-        <template slot="items" slot-scope="props">
-          <td>{{ getDate(props.item._fecha_creacion) }}</td>
-          <!-- <td>{{ new Date(props.item._fecha_creacion).getDate() + ' - ' + $t('months[' + new Date(props.item._fecha_creacion).getMonth() + ']') + ' - ' + new Date(props.item._fecha_creacion).getFullYear() }}</td> -->
-          <td>{{ props.item.usuario.nombre_completo }}</td>
-          <td>{{ props.item.tipo === 'simple' ? 'seguimiento' : props.item.tipo }}</td>
-          <td class="text-xs-right">
-            <v-btn icon dark color="primary" @click.native="verRegistro(props.item.id_usuario, props.item.email)">
-              <v-icon>filter_none</v-icon>
-            </v-btn>
-            <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editaRegistro(props.item.id_usuario, props.item.email)">
-              <v-icon>edit</v-icon>
-            </v-btn>
-            <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="red" @click.native="eliminaRegistro(props.item)">
-              <v-icon>delete</v-icon>
-            </v-btn>
-          </td>
-        </template>
-      </v-data-table>
-    </v-card>
+      <br>
+      <v-card>
+        <v-card-title class="headline">
+          <v-icon right>search</v-icon>
+          <h2 class="headline mb-0">Parámetros de búsqueda</h2>
+          <v-spacer></v-spacer>
+          <v-btn icon dark color="primary" @click.native="generalDataPanel?minimize():maximize()">
+            <v-icon>{{generalDataPanel?"remove":"add"}}</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-container fluid v-if="generalDataPanel">
+          <v-layout row wrap>
+            <v-flex xs4>
+              <v-select
+                v-bind:items="areas"
+                item-text="text"
+                item-value="value"
+                v-model="search.area"
+                label="Área"
+              ></v-select>
+            </v-flex>
+            <v-flex xs4>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card>
+      <!-- TABLA DE DATOS -->
+      <v-card>
+        <v-card-title class="headline">
+          <v-icon right>list</v-icon>
+          <h2 class="headline mb-0">Documentos</h2>
+        </v-card-title>
+        <v-data-table :headers="headersAsinacion" :items="registros" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
+          <template slot="items" slot-scope="props">
+            <td>{{ getDate(props.item._fecha_creacion) }}</td>
+            <td>{{ props.item.usuario.nombre_completo }}</td>
+            <td>{{ props.item.tipo === 'simple' ? 'seguimiento' : props.item.tipo }}</td>
+            <td class="text-xs-right">
+              <v-btn icon dark color="primary" @click.native="verRegistro(props.item)">
+                <v-icon>filter_none</v-icon>
+              </v-btn>
+              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editaRegistro(props.item.id_usuario, props.item.email)">
+                <v-icon>edit</v-icon>
+              </v-btn>
+              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="red" @click.native="eliminaRegistro(props.item)">
+                <v-icon>delete</v-icon>
+              </v-btn>
+            </td>
+          </template>
+        </v-data-table>
+      </v-card>
+    </div>
+    <div>
+    <!-- VENTANA DE REGISTRO DE SEGUIMIENTO -->
+      <v-layout row wrap align-center>
+        <v-dialog v-model="dialogRegistroSeguimiento" persistent width="1200px">
+          <v-card>
+            <v-card-title class="headline">
+              <v-icon right>book</v-icon>
+              {{$t('generalFollowUp.standartRegistry') }}
+              <v-spacer></v-spacer>
+              <v-btn class="primary" flat v-on:click="agregaCurso()">{{$t('generalFollowUp.print')}}
+                <v-icon right>print</v-icon>
+              </v-btn>
+            </v-card-title>
+            <v-layout row>
+              <v-flex xs10 offset-xs1>
+                <v-alert color="primary" icon="label" value="true">
+                  {{$t('generalFollowUp.generalData')}}
+                </v-alert>
+                <form @submit.prevent="agregaCurso()">
+                  <v-layout row wrap>
+                    <v-flex xs4 offset-xs8>
+                      <b>Creado: </b>{{datosRegistro.fecha}}
+                    </v-flex>
+                    <v-flex xs12>
+                      <b>Área: </b>{{datosRegistro.area}}
+                    </v-flex>
+                    <v-flex xs12>
+                      <b>Creado por: </b>{{datosRegistro.autor}}
+                    </v-flex>
+                    <v-flex xs10 offset-xs1>
+                      <br><b>Observación: </b>{{datosRegistro.observacion}}
+                    </v-flex>
+                    <v-flex xs10 offset-xs1>
+                      <br><b>Intervención: </b>{{datosRegistro.intervencion}}
+                    </v-flex>
+                  </v-layout>
+                </form>
+              </v-flex>
+            </v-layout>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="cancel" dark @click.native="dialogRegistroSeguimiento = false">{{$t('common.cancel')}}
+                <v-icon right>cancel</v-icon>
+              </v-btn>
+              <v-btn class="primary" flat v-on:click="agregaCurso()">{{$t('common.save')}}
+                <v-icon right>done</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -77,6 +129,17 @@
       return {
         headers: {'access-token': '<your-token>'},
         generalDataPanel: true,
+        // Registro Seguimiento
+        dialogRegistroSeguimiento: false,
+        datosRegistro: {
+          fecha: '',
+          area: '',
+          autor: '',
+          observacion: '',
+          intervencion: ''
+        },
+        dialogRegistroEspecialidad: false,
+        dialogRegistroSemestral: false,
         // Opciones de area
         areas: [
           {
@@ -256,6 +319,28 @@
       eliminaRegistro (item) {
       },
       editarRegistro (item) {
+      },
+      verRegistro (item) {
+        switch (item.tipo) {
+          case 'simple':
+            this.dialogRegistroSeguimiento = true;
+            this.datosRegistro = {
+              fecha: this.getDate(item.fecha),
+              area: item.area,
+              autor: item.usuario.nombre + ' ' + item.usuario.primer_apellido + ' ' + item.usuario.segundo_apellido,
+              observacion: item.registros_simple.observacion,
+              intervencion: item.registros_simple.intervencion
+            }
+            break;
+          case 'especialidad':
+            this.dialogRegistroEspecialidad = true;
+            break;
+          case 'semestral':
+            this.dialogRegistroSemestral = true;
+            break;
+          default:
+            break;
+        }
       }
     }
   }
