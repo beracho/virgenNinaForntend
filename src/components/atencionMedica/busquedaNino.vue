@@ -167,12 +167,12 @@
       },
       abrirCarpeta (userData) {
         if (this.$storage.exist('menu')) {
+          this.$storage.set('nino', userData);
           let nuevoMenu = this.$storage.get('menu');
           nuevoMenu[0].visible = false;
           nuevoMenu[1].visible = true;
-          // this.recargaMenu(nuevoMenu);
           this.$storage.set('menu', nuevoMenu);
-          this.$storage.set('nino', userData);
+          this.$store.state.menu = nuevoMenu;
           this.$router.push('datosEstudiante');
         } else {
           this.$message.error(this.$t('error.wrongUrl'));

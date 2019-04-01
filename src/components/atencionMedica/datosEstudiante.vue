@@ -251,7 +251,8 @@
           nuevoMenu[0].visible = true;
           nuevoMenu[1].visible = false;
           this.$storage.set('menu', nuevoMenu);
-          this.$storage.set('nino', {});
+          this.$store.state.menu = nuevoMenu;
+          this.$storage.remove('nino');
           this.$router.push('busquedaNino');
         } else {
           this.$message.error(this.$t('error.wrongUrl'));
