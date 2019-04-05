@@ -278,7 +278,7 @@ export default {
     accept: 'Aceptar',
     select: 'Seleccionar',
     close: 'Cerrar',
-    yes: 'Si',
+    yes: 'Sí',
     no: 'No',
     code: 'Código',
     rowsPage: 'Filas por página',
@@ -310,10 +310,30 @@ export default {
       editEnt: 'Editar entidad'
     }
   },
+  psicomotricity: {
+    evaluationDate: 'Fecha de evaluación',
+    sentDiagnosis: 'Diagnostico de envío',
+    educationCenter: 'Centro educativo',
+    schoolGrade: 'Grado escolar',
+    perinatal: 'Perinatal',
+    prenatal: 'Prenatal',
+    postnatal: 'Postnatal',
+    cephalicControl: 'Control cefálico',
+    sitting: 'Sedestación',
+    drag: 'Arrastre',
+    crawl: 'Gateo',
+    standing: 'Bipedestación',
+    walk: 'Marcha',
+    consultationReason: 'Razón de la consulta',
+    psychomotorEvaluation: 'Evaluación Psicomotriz',
+    motor: 'Motor',
+    cognitive: 'Cognitivo',
+    socioAffective: 'Socio afectivo'
+  },
   account: {
     title: 'Cuentas',
     add: 'Agregar nueva cuenta',
-    select: 'Seleccione una entidad para ver sus cuentas',
+    select: 'Seleccione una opción',
     crud: {
       edit: 'Editar',
       accountNumber: 'Nro. de cuenta',
