@@ -219,7 +219,7 @@
     },
     watch: {
       'search.area': function () {
-        this.$service.get(`registros?area=${this.search.area.value}&estudiante=${this.datosEstudiante.codigo}`)
+        this.$service.get(`registros?area=${this.search.area}&estudiante=${this.datosEstudiante.codigo}`)
         .then(response => {
           this.registros = response.datos.rows ? response.datos.rows : response.datos;
         })
@@ -256,17 +256,6 @@
           // })
         },
         deep: true
-      // },
-      // 'formAsignacionCurso.fid_curso': function () {
-      //   this.cursos.forEach(function (element) {
-      //     if (element.id_curso === this.formAsignacionCurso.fid_curso) {
-      //       this.formAsignacionCurso.maestro = element.maestro;
-      //       this.formAsignacionCurso.descripcion = element.descripcion;
-      //       this.formAsignacionCurso.grado = element.grado;
-      //       this.formAsignacionCurso.tipo_discapacidad = element.tipo_discapacidad;
-      //       this.formAsignacionCurso.criterio_edad = element.criterio_edad;
-      //     }
-      //   }, this);
       }
     },
     created () {
@@ -275,7 +264,7 @@
       let areaActual = this.$storage.get('user');
       this.areas.forEach(area => {
         if (area.text === areaActual.rol.area) {
-          this.search.area = area;
+          this.search.area = area.value;
         }
       });
     },
