@@ -330,6 +330,16 @@ export default {
     cognitive: 'Cognitivo',
     socioAffective: 'Socio afectivo'
   },
+  socialWork: {
+    admissionDate: 'Fecha de ingreso',
+    readmissionDate: 'Fecha de reingreso',
+    addFamilyMember: 'Agregar Familiar',
+    selectOrCreate: 'Seleccione una opción o cree una nueva',
+    civilState: 'Estado civil',
+    monthSalary: 'Salario mensual',
+    closeFolder: 'Cerrar archivador',
+    familyInformation: 'Información de la familia'
+  },
   account: {
     title: 'Cuentas',
     add: 'Agregar nueva cuenta',

@@ -93,6 +93,14 @@ export default {
     address: 'Dirección',
     age: 'Edad'
   },
+  socialWork: {
+    admissionDate: 'Fecha de ingreso',
+    readmissionDate: 'Fecha de reingreso',
+    addFamilyMember: 'Agregar Familiar',
+    selectOrCreate: 'Seleccione una opción o cree una nueva',
+    civilState: 'Estado civil',
+    monthSalary: 'Salario mensual'
+  },
   common: {
     add: `Yapt'aña`,
     required: `Qillqañatakipuni`,

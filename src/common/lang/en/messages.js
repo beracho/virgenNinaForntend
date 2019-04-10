@@ -275,6 +275,7 @@ export default {
     required: 'Required',
     cancel: 'Cancel',
     save: 'Save',
+    accept: 'Ok',
     select: 'Select',
     close: 'Close',
     yes: 'Yes',
@@ -308,6 +309,16 @@ export default {
       addEnt: 'Add entity',
       editEnt: 'Edit entity'
     }
+  },
+  socialWork: {
+    admissionDate: 'Admission date',
+    readmissionDate: 'Readmission date',
+    addFamilyMember: 'Add family member',
+    selectOrCreate: 'Select an option or create a new one',
+    civilState: 'Civil status',
+    monthSalary: 'Month salary',
+    closeFolder: 'Close folder',
+    familyInformation: 'Family information'
   },
   account: {
     title: 'Accounts',
