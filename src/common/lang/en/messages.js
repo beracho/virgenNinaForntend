@@ -268,7 +268,9 @@ export default {
     intervention: 'Intervention',
     notRegistered: 'Not registered',
     address: 'Address',
-    age: 'Age'
+    age: 'Age',
+    registerCreationSuccessfull: 'Creation successfull',
+    registerCreationUnsuccessfull: 'Error on register creation'
   },
   common: {
     add: 'Add',

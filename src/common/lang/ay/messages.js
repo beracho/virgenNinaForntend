@@ -91,7 +91,9 @@ export default {
     intervention: 'Intervenciones',
     notRegistered: 'No registrado',
     address: 'Dirección',
-    age: 'Edad'
+    age: 'Edad',
+    registerCreationSuccessfull: 'Registro creado exitosamente',
+    registerCreationUnsuccessfull: 'Error an la creación del registro'
   },
   socialWork: {
     admissionDate: 'Fecha de ingreso',

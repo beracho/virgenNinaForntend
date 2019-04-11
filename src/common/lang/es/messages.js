@@ -268,7 +268,9 @@ export default {
     intervention: 'Intervención',
     notRegistered: 'No registrado',
     address: 'Dirección',
-    age: 'Edad'
+    age: 'Edad',
+    registerCreationSuccessfull: 'Registro creado exitosamente',
+    registerCreationUnsuccessfull: 'Error an la creación del registro'
   },
   common: {
     add: 'Agregar',

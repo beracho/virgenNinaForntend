@@ -8,7 +8,7 @@
           <h3>{{this.datosEstudiante.nombres}} <br> {{this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
         </v-flex>
         <v-flex xs4>
-          <v-btn dark block color="red" @click.native="cerrarCarpeta()">Cerrar archivador</v-btn>
+          <v-btn dark block color="red" @click.native="cerrarCarpeta()">{{$t('socialWork.closeFolder')}}</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -132,11 +132,11 @@
           .then(respuesta => {
             this.dialogAsignacionCurso = false
             this.limpiarCampos();
-            this.$message.success('Registro creado exitosamente');
+            this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
             this.$router.push('registrosArchivados');
           })
           .catch(() => {
-            this.$message.error('Error an la creación del registro');
+            this.$message.error(this.$t('generalFollowUp.registerCreationSuccessfull'));
           });
         }
       },
