@@ -99,7 +99,20 @@ export default {
     addFamilyMember: 'Agregar Familiar',
     selectOrCreate: 'Seleccione una opción o cree una nueva',
     civilState: 'Estado civil',
-    monthSalary: 'Salario mensual'
+    monthSalary: 'Salario mensual',
+    familyDinamicDetail: 'Detalle de dinámica familiar',
+    familyInformation: 'Información de la familia',
+    familyType: 'Tipo de familia',
+    groupFamilyObservation: 'Observaciones al grupo familiar',
+    familyDinamic: 'Dinámica familiar',
+    familyDinamicPlaceholder: 'Qué actividades realiza cada uno de los miembros de la familia y en qué momento interactúan',
+    socialProces: 'Proceso social',
+    socialProcesPlaceholder: 'Por qué la familia necesita los servicios que brinda la institución',
+    disabilityStory: 'Relato de la discapacidad',
+    socialDiagnostics: 'Diagnóstico social',
+    socialDiagnosticsPlaceholder: 'Cómo está la familia al momento del ingreso a la institución',
+    conclusionSuggestion: 'Conclusiones y sugerencias',
+    conclusionSuggestionPlaceholder: 'Cómo se debe trabajar con la familia para mejorar la calidad de vida'
   },
   common: {
     add: `Yapt'aña`,

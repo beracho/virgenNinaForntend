@@ -60,11 +60,140 @@
         </v-btn>
       </v-card-title>
       <v-container fluid v-if="familyDataPanel">
-        <family-members :studentCode="datosEstudiante.codigo" :createRelation="true" :editRelation="true"></family-members>
+        <v-layout row wrap>
+          <v-flex xs12>
+            <family-members :studentCode="datosEstudiante.codigo" :createRelation="true" :editRelation="true"></family-members>
+          </v-flex>
+          <v-flex xs12>
+            <v-combobox
+              v-model="modelFamilyType"
+              :filter="filter"
+              :hide-no-data="!familyTypeSearch"
+              :items="familyTypeItems"
+              :search-input.sync="familyTypeSearch"
+              hide-selected
+              :label="$t('socialWork.familyType')"
+              small-chips
+            >
+              <template v-slot:no-data>
+                <v-list-tile>
+                  <span class="subheading">{{$t('inscriptionRegister.createNew')}}</span>
+                  <v-chip
+                    :color="`${colors[nonce - 1]} lighten-3`"
+                    label
+                    small
+                  >
+                    {{ familyTypeSearch }}
+                  </v-chip>
+                </v-list-tile>
+              </template>
+              <template v-slot:selection="{ item, parent, selected }">
+                <v-chip
+                  v-if="item === Object(item)"
+                  :color="`${item.color} lighten-3`"
+                  :selected="selected"
+                  label
+                  small
+                >
+                  <span class="pr-2">
+                    {{ item.text }}
+                  </span>
+                  <v-icon
+                    small
+                    @click="parent.selectItem(item)"
+                  >close</v-icon>
+                </v-chip>
+              </template>
+              <template v-slot:item="{ index, item }">
+                <v-list-tile-content>
+                  <v-chip
+                    :color="`${item.color} lighten-3`"
+                    dark
+                    label
+                    small
+                  >
+                    {{ item.text }}
+                  </v-chip>
+                </v-list-tile-content>
+              </template>
+            </v-combobox>
+          </v-flex>
+          <v-flex xs12>
+            <v-textarea
+              :label="$t('socialWork.groupFamilyObservation')"
+              v-model="formularioRegistro.observacionGrupoFamiliar"
+              :error="$v.formularioRegistro.observacionGrupoFamiliar.$error"
+              @input="$v.formularioRegistro.observacionGrupoFamiliar.$touch()"
+              :error-messages="errors.observacionGrupoFamiliar"
+            ></v-textarea>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card>
+    <v-card>
+      <v-card-title class="headline">
+        <v-icon right>subject</v-icon>
+        <h2 class="headline mb-0">{{$t('socialWork.familyDinamicDetail')}}</h2>
+        <v-spacer></v-spacer>
+        <v-btn icon dark color="primary" @click.native="socialDataPanel?minimize(2):maximize(2)">
+          <v-icon>{{socialDataPanel?"remove":"add"}}</v-icon>
+        </v-btn>
+      </v-card-title>
+      <v-container fluid v-if="socialDataPanel">
+        <v-layout row wrap>
+          <v-flex xs12>
+            <v-textarea
+              :label="$t('socialWork.familyDinamic')"
+              v-model="formularioRegistro.dinamicaFamiliar"
+              :placeholder="$t('socialWork.familyDinamicPlaceholder')"
+              :error="$v.formularioRegistro.dinamicaFamiliar.$error"
+              @input="$v.formularioRegistro.dinamicaFamiliar.$touch()"
+              :error-messages="errors.dinamicaFamiliar"
+            ></v-textarea>
+          </v-flex>
+          <v-flex xs12>
+            <v-textarea
+              :label="$t('socialWork.socialProces')"
+              v-model="formularioRegistro.procesoSocial"
+              :placeholder="$t('socialWork.socialProcesPlaceholder')"
+              :error="$v.formularioRegistro.procesoSocial.$error"
+              @input="$v.formularioRegistro.procesoSocial.$touch()"
+              :error-messages="errors.procesoSocial"
+            ></v-textarea>
+          </v-flex>
+          <v-flex xs12>
+            <v-textarea
+              :label="$t('socialWork.disabilityStory')"
+              v-model="formularioRegistro.relatoDiscapacidad"
+              :error="$v.formularioRegistro.relatoDiscapacidad.$error"
+              @input="$v.formularioRegistro.relatoDiscapacidad.$touch()"
+              :error-messages="errors.relatoDiscapacidad"
+            ></v-textarea>
+          </v-flex>
+          <v-flex xs12>
+            <v-textarea
+              :label="$t('socialWork.socialDiagnostics')"
+              v-model="formularioRegistro.diagnosticoSocial"
+              :placeholder="$t('socialWork.socialDiagnosticsPlaceholder')"
+              :error="$v.formularioRegistro.diagnosticoSocial.$error"
+              @input="$v.formularioRegistro.diagnosticoSocial.$touch()"
+              :error-messages="errors.diagnosticoSocial"
+            ></v-textarea>
+          </v-flex>
+          <v-flex xs12>
+            <v-textarea
+              :label="$t('socialWork.conclusionSuggestion')"
+              v-model="formularioRegistro.conclusionSugerencia"
+              :placeholder="$t('socialWork.conclusionSuggestionPlaceholder')"
+              :error="$v.formularioRegistro.conclusionSugerencia.$error"
+              @input="$v.formularioRegistro.conclusionSugerencia.$touch()"
+              :error-messages="errors.conclusionSugerencia"
+            ></v-textarea>
+          </v-flex>
+        </v-layout>
       </v-container>
     </v-card>
   </div>
-
 </template>
 
 <script>
@@ -80,26 +209,82 @@
         headers: {'access-token': '<your-token>'},
         generalDataPanel: true,
         familyDataPanel: true,
+        socialDataPanel: true,
         datosEstudiante: {},
         formularioRegistro: {
-          observacion: '',
-          intervencion: ''
+          observacionGrupoFamiliar: '',
+          dinamicaFamiliar: '',
+          procesoSocial: '',
+          relatoDiscapacidad: '',
+          diagnosticoSocial: '',
+          conclusionSugerencia: ''
         },
         errors: {
-          observacion: [],
-          intervencion: []
-        }
+          observacionGrupoFamiliar: [],
+          dinamicaFamiliar: [],
+          procesoSocial: [],
+          relatoDiscapacidad: [],
+          diagnosticoSocial: [],
+          conclusionSugerencia: []
+        },
+        colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
+        nonce: 1,
+        familyTypeItems: [
+          { header: this.$t('socialWork.selectOrCreate') },
+          {
+            text: 'Nuclear',
+            color: 'blue'
+          },
+          {
+            text: 'Monoparental',
+            color: 'red'
+          },
+          {
+            text: 'Extensa',
+            color: 'orange'
+          },
+          {
+            text: 'Reconstituida',
+            color: 'green'
+          }
+        ],
+        familyTypeSearch: null,
+        modelFamilyType: ''
       }
     },
     components: {
       'family-members': FamilyMember
     },
     watch: {
-      '$v.formularioRegistro.observacion.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.observacion, this.errors.observacion);
+      'modelFamilyType': function (val, prev) {
+        if (typeof this.modelFamilyType === 'string') {
+          this.modelFamilyType = {
+            text: this.modelFamilyType,
+            color: this.colors[this.nonce - 1]
+          };
+          this.familyTypeItems.push(this.modelFamilyType);
+          this.nonce++;
+        }
+        this.formRelative.civil_state = this.modelFamilyType.text;
+        return this.modelFamilyType;
       },
-      '$v.formularioRegistro.intervencion.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.intervencion, this.errors.intervencion);
+      '$v.formularioRegistro.observacionGrupoFamiliar.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.observacionGrupoFamiliar, this.errors.observacionGrupoFamiliar);
+      },
+      '$v.formularioRegistro.dinamicaFamiliar.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.dinamicaFamiliar, this.errors.dinamicaFamiliar);
+      },
+      '$v.formularioRegistro.procesoSocial.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.procesoSocial, this.errors.procesoSocial);
+      },
+      '$v.formularioRegistro.relatoDiscapacidad.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.relatoDiscapacidad, this.errors.relatoDiscapacidad);
+      },
+      '$v.formularioRegistro.diagnosticoSocial.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.diagnosticoSocial, this.errors.diagnosticoSocial);
+      },
+      '$v.formularioRegistro.conclusionSugerencia.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.conclusionSugerencia, this.errors.conclusionSugerencia);
       }
     },
     created () {
@@ -108,10 +293,22 @@
     },
     validations: {
       formularioRegistro: {
-        observacion: {
+        observacionGrupoFamiliar: {
           required
         },
-        intervencion: {
+        dinamicaFamiliar: {
+          required
+        },
+        procesoSocial: {
+          required
+        },
+        relatoDiscapacidad: {
+          required
+        },
+        diagnosticoSocial: {
+          required
+        },
+        conclusionSugerencia: {
           required
         }
       }
@@ -129,7 +326,7 @@
             this.backgroundDataPanel = false;
             break;
           case 3:
-            this.psychomotorEvaluationDataPanel = false;
+            this.socialDataPanel = false;
             break;
           default:
             break;
@@ -147,11 +344,23 @@
             this.backgroundDataPanel = true;
             break;
           case 3:
-            this.psychomotorEvaluationDataPanel = true;
+            this.socialDataPanel = true;
             break;
           default:
             break;
         }
+      },
+      filter (item, queryText, itemText) {
+        if (item.header) return false;
+
+        const hasValue = val => val != null ? val : '';
+
+        const text = hasValue(itemText);
+        const query = hasValue(queryText);
+
+        return text.toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1;
       },
       submit () { // Envía datos de la nueva asignación
         this.$v.formularioRegistro.$touch();
@@ -170,8 +379,12 @@
         }
       },
       limpiarCampos () {
-        this.formularioRegistro.observacion = '';
-        this.formularioRegistro.intervencion = '';
+        this.formularioRegistro.observacionGrupoFamiliar = '';
+        this.formularioRegistro.dinamicaFamiliar = '';
+        this.formularioRegistro.procesoSocial = '';
+        this.formularioRegistro.relatoDiscapacidad = '';
+        this.formularioRegistro.diagnosticoSocial = '';
+        this.formularioRegistro.conclusionSugerencia = '';
       },
       cerrarCarpeta (userData) {
         if (this.$storage.exist('menu')) {

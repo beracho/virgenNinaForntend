@@ -318,7 +318,19 @@ export default {
     civilState: 'Civil status',
     monthSalary: 'Month salary',
     closeFolder: 'Close folder',
-    familyInformation: 'Family information'
+    familyDinamicDetail: 'Family dynamic detail',
+    familyInformation: 'Family information',
+    familyType: 'Family type',
+    groupFamilyObservation: 'Family group observations',
+    familyDinamic: 'Family dynamic',
+    familyDinamicPlaceholder: 'What activities do the family members do and at what time do they interact with each other',
+    socialProces: 'Social process',
+    socialProcesPlaceholder: 'Why does the family require the services given by the institution',
+    disabilityStory: 'Disability story',
+    socialDiagnostics: 'Social diagnosis',
+    socialDiagnosticsPlaceholder: 'How is the family at the moment of admission',
+    conclusionSuggestion: 'Conclusions and suggestions',
+    conclusionSuggestionPlaceholder: 'What teraphy does the family need to improve their life quality'
   },
   account: {
     title: 'Accounts',
