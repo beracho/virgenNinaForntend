@@ -39,6 +39,7 @@
           </v-layout>
         </v-container>
       </v-card>
+      <br>
       <!-- TABLA DE DATOS -->
       <v-card>
         <v-card-title class="headline">
@@ -70,46 +71,10 @@
       <v-layout row wrap align-center>
         <v-dialog v-model="dialogRegistroSeguimiento" persistent width="1200px">
           <v-card>
-            <v-card-title class="headline">
-              <v-icon right>book</v-icon>
-              {{$t('generalFollowUp.standartRegistry') }}
-              <v-spacer></v-spacer>
-              <v-btn class="primary" flat v-on:click="agregaCurso()">{{$t('generalFollowUp.print')}}
-                <v-icon right>print</v-icon>
-              </v-btn>
-            </v-card-title>
-            <v-layout row>
-              <v-flex xs10 offset-xs1>
-                <v-alert color="primary" icon="label" value="true">
-                  {{$t('generalFollowUp.generalData')}}
-                </v-alert>
-                <form @submit.prevent="agregaCurso()">
-                  <v-layout row wrap>
-                    <v-flex xs4 offset-xs8>
-                      <b>Creado: </b>{{datosRegistro.fecha}}
-                    </v-flex>
-                    <v-flex xs12>
-                      <b>Área: </b>{{datosRegistro.area}}
-                    </v-flex>
-                    <v-flex xs12>
-                      <b>Creado por: </b>{{datosRegistro.autor}}
-                    </v-flex>
-                    <v-flex xs10 offset-xs1>
-                      <br><b>Observación: </b>{{datosRegistro.observacion}}
-                    </v-flex>
-                    <v-flex xs10 offset-xs1>
-                      <br><b>Intervención: </b>{{datosRegistro.intervencion}}
-                    </v-flex>
-                  </v-layout>
-                </form>
-              </v-flex>
-            </v-layout>
+            <vista-simple></vista-simple>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="cancel" dark @click.native="dialogRegistroSeguimiento = false">{{$t('common.cancel')}}
-                <v-icon right>cancel</v-icon>
-              </v-btn>
-              <v-btn class="primary" flat v-on:click="agregaCurso()">{{$t('common.save')}}
+              <v-btn class="primary" flat v-on:click="dialogRegistroSeguimiento = false">{{$t('common.accept')}}
                 <v-icon right>done</v-icon>
               </v-btn>
             </v-card-actions>
@@ -122,6 +87,7 @@
 
 <script>
   import Comps from '../comps';
+  import RegistroSimple from '@/components/vistaRegistros/simple.vue';
   /* eslint-disable semi */
   export default {
     mixins: [ Comps ],
@@ -131,13 +97,6 @@
         generalDataPanel: true,
         // Registro Seguimiento
         dialogRegistroSeguimiento: false,
-        datosRegistro: {
-          fecha: '',
-          area: '',
-          autor: '',
-          observacion: '',
-          intervencion: ''
-        },
         dialogRegistroEspecialidad: false,
         dialogRegistroSemestral: false,
         // Opciones de area
@@ -216,6 +175,7 @@
       }
     },
     components: {
+      'vista-simple': RegistroSimple
     },
     watch: {
       'search.area': function () {
@@ -263,7 +223,7 @@
       this.datosEstudiante = this.$storage.get('nino');
       let areaActual = this.$storage.get('user');
       this.areas.forEach(area => {
-        if (area.text === areaActual.rol.area) {
+        if (area.text.toLowerCase() === areaActual.rol.area.toLowerCase()) {
           this.search.area = area.value;
         }
       });
@@ -282,10 +242,10 @@
           }
         });
       },
-      minimize (cardNumber) {
+      minimize () {
         this.generalDataPanel = false;
       },
-      maximize (cardNumber) {
+      maximize () {
         this.generalDataPanel = true;
       },
       cerrarCarpeta (userData) {
@@ -312,14 +272,15 @@
       verRegistro (item) {
         switch (item.tipo) {
           case 'simple':
-            this.dialogRegistroSeguimiento = true;
-            this.datosRegistro = {
-              fecha: this.getDate(item.fecha),
+            const datosRegistro = {
+              fecha: this.getDate(item._fecha_creacion),
               area: item.area,
               autor: item.usuario.nombre + ' ' + item.usuario.primer_apellido + ' ' + item.usuario.segundo_apellido,
               observacion: item.registros_simple.observacion,
               intervencion: item.registros_simple.intervencion
             }
+            this.$store.state.simpleRegisterView = datosRegistro;
+            this.dialogRegistroSeguimiento = true;
             break;
           case 'especialidad':
             this.dialogRegistroEspecialidad = true;

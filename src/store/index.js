@@ -36,7 +36,9 @@ const store = new Vuex.Store({
     state403: false,
     touch: false,
     message: null,
-    selectDate: null
+    selectDate: null,
+    // Vista de formularios
+    simpleRegisterView: {}
   },
   mutations: {
     toggleSidenav (state) {
