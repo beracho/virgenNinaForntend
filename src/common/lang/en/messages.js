@@ -312,6 +312,33 @@ export default {
       editEnt: 'Edit entity'
     }
   },
+  registerView: {
+    searchParams: 'Search parameters',
+    files: 'Files',
+    creationDate: 'Creation date',
+    area: 'Area',
+    createdBy: 'Created by'
+  },
+  psicomotricity: {
+    evaluationDate: 'Evaluation date',
+    sentDiagnosis: 'Send diagnosis',
+    educationCenter: 'Education center',
+    schoolGrade: 'School grade',
+    perinatal: 'Perinatal',
+    prenatal: 'Prenatal',
+    postnatal: 'Postnatal',
+    cephalicControl: 'Cephalic control',
+    sitting: 'Sitting',
+    drag: 'Drag',
+    crawl: 'Crawl',
+    standing: 'Standing',
+    walk: 'Walk',
+    consultationReason: 'Consultation reason',
+    psychomotorEvaluation: 'Psychomotor evaluation',
+    motor: 'Mothor',
+    cognitive: 'Cognitive',
+    socioAffective: 'Socio affective'
+  },
   socialWork: {
     admissionDate: 'Admission date',
     readmissionDate: 'Readmission date',

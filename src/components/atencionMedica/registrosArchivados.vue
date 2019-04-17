@@ -9,7 +9,7 @@
             <h3>{{this.datosEstudiante.nombres + ' ' +  this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
           </v-flex>
           <v-flex xs4>
-            <v-btn dark block color="red" @click.native="cerrarCarpeta()">Cerrar archivador</v-btn>
+            <v-btn dark block color="red" @click.native="cerrarCarpeta()">{{$t('socialWork.closeFolder')}}</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -17,7 +17,7 @@
       <v-card>
         <v-card-title class="headline">
           <v-icon right>search</v-icon>
-          <h2 class="headline mb-0">Parámetros de búsqueda</h2>
+          <h2 class="headline mb-0">{{$t('registerView.searchParams')}}</h2>
           <v-spacer></v-spacer>
           <v-btn icon dark color="primary" @click.native="generalDataPanel?minimize():maximize()">
             <v-icon>{{generalDataPanel?"remove":"add"}}</v-icon>
@@ -44,7 +44,7 @@
       <v-card>
         <v-card-title class="headline">
           <v-icon right>list</v-icon>
-          <h2 class="headline mb-0">Documentos</h2>
+          <h2 class="headline mb-0">{{$t('registerView.files')}}</h2>
         </v-card-title>
         <v-data-table :headers="headersAsinacion" :items="registros" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
           <template slot="items" slot-scope="props">
@@ -67,14 +67,26 @@
       </v-card>
     </div>
     <div>
-    <!-- VENTANA DE REGISTRO DE SEGUIMIENTO -->
       <v-layout row wrap align-center>
+        <!-- VENTANA DE REGISTRO DE SEGUIMIENTO -->
         <v-dialog v-model="dialogRegistroSeguimiento" persistent width="1200px">
           <v-card>
             <vista-simple></vista-simple>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn class="primary" flat v-on:click="dialogRegistroSeguimiento = false">{{$t('common.accept')}}
+                <v-icon right>done</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <!-- VENTANA DE TRABAJO SOCIAL -->
+        <v-dialog v-model="dialogRegistroEspecialidad" persistent width="1200px">
+          <v-card>
+            <vista-trabajo-social :v-if="areaView == 'Trabajo social'"></vista-trabajo-social>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="primary" flat v-on:click="dialogRegistroEspecialidad = false">{{$t('common.accept')}}
                 <v-icon right>done</v-icon>
               </v-btn>
             </v-card-actions>
@@ -88,6 +100,7 @@
 <script>
   import Comps from '../comps';
   import RegistroSimple from '@/components/vistaRegistros/simple.vue';
+  import RegistroEvalTrabajoSocial from '@/components/vistaRegistros/evalTrabajoSocial.vue';
   /* eslint-disable semi */
   export default {
     mixins: [ Comps ],
@@ -100,6 +113,7 @@
         dialogRegistroEspecialidad: false,
         dialogRegistroSemestral: false,
         // Opciones de area
+        areaView: '',
         areas: [
           {
             value: 'psicomotricidad',
@@ -175,7 +189,8 @@
       }
     },
     components: {
-      'vista-simple': RegistroSimple
+      'vista-simple': RegistroSimple,
+      'vista-trabajo-social': RegistroEvalTrabajoSocial
     },
     watch: {
       'search.area': function () {
@@ -283,6 +298,26 @@
             this.dialogRegistroSeguimiento = true;
             break;
           case 'especialidad':
+            switch (item.area) {
+              case 'Trabajo social':
+                this.areaView = 'Trabajo social';
+                const datosTrabajoSocial = {
+                  fecha: this.getDate(item._fecha_creacion),
+                  area: item.area,
+                  autor: item.usuario.nombre + ' ' + item.usuario.primer_apellido + ' ' + item.usuario.segundo_apellido,
+                  tipoDeFamilia: item.registro_eval_trabajo_social.tipo_de_familia,
+                  observacionGrupoFamiliar: item.registro_eval_trabajo_social.observacion_grupo_familiar,
+                  dinamicaFamiliar: item.registro_eval_trabajo_social.dinamica_familiar,
+                  procesoSocial: item.registro_eval_trabajo_social.proceso_social,
+                  relatoDiscapacidad: item.registro_eval_trabajo_social.relato_discapacidad,
+                  diagnosticoSocial: item.registro_eval_trabajo_social.diagnostico_social,
+                  conclusionSugerencia: item.registro_eval_trabajo_social.conclusion_sugerencia
+                };
+                this.$store.state.socialWorkRegisterView = datosTrabajoSocial
+                break;
+              default:
+                break;
+            }
             this.dialogRegistroEspecialidad = true;
             break;
           case 'semestral':

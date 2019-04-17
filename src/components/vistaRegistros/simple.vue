@@ -15,19 +15,19 @@
         </v-alert>
         <v-layout row wrap>
           <v-flex xs4 offset-xs8>
-            <b>Creado: </b>{{$store.state.simpleRegisterView.fecha}}
+            <b>{{$t('registerView.creationDate')}}: </b>{{$store.state.simpleRegisterView.fecha}}
           </v-flex>
           <v-flex xs12>
-            <b>Área: </b>{{$store.state.simpleRegisterView.area}}
+            <b>{{$t('registerView.area')}}: </b>{{$store.state.simpleRegisterView.area}}
           </v-flex>
           <v-flex xs12>
-            <b>Creado por: </b>{{$store.state.simpleRegisterView.autor}}
+            <b>{{$t('registerView.createdBy')}}: </b>{{$store.state.simpleRegisterView.autor}}
           </v-flex>
           <v-flex xs10 offset-xs1>
-            <br><b>Observación: </b>{{$store.state.simpleRegisterView.observacion}}
+            <br><b>{{$t('generalFollowUp.observation')}}: </b><br>{{$store.state.simpleRegisterView.observacion}}
           </v-flex>
           <v-flex xs10 offset-xs1>
-            <br><b>Intervención: </b>{{$store.state.simpleRegisterView.intervencion}}
+            <br><b>{{$t('generalFollowUp.intervention')}}: </b><br>{{$store.state.simpleRegisterView.intervencion}}
           </v-flex>
         </v-layout>
       </v-flex>

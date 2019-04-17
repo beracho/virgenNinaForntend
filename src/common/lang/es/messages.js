@@ -264,7 +264,7 @@ export default {
     generalData: 'Datos generales',
     standartRegistry: 'Registro de seguimiento',
     print: 'Imprimir',
-    observation: 'Obervación',
+    observation: 'Observación',
     intervention: 'Intervención',
     notRegistered: 'No registrado',
     address: 'Dirección',
@@ -311,6 +311,13 @@ export default {
       addEnt: 'Agregar entidad',
       editEnt: 'Editar entidad'
     }
+  },
+  registerView: {
+    searchParams: 'Parámetros de búsqueda',
+    files: 'Documentos',
+    creationDate: 'Fecha de creación',
+    area: 'Área',
+    createdBy: 'Creado por'
   },
   psicomotricity: {
     evaluationDate: 'Fecha de evaluación',

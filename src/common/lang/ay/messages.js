@@ -95,6 +95,13 @@ export default {
     registerCreationSuccessfull: 'Registro creado exitosamente',
     registerCreationUnsuccessfull: 'Error an la creación del registro'
   },
+  registerView: {
+    searchParams: 'Parámetros de búsqueda',
+    files: 'Documentos',
+    creationDate: 'Fecha de creación',
+    area: 'Área',
+    createdBy: 'Creado por'
+  },
   socialWork: {
     admissionDate: 'Fecha de ingreso',
     readmissionDate: 'Fecha de reingreso',
