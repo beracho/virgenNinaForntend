@@ -422,14 +422,14 @@
             .then(respuesta => {
               if (respuesta !== undefined) {
                 this.limpiarCampos();
-                this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+                this.$message.success(this.$t('generalFollowUp.registerEditionSuccessfull'));
                 this.$router.push('registrosArchivados');
               } else {
-                this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+                this.$message.error(this.$t('generalFollowUp.registerEditionUnsuccessfull'));
               }
             })
             .catch(() => {
-              this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+              this.$message.error(this.$t('generalFollowUp.registerEditionUnsuccessfull'));
             });
           } else {
             // Crea registro simple

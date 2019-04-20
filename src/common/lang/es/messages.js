@@ -270,7 +270,13 @@ export default {
     address: 'Dirección',
     age: 'Edad',
     registerCreationSuccessfull: 'Registro creado exitosamente',
-    registerCreationUnsuccessfull: 'Error an la creación del registro'
+    registerCreationUnsuccessfull: 'Error an la creación del registro',
+    registerEditionSuccessfull: 'Registro editado exitosamente',
+    registerEditionUnsuccessfull: 'Error en la edición del registro',
+    registerRemovalSuccessfull: 'Registro eliminado exitosamente',
+    registerRemovalUnsuccessfull: 'Error en la eliminación del registro',
+    confirmDeletion: 'Confirmar eliminación',
+    deleteWarning: 'Está seguro que quiere eliminar este archivo, los datos no podrán ser recuperados'
   },
   common: {
     add: 'Agregar',

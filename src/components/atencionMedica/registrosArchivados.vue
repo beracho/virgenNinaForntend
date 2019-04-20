@@ -9,7 +9,7 @@
             <h3>{{this.datosEstudiante.nombres + ' ' +  this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
           </v-flex>
           <v-flex xs4>
-            <v-btn dark block color="red" @click.native="cerrarCarpeta()">{{$t('socialWork.closeFolder')}}</v-btn>
+            <v-btn dark block color="red" @click.native="closeFolder()">{{$t('socialWork.closeFolder')}}</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -58,7 +58,7 @@
               <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editarRegistro(props.item)">
                 <v-icon>edit</v-icon>
               </v-btn>
-              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="red" @click.native="eliminarRegistro(props.item)">
+              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="red" @click.native="confirmDelete(props.item)">
                 <v-icon>delete</v-icon>
               </v-btn>
             </td>
@@ -92,6 +92,31 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        <!-- VENTANA CONFIRMACION -->
+        <v-dialog v-model="dialogDeleteConfirm" persistent>
+          <v-card>
+            <v-card-title class="headline">
+              <v-icon right>list</v-icon>
+              <h2 class="headline mb-0">{{$t('generalFollowUp.confirmDeletion')}}</h2>
+            </v-card-title>
+            <v-container fluid v-if="generalDataPanel">
+              <v-layout row wrap>
+                <v-flex xs12>
+                  {{$t('generalFollowUp.deleteWarning')}}
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="red" dark flat v-on:click="dialogDeleteConfirm = false">{{$t('common.cancel')}}
+                <v-icon right>cancel</v-icon>
+              </v-btn>
+              <v-btn class="black" dark flat v-on:click="eliminarRegistro()">{{$t('common.accept')}}
+                <v-icon right>done</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-layout>
     </div>
   </div>
@@ -112,6 +137,7 @@
         dialogRegistroSeguimiento: false,
         dialogRegistroEspecialidad: false,
         dialogRegistroSemestral: false,
+        dialogDeleteConfirm: false,
         // Opciones de area
         areaView: '',
         areas: [
@@ -163,6 +189,7 @@
         search: {
           area: ''
         },
+        deleteData: {},
         // Listado de estudiantes
         datosEstudiante: {},
         registros: [],
@@ -194,10 +221,7 @@
     },
     watch: {
       'search.area': function () {
-        this.$service.get(`registros?area=${this.search.area}&estudiante=${this.datosEstudiante.codigo}`)
-        .then(response => {
-          this.registros = response.datos.rows ? response.datos.rows : response.datos;
-        })
+        this.getTableData();
       },
       pagination: {
         handler () {
@@ -244,18 +268,11 @@
       });
     },
     methods: {
-      focus (boton) {
-        this.areas.forEach((element, index) => {
-          if (boton === index) {
-            element.seleccionado = true;
-            this.$service.get(`registros?area=${element.nombre}&estudiante=${this.datosEstudiante.codigo}`)
-            .then(response => {
-              this.registros = response.datos.rows ? response.datos.rows : response.datos;
-            })
-          } else {
-            element.seleccionado = false;
-          }
-        });
+      getTableData () {
+        this.$service.get(`registros?area=${this.search.area}&estudiante=${this.datosEstudiante.codigo}`)
+        .then(response => {
+          this.registros = response.datos.rows ? response.datos.rows : response.datos;
+        })
       },
       minimize () {
         this.generalDataPanel = false;
@@ -263,7 +280,7 @@
       maximize () {
         this.generalDataPanel = true;
       },
-      cerrarCarpeta (userData) {
+      closeFolder (userData) {
         if (this.$storage.exist('menu')) {
           let nuevoMenu = this.$storage.get('menu');
           nuevoMenu[0].visible = true;
@@ -280,9 +297,55 @@
         let date = dateString ? new Date(dateString) : new Date();
         return (date.getDate() + ' - ' + this.$t('months[' + date.getMonth() + ']') + ' - ' + date.getFullYear());
       },
-      eliminarRegistro (item) {
+      confirmDelete (item) {
+        this.deleteData = item;
+        this.dialogDeleteConfirm = true;
       },
-      // editaRegistro(props.item.id_usuario, props.item.email)
+      eliminarRegistro () {
+        this.dialogDeleteConfirm = false
+        let item = this.deleteData;
+        switch (item.tipo) {
+          case 'simple':
+            this.$service.delete(`registroSimple`, item)
+            .then(respuesta => {
+              if (respuesta !== undefined) {
+                this.$message.success(this.$t('generalFollowUp.registerRemovalSuccessfull'));
+                this.getTableData();
+              } else {
+                this.$message.error(this.$t('generalFollowUp.registerRemovalUnsuccessfull'));
+              }
+            })
+            .catch(() => {
+              this.$message.error(this.$t('generalFollowUp.registerRemovalUnsuccessfull'));
+            });
+            break;
+          case 'especialidad':
+            switch (item.area) {
+              case 'Trabajo social':
+                this.$service.delete(`registroEvalTrabajoSocial`, item)
+                .then(respuesta => {
+                  if (respuesta !== undefined) {
+                    this.$message.success(this.$t('generalFollowUp.registerRemovalSuccessfull'));
+                    this.getTableData();
+                  } else {
+                    this.$message.error(this.$t('generalFollowUp.registerRemovalUnsuccessfull'));
+                  }
+                })
+                .catch(() => {
+                  this.$message.error(this.$t('generalFollowUp.registerRemovalUnsuccessfull'));
+                });
+                break;
+              default:
+                break;
+            }
+            break;
+          case 'semestral':
+            this.dialogRegistroSemestral = true;
+            break;
+          default:
+            break;
+        }
+      },
       editarRegistro (item) {
         switch (item.tipo) {
           case 'simple':

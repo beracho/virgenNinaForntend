@@ -270,7 +270,13 @@ export default {
     address: 'Address',
     age: 'Age',
     registerCreationSuccessfull: 'Creation successfull',
-    registerCreationUnsuccessfull: 'Error on register creation'
+    registerCreationUnsuccessfull: 'Error on register creation',
+    registerEditionSuccessfull: 'Edition successfull',
+    registerEditionUnsuccessfull: 'Error on register edition',
+    registerRemovalSuccessfull: 'Deletion successfull',
+    registerRemovalUnsuccessfull: 'Error on register deletion',
+    confirmDeletion: 'Confirm deletion',
+    deleteWarning: 'Are you sure you want this file removed? File data won\'t be recoverable'
   },
   common: {
     add: 'Add',

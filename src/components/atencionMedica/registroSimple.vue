@@ -133,12 +133,16 @@
             this.$service.put(`registroSimple`, this.formularioRegistro)
             .then(respuesta => {
               this.dialogAsignacionCurso = false
-              this.limpiarCampos();
-              this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+              if (respuesta !== undefined) {
+                this.limpiarCampos();
+                this.$message.success(this.$t('generalFollowUp.registerEditionSuccessfull'));
+              } else {
+                this.$message.error(this.$t('generalFollowUp.registerEditionUnsuccessfull'));
+              }
               this.$router.push('registrosArchivados');
             })
             .catch(() => {
-              this.$message.error(this.$t('generalFollowUp.registerCreationSuccessfull'));
+              this.$message.error(this.$t('generalFollowUp.registerEditionUnsuccessfull'));
             });
           } else {
             // Crea registro simple
@@ -146,12 +150,16 @@
             this.$service.post(`registroSimple`, this.formularioRegistro)
             .then(respuesta => {
               this.dialogAsignacionCurso = false
-              this.limpiarCampos();
-              this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+              if (respuesta !== undefined) {
+                this.limpiarCampos();
+                this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+              } else {
+                this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+              }
               this.$router.push('registrosArchivados');
             })
             .catch(() => {
-              this.$message.error(this.$t('generalFollowUp.registerCreationSuccessfull'));
+              this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
             });
           }
         }
