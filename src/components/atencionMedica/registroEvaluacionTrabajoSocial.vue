@@ -413,21 +413,41 @@
       submit () { // Envía datos de la nueva asignación
         this.$v.formularioRegistro.$touch();
         if (!this.$v.formularioRegistro.$invalid) {
-          this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
           this.formularioRegistro.tipoDeFamilia = this.formularioRegistro.tipoDeFamiliaObject.text;
-          this.$service.post(`registroEvalTrabajoSocial`, this.formularioRegistro)
-          .then(respuesta => {
-            if (respuesta !== undefined) {
-              this.limpiarCampos();
-              this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
-              this.$router.push('registrosArchivados');
-            } else {
+          if (this.$route.query.registro) {
+            // Edita registro Simple
+            this.formularioRegistro.idRegistro = this.$route.query.registro;
+            this.formularioRegistro.idRegistroTrabajoSocial = this.$store.state.socialWorkRegisterEdit.registro_eval_trabajo_social.id_registro_eval_trabajo_social;
+            this.$service.put(`registroEvalTrabajoSocial`, this.formularioRegistro)
+            .then(respuesta => {
+              if (respuesta !== undefined) {
+                this.limpiarCampos();
+                this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+                this.$router.push('registrosArchivados');
+              } else {
+                this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+              }
+            })
+            .catch(() => {
               this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
-            }
-          })
-          .catch(() => {
-            this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
-          });
+            });
+          } else {
+            // Crea registro simple
+            this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
+            this.$service.post(`registroEvalTrabajoSocial`, this.formularioRegistro)
+            .then(respuesta => {
+              if (respuesta !== undefined) {
+                this.limpiarCampos();
+                this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+                this.$router.push('registrosArchivados');
+              } else {
+                this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+              }
+            })
+            .catch(() => {
+              this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+            });
+          }
         } else {
           this.$message.error(this.$t('usuarios.errorFillForm'));
         }
