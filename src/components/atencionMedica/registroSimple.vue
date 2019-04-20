@@ -17,15 +17,11 @@
         <v-card-title class="headline">
           <v-icon right>note_add</v-icon>
           <h2 class="headline mb-0">{{ this.$t('generalFollowUp.newStandartRegistry') }}</h2>
-          <v-spacer></v-spacer>
-          <v-btn icon dark color="primary" @click.native="maximizeDataPanel?minimize():maximize()">
-            <v-icon>{{maximizeDataPanel?"remove":"add"}}</v-icon>
-          </v-btn>
         </v-card-title>
         <v-container fluid v-if="maximizeDataPanel">
           <v-layout row wrap>
             <v-flex xs12>
-              <b>{{ this.$t('generalFollowUp.date') }}: </b> {{new Date().getDate() + ' - ' + this.$t('months[' + new Date().getMonth() + ']') + ' - ' + new Date().getFullYear()}} 
+              <b>{{ this.$t('registerView.creationDate') }}: </b> {{getDate(fechaCreacion)}} 
             </v-flex>
             <v-flex xs12>
               <v-textarea
@@ -68,7 +64,6 @@
       </form>
     </v-card>
   </div>
-
 </template>
 
 <script>
@@ -83,6 +78,7 @@
         headers: {'access-token': '<your-token>'},
         maximizeDataPanel: true,
         datosEstudiante: {},
+        fechaCreacion: new Date(),
         formularioRegistro: {
           observacion: '',
           intervencion: ''
@@ -106,6 +102,11 @@
     created () {
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
+      if (this.$route.query.registro) {
+        this.formularioRegistro.observacion = this.$store.state.simpleRegisterEdit.registros_simple.observacion;
+        this.formularioRegistro.intervencion = this.$store.state.simpleRegisterEdit.registros_simple.intervencion;
+        this.fechaCreacion = this.$store.state.simpleRegisterEdit._fecha_creacion;
+      }
     },
     validations: {
       formularioRegistro: {
@@ -118,26 +119,41 @@
       }
     },
     methods: {
-      minimize () {
-        this.maximizeDataPanel = false;
-      },
-      maximize () {
-        this.maximizeDataPanel = true;
+      getDate (dateString) {
+        let date = dateString ? new Date(dateString) : new Date();
+        return (date.getDate() + ' - ' + this.$t('months[' + date.getMonth() + ']') + ' - ' + date.getFullYear());
       },
       submit () { // Envía datos de la nueva asignación
         this.$v.formularioRegistro.$touch();
         if (!this.$v.formularioRegistro.$invalid) {
-          this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
-          this.$service.post(`registroSimple`, this.formularioRegistro)
-          .then(respuesta => {
-            this.dialogAsignacionCurso = false
-            this.limpiarCampos();
-            this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
-            this.$router.push('registrosArchivados');
-          })
-          .catch(() => {
-            this.$message.error(this.$t('generalFollowUp.registerCreationSuccessfull'));
-          });
+          if (this.$route.query.registro) {
+            // Edita registro Simple
+            this.formularioRegistro.idRegistro = this.$route.query.registro;
+            this.formularioRegistro.idRegistroSimple = this.$store.state.simpleRegisterEdit.registros_simple.id_registro_simple;
+            this.$service.put(`registroSimple`, this.formularioRegistro)
+            .then(respuesta => {
+              this.dialogAsignacionCurso = false
+              this.limpiarCampos();
+              this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+              this.$router.push('registrosArchivados');
+            })
+            .catch(() => {
+              this.$message.error(this.$t('generalFollowUp.registerCreationSuccessfull'));
+            });
+          } else {
+            // Crea registro simple
+            this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
+            this.$service.post(`registroSimple`, this.formularioRegistro)
+            .then(respuesta => {
+              this.dialogAsignacionCurso = false
+              this.limpiarCampos();
+              this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+              this.$router.push('registrosArchivados');
+            })
+            .catch(() => {
+              this.$message.error(this.$t('generalFollowUp.registerCreationSuccessfull'));
+            });
+          }
         }
       },
       limpiarCampos () {

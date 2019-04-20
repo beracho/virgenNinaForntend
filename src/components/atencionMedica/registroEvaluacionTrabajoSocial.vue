@@ -24,6 +24,9 @@
         </v-card-title>
         <v-container fluid v-if="generalDataPanel">
           <v-layout row wrap>
+            <v-flex xs12>
+              <b>{{ this.$t('registerView.creationDate') }}: </b> {{getDate(fechaCreacion)}} 
+            </v-flex>
             <v-flex xs6>
               <b>{{ this.$t('common.code') }}: </b>
             </v-flex>
@@ -238,6 +241,7 @@
         generalDataPanel: true,
         familyDataPanel: true,
         socialDataPanel: true,
+        fechaCreacion: new Date(),
         datosEstudiante: {},
         formularioRegistro: {
           tipoDeFamilia: '',
@@ -323,6 +327,22 @@
     created () {
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
+      if (this.$route.query.registro) {
+        const socialWorkAux = this.$store.state.socialWorkRegisterEdit.registro_eval_trabajo_social;
+        this.formularioRegistro = {
+          tipoDeFamilia: socialWorkAux.tipo_de_familia ? socialWorkAux.tipo_de_familia : null,
+          tipoDeFamiliaObject: socialWorkAux.tipo_de_familia ? {
+            text: socialWorkAux.tipo_de_familia,
+            color: this.colors[this.nonce - 1]} : null,
+          observacionGrupoFamiliar: socialWorkAux.observacion_grupo_familiar ? socialWorkAux.observacion_grupo_familiar : null,
+          dinamicaFamiliar: socialWorkAux.dinamica_familiar ? socialWorkAux.dinamica_familiar : null,
+          procesoSocial: socialWorkAux.proceso_social ? socialWorkAux.proceso_social : null,
+          relatoDiscapacidad: socialWorkAux.relato_discapacidad ? socialWorkAux.relato_discapacidad : null,
+          diagnosticoSocial: socialWorkAux.diagnostico_social ? socialWorkAux.diagnostico_social : null,
+          conclusionSugerencia: socialWorkAux.conclusion_sugerencia ? socialWorkAux.conclusion_sugerencia : null
+        }
+        // this.fechaCreacion = this.$store.state.socialWorkRegisterEdit._fecha_creacion;
+      }
     },
     validations: {
       formularioRegistro: {
@@ -373,6 +393,10 @@
           default:
             break;
         }
+      },
+      getDate (dateString) {
+        let date = dateString ? new Date(dateString) : new Date();
+        return (date.getDate() + ' - ' + this.$t('months[' + date.getMonth() + ']') + ' - ' + date.getFullYear());
       },
       filter (item, queryText, itemText) {
         if (item.header) return false;

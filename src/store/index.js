@@ -39,7 +39,9 @@ const store = new Vuex.Store({
     selectDate: null,
     // Vista de formularios
     simpleRegisterView: {},
-    socialWorkRegisterView: {}
+    simpleRegisterEdit: {},
+    socialWorkRegisterView: {},
+    socialWorkRegisterEdit: {}
   },
   mutations: {
     toggleSidenav (state) {

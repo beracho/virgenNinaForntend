@@ -55,10 +55,10 @@
               <v-btn icon dark color="primary" @click.native="verRegistro(props.item)">
                 <v-icon>filter_none</v-icon>
               </v-btn>
-              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editaRegistro(props.item.id_usuario, props.item.email)">
+              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editarRegistro(props.item)">
                 <v-icon>edit</v-icon>
               </v-btn>
-              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="red" @click.native="eliminaRegistro(props.item)">
+              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="red" @click.native="eliminarRegistro(props.item)">
                 <v-icon>delete</v-icon>
               </v-btn>
             </td>
@@ -280,9 +280,31 @@
         let date = dateString ? new Date(dateString) : new Date();
         return (date.getDate() + ' - ' + this.$t('months[' + date.getMonth() + ']') + ' - ' + date.getFullYear());
       },
-      eliminaRegistro (item) {
+      eliminarRegistro (item) {
       },
+      // editaRegistro(props.item.id_usuario, props.item.email)
       editarRegistro (item) {
+        switch (item.tipo) {
+          case 'simple':
+            this.$store.state.simpleRegisterEdit = item;
+            this.$router.push('registroSImple?registro=' + item.id_registro);
+            break;
+          case 'especialidad':
+            switch (item.area) {
+              case 'Trabajo social':
+                this.$store.state.socialWorkRegisterEdit = item;
+                this.$router.push('registroEvaluacionTrabajoSocial?registro=' + item.id_registro);
+                break;
+              default:
+                break;
+            }
+            break;
+          case 'semestral':
+            this.dialogRegistroSemestral = true;
+            break;
+          default:
+            break;
+        }
       },
       verRegistro (item) {
         switch (item.tipo) {
