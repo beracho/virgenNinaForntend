@@ -559,6 +559,7 @@
                 tutor.documento_identidad = this.formRelative.documento_identidad;
                 tutor.lugar_documento_identidad = this.formRelative.lugar_documento_identidad;
                 tutor.fecha_nacimiento = this.formRelative.fecha_nacimiento ? this.formRelative.fecha_nacimiento : '';
+                tutor.age = this.formRelative.age;
                 tutor.nombres = this.formRelative.nombres;
                 tutor.primer_apellido = this.formRelative.primer_apellido;
                 tutor.segundo_apellido = this.formRelative.segundo_apellido;
@@ -583,7 +584,8 @@
               tipo_documento: 'CARNET_IDENTIDAD',
               documento_identidad: this.formRelative.documento_identidad,
               lugar_documento_identidad: this.formRelative.lugar_documento_identidad,
-              fecha_nacimiento: this.formRelative.fecha_nacimiento ? this.formRelative.fecha_nacimiento : '',
+              fecha_nacimiento: this.formRelative.fecha_nacimiento ? this.formRelative.fecha_nacimiento : undefined,
+              age: this.formRelative.age,
               nombres: this.formRelative.nombres,
               primer_apellido: this.formRelative.primer_apellido,
               segundo_apellido: this.formRelative.segundo_apellido,

@@ -122,6 +122,7 @@ export default {
     municipio: 'Municipality',
     departamento: 'Department',
     localidad: 'Localidad',
+    community: 'community',
     zona: 'Neighborhood',
     street: 'Street / Avenue',
     number: 'Address number',

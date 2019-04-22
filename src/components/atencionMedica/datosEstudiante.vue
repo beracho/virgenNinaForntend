@@ -52,8 +52,35 @@
         <v-flex xs6>
           <b>{{ this.$t('inscriptionRegister.cellphone') }}: </b> {{consulta.telefono ? consulta.telefono : this.$t('generalFollowUp.notRegistered')}}
         </v-flex>
-        <v-flex xs12>
-          <b>{{ this.$t('generalFollowUp.address') }}: </b> {{consulta.direccion ? consulta.direccion : this.$t('generalFollowUp.notRegistered')}}
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.community') }}: </b> {{ consulta.direccion && consulta.direccion.comunidad ? consulta.direccion.comunidad : this.$t('generalFollowUp.notRegistered')}}
+        </v-flex>
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.zona') }}: </b> {{ consulta.direccion && consulta.direccion.zona ? consulta.direccion.zona : this.$t('generalFollowUp.notRegistered')}}
+        </v-flex>
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.street') }}: </b> {{ consulta.direccion && consulta.direccion.calle ? consulta.direccion.calle : this.$t('generalFollowUp.notRegistered')}}
+        </v-flex>
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.number') }}: </b> {{ consulta.direccion && consulta.direccion.numero ? consulta.direccion.numero : this.$t('generalFollowUp.notRegistered')}}
+        </v-flex>
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.telefon') }}: </b> {{ consulta.direccion && consulta.direccion.telefono ? consulta.direccion.telefono : this.$t('generalFollowUp.notRegistered')}}
+        </v-flex>
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.cellphone') }}: </b> {{ consulta.direccion && consulta.direccion.celular ? consulta.direccion.celular : this.$t('generalFollowUp.notRegistered')}}
+        </v-flex>
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.country') }}: </b> {{consulta.direccion && consulta.direccion.pais ? getPais(consulta.direccion.pais) : this.$t('generalFollowUp.notRegistered')}}
+        </v-flex>
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.departamento') }}: </b> {{consulta.direccion && consulta.direccion.departamento ? getDepartamento(consulta.direccion.departamento) : this.$t('generalFollowUp.notRegistered')}}
+        </v-flex>
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.provincia') }}: </b> {{consulta.direccion && consulta.direccion.provincia ? getProvincia(consulta.direccion.provincia) : this.$t('generalFollowUp.notRegistered')}}
+        </v-flex>
+        <v-flex xs6>
+          <b>{{ this.$t('inscriptionRegister.municipio') }}: </b> {{consulta.direccion && consulta.direccion.municipio ? getMunicipio(consulta.direccion.municipio) : this.$t('generalFollowUp.notRegistered')}}
         </v-flex>
       </v-layout>
     </v-container>
@@ -132,7 +159,11 @@
         schoolDataPanel: true,
         datosEstudiante: {},
         consulta: {},
-        padres: []
+        padres: [],
+        paisLista: [],
+        departamentoLista: [],
+        provinciaLista: [],
+        municipioLista: []
       }
     },
     components: {
@@ -141,6 +172,22 @@
     },
     created () {
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
+      this.$service.get(`dpaNivel?nivel=1`)
+      .then(respuesta => {
+        this.paisLista = respuesta.datos;
+      });
+      this.$service.get(`dpaNivel?nivel=2`)
+      .then(respuesta => {
+        this.departamentoLista = respuesta.datos;
+      });
+      this.$service.get(`dpaNivel?nivel=3`)
+      .then(respuesta => {
+        this.provinciaLista = respuesta.datos;
+      });
+      this.$service.get(`dpaNivel?nivel=4`)
+      .then(respuesta => {
+        this.municipioLista = respuesta.datos;
+      });
       this.datosEstudiante = this.$storage.get('nino');
       this.$service.get(`estudiantes?codigo=${this.datosEstudiante.codigo}`)
       .then(respuesta => {
@@ -244,6 +291,42 @@
           age--;
         }
         return age;
+      },
+      getPais (itemPais) {
+        let response = 'No registrado';
+        this.paisLista.forEach(element => {
+          if (element.id_dpa === itemPais) {
+            response = element.nombre;
+          }
+        });
+        return response;
+      },
+      getDepartamento (itemDepartamento) {
+        let response = 'No registrado';
+        this.departamentoLista.forEach(element => {
+          if (element.id_dpa === itemDepartamento) {
+            response = element.nombre;
+          }
+        });
+        return response;
+      },
+      getProvincia (itemProvincia) {
+        let response = 'No registrado';
+        this.provinciaLista.forEach(element => {
+          if (element.id_dpa === itemProvincia) {
+            response = element.nombre;
+          }
+        });
+        return response;
+      },
+      getMunicipio (itemMunicipio) {
+        let response = 'No registrado';
+        this.municipioLista.forEach(element => {
+          if (element.id_dpa === itemMunicipio) {
+            response = element.nombre;
+          }
+        });
+        return response;
       },
       cerrarCarpeta (userData) {
         if (this.$storage.exist('menu')) {
