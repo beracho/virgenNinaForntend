@@ -1105,55 +1105,91 @@ export default {
               this.form.registroInscripcion.idiomas = consulta.idiomas ? consulta.idiomas : '';
               // estudiante
               this.form.persona.codrude = consulta.estudiante.rude;
-              this.form.persona.pioc = consulta.estudiante.registro.pioc.id_pioc;
+              if (consulta.estudiante.registro.pioc && consulta.estudiante.registro.pioc.id_pioc) {
+                this.form.persona.pioc = consulta.estudiante.registro.pioc.id_pioc;
+              }
               // nacimiento
               this.form.nacimiento.fecha_nacimiento = consulta.fecha_nacimiento.substring(0, consulta.fecha_nacimiento.indexOf('T')); // get posicion T y cortar
-              if (consulta.lugar_nacimiento.municipio) {
+              if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.municipio) {
                 this.form.nacimiento.municipio = consulta.lugar_nacimiento.municipio;
-              } else if (consulta.lugar_nacimiento.provincia) {
+              } else if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.provincia) {
                 this.form.nacimiento.provincia = consulta.lugar_nacimiento.provincia;
-              } else if (consulta.lugar_nacimiento.departamento) {
+              } else if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.departamento) {
                 this.form.nacimiento.departamento = consulta.lugar_nacimiento.departamento;
-              } else {
+              } else if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.pais) {
                 this.form.nacimiento.pais = consulta.lugar_nacimiento.pais;
               }
-              this.form.nacimiento.nOficialia = consulta.estudiante.registro.oficialia;
-              this.form.nacimiento.nLibro = consulta.estudiante.registro.libro;
-              this.form.nacimiento.nPartida = consulta.estudiante.registro.partida;
-              this.form.nacimiento.nFolio = consulta.estudiante.registro.folio;
-              // direccion
-              this.form.direccion.pais = consulta.direccion.pais;
-              this.form.direccion.departamento = consulta.direccion.departamento;
-              this.form.direccion.provincia = consulta.direccion.provincia;
-              this.form.direccion.municipio = consulta.direccion.municipio;
-              this.form.direccion.localidad = consulta.direccion.localidad;
-              this.form.direccion.zona = consulta.direccion.zona;
-              this.form.direccion.calle = consulta.direccion.calle;
-              this.form.direccion.numero = consulta.direccion.numero;
-              this.form.direccion.telefono = consulta.direccion.telefono;
-              this.form.direccion.celular = consulta.direccion.celular;
-              // salud
-              this.form.salud.centro_salud = consulta.estudiante.registro.centro_salud;
-              this.form.salud.frecuencia_medica = consulta.estudiante.registro.frecuencia_medica;
-              this.form.salud.discapacidad_origen = consulta.estudiante.discapacidad_origen;
-              if (consulta.estudiante.fid_discapacidad >= 75) {
-                this.form.salud.subtipo_discapacidad = consulta.estudiante.fid_discapacidad;
-              } else {
-                this.form.salud.tipo_discapacidad = consulta.estudiante.fid_discapacidad;
+              if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.oficialia) {
+                this.form.nacimiento.nOficialia = consulta.estudiante.registro.oficialia;
               }
-              // servicios básicos
-              this.form.servicios_basicos.origen_agua = consulta.estudiante.registro.origen_agua;
-              this.form.servicios_basicos.acceso_electricidad = consulta.estudiante.registro.acceso_electricidad;
-              this.form.servicios_basicos.destino_agua = consulta.estudiante.registro.destino_agua;
-              // empleo
-              this.form.empleo.actividad_laboral = consulta.estudiante.registro.actividad_laboral;
-              this.form.empleo.dias_trabajo = consulta.estudiante.registro.dias_trabajo;
-              this.form.empleo.salario = consulta.estudiante.registro.salario;
-              // comunicacion y transporte
-              this.form.comunicacion_transporte.acceso_internet = consulta.estudiante.registro.acceso_internet;
-              this.form.comunicacion_transporte.frecuencia_internet = consulta.estudiante.registro.frecuencia_internet;
-              this.form.comunicacion_transporte.medio_transporte = consulta.estudiante.registro.medio_transporte;
-              this.form.comunicacion_transporte.duracion_transporte = consulta.estudiante.registro.duracion_transporte;
+              if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.libro) {
+                this.form.nacimiento.nLibro = consulta.estudiante.registro.libro;
+              }
+              if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.partida) {
+                this.form.nacimiento.nPartida = consulta.estudiante.registro.partida;
+              }
+              if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.folio) {
+                this.form.nacimiento.nFolio = consulta.estudiante.registro.folio;
+              }
+              // direccion
+              if (consulta.direccion) {
+                if (consulta.direccion.pais) {
+                  this.form.direccion.pais = consulta.direccion.pais;
+                }
+                if (consulta.direccion.departamento) {
+                  this.form.direccion.departamento = consulta.direccion.departamento;
+                }
+                if (consulta.direccion.provincia) {
+                  this.form.direccion.provincia = consulta.direccion.provincia;
+                }
+                if (consulta.direccion.municipio) {
+                  this.form.direccion.municipio = consulta.direccion.municipio;
+                }
+                if (consulta.direccion.localidad) {
+                  this.form.direccion.localidad = consulta.direccion.localidad;
+                }
+                if (consulta.direccion.zona) {
+                  this.form.direccion.zona = consulta.direccion.zona;
+                }
+                if (consulta.direccion.calle) {
+                  this.form.direccion.calle = consulta.direccion.calle;
+                }
+                if (consulta.direccion.numero) {
+                  this.form.direccion.numero = consulta.direccion.numero;
+                }
+                if (consulta.direccion.telefono) {
+                  this.form.direccion.telefono = consulta.direccion.telefono;
+                }
+                if (consulta.direccion.celular) {
+                  this.form.direccion.celular = consulta.direccion.celular;
+                }
+              }
+              // salud
+              if (consulta.estudiante) {
+                if (consulta.estudiante.registro) {
+                  this.form.salud.centro_salud = consulta.estudiante.registro.centro_salud;
+                  this.form.salud.frecuencia_medica = consulta.estudiante.registro.frecuencia_medica;
+                  // servicios básicos
+                  this.form.servicios_basicos.origen_agua = consulta.estudiante.registro.origen_agua;
+                  this.form.servicios_basicos.acceso_electricidad = consulta.estudiante.registro.acceso_electricidad;
+                  this.form.servicios_basicos.destino_agua = consulta.estudiante.registro.destino_agua;
+                  // empleo
+                  this.form.empleo.actividad_laboral = consulta.estudiante.registro.actividad_laboral;
+                  this.form.empleo.dias_trabajo = consulta.estudiante.registro.dias_trabajo;
+                  this.form.empleo.salario = consulta.estudiante.registro.salario;
+                  // comunicacion y transporte
+                  this.form.comunicacion_transporte.acceso_internet = consulta.estudiante.registro.acceso_internet;
+                  this.form.comunicacion_transporte.frecuencia_internet = consulta.estudiante.registro.frecuencia_internet;
+                  this.form.comunicacion_transporte.medio_transporte = consulta.estudiante.registro.medio_transporte;
+                  this.form.comunicacion_transporte.duracion_transporte = consulta.estudiante.registro.duracion_transporte;
+                }
+                this.form.salud.discapacidad_origen = consulta.estudiante.discapacidad_origen;
+                if (consulta.estudiante.fid_discapacidad >= 75) {
+                  this.form.salud.subtipo_discapacidad = consulta.estudiante.fid_discapacidad;
+                } else {
+                  this.form.salud.tipo_discapacidad = consulta.estudiante.fid_discapacidad;
+                }
+              }
               // padres
               this.form.apoderados = consulta.persona_de;
               this.padres = [];
@@ -1205,9 +1241,6 @@ export default {
                 }
               }, this);
             });
-          // } else {
-          //   this.disableOptionsUE = false;
-          // }
         } else {
           this.$message.error(this.$t('inscriptionRegister.errorNameField'));
         }
