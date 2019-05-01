@@ -28,17 +28,26 @@
                     <v-radio :label="$t('common.code')" :disabled="searchRE" value="CODIGO"></v-radio>
                   </v-radio-group>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs4 v-if="!codeChosen">
                   <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentNumber')" v-model="form.persona.documento_identidad"></v-text-field>
+                </v-flex>
+                <v-flex xs8 v-else>
+                  <v-text-field :disabled="searchRE" :label="$t('common.code')" v-model="form.persona.codigo"></v-text-field>
                 </v-flex>
                 <v-flex xs4 v-if="!codeChosen">
                   <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field>
                 </v-flex>
+                <v-flex xs6 v-if="codeChosen && searchRE">
+                  <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentNumber')" v-model="form.persona.documento_identidad"></v-text-field>
+                </v-flex>
+                <v-flex xs6 v-if="codeChosen && searchRE">
+                  <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field>
+                </v-flex>
                 <v-flex sx4 offset-xs8>
-                  <v-btn v-if="!searchRE" class="primary" block flat v-on:click="buscaEstudiante('search', false)">{{$t('common.search')}}
+                  <v-btn v-if="!searchRE" class="primary" block flat v-on:click="buscaEstudiante()">{{$t('common.search')}}
                     <v-icon right> search </v-icon>
                   </v-btn>
-                  <v-btn v-if="searchRE" class="primary" block flat v-on:click="buscaEstudiante('restore', false)">{{$t('common.change')}}
+                  <v-btn v-if="searchRE" class="primary" block flat v-on:click="reiniciaBusqueda()">{{$t('common.change')}}
                     <v-icon right> cached </v-icon>
                   </v-btn>
                 </v-flex>
@@ -151,10 +160,18 @@
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.bornCertificate') }}</h4>
                 </v-flex>
-                <v-text-field :label="$t('inscriptionRegister.civilRegistryNumber')" v-model="form.nacimiento.nOficialia"></v-text-field>
-                <v-text-field :label="$t('inscriptionRegister.bookNumber')" v-model="form.nacimiento.nLibro"></v-text-field>
-                <v-text-field :label="$t('inscriptionRegister.matchNumber')" v-model="form.nacimiento.nPartida"></v-text-field>
-                <v-text-field :label="$t('inscriptionRegister.folioNumber')" v-model="form.nacimiento.nFolio"></v-text-field>
+                <v-flex xs3>
+                  <v-text-field :label="$t('inscriptionRegister.civilRegistryNumber')" v-model="form.nacimiento.nOficialia"></v-text-field>
+                </v-flex>
+                <v-flex xs3>
+                  <v-text-field :label="$t('inscriptionRegister.bookNumber')" v-model="form.nacimiento.nLibro"></v-text-field>
+                </v-flex>
+                <v-flex xs3>
+                  <v-text-field :label="$t('inscriptionRegister.matchNumber')" v-model="form.nacimiento.nPartida"></v-text-field>
+                </v-flex>
+                <v-flex xs3>
+                  <v-text-field :label="$t('inscriptionRegister.folioNumber')" v-model="form.nacimiento.nFolio"></v-text-field>
+                </v-flex>
               </v-layout>
 
               <v-layout row wrap>
@@ -710,6 +727,7 @@ export default {
           tipo_documento: '',
           documento_identidad: '',
           lugar_documento_identidad: '',
+          codigo: '',
           carnet_discapacidad: '',
           pioc: '',
           codrude: ''
@@ -848,11 +866,6 @@ export default {
       {name: this.$t('inscriptionRegister.convein'), value: 'convein'},
       {name: this.$t('inscriptionRegister.private'), value: 'private'}
     ];
-    if (this.$route.query.codigo) {
-      this.buscaEstudiante('search', true);
-      this.form.persona.tipo_documento = 'CODIGO';
-      this.form.persona.documento_identidad = this.$route.query.codigo;
-    }
     this.$service.get(`unidadesEducativas`)
     .then(respuesta => {
       this.todosUE = respuesta.datos;
@@ -956,6 +969,13 @@ export default {
             break;
         }
       }, this);
+    })
+    .then(() => {
+      if (this.$route.query.codigo) {
+        this.form.persona.tipo_documento = 'CODIGO';
+        this.form.persona.codigo = this.$route.query.codigo;
+        this.buscaEstudiante();
+      }
     });
   },
   methods: {
@@ -1074,187 +1094,195 @@ export default {
       }
       this.windowA = false;
     },
-    buscaEstudiante (action, onload) {
-      if (action === 'search') {
-        if ((this.form.persona.documento_identidad && this.form.persona.lugar_documento_identidad && this.form.persona.tipo_documento) || onload) {
-          let ruta = `estudiantes?tipo_documento=${this.form.persona.tipo_documento}&documento_identidad=${this.form.persona.documento_identidad}&lugar_documento_identidad=${this.form.persona.lugar_documento_identidad}`;
-          if (onload) {
-            ruta = `estudiantes?codigo=${this.$route.query.codigo}`;
-          }
-          // if (this.form.unidadEducativa.nombre !== -1) {
-          this.$service.get(ruta)
-            .then(respuesta => {
-              var consulta = {};
-              if (!respuesta) {
-                return;
-              }
-              if (respuesta.datos.length === 1) {
-                consulta = respuesta.datos[0];
-                this.searchRE = true;
-              }
-              // Jala datos al formulario
-              // this.form.persona.carnet_discapacidad = consulta.carnet_discapacidad ? consulta.carnet_discapacidad : 'No cuenta con carnet';
-              this.form.persona.nombres = consulta.nombres;
-              this.form.persona.primer_apellido = consulta.primer_apellido;
-              this.form.persona.segundo_apellido = consulta.segundo_apellido;
-              this.form.persona.casada_apellido = consulta.casada_apellido;
-              this.form.persona.genero = consulta.genero;
-              this.form.persona.discapacidad = consulta.discapacidad ? consulta.discapacidad : '';
-              // registroInscripcion
-              this.form.registroInscripcion.idioma = consulta.idioma_materno ? consulta.idioma_materno : '';
-              this.form.registroInscripcion.idiomas = consulta.idiomas ? consulta.idiomas : '';
-              // estudiante
-              this.form.persona.codrude = consulta.estudiante.rude;
-              if (consulta.estudiante.registro.pioc && consulta.estudiante.registro.pioc.id_pioc) {
-                this.form.persona.pioc = consulta.estudiante.registro.pioc.id_pioc;
-              }
-              // nacimiento
-              this.form.nacimiento.fecha_nacimiento = consulta.fecha_nacimiento.substring(0, consulta.fecha_nacimiento.indexOf('T')); // get posicion T y cortar
-              if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.municipio) {
-                this.form.nacimiento.municipio = consulta.lugar_nacimiento.municipio;
-              } else if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.provincia) {
-                this.form.nacimiento.provincia = consulta.lugar_nacimiento.provincia;
-              } else if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.departamento) {
-                this.form.nacimiento.departamento = consulta.lugar_nacimiento.departamento;
-              } else if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.pais) {
-                this.form.nacimiento.pais = consulta.lugar_nacimiento.pais;
-              }
-              if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.oficialia) {
-                this.form.nacimiento.nOficialia = consulta.estudiante.registro.oficialia;
-              }
-              if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.libro) {
-                this.form.nacimiento.nLibro = consulta.estudiante.registro.libro;
-              }
-              if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.partida) {
-                this.form.nacimiento.nPartida = consulta.estudiante.registro.partida;
-              }
-              if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.folio) {
-                this.form.nacimiento.nFolio = consulta.estudiante.registro.folio;
-              }
-              // direccion
-              if (consulta.direccion) {
-                if (consulta.direccion.pais) {
-                  this.form.direccion.pais = consulta.direccion.pais;
-                }
-                if (consulta.direccion.departamento) {
-                  this.form.direccion.departamento = consulta.direccion.departamento;
-                }
-                if (consulta.direccion.provincia) {
-                  this.form.direccion.provincia = consulta.direccion.provincia;
-                }
-                if (consulta.direccion.municipio) {
-                  this.form.direccion.municipio = consulta.direccion.municipio;
-                }
-                if (consulta.direccion.localidad) {
-                  this.form.direccion.localidad = consulta.direccion.localidad;
-                }
-                if (consulta.direccion.zona) {
-                  this.form.direccion.zona = consulta.direccion.zona;
-                }
-                if (consulta.direccion.calle) {
-                  this.form.direccion.calle = consulta.direccion.calle;
-                }
-                if (consulta.direccion.numero) {
-                  this.form.direccion.numero = consulta.direccion.numero;
-                }
-                if (consulta.direccion.telefono) {
-                  this.form.direccion.telefono = consulta.direccion.telefono;
-                }
-                if (consulta.direccion.celular) {
-                  this.form.direccion.celular = consulta.direccion.celular;
-                }
-              }
-              // salud
-              if (consulta.estudiante) {
-                if (consulta.estudiante.registro) {
-                  this.form.salud.centro_salud = consulta.estudiante.registro.centro_salud;
-                  this.form.salud.frecuencia_medica = consulta.estudiante.registro.frecuencia_medica;
-                  // servicios básicos
-                  this.form.servicios_basicos.origen_agua = consulta.estudiante.registro.origen_agua;
-                  this.form.servicios_basicos.acceso_electricidad = consulta.estudiante.registro.acceso_electricidad;
-                  this.form.servicios_basicos.destino_agua = consulta.estudiante.registro.destino_agua;
-                  // empleo
-                  this.form.empleo.actividad_laboral = consulta.estudiante.registro.actividad_laboral;
-                  this.form.empleo.dias_trabajo = consulta.estudiante.registro.dias_trabajo;
-                  this.form.empleo.salario = consulta.estudiante.registro.salario;
-                  // comunicacion y transporte
-                  this.form.comunicacion_transporte.acceso_internet = consulta.estudiante.registro.acceso_internet;
-                  this.form.comunicacion_transporte.frecuencia_internet = consulta.estudiante.registro.frecuencia_internet;
-                  this.form.comunicacion_transporte.medio_transporte = consulta.estudiante.registro.medio_transporte;
-                  this.form.comunicacion_transporte.duracion_transporte = consulta.estudiante.registro.duracion_transporte;
-                }
-                this.form.salud.discapacidad_origen = consulta.estudiante.discapacidad_origen;
-                if (consulta.estudiante.fid_discapacidad >= 75) {
-                  this.form.salud.subtipo_discapacidad = consulta.estudiante.fid_discapacidad;
-                } else {
-                  this.form.salud.tipo_discapacidad = consulta.estudiante.fid_discapacidad;
-                }
-              }
-              // padres
-              this.form.apoderados = consulta.persona_de;
-              this.padres = [];
-              this.form.apoderados.forEach(function (tutor) {
-                const obj = {
-                  id: tutor.id_parentezco,
-                  id_persona: tutor.fid_persona_es,
-                  cargado: true,
-                  relation: tutor.relacion,
-                  descripcion: tutor.descripcion,
-                  tipo_documento: tutor.persona_es.tipo_documento,
-                  documento_identidad: tutor.persona_es.documento_identidad,
-                  lugar_documento_identidad: tutor.persona_es.lugar_documento_identidad,
-                  complemento_documento: tutor.persona_es.complemento_documento,
-                  tipo_documento_discapacidad: tutor.persona_es.tipo_documento_discapacidad,
-                  carnet_discapacidad: tutor.persona_es.carnet_discapacidad,
-                  fecha_nacimiento: tutor.persona_es.fecha_nacimiento,
-                  nombres: tutor.persona_es.nombres,
-                  primer_apellido: tutor.persona_es.primer_apellido,
-                  segundo_apellido: tutor.persona_es.segundo_apellido,
-                  casada_apellido: tutor.persona_es.casada_apellido,
-                  genero: tutor.persona_es.genero,
-                  nombre_completo: tutor.persona_es.nombre_completo,
-                  idiomas: tutor.persona_es.idiomas,
-                  idioma_materno: tutor.persona_es.idioma_materno,
-                  ocupacion_actual: tutor.persona_es.ocupacion_actual,
-                  grado_instruccion: tutor.persona_es.grado_instruccion,
-                  discapacidad: tutor.persona_es.discapacidad,
-                  src: '/static/images/' + (tutor.persona_es.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg')
-                };
-                this.padres.push(obj);
-              }, this);
-              // Unidades educativas
-              consulta.unidades_educativas.forEach(function (element) {
-                if (element.gestion === '2018') {
-                  this.form.unidadEducativa.nombre = element.fid_unidad_educativa;
-                  this.form.registroInscripcion.nivel = element.nivel;
-                  this.form.registroInscripcion.grado = element.grado;
-                  this.form.registroInscripcion.turno = element.turno;
-                  this.form.registroInscripcion.paralelo = element.paralelo;
-                  if (this.form.unidadEducativa.nombre !== '') {
-                    this.buscaUnidadEducativa('search');
-                  }
-                }
-                if (element.gestion === '2017') {
-                  this.form.unidadEducativaAnterior.id = element.fid_unidad_educativa;
-                  this.form.unidadEducativaAnterior.codSie = element.unidad_educativa.sie;
-                  this.form.unidadEducativaAnterior.nombreUnidad = element.unidad_educativa.nombre;
-                }
-              }, this);
-            });
-        } else {
-          this.$message.error(this.$t('inscriptionRegister.errorNameField'));
+    buscaEstudiante () {
+      let searchIDQuery = this.form.persona.documento_identidad && this.form.persona.lugar_documento_identidad && this.form.persona.tipo_documento !== 'CODIGO';
+      let searchCodeQuery = this.form.persona.codigo && this.form.persona.tipo_documento === 'CODIGO';
+      if (searchIDQuery || searchCodeQuery) {
+        let ruta = `estudiantes?tipo_documento=${this.form.persona.tipo_documento}&documento_identidad=${this.form.persona.documento_identidad}&lugar_documento_identidad=${this.form.persona.lugar_documento_identidad}`;
+        if (searchCodeQuery) {
+          ruta = `estudiantes?codigo=${this.$route.query.codigo}`;
         }
+        // if (this.form.unidadEducativa.nombre !== -1) {
+        this.$service.get(ruta)
+          .then(respuesta => {
+            var consulta = {};
+            if (!respuesta) {
+              return;
+            }
+            if (respuesta.datos.length === 1) {
+              consulta = respuesta.datos[0];
+              this.searchRE = true;
+            }
+            // Jala datos al formulario
+            // this.form.persona.carnet_discapacidad = consulta.carnet_discapacidad ? consulta.carnet_discapacidad : 'No cuenta con carnet';
+            this.form.persona.documento_identidad = consulta.documento_identidad;
+            this.form.persona.lugar_documento_identidad = consulta.lugar_documento_identidad;
+            this.form.persona.nombres = consulta.nombres;
+            this.form.persona.primer_apellido = consulta.primer_apellido;
+            this.form.persona.segundo_apellido = consulta.segundo_apellido;
+            this.form.persona.casada_apellido = consulta.casada_apellido;
+            this.form.persona.genero = consulta.genero;
+            this.form.persona.discapacidad = consulta.discapacidad ? consulta.discapacidad : '';
+            // registroInscripcion
+            this.form.registroInscripcion.idioma = consulta.idioma_materno ? consulta.idioma_materno : '';
+            this.form.registroInscripcion.idiomas = consulta.idiomas ? consulta.idiomas : '';
+            // estudiante
+            this.form.persona.codrude = consulta.estudiante.rude;
+            if (consulta.estudiante.registro.pioc && consulta.estudiante.registro.pioc.id_pioc) {
+              this.form.persona.pioc = consulta.estudiante.registro.pioc.id_pioc;
+            }
+            // nacimiento
+            this.form.nacimiento.fecha_nacimiento = consulta.fecha_nacimiento.substring(0, consulta.fecha_nacimiento.indexOf('T')); // get posicion T y cortar
+            if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.municipio) {
+              this.form.nacimiento.municipio = consulta.lugar_nacimiento.municipio;
+            } else if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.provincia) {
+              this.form.nacimiento.provincia = consulta.lugar_nacimiento.provincia;
+            } else if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.departamento) {
+              this.form.nacimiento.departamento = consulta.lugar_nacimiento.departamento;
+            } else if (consulta.lugar_nacimiento && consulta.lugar_nacimiento.pais) {
+              this.form.nacimiento.pais = consulta.lugar_nacimiento.pais;
+            }
+            if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.oficialia) {
+              this.form.nacimiento.nOficialia = consulta.estudiante.registro.oficialia;
+            }
+            if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.libro) {
+              this.form.nacimiento.nLibro = consulta.estudiante.registro.libro;
+            }
+            if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.partida) {
+              this.form.nacimiento.nPartida = consulta.estudiante.registro.partida;
+            }
+            if (consulta.estudiante && consulta.estudiante.registro && consulta.estudiante.registro.folio) {
+              this.form.nacimiento.nFolio = consulta.estudiante.registro.folio;
+            }
+            // direccion
+            if (consulta.direccion) {
+              if (consulta.direccion.pais) {
+                this.form.direccion.pais = consulta.direccion.pais;
+              }
+              if (consulta.direccion.departamento) {
+                this.form.direccion.departamento = consulta.direccion.departamento;
+              }
+              if (consulta.direccion.provincia) {
+                this.form.direccion.provincia = consulta.direccion.provincia;
+              }
+              if (consulta.direccion.municipio) {
+                this.form.direccion.municipio = consulta.direccion.municipio;
+              }
+              if (consulta.direccion.localidad) {
+                this.form.direccion.localidad = consulta.direccion.localidad;
+              }
+              if (consulta.direccion.zona) {
+                this.form.direccion.zona = consulta.direccion.zona;
+              }
+              if (consulta.direccion.calle) {
+                this.form.direccion.calle = consulta.direccion.calle;
+              }
+              if (consulta.direccion.numero) {
+                this.form.direccion.numero = consulta.direccion.numero;
+              }
+              if (consulta.direccion.telefono) {
+                this.form.direccion.telefono = consulta.direccion.telefono;
+              }
+              if (consulta.direccion.celular) {
+                this.form.direccion.celular = consulta.direccion.celular;
+              }
+            }
+            // salud
+            if (consulta.estudiante) {
+              if (consulta.estudiante.registro) {
+                this.form.salud.centro_salud = consulta.estudiante.registro.centro_salud;
+                this.form.salud.frecuencia_medica = consulta.estudiante.registro.frecuencia_medica;
+                // servicios básicos
+                this.form.servicios_basicos.origen_agua = consulta.estudiante.registro.origen_agua;
+                this.form.servicios_basicos.acceso_electricidad = consulta.estudiante.registro.acceso_electricidad;
+                this.form.servicios_basicos.destino_agua = consulta.estudiante.registro.destino_agua;
+                // empleo
+                this.form.empleo.actividad_laboral = consulta.estudiante.registro.actividad_laboral;
+                this.form.empleo.dias_trabajo = consulta.estudiante.registro.dias_trabajo;
+                this.form.empleo.salario = consulta.estudiante.registro.salario;
+                // comunicacion y transporte
+                this.form.comunicacion_transporte.acceso_internet = consulta.estudiante.registro.acceso_internet;
+                this.form.comunicacion_transporte.frecuencia_internet = consulta.estudiante.registro.frecuencia_internet;
+                this.form.comunicacion_transporte.medio_transporte = consulta.estudiante.registro.medio_transporte;
+                this.form.comunicacion_transporte.duracion_transporte = consulta.estudiante.registro.duracion_transporte;
+              }
+              this.form.salud.discapacidad_origen = consulta.discapacidad_origen;
+              if (consulta.fid_discapacidad >= 75) {
+                this.form.salud.subtipo_discapacidad = consulta.fid_discapacidad;
+                this.form.salud.tipo_discapacidad = this.getDisabilityFather(consulta.fid_discapacidad);
+              } else {
+                this.form.salud.tipo_discapacidad = consulta.fid_discapacidad;
+              }
+            }
+            // padres
+            this.form.apoderados = consulta.persona_de;
+            this.padres = [];
+            this.form.apoderados.forEach(function (tutor) {
+              const obj = {
+                id: tutor.id_parentezco,
+                id_persona: tutor.fid_persona_es,
+                cargado: true,
+                relation: tutor.relacion,
+                descripcion: tutor.descripcion,
+                tipo_documento: tutor.persona_es.tipo_documento,
+                documento_identidad: tutor.persona_es.documento_identidad,
+                lugar_documento_identidad: tutor.persona_es.lugar_documento_identidad,
+                complemento_documento: tutor.persona_es.complemento_documento,
+                tipo_documento_discapacidad: tutor.persona_es.tipo_documento_discapacidad,
+                carnet_discapacidad: tutor.persona_es.carnet_discapacidad,
+                fecha_nacimiento: tutor.persona_es.fecha_nacimiento,
+                nombres: tutor.persona_es.nombres,
+                primer_apellido: tutor.persona_es.primer_apellido,
+                segundo_apellido: tutor.persona_es.segundo_apellido,
+                casada_apellido: tutor.persona_es.casada_apellido,
+                genero: tutor.persona_es.genero,
+                nombre_completo: tutor.persona_es.nombre_completo,
+                idiomas: tutor.persona_es.idiomas,
+                idioma_materno: tutor.persona_es.idioma_materno,
+                ocupacion_actual: tutor.persona_es.ocupacion_actual,
+                grado_instruccion: tutor.persona_es.grado_instruccion,
+                discapacidad: tutor.persona_es.discapacidad,
+                src: '/static/images/' + (tutor.persona_es.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg')
+              };
+              this.padres.push(obj);
+            }, this);
+            // Unidades educativas
+            consulta.unidades_educativas.forEach(function (element) {
+              if (element.gestion === '2018') {
+                this.form.unidadEducativa.nombre = element.fid_unidad_educativa;
+                this.form.registroInscripcion.nivel = element.nivel;
+                this.form.registroInscripcion.grado = element.grado;
+                this.form.registroInscripcion.turno = element.turno;
+                this.form.registroInscripcion.paralelo = element.paralelo;
+                if (this.form.unidadEducativa.nombre !== '') {
+                  this.buscaUnidadEducativa('search');
+                }
+              }
+              if (element.gestion === '2017') {
+                this.form.unidadEducativaAnterior.id = element.fid_unidad_educativa;
+                this.form.unidadEducativaAnterior.codSie = element.unidad_educativa.sie;
+                this.form.unidadEducativaAnterior.nombreUnidad = element.unidad_educativa.nombre;
+              }
+            }, this);
+          });
+      } else {
+        this.$message.error(this.$t('inscriptionRegister.errorNameField'));
       }
-      if (action === 'restore') {
-        this.searchRE = false;
-        if (!this.disableOptionsUE) {
-          this.disableOptionsUE = true;
-        } else {
-          // this.form.unidadEducativa.nombre = null;
-          // this.form.unidadEducativa.dependencia = null;
-          // this.form.unidadEducativa.distrito = null;
+    },
+    reiniciaBusqueda () {
+      this.searchRE = false;
+      if (!this.disableOptionsUE) {
+        this.disableOptionsUE = true;
+      }
+    },
+    getDisabilityFather (sonCode) {
+      let fatherCode;
+      this.opcionesDiscapacidad.forEach(item => {
+        if (item.id_parametro === sonCode) {
+          fatherCode = item.padre;
         }
-      }
+      });
+      return fatherCode;
     },
     guardarInscripcion () {
       this.form.apoderados = this.padres;
