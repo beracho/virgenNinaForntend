@@ -13,47 +13,7 @@
       </v-layout>
     </v-container>
     <form @submit.prevent="submit">
-      <v-card>
-        <v-card-title class="headline">
-          <v-icon right>subject</v-icon>
-          <h2 class="headline mb-0">{{$t('usuarios.personalData')}}</h2>
-          <v-spacer></v-spacer>
-          <v-btn icon dark color="primary" @click.native="generalDataPanel?minimize(0):maximize(0)">
-            <v-icon>{{generalDataPanel?"remove":"add"}}</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-container fluid v-if="generalDataPanel">
-          <v-layout row wrap>
-            <v-flex xs12>
-              <b>{{ this.$t('registerView.creationDate') }}: </b> {{getDate(fechaCreacion)}} 
-            </v-flex>
-            <v-flex xs6>
-              <b>{{ this.$t('common.code') }}: </b>
-            </v-flex>
-            <v-flex xs6>
-              <b>{{ this.$t('inscriptionRegister.subNames') }}: </b> {{datosEstudiante.primer_apellido ? datosEstudiante.primer_apellido : this.$t('generalFollowUp.notRegistered')}} {{datosEstudiante.segundo_apellido ? datosEstudiante.segundo_apellido : this.$t('generalFollowUp.notRegistered')}} {{datosEstudiante.nombres ? datosEstudiante.nombres : this.$t('generalFollowUp.notRegistered')}}
-            </v-flex>
-            <v-flex xs6>
-              <b>{{ this.$t('inscriptionRegister.bornDate') }}: </b> {{datosEstudiante.segundo_apellido ? datosEstudiante.segundo_apellido : this.$t('generalFollowUp.notRegistered')}}
-            </v-flex>
-            <v-flex xs6>
-              <b>{{ this.$t('generalFollowUp.age') }}: </b> {{datosEstudiante.nombres ? datosEstudiante.nombres : this.$t('generalFollowUp.notRegistered')}}
-            </v-flex>
-            <v-flex xs6>
-              <b>{{ this.$t('socialWork.admissionDate') }}: </b> 
-            </v-flex>
-            <v-flex xs6>
-              <b>{{ this.$t('socialWork.readmissionDate') }}: </b> 
-            </v-flex>
-            <v-flex xs6>
-              <b>{{ this.$t('usuarios.gender') }}: </b> 
-            </v-flex>
-            <v-flex xs6>
-              <b>{{ this.$t('inscriptionRegister.telefon') }}: </b> 
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card>
+      <student-data :studentCode="datosEstudiante.codigo"></student-data>
       <v-card>
         <v-card-title class="headline">
           <v-icon right>subject</v-icon>
@@ -231,6 +191,7 @@
   import { required } from 'vuelidate/lib/validators';
   import errorsHandler from '@/common/mixins/errorsHandler';
   import FamilyMember from '@/common/util/FamilyMember.vue';
+  import StudentData from '@/common/util/StudentData.vue';
   import Comps from '../comps';
   /* eslint-disable semi */
   export default {
@@ -238,7 +199,6 @@
     data () {
       return {
         headers: {'access-token': '<your-token>'},
-        generalDataPanel: true,
         familyDataPanel: true,
         socialDataPanel: true,
         fechaCreacion: new Date(),
@@ -287,7 +247,8 @@
       }
     },
     components: {
-      'family-members': FamilyMember
+      'family-members': FamilyMember,
+      'student-data': StudentData
     },
     watch: {
       'formularioRegistro.tipoDeFamiliaObject': function (val, prev) {
@@ -360,9 +321,6 @@
     methods: {
       minimize (cardNumber) {
         switch (cardNumber) {
-          case 0:
-            this.generalDataPanel = false;
-            break;
           case 1:
             this.familyDataPanel = false;
             break;
@@ -378,9 +336,6 @@
       },
       maximize (cardNumber) {
         switch (cardNumber) {
-          case 0:
-            this.generalDataPanel = true;
-            break;
           case 1:
             this.familyDataPanel = true;
             break;
