@@ -46,7 +46,15 @@
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
     },
     methods: {
-      printFile () {}
+      printFile () {
+        let datosEstudiante = this.$storage.get('nino');
+        this.$service.get(`imprimirRegistro?idRegistro=${this.$store.state.socialWorkRegisterView.idRegistro}&estudiante=${datosEstudiante.codigo}`)
+        .then(response => {
+          if (response && response.datos) {
+            window.open('data:application/pdf;base64,' + response.datos);
+          }
+        });
+      }
     },
     watch: {
     }

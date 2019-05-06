@@ -373,6 +373,7 @@
         switch (item.tipo) {
           case 'simple':
             const datosRegistro = {
+              idRegistro: item.id_registro,
               fecha: this.getDate(item._fecha_creacion),
               area: item.area,
               autor: item.usuario.nombre + ' ' + item.usuario.primer_apellido + ' ' + item.usuario.segundo_apellido,
@@ -387,6 +388,7 @@
               case 'Trabajo social':
                 this.areaView = 'Trabajo social';
                 const datosTrabajoSocial = {
+                  idRegistro: item.id_registro,
                   fecha: this.getDate(item._fecha_creacion),
                   area: item.area,
                   autor: item.usuario.nombre + ' ' + item.usuario.primer_apellido + ' ' + item.usuario.segundo_apellido,
