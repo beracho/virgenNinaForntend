@@ -4,7 +4,7 @@
       <v-icon right>book</v-icon>
       {{$t('generalFollowUp.standartRegistry') }}
       <v-spacer></v-spacer>
-      <v-btn class="primary" flat v-on:click="printFile()">{{$t('generalFollowUp.print')}}
+      <v-btn :disabled="loading" class="primary" flat v-on:click="printFile()">{{$t('generalFollowUp.print')}}
         <v-icon right>print</v-icon>
       </v-btn>
     </v-card-title>
@@ -55,6 +55,7 @@
     // props: ['visibility'],
     data () {
       return {
+        loading: false
       };
     },
     created () {
@@ -62,12 +63,14 @@
     },
     methods: {
       printFile () {
+        this.loading = true;
         let datosEstudiante = this.$storage.get('nino');
         this.$service.get(`imprimirRegistro?idRegistro=${this.$store.state.socialWorkRegisterView.idRegistro}&estudiante=${datosEstudiante.codigo}`)
         .then(response => {
           if (response && response.datos) {
             window.open('data:application/pdf;base64,' + response.datos);
           }
+          this.loading = false;
         });
       }
     },
