@@ -2,339 +2,487 @@
   <div>
     <v-container fluid>
       <v-layout row wrap>
-        <v-flex xs1>
-        </v-flex>
-        <v-flex xs7>
+        <v-flex xs1></v-flex>
+        <v-flex xs6>
           <h3>{{this.datosEstudiante.nombres}} <br> {{this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
         </v-flex>
+        <v-flex xs1></v-flex>
         <v-flex xs4>
-          <v-btn dark block color="red" @click.native="cerrarCarpeta()">Cerrar archivador</v-btn>
+          <v-btn dark block color="red" @click.native="cerrarCarpeta()">{{$t('socialWork.closeFolder')}}</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
-    <v-card>
-      <v-card-title class="headline">
-        <v-icon right>subject</v-icon>
-        <h2 class="headline mb-0">Datos personales</h2>
-        <v-spacer></v-spacer>
-        <v-btn icon dark color="primary" @click.native="generalDataPanel?minimize(0):maximize(0)">
-          <v-icon>{{generalDataPanel?"remove":"add"}}</v-icon>
-        </v-btn>
-      </v-card-title>
-      <v-container fluid v-if="generalDataPanel">
-        <v-layout row wrap>
-          <v-flex xs12>
-            <b>{{ this.$t('inscriptionRegister.subNames') }}: </b> {{datosEstudiante.primer_apellido ? datosEstudiante.primer_apellido : this.$t('generalFollowUp.notRegistered')}} {{datosEstudiante.segundo_apellido ? datosEstudiante.segundo_apellido : this.$t('generalFollowUp.notRegistered')}} {{datosEstudiante.nombres ? datosEstudiante.nombres : this.$t('generalFollowUp.notRegistered')}}
-          </v-flex>
-          <v-flex xs6>
-            <b>{{ this.$t('inscriptionRegister.bornDate') }}: </b> {{datosEstudiante.segundo_apellido ? datosEstudiante.segundo_apellido : this.$t('generalFollowUp.notRegistered')}}
-          </v-flex>
-          <v-flex xs6>
-            <b>{{ this.$t('generalFollowUp.age') }}: </b> {{datosEstudiante.nombres ? datosEstudiante.nombres : this.$t('generalFollowUp.notRegistered')}}
-          </v-flex>
-          <v-flex xs6>
-            <b>{{ this.$t('psicomotricity.evaluationDate') }}: </b> 
-          </v-flex>
-          <v-flex xs6>
-            <b>{{ this.$t('psicomotricity.sentDiagnosis') }}: </b> 
-          </v-flex>
-          <v-flex xs6>
-            <b>{{ this.$t('psicomotricity.educationCenter') }}: </b> 
-          </v-flex>
-          <v-flex xs6>
-            <b>{{ this.$t('psicomotricity.schoolGrade') }}: </b> 
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-card>
-    <v-card>
-      <v-card-title class="headline">
-        <v-icon right>account_circle</v-icon>
-        <h2 class="headline mb-0">{{ this.$t('inscriptionRegister.tutorData') }}</h2>
-        <v-spacer></v-spacer>
-        <v-btn icon dark color="primary" @click.native="parentsDataPanel?minimize(1):maximize(1)">
-          <v-icon>{{parentsDataPanel?"remove":"add"}}</v-icon>
-        </v-btn>
-      </v-card-title>
-      <v-container fluid v-if="parentsDataPanel">
-        <v-layout row wrap>
-          <v-flex xs12>
-            <v-layout row wrap>
-              <v-flex xs6
-                v-for="padre in padres"
-                :key="padre.relacion"
-              >
-              <h4>{{ $t('inscriptionRegister.relation').toUpperCase() }}: {{padre.relation ? padre.relation.toUpperCase() : $t('generalFollowUp.notRegistered').toUpperCase()}}</h4>
-              <b>{{ $t('inscriptionRegister.firstLastName') }}: </b> {{padre.primer_apellido ? padre.primer_apellido : $t('generalFollowUp.notRegistered')}}<br>
-              <b>{{ $t('inscriptionRegister.secondLastName') }}: </b> {{padre.segundo_apellido ? padre.segundo_apellido : $t('generalFollowUp.notRegistered')}}<br>
-              <b>{{ $t('inscriptionRegister.names') }}: </b> {{padre.nombres ? padre.nombres : $t('generalFollowUp.notRegistered')}}<br>
-              <b>{{ $t('inscriptionRegister.ci') }}: </b> {{padre.documento_identidad ? padre.documento_identidad + ' ' + padre.lugar_documento_identidad : $t('generalFollowUp.notRegistered')}}<br>
-              <b>{{ $t('inscriptionRegister.bornDate') }}: </b> {{padre.fecha_nacimiento ? getDate(padre.fecha_nacimiento) : $t('generalFollowUp.notRegistered')}}<br>
-              <b>{{ $t('usuarios.gender') }}: </b> {{padre.genero ? padre.genero == 'M' ? $t('usuarios.male') : $t('usuarios.female') : $t('generalFollowUp.notRegistered')}}<br>
-              <b>{{ $t('inscriptionRegister.language') }}: </b> {{padre.idiomas ? padre.idiomas : $t('generalFollowUp.notRegistered')}}<br>
-              <b>{{ $t('inscriptionRegister.profession') }}: </b> {{padre.ocupacion_actual ? padre.ocupacion_actual : $t('generalFollowUp.notRegistered')}}<br>
-              <b>{{ $t('inscriptionRegister.maxEducation') }}: </b> {{padre.grado_instruccion ? padre.grado_instruccion : $t('generalFollowUp.notRegistered')}}<br>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-card>
-    <v-card>
-      <form @submit.prevent="submit">
+    <form @submit.prevent="submit">
+      <student-data :studentCode="datosEstudiante.codigo"></student-data>
+      <v-card>
         <v-card-title class="headline">
-          <v-icon right>note_add</v-icon>
-          <h2 class="headline mb-0">Antecedentes</h2>
+          <v-icon right>subject</v-icon>
+          <h2 class="headline mb-0">I. {{$t('psicomotricity.anamnesis')}}</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark color="primary" @click.native="backgroundDataPanel?minimize(2):maximize(2)">
-            <v-icon>{{backgroundDataPanel?"remove":"add"}}</v-icon>
+          <v-btn icon dark color="primary" @click.native="anamnesisDataPanel?minimize(1):maximize(1)">
+            <v-icon>{{anamnesisDataPanel?"remove":"add"}}</v-icon>
           </v-btn>
         </v-card-title>
-        <v-container fluid v-if="backgroundDataPanel">
+        <v-container fluid v-if="anamnesisDataPanel">
           <v-layout row wrap>
-            <v-flex xs6>
+            <v-flex xs12>
+              <family-members :studentCode="datosEstudiante.codigo" :createRelation="false" :editRelation="false"></family-members>
+            </v-flex>
+            <v-flex xs12>
+              <v-textarea
+                :label="$t('psicomotricity.familyBackground')"
+                v-model="formularioRegistro.anamnesia.antecedentesFamiliares"
+                :error="$v.formularioRegistro.observacionGrupoFamiliar.$error"
+                @input="$v.formularioRegistro.observacionGrupoFamiliar.$touch()"
+                :error-messages="errors.observacionGrupoFamiliar"
+                counter
+              ></v-textarea>
+            </v-flex>
+            <v-flex xs12>
+              <v-textarea
+                :label="$t('psicomotricity.pathologicalBackground')"
+                v-model="formularioRegistro.anamnesia.antecedentesPatologicos"
+                :error="$v.formularioRegistro.observacionGrupoFamiliar.$error"
+                @input="$v.formularioRegistro.observacionGrupoFamiliar.$touch()"
+                :error-messages="errors.observacionGrupoFamiliar"
+                counter
+              ></v-textarea>
+            </v-flex>
+            <v-flex xs12>
+              <h3 class="headline mb-0">{{$t('psicomotricity.gynecologicalBackground')}}</h3>
+            </v-flex>
+            <v-flex xs12>
               <v-textarea
                 :label="$t('psicomotricity.perinatal')"
-                v-model="formularioRegistro.perinatal"
-                :error="$v.formularioRegistro.perinatal.$error"
-                @input="$v.formularioRegistro.perinatal.$touch()"
-                :error-messages="errors.perinatal"
+                v-model="formularioRegistro.anamnesia.perinatal"
+                :error="$v.formularioRegistro.observacionGrupoFamiliar.$error"
+                @input="$v.formularioRegistro.observacionGrupoFamiliar.$touch()"
+                :error-messages="errors.observacionGrupoFamiliar"
+                counter
               ></v-textarea>
             </v-flex>
-            <v-flex xs6>
+            <v-flex xs12>
               <v-textarea
                 :label="$t('psicomotricity.prenatal')"
-                v-model="formularioRegistro.prenatal"
-                :error="$v.formularioRegistro.prenatal.$error"
-                @input="$v.formularioRegistro.prenatal.$touch()"
-                :error-messages="errors.prenatal"
+                v-model="formularioRegistro.anamnesia.prenatal"
+                :error="$v.formularioRegistro.observacionGrupoFamiliar.$error"
+                @input="$v.formularioRegistro.observacionGrupoFamiliar.$touch()"
+                :error-messages="errors.observacionGrupoFamiliar"
+                counter
               ></v-textarea>
             </v-flex>
-            <v-flex xs6>
+            <v-flex xs12>
               <v-textarea
                 :label="$t('psicomotricity.postnatal')"
-                v-model="formularioRegistro.postnatal"
-                :error="$v.formularioRegistro.postnatal.$error"
-                @input="$v.formularioRegistro.postnatal.$touch()"
-                :error-messages="errors.postnatal"
+                v-model="formularioRegistro.anamnesia.postnatal"
+                :error="$v.formularioRegistro.observacionGrupoFamiliar.$error"
+                @input="$v.formularioRegistro.observacionGrupoFamiliar.$touch()"
+                :error-messages="errors.observacionGrupoFamiliar"
+                counter
               ></v-textarea>
             </v-flex>
-            <v-flex xs3>
-              <v-radio-group v-model="formularioRegistro.cephalicControl" :label="$t('psicomotricity.cephalicControl')" :mandatory="true" column>
-                <v-radio :label="$t('common.yes')" value="CARNET_IDENTIDAD"></v-radio>
-                <v-radio :label="$t('common.no')" value="PASAPORTE"></v-radio>
-              </v-radio-group>
+            <v-flex xs12>
+              <h3 class="headline mb-0">{{$t('psicomotricity.developmentBackground')}}</h3>
             </v-flex>
-            <v-flex xs3>
-              <v-radio-group v-model="formularioRegistro.sitting" :label="$t('psicomotricity.sitting')" :mandatory="true" column>
-                <v-radio :label="$t('common.yes')" value="CARNET_IDENTIDAD"></v-radio>
-                <v-radio :label="$t('common.no')" value="PASAPORTE"></v-radio>
-              </v-radio-group>
+            <v-flex xs4>
+              <v-text-field
+                :label="$t('psicomotricity.cephalicControl')"
+                v-model="formularioRegistro.anamnesia.controlCefálico"
+              ></v-text-field>
             </v-flex>
-            <v-flex xs3>
-              <v-radio-group v-model="formularioRegistro.drag" :label="$t('psicomotricity.drag')" :mandatory="true" column>
-                <v-radio :label="$t('common.yes')" value="CARNET_IDENTIDAD"></v-radio>
-                <v-radio :label="$t('common.no')" value="PASAPORTE"></v-radio>
-              </v-radio-group>
+            <v-flex xs4>
+              <v-text-field
+                :label="$t('psicomotricity.sitting')"
+                v-model="formularioRegistro.anamnesia.Sedestación"
+              ></v-text-field>
             </v-flex>
-            <v-flex xs3>
-              <v-radio-group v-model="formularioRegistro.crawl" :label="$t('psicomotricity.crawl')" :mandatory="true" column>
-                <v-radio :label="$t('common.yes')" value="CARNET_IDENTIDAD"></v-radio>
-                <v-radio :label="$t('common.no')" value="PASAPORTE"></v-radio>
-              </v-radio-group>
+            <v-flex xs4>
+              <v-text-field
+                :label="$t('psicomotricity.drag')"
+                v-model="formularioRegistro.anamnesia.Arrastre"
+              ></v-text-field>
             </v-flex>
-            <v-flex xs3>
-              <v-radio-group v-model="formularioRegistro.standing" :label="$t('psicomotricity.standing')" :mandatory="true" column>
-                <v-radio :label="$t('common.yes')" value="CARNET_IDENTIDAD"></v-radio>
-                <v-radio :label="$t('common.no')" value="PASAPORTE"></v-radio>
-              </v-radio-group>
+            <v-flex xs4>
+              <v-text-field
+                :label="$t('psicomotricity.crawl')"
+                v-model="formularioRegistro.anamnesia.Gateo"
+              ></v-text-field>
             </v-flex>
-            <v-flex xs3>
-              <v-radio-group v-model="formularioRegistro.walk" :label="$t('psicomotricity.walk')" :mandatory="true" column>
-                <v-radio :label="$t('common.yes')" value="CARNET_IDENTIDAD"></v-radio>
-                <v-radio :label="$t('common.no')" value="PASAPORTE"></v-radio>
-              </v-radio-group>
+            <v-flex xs4>
+              <v-text-field
+                :label="$t('psicomotricity.standing')"
+                v-model="formularioRegistro.anamnesia.Bipedestación"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs4>
+              <v-text-field
+                :label="$t('psicomotricity.walk')"
+                v-model="formularioRegistro.anamnesia.Marcha"
+              ></v-text-field>
             </v-flex>
             <v-flex xs12>
               <v-textarea
                 :label="$t('psicomotricity.consultationReason')"
-                v-model="formularioRegistro.consultationReason"
-                :error="$v.formularioRegistro.consultationReason.$error"
-                @input="$v.formularioRegistro.consultationReason.$touch()"
-                :error-messages="errors.consultationReason"
+                v-model="formularioRegistro.anamnesia.postnatal"
+                :error="$v.formularioRegistro.observacionGrupoFamiliar.$error"
+                @input="$v.formularioRegistro.observacionGrupoFamiliar.$touch()"
+                :error-messages="errors.observacionGrupoFamiliar"
+                counter
               ></v-textarea>
             </v-flex>
           </v-layout>
         </v-container>
-      </form>
-    </v-card>
-    <v-card>
-      <form @submit.prevent="submit">
+      </v-card>
+      <v-card>
         <v-card-title class="headline">
-          <v-icon right>note_add</v-icon>
-          <h2 class="headline mb-0">{{$t('psicomotricity.psychomotorEvaluation')}}</h2>
+          <v-icon right>subject</v-icon>
+          <h2 class="headline mb-0">II. {{$t('psicomotricity.psicomotrizEvaluation')}}</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark color="primary" @click.native="psychomotorEvaluationDataPanel?minimize(3):maximize(3)">
-            <v-icon>{{psychomotorEvaluationDataPanel?"remove":"add"}}</v-icon>
+          <v-btn icon dark color="primary" @click.native="evaluationDataPanel?minimize(2):maximize(2)">
+            <v-icon>{{evaluationDataPanel?"remove":"add"}}</v-icon>
           </v-btn>
         </v-card-title>
-        <v-container fluid v-if="psychomotorEvaluationDataPanel">
+        <v-container fluid v-if="evaluationDataPanel">
           <v-layout row wrap>
-            <v-flex xs4>
-              <v-combobox
-                v-model="formularioRegistro.motor0a3"
-                :filter="filter"
-                :hide-no-data="!searchMotor0a3"
-                :items="itemsMotor0a3"
-                hide-selected
-                :label="$t('psicomotricity.motor')"
-                multiple
-                small-chips
-              >
-                <template v-slot:selection="{ item, parent, selected }">
-                  <v-chip
-                    v-if="item === Object(item)"
-                    :color="`${item.color} lighten-3`"
-                    :selected="selected"
-                    label
-                    small
-                  >
-                    <span class="pr-2">
-                      {{ item.text }}
-                    </span>
-                    <v-icon
-                      small
-                      @click="parent.selectItem(item)"
-                    >close</v-icon>
-                  </v-chip>
-                </template>
-                <template v-slot:item="{ index, item }">
-                  <v-list-tile-content>
-                    <v-chip
-                      :color="`${item.color} lighten-3`"
-                      dark
-                      label
-                      small
-                    >
-                      {{ item.text }}
-                    </v-chip>
-                  </v-list-tile-content>
-                </template>
-              </v-combobox>
+            <v-flex xs3>
+              Edad
             </v-flex>
-            <v-flex xs4>
-              <v-combobox
-                v-model="formularioRegistro.cognitive0a3"
-                :filter="filter"
-                :hide-no-data="!searchCognitive0a3"
-                :items="itemsCognitive0a3"
-                hide-selected
-                :label="$t('psicomotricity.cognitive')"
-                multiple
-                small-chips
-              >
-                <template v-slot:selection="{ item, parent, selected }">
-                  <v-chip
-                    v-if="item === Object(item)"
-                    :color="`${item.color} lighten-3`"
-                    :selected="selected"
-                    label
-                    small
-                  >
-                    <span class="pr-2">
-                      {{ item.text }}
-                    </span>
-                    <v-icon
-                      small
-                      @click="parent.selectItem(item)"
-                    >close</v-icon>
-                  </v-chip>
-                </template>
-                <template v-slot:item="{ index, item }">
-                  <v-list-tile-content>
-                    <v-chip
-                      :color="`${item.color} lighten-3`"
-                      dark
-                      label
-                      small
-                    >
-                      {{ item.text }}
-                    </v-chip>
-                  </v-list-tile-content>
-                </template>
-              </v-combobox>
+            <v-flex xs3>
+              Motor
             </v-flex>
-            <v-flex xs4>
-              <v-combobox
-                v-model="formularioRegistro.socioAfective0a3"
-                :filter="filter"
-                :hide-no-data="!searchSocioAfective0a3"
-                :items="itemsSocioAfective0a3"
-                hide-selected
-                :label="$t('psicomotricity.cognitive')"
-                multiple
-                small-chips
-              >
-                <template v-slot:selection="{ item, parent, selected }">
-                  <v-chip
-                    v-if="item === Object(item)"
-                    :color="`${item.color} lighten-3`"
-                    :selected="selected"
-                    label
-                    small
-                  >
-                    <span class="pr-2">
-                      {{ item.text }}
-                    </span>
-                    <v-icon
-                      small
-                      @click="parent.selectItem(item)"
-                    >close</v-icon>
-                  </v-chip>
-                </template>
-                <template v-slot:item="{ index, item }">
-                  <v-list-tile-content>
-                    <v-chip
-                      :color="`${item.color} lighten-3`"
-                      dark
-                      label
-                      small
-                    >
-                      {{ item.text }}
-                    </v-chip>
-                  </v-list-tile-content>
-                </template>
-              </v-combobox>
+            <v-flex xs3>
+              Cognitivo
+            </v-flex>
+            <v-flex xs3>
+              Socio - Afectivo
+            </v-flex>
+            <v-flex xs3>
+              0 - 3 meses
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.headUpright"
+                :label="$t('psicomotricity.headUpright')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.movesHead"
+                :label="$t('psicomotricity.movesHead')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.holdsObjects"
+                :label="$t('psicomotricity.holdsObjects')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.playsFeetAndHands"
+                :label="$t('psicomotricity.playsFeetAndHands')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.locateSounds"
+                :label="$t('psicomotricity.locateSounds')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.babbles"
+                :label="$t('psicomotricity.babbles')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.gutturalSounds"
+                :label="$t('psicomotricity.gutturalSounds')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.stimulusSmile"
+                :label="$t('psicomotricity.stimulusSmile')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.recognicesMother"
+                :label="$t('psicomotricity.recognicesMother')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.mouthSounds"
+                :label="$t('psicomotricity.mouthSounds')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              3 - 6 meses
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.liftHead"
+                :label="$t('psicomotricity.liftHead')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.ulnaChange"
+                :label="$t('psicomotricity.ulnaChange')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.picksCloseObjects"
+                :label="$t('psicomotricity.picksCloseObjects')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.makesSounds"
+                :label="$t('psicomotricity.makesSounds')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.callsForAttention"
+                :label="$t('psicomotricity.callsForAttention')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.repeatsSyllables"
+                :label="$t('psicomotricity.repeatsSyllables')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.smilesToExtrangers"
+                :label="$t('psicomotricity.smilesToExtrangers')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.recognicesCaretaker"
+                :label="$t('psicomotricity.recognicesCaretaker')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              6 - 9 meses
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.sitsWithoutSupport"
+                :label="$t('psicomotricity.sitsWithoutSupport')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.drags"
+                :label="$t('psicomotricity.drags')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.picksAndHitsObjects"
+                :label="$t('psicomotricity.picksAndHitsObjects')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.takesFoodToMouth"
+                :label="$t('psicomotricity.takesFoodToMouth')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.likesSongs"
+                :label="$t('psicomotricity.likesSongs')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.searchsSounds"
+                :label="$t('psicomotricity.searchsSounds')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.recognicesObjects"
+                :label="$t('psicomotricity.recognicesObjects')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.criesBeforeExtrangers"
+                :label="$t('psicomotricity.criesBeforeExtrangers')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.imitatesMovements"
+                :label="$t('psicomotricity.imitatesMovements')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              9 - 12 meses
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.sitsWithSupport"
+                :label="$t('psicomotricity.sitsWithSupport')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.crawl"
+                :label="$t('psicomotricity.crawl')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.discoversObjects"
+                :label="$t('psicomotricity.discoversObjects')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.walksWithSupport"
+                :label="$t('psicomotricity.walksWithSupport')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.wordsWithMeaning"
+                :label="$t('psicomotricity.wordsWithMeaning')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.embraceAdultChild"
+                :label="$t('psicomotricity.embraceAdultChild')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.answersToName"
+                :label="$t('psicomotricity.answersToName')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.meetsSimpleOrders"
+                :label="$t('psicomotricity.meetsSimpleOrders')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              24 - 30 meses
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.jumpsWithBothFeet"
+                :label="$t('psicomotricity.jumpsWithBothFeet')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.throwsBall"
+                :label="$t('psicomotricity.throwsBall')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.UndressHimself"
+                :label="$t('psicomotricity.UndressHimself')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.useForkCup"
+                :label="$t('psicomotricity.useForkCup')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.makesNounVerbPhrases"
+                :label="$t('psicomotricity.makesNounVerbPhrases')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.useNegatives"
+                :label="$t('psicomotricity.useNegatives')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.answerQuestions"
+                :label="$t('psicomotricity.answerQuestions')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.bigAndSmallDifferences"
+                :label="$t('psicomotricity.bigAndSmallDifferences')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.singChildrenSongs"
+                :label="$t('psicomotricity.singChildrenSongs')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.exploreEnvironment"
+                :label="$t('psicomotricity.exploreEnvironment')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.recognicesPhotographs"
+                :label="$t('psicomotricity.recognicesPhotographs')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.playsSmallGroups"
+                :label="$t('psicomotricity.playsSmallGroups')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.greetsOnCommand"
+                :label="$t('psicomotricity.greetsOnCommand')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              30 - 36 meses
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.performManualActivities"
+                :label="$t('psicomotricity.performManualActivities')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.runsJumps"
+                :label="$t('psicomotricity.runsJumps')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.copyLinesAndCircles"
+                :label="$t('psicomotricity.copyLinesAndCircles')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.identifiesEspatialConcepts"
+                :label="$t('psicomotricity.identifiesEspatialConcepts')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.acknowledgeHisSex"
+                :label="$t('psicomotricity.acknowledgeHisSex')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.gerundPluralArticleDifference"
+                :label="$t('psicomotricity.gerundPluralArticleDifference')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.articlePhonemes"
+                :label="$t('psicomotricity.articlePhonemes')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.gestureCommunication"
+                :label="$t('psicomotricity.gestureCommunication')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.talksFirstPerson"
+                :label="$t('psicomotricity.talksFirstPerson')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.useOralLanguage"
+                :label="$t('psicomotricity.useOralLanguage')"
+              ></v-checkbox>
+            </v-flex>
+            <v-flex xs3>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.showsPersonalPreferences"
+                :label="$t('psicomotricity.showsPersonalPreferences')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.likesChildAndAnimals"
+                :label="$t('psicomotricity.likesChildAndAnimals')"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="formularioRegistro.evaluacionPsicomotriz.joinsSmallTeams"
+                :label="$t('psicomotricity.joinsSmallTeams')"
+              ></v-checkbox>
             </v-flex>
           </v-layout>
         </v-container>
-        <v-card-actions>
-          <v-container fluid>
-            <v-layout row wrap>
-              <v-flex xs6>
-              </v-flex>
-              <v-flex xs3>
-                <v-btn class="seccion" dark @click.native="limpiarCampos()">{{$t('common.clear')}}
-                  <v-icon right>cached</v-icon>
-                </v-btn>
-              </v-flex>
-              <v-flex xs3>
-                <v-btn class="primary" dark type="submit">{{$t('common.save')}}
-                  <v-icon right>done</v-icon>
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-actions>
-      </form>
-    </v-card>
+      </v-card>
+      <!-- <v-card-actions>
+        <v-container fluid>
+          <v-layout row wrap>
+            <v-spacer></v-spacer>
+            <v-flex xs3>
+              <v-btn class="seccion" block dark @click.native="limpiarCampos()">{{$t('common.clear')}}
+                <v-icon right>cached</v-icon>
+              </v-btn>
+            </v-flex>
+            <v-flex xs3>
+              <v-btn class="primary" block dark type="submit">{{$t('common.save')}}
+                <v-icon right>done</v-icon>
+              </v-btn>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card-actions> -->
+    </form>
   </div>
-
 </template>
 
 <script>
   import { required } from 'vuelidate/lib/validators';
   import errorsHandler from '@/common/mixins/errorsHandler';
+  import FamilyMember from '@/common/util/FamilyMember.vue';
+  import StudentData from '@/common/util/StudentData.vue';
   import Comps from '../comps';
   /* eslint-disable semi */
   export default {
@@ -342,134 +490,204 @@
     data () {
       return {
         headers: {'access-token': '<your-token>'},
-        generalDataPanel: true,
-        parentsDataPanel: true,
-        backgroundDataPanel: true,
-        psychomotorEvaluationDataPanel: true,
+        anamnesisDataPanel: true,
+        evaluationDataPanel: true,
+        fechaCreacion: new Date(),
         datosEstudiante: {},
-        padres: [],
         formularioRegistro: {
-          perinatal: '',
-          prenatal: '',
-          postnatal: '',
-          consultationReason: '',
-          motor0a3: [],
-          cognitive0a3: [],
-          socioAfective0a3: []
+          anamnesia: {
+            antecedentesFamiliares: '',
+            antecedentesPatologicos: '',
+            perinatal: '',
+            prenatal: '',
+            postnatal: '',
+            controlCefálico: '',
+            Sedestación: '',
+            Arrastre: '',
+            Gateo: '',
+            Bipedestación: '',
+            Marcha: ''
+          },
+          evaluacionPsicomotriz: {
+            headUpright: false,
+            movesHead: false,
+            holdsObjects: false,
+            playsFeetAndHands: false,
+            locateSounds: false,
+            babbles: false,
+            gutturalSounds: false,
+            stimulusSmile: false,
+            recognicesMother: false,
+            mouthSounds: false,
+            liftHead: false,
+            ulnaChange: false,
+            picksCloseObjects: false,
+            makesSounds: false,
+            callsForAttention: false,
+            repeatsSyllables: false,
+            smilesToExtrangers: false,
+            recognicesCaretaker: false,
+            sitsWithoutSupport: false,
+            drags: false,
+            picksAndHitsObjects: false,
+            takesFoodToMouth: false,
+            likesSongs: false,
+            searchsSounds: false,
+            recognicesObjects: false,
+            criesBeforeExtrangers: false,
+            imitatesMovements: false,
+            sitsWithSupport: false,
+            crawl: false,
+            discoversObjects: false,
+            walksWithSupport: false,
+            wordsWithMeaning: false,
+            embraceAdultChild: false,
+            answersToName: false,
+            meetsSimpleOrders: false,
+            jumpsWithBothFeet: false,
+            throwsBall: false,
+            UndressHimself: false,
+            useForkCup: false,
+            makesNounVerbPhrases: false,
+            useNegatives: false,
+            answerQuestions: false,
+            bigAndSmallDifferences: false,
+            singChildrenSongs: false,
+            exploreEnvironment: false,
+            recognicesPhotographs: false,
+            playsSmallGroups: false,
+            greetsOnCommand: false,
+            performManualActivities: false,
+            runsJumps: false,
+            copyLinesAndCircles: false,
+            identifiesEspatialConcepts: false,
+            acknowledgeHisSex: false,
+            gerundPluralArticleDifference: false,
+            articlePhonemes: false,
+            gestureCommunication: false,
+            talksFirstPerson: false,
+            useOralLanguage: false,
+            showsPersonalPreferences: false,
+            likesChildAndAnimals: false,
+            joinsSmallTeams: false
+          }
         },
         errors: {
-          perinatal: [],
-          prenatal: [],
-          postnatal: [],
-          consultationReason: []
+          tipoDeFamiliaObject: [],
+          observacionGrupoFamiliar: [],
+          dinamicaFamiliar: [],
+          procesoSocial: [],
+          relatoDiscapacidad: [],
+          diagnosticoSocial: [],
+          conclusionSugerencia: []
         },
-        // ComboBox
         colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
-        index: -1,
-        itemsMotor0a3: [
-          { header: this.$t('account.select') },
+        nonce: 1,
+        familyTypeItems: [
+          { header: this.$t('socialWork.selectOrCreate') },
           {
-            text: 'Cabeza erguida',
+            text: 'Nuclear',
             color: 'blue'
           },
           {
-            text: 'Mueve la cabeza',
+            text: 'Monoparental',
             color: 'red'
           },
           {
-            text: 'Sostiene objetos',
-            color: 'green'
-          },
-          {
-            text: 'Juega con pies y manos',
+            text: 'Extensa',
             color: 'orange'
-          }
-        ],
-        itemsCognitive0a3: [
-          { header: this.$t('account.select') },
-          {
-            text: 'Localiza sonidos',
-            color: 'blue'
           },
           {
-            text: 'Balbucea',
-            color: 'red'
-          },
-          {
-            text: 'Realiza sonidos guturales',
+            text: 'Reconstituida',
             color: 'green'
           }
         ],
-        itemsSocioAfective0a3: [
-          { header: this.$t('account.select') },
-          {
-            text: 'Sonrie a un estímulo',
-            color: 'blue'
-          },
-          {
-            text: 'Reconoce a la madre',
-            color: 'red'
-          },
-          {
-            text: 'Emite sonidos bucales',
-            color: 'green'
-          }
-        ],
-        searchMotor0a3: null,
-        searchCognitive0a3: null,
-        searchSocioAfective0a3: null
+        familyTypeSearch: null
       }
     },
     components: {
+      'family-members': FamilyMember,
+      'student-data': StudentData
     },
     watch: {
-      '$v.formularioRegistro.perinatal.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.perinatal, this.errors.perinatal);
+      'formularioRegistro.tipoDeFamiliaObject': function (val, prev) {
+        if (typeof this.formularioRegistro.tipoDeFamiliaObject === 'string') {
+          this.formularioRegistro.tipoDeFamiliaObject = {
+            text: this.formularioRegistro.tipoDeFamiliaObject,
+            color: this.colors[this.nonce - 1]
+          };
+          this.familyTypeItems.push(this.formularioRegistro.tipoDeFamilia);
+          this.nonce++;
+        }
+        // this.formRelative.civil_state = this.formularioRegistro.tipoDeFamilia.text;
+        return this.formularioRegistro.tipoDeFamiliaObject;
       },
-      '$v.formularioRegistro.prenatal.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.prenatal, this.errors.prenatal);
+      '$v.formularioRegistro.tipoDeFamiliaObject.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.tipoDeFamiliaObject, this.errors.tipoDeFamiliaObject);
       },
-      '$v.formularioRegistro.postnatal.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.postnatal, this.errors.postnatal);
+      '$v.formularioRegistro.observacionGrupoFamiliar.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.observacionGrupoFamiliar, this.errors.observacionGrupoFamiliar);
       },
-      '$v.formularioRegistro.consultationReason.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.consultationReason, this.errors.consultationReason);
+      '$v.formularioRegistro.dinamicaFamiliar.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.dinamicaFamiliar, this.errors.dinamicaFamiliar);
+      },
+      '$v.formularioRegistro.procesoSocial.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.procesoSocial, this.errors.procesoSocial);
+      },
+      '$v.formularioRegistro.relatoDiscapacidad.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.relatoDiscapacidad, this.errors.relatoDiscapacidad);
+      },
+      '$v.formularioRegistro.diagnosticoSocial.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.diagnosticoSocial, this.errors.diagnosticoSocial);
+      },
+      '$v.formularioRegistro.conclusionSugerencia.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.conclusionSugerencia, this.errors.conclusionSugerencia);
       }
     },
     created () {
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
+      if (this.$route.query.registro) {
+        const socialWorkAux = this.$store.state.socialWorkRegisterEdit.registro_eval_trabajo_social;
+        this.formularioRegistro = {
+          tipoDeFamilia: socialWorkAux.tipo_de_familia ? socialWorkAux.tipo_de_familia : null,
+          tipoDeFamiliaObject: socialWorkAux.tipo_de_familia ? {
+            text: socialWorkAux.tipo_de_familia,
+            color: this.colors[this.nonce - 1]} : null,
+          observacionGrupoFamiliar: socialWorkAux.observacion_grupo_familiar ? socialWorkAux.observacion_grupo_familiar : null,
+          dinamicaFamiliar: socialWorkAux.dinamica_familiar ? socialWorkAux.dinamica_familiar : null,
+          procesoSocial: socialWorkAux.proceso_social ? socialWorkAux.proceso_social : null,
+          relatoDiscapacidad: socialWorkAux.relato_discapacidad ? socialWorkAux.relato_discapacidad : null,
+          diagnosticoSocial: socialWorkAux.diagnostico_social ? socialWorkAux.diagnostico_social : null,
+          conclusionSugerencia: socialWorkAux.conclusion_sugerencia ? socialWorkAux.conclusion_sugerencia : null
+        }
+        // this.fechaCreacion = this.$store.state.socialWorkRegisterEdit._fecha_creacion;
+      }
     },
     validations: {
       formularioRegistro: {
-        perinatal: {
+        tipoDeFamiliaObject: {
           required
         },
-        prenatal: {
-          required
-        },
-        postnatal: {
-          required
-        },
-        consultationReason: {
-          required
-        }
+        observacionGrupoFamiliar: {},
+        dinamicaFamiliar: {},
+        procesoSocial: {},
+        relatoDiscapacidad: {},
+        diagnosticoSocial: {},
+        conclusionSugerencia: {}
       }
     },
     methods: {
       minimize (cardNumber) {
         switch (cardNumber) {
-          case 0:
-            this.generalDataPanel = false;
-            break;
           case 1:
-            this.parentsDataPanel = false;
+            this.anamnesisDataPanel = false;
             break;
           case 2:
-            this.backgroundDataPanel = false;
+            this.evaluationDataPanel = false;
             break;
           case 3:
-            this.psychomotorEvaluationDataPanel = false;
+            this.socialDataPanel = false;
             break;
           default:
             break;
@@ -477,55 +695,86 @@
       },
       maximize (cardNumber) {
         switch (cardNumber) {
-          case 0:
-            this.generalDataPanel = true;
-            break;
           case 1:
-            this.parentsDataPanel = true;
+            this.anamnesisDataPanel = true;
             break;
           case 2:
-            this.backgroundDataPanel = true;
+            this.evaluation = true;
             break;
           case 3:
-            this.psychomotorEvaluationDataPanel = true;
+            this.socialDataPanel = true;
             break;
           default:
             break;
         }
       },
-      submit () { // Envía datos de la nueva asignación
-        this.$v.formularioRegistro.$touch();
-        if (!this.$v.formularioRegistro.$invalid) {
-          this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
-          this.$service.post(`registroSimple`, this.formularioRegistro)
-          .then(respuesta => {
-            this.dialogAsignacionCurso = false
-            this.limpiarCampos();
-            this.$message.success('Registro creado exitosamente');
-            this.$router.push('registrosArchivados');
-          })
-          .catch(() => {
-            this.$message.error('Error an la creación del registro');
-          });
-        }
+      getDate (dateString) {
+        let date = dateString ? new Date(dateString) : new Date();
+        return (date.getDate() + ' - ' + this.$t('months[' + date.getMonth() + ']') + ' - ' + date.getFullYear());
       },
       filter (item, queryText, itemText) {
-        if (item.header) return false
+        if (item.header) return false;
 
-        const hasValue = val => val != null ? val : ''
+        const hasValue = val => val != null ? val : '';
 
-        const text = hasValue(itemText)
-        const query = hasValue(queryText)
+        const text = hasValue(itemText);
+        const query = hasValue(queryText);
 
         return text.toString()
           .toLowerCase()
-          .indexOf(query.toString().toLowerCase()) > -1
+          .indexOf(query.toString().toLowerCase()) > -1;
+      },
+      submit () { // Envía datos de la nueva asignación
+        this.$v.formularioRegistro.$touch();
+        if (!this.$v.formularioRegistro.$invalid) {
+          this.formularioRegistro.tipoDeFamilia = this.formularioRegistro.tipoDeFamiliaObject.text;
+          if (this.$route.query.registro) {
+            // Edita registro Simple
+            this.formularioRegistro.idRegistro = this.$route.query.registro;
+            this.formularioRegistro.idRegistroTrabajoSocial = this.$store.state.socialWorkRegisterEdit.registro_eval_trabajo_social.id_registro_eval_trabajo_social;
+            this.$service.put(`registroEvalTrabajoSocial`, this.formularioRegistro)
+            .then(respuesta => {
+              if (respuesta !== undefined) {
+                this.limpiarCampos();
+                this.$message.success(this.$t('generalFollowUp.registerEditionSuccessfull'));
+                this.$router.push('registrosArchivados');
+              } else {
+                this.$message.error(this.$t('generalFollowUp.registerEditionUnsuccessfull'));
+              }
+            })
+            .catch(() => {
+              this.$message.error(this.$t('generalFollowUp.registerEditionUnsuccessfull'));
+            });
+          } else {
+            // Crea registro simple
+            this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
+            this.$service.post(`registroEvalTrabajoSocial`, this.formularioRegistro)
+            .then(respuesta => {
+              if (respuesta !== undefined) {
+                this.limpiarCampos();
+                this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+                this.$router.push('registrosArchivados');
+              } else {
+                this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+              }
+            })
+            .catch(() => {
+              this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+            });
+          }
+        } else {
+          this.$message.error(this.$t('usuarios.errorFillForm'));
+        }
       },
       limpiarCampos () {
-        this.formularioRegistro.perinatal = '';
-        this.formularioRegistro.prenatal = '';
-        this.formularioRegistro.postnatal = '';
-        this.formularioRegistro.consultationReason = '';
+        this.formularioRegistro.tipoDeFamilia = '';
+        this.formularioRegistro.tipoDeFamiliaObject = {};
+        this.formularioRegistro.observacionGrupoFamiliar = '';
+        this.formularioRegistro.dinamicaFamiliar = '';
+        this.formularioRegistro.procesoSocial = '';
+        this.formularioRegistro.relatoDiscapacidad = '';
+        this.formularioRegistro.diagnosticoSocial = '';
+        this.formularioRegistro.conclusionSugerencia = '';
       },
       cerrarCarpeta (userData) {
         if (this.$storage.exist('menu')) {

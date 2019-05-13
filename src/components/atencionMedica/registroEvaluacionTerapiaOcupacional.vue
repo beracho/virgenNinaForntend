@@ -16,7 +16,7 @@
       <v-card>
         <v-card-title class="headline">
           <v-icon right>subject</v-icon>
-          <h2 class="headline mb-0">{{$t('occupationalTherapy.avd')}}</h2>
+          <h2 class="headline mb-0">I. {{$t('occupationalTherapy.avd')}}</h2>
           <v-spacer></v-spacer>
           <v-btn icon dark color="primary" @click.native="avdDataPanel?minimize(1):maximize(1)">
             <v-icon>{{avdDataPanel?"remove":"add"}}</v-icon>
@@ -134,7 +134,7 @@
       <v-card>
         <v-card-title class="headline">
           <v-icon right>subject</v-icon>
-          <h2 class="headline mb-0">{{$t('occupationalTherapy.comunicacionSocialCognitivo')}}</h2>
+          <h2 class="headline mb-0">II. {{$t('occupationalTherapy.comunicacionSocialCognitivo')}}</h2>
           <v-spacer></v-spacer>
           <v-btn icon dark color="primary" @click.native="avdDataPanel?minimize(2):maximize(2)">
             <v-icon>{{avdDataPanel?"remove":"add"}}</v-icon>
@@ -304,7 +304,7 @@
       <v-card>
         <v-card-title class="headline">
           <v-icon right>subject</v-icon>
-          <h2 class="headline mb-0">{{$t('occupationalTherapy.functionalMovility')}}</h2>
+          <h2 class="headline mb-0">III. {{$t('occupationalTherapy.functionalMovility')}}</h2>
           <v-spacer></v-spacer>
           <v-btn icon dark color="primary" @click.native="physicalExamDataPanel?minimize(3):maximize(3)">
             <v-icon>{{physicalExamDataPanel?"remove":"add"}}</v-icon>
@@ -397,7 +397,7 @@
       <v-card>
         <v-card-title class="headline">
           <v-icon right>subject</v-icon>
-          <h2 class="headline mb-0">{{$t('occupationalTherapy.manualFunction')}}</h2>
+          <h2 class="headline mb-0">IV. {{$t('occupationalTherapy.manualFunction')}}</h2>
           <v-spacer></v-spacer>
           <v-btn icon dark color="primary" @click.native="manualFunctionDataPanel?minimize(4):maximize(4)">
             <v-icon>{{manualFunctionDataPanel?"remove":"add"}}</v-icon>
@@ -547,7 +547,7 @@
       <v-card>
         <v-card-title class="headline">
           <v-icon right>subject</v-icon>
-          <h2 class="headline mb-0">{{$t('occupationalTherapy.architecturalBarriers')}}</h2>
+          <h2 class="headline mb-0">V. {{$t('occupationalTherapy.architecturalBarriers')}}</h2>
           <v-spacer></v-spacer>
           <v-btn icon dark color="primary" @click.native="barriersFunctionDataPanel?minimize(5):maximize(5)">
             <v-icon>{{barriersFunctionDataPanel?"remove":"add"}}</v-icon>
@@ -570,7 +570,7 @@
       <v-card>
         <v-card-title class="headline">
           <v-icon right>subject</v-icon>
-          <h2 class="headline mb-0">{{$t('occupationalTherapy.interventionObjectives')}}</h2>
+          <h2 class="headline mb-0">VI. {{$t('occupationalTherapy.interventionObjectives')}}</h2>
           <v-spacer></v-spacer>
           <v-btn icon dark color="primary" @click.native="objectivesFunctionDataPanel?minimize(6):maximize(6)">
             <v-icon>{{objectivesFunctionDataPanel?"remove":"add"}}</v-icon>
