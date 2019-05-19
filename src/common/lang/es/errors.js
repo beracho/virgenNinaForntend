@@ -34,6 +34,7 @@ export default {
   'wrongFormat': 'Formato incorrecto, revisar las instrucciones.',
   'noCsvSent': 'No se encontraron los datos relacionados al archivo.',
   'notACsvFile': 'El archivo enviado no se encuentra en formato CSV, leer las instrucciones.',
+  'incorrectNumberOfColumns': 'Número de columnas incorrecto',
   // Menu de cursos
   'courseNameRepeated': 'Nombre del curso repetido.',
   'invalidParalelFormat': 'Formato de paralelo incorrecto.',
