@@ -130,14 +130,14 @@
                 :label="$t('physiotherapy.birthTipe')"
                 v-model="formularioRegistro.antecedentesGestacionales.tipoParto">
                 <v-radio
-                  key="initial"
+                  key="cesarean"
                   :label="$t('physiotherapy.cesarean')"
-                  value="initial"
+                  value="cesarean"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="eutocic"
                   :label="$t('physiotherapy.eutocic')"
-                  value="elementary"
+                  value="eutocic"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -203,14 +203,14 @@
                 :label="$t('physiotherapy.cry')"
                 v-model="formularioRegistro.antecedentesGestacionales.llanto">
                 <v-radio
-                  key="initial"
+                  key="immediate"
                   :label="$t('physiotherapy.immediate')"
-                  value="initial"
+                  value="immediate"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="belated"
                   :label="$t('physiotherapy.belated')"
-                  value="elementary"
+                  value="belated"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -730,19 +730,19 @@
                 :label="$t('psicomotricity.bodyOutline')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.esquemaCorporal">
                 <v-radio
-                  key="initial"
+                  key="structured"
                   :label="$t('physiotherapy.structured')"
-                  value="initial"
+                  value="structured"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="inProgress"
                   :label="$t('physiotherapy.inProgress')"
-                  value="elementary"
+                  value="inProgress"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -758,19 +758,19 @@
                 :label="$t('psicomotricity.bodyImage')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.imagenCorporal">
                 <v-radio
-                  key="initial"
+                  key="structured"
                   :label="$t('physiotherapy.structured')"
-                  value="initial"
+                  value="structured"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="inProgress"
                   :label="$t('physiotherapy.inProgress')"
-                  value="elementary"
+                  value="inProgress"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -786,19 +786,19 @@
                 :label="$t('physiotherapy.corporalConcept')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.conceptoCorporal">
                 <v-radio
-                  key="initial"
+                  key="structured"
                   :label="$t('physiotherapy.structured')"
-                  value="initial"
+                  value="structured"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="inProgress"
                   :label="$t('physiotherapy.inProgress')"
-                  value="elementary"
+                  value="inProgress"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -814,19 +814,19 @@
                 :label="$t('physiotherapy.spatialEstructuration')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.estructuracionEspacial">
                 <v-radio
-                  key="initial"
+                  key="structured"
                   :label="$t('physiotherapy.structured')"
-                  value="initial"
+                  value="structured"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="inProgress"
                   :label="$t('physiotherapy.inProgress')"
-                  value="elementary"
+                  value="inProgress"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -842,19 +842,19 @@
                 :label="$t('physiotherapy.temporalEstructuration')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.estructuracionTemporal">
                 <v-radio
-                  key="initial"
+                  key="structured"
                   :label="$t('physiotherapy.structured')"
-                  value="initial"
+                  value="structured"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="inProgress"
                   :label="$t('physiotherapy.inProgress')"
-                  value="elementary"
+                  value="inProgress"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -870,19 +870,19 @@
                 :label="$t('psicomotricity.staticBalance')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.equilibrioEstatico">
                 <v-radio
-                  key="initial"
+                  key="good"
                   :label="$t('physiotherapy.good')"
-                  value="initial"
+                  value="good"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="elementary"
+                  value="deficient"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -898,19 +898,19 @@
                 :label="$t('physiotherapy.dinamicBalance')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.equilibrioDinamico">
                 <v-radio
-                  key="initial"
+                  key="good"
                   :label="$t('physiotherapy.good')"
-                  value="initial"
+                  value="good"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="elementary"
+                  value="deficient"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -926,19 +926,19 @@
                 :label="$t('physiotherapy.thickCoordination')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.coordinacionGruesa">
                 <v-radio
-                  key="initial"
+                  key="good"
                   :label="$t('physiotherapy.good')"
-                  value="initial"
+                  value="good"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="elementary"
+                  value="deficient"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -954,19 +954,19 @@
                 :label="$t('physiotherapy.thinCoordination')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.coordinacionFina">
                 <v-radio
-                  key="initial"
+                  key="good"
                   :label="$t('physiotherapy.good')"
-                  value="initial"
+                  value="good"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="elementary"
+                  value="deficient"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -982,19 +982,19 @@
                 :label="$t('physiotherapy.eyeHandCoordination')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.coordinacionOjoMano">
                 <v-radio
-                  key="initial"
+                  key="good"
                   :label="$t('physiotherapy.good')"
-                  value="initial"
+                  value="good"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="elementary"
+                  value="deficient"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1010,19 +1010,19 @@
                 :label="$t('physiotherapy.eyeFeetCoordination')"
                 v-model="formularioRegistro.evaluacionPsicomotriz.coordinacionOjoPie">
                 <v-radio
-                  key="initial"
+                  key="good"
                   :label="$t('physiotherapy.good')"
-                  value="initial"
+                  value="good"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="elementary"
+                  value="deficient"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1119,19 +1119,19 @@
                 :label="$t('physiotherapy.hygiene')"
                 v-model="formularioRegistro.actividadesVidaDiaria.higiene">
                 <v-radio
-                  key="initial"
+                  key="independent"
                   :label="$t('physiotherapy.independent')"
-                  value="initial"
+                  value="independent"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="withHelp"
                   :label="$t('physiotherapy.withHelp')"
-                  value="elementary"
+                  value="withHelp"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="dependent"
                   :label="$t('physiotherapy.dependent')"
-                  value="mature"
+                  value="dependent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1147,19 +1147,19 @@
                 :label="$t('physiotherapy.feeding')"
                 v-model="formularioRegistro.actividadesVidaDiaria.alimentacion">
                 <v-radio
-                  key="initial"
+                  key="independent"
                   :label="$t('physiotherapy.independent')"
-                  value="initial"
+                  value="independent"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="withHelp"
                   :label="$t('physiotherapy.withHelp')"
-                  value="elementary"
+                  value="withHelp"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="dependent"
                   :label="$t('physiotherapy.dependent')"
-                  value="mature"
+                  value="dependent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1175,19 +1175,19 @@
                 :label="$t('physiotherapy.clothing')"
                 v-model="formularioRegistro.actividadesVidaDiaria.vestimenta">
                 <v-radio
-                  key="initial"
+                  key="independent"
                   :label="$t('physiotherapy.independent')"
-                  value="initial"
+                  value="independent"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="withHelp"
                   :label="$t('physiotherapy.withHelp')"
-                  value="elementary"
+                  value="withHelp"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="dependent"
                   :label="$t('physiotherapy.dependent')"
-                  value="mature"
+                  value="dependent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1217,19 +1217,19 @@
                 :label="$t('physiotherapy.affectivePattern')"
                 v-model="formularioRegistro.areaSocioAfectiva.muestrasAfectivas">
                 <v-radio
-                  key="initial"
+                  key="present"
                   :label="$t('physiotherapy.present')"
-                  value="initial"
+                  value="present"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="elementary"
+                  value="absent"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="mature"
+                  value="deficient"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1245,19 +1245,19 @@
                 :label="$t('physiotherapy.oralCommunication')"
                 v-model="formularioRegistro.areaSocioAfectiva.comunicacionOral">
                 <v-radio
-                  key="initial"
+                  key="present"
                   :label="$t('physiotherapy.present')"
-                  value="initial"
+                  value="present"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="elementary"
+                  value="absent"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="mature"
+                  value="deficient"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1273,19 +1273,19 @@
                 :label="$t('physiotherapy.alternateCommunication')"
                 v-model="formularioRegistro.areaSocioAfectiva.comunicacionAlternativa">
                 <v-radio
-                  key="initial"
+                  key="present"
                   :label="$t('physiotherapy.present')"
-                  value="initial"
+                  value="present"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="elementary"
+                  value="absent"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="mature"
+                  value="deficient"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1301,19 +1301,19 @@
                 :label="$t('physiotherapy.socialRelationship')"
                 v-model="formularioRegistro.areaSocioAfectiva.relacionamientoSocial">
                 <v-radio
-                  key="initial"
+                  key="present"
                   :label="$t('physiotherapy.present')"
-                  value="initial"
+                  value="present"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="elementary"
+                  value="absent"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="deficient"
                   :label="$t('physiotherapy.deficient')"
-                  value="mature"
+                  value="deficient"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1343,24 +1343,24 @@
                 :label="$t('psicomotricity.cognitiveArea')"
                 v-model="formularioRegistro.areaCognitiva">
                 <v-radio
-                  key="initial"
+                  key="collaborate"
                   :label="$t('physiotherapy.collaborate')"
-                  value="initial"
+                  value="collaborate"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="doesntCollaborate"
                   :label="$t('physiotherapy.doesntCollaborate')"
-                  value="elementary"
+                  value="doesntCollaborate"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="understand"
                   :label="$t('physiotherapy.understand')"
-                  value="mature"
+                  value="understand"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="doesntUnderstand"
                   :label="$t('physiotherapy.doesntUnderstand')"
-                  value="mature"
+                  value="doesntUnderstand"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1389,19 +1389,19 @@
                 :label="$t('physiotherapy.vision')"
                 v-model="formularioRegistro.alteracionesAsociadas.vision">
                 <v-radio
-                  key="initial"
+                  key="normal"
                   :label="$t('physiotherapy.normal')"
-                  value="initial"
+                  value="normal"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="altered"
                   :label="$t('physiotherapy.altered')"
-                  value="elementary"
+                  value="altered"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="mature"
+                  value="absent"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1417,19 +1417,19 @@
                 :label="$t('physiotherapy.audition')"
                 v-model="formularioRegistro.alteracionesAsociadas.audicion">
                 <v-radio
-                  key="initial"
+                  key="normal"
                   :label="$t('physiotherapy.normal')"
-                  value="initial"
+                  value="normal"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="hearingLoss"
                   :label="$t('physiotherapy.hearingLoss')"
-                  value="elementary"
+                  value="hearingLoss"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="deafness"
                   :label="$t('physiotherapy.deafness')"
-                  value="mature"
+                  value="deafness"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1445,29 +1445,29 @@
                 :label="$t('occupationalTherapy.language')"
                 v-model="formularioRegistro.alteracionesAsociadas.lenguaje">
                 <v-radio
-                  key="initial"
+                  key="normal"
                   :label="$t('physiotherapy.normal')"
-                  value="initial"
+                  value="normal"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="understandable"
                   :label="$t('physiotherapy.understandable')"
-                  value="elementary"
+                  value="understandable"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="notUnderstandable"
                   :label="$t('physiotherapy.notUnderstandable')"
-                  value="mature"
+                  value="notUnderstandable"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="elementary"
+                  value="absent"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="alternative"
                   :label="$t('physiotherapy.alternative')"
-                  value="mature"
+                  value="alternative"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1483,29 +1483,29 @@
                 :label="$t('physiotherapy.convulsiveSyndrome')"
                 v-model="formularioRegistro.alteracionesAsociadas.sindromeConvulsivo">
                 <v-radio
-                  key="initial"
+                  key="absent"
                   :label="$t('physiotherapy.absent')"
-                  value="initial"
+                  value="absent"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="present"
                   :label="$t('physiotherapy.present')"
-                  value="elementary"
+                  value="present"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="withTreatment"
                   :label="$t('physiotherapy.withTreatment')"
-                  value="mature"
+                  value="withTreatment"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="withoutTreatment"
                   :label="$t('physiotherapy.withoutTreatment')"
-                  value="mature"
+                  value="withoutTreatment"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="type"
                   :label="$t('physiotherapy.type')"
-                  value="mature"
+                  value="type"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1521,19 +1521,19 @@
                 :label="$t('physiotherapy.longTermMemory')"
                 v-model="formularioRegistro.alteracionesAsociadas.memoriaLargoPlazo">
                 <v-radio
-                  key="initial"
+                  key="good"
                   :label="$t('physiotherapy.good')"
-                  value="initial"
+                  value="good"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="regular"
                   :label="$t('physiotherapy.regular')"
-                  value="elementary"
+                  value="regular"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="bad"
                   :label="$t('physiotherapy.bad')"
-                  value="mature"
+                  value="bad"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1549,19 +1549,19 @@
                 :label="$t('physiotherapy.shortTermMemory')"
                 v-model="formularioRegistro.alteracionesAsociadas.memoriaCortoPlazo">
                 <v-radio
-                  key="initial"
+                  key="good"
                   :label="$t('physiotherapy.good')"
-                  value="initial"
+                  value="good"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="regular"
                   :label="$t('physiotherapy.regular')"
-                  value="elementary"
+                  value="regular"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="bad"
                   :label="$t('physiotherapy.bad')"
-                  value="mature"
+                  value="bad"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1577,24 +1577,24 @@
                 :label="$t('physiotherapy.emotionalStatus')"
                 v-model="formularioRegistro.alteracionesAsociadas.estadoEmocional">
                 <v-radio
-                  key="initial"
+                  key="stable"
                   :label="$t('physiotherapy.stable')"
-                  value="initial"
+                  value="stable"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="quiet"
                   :label="$t('physiotherapy.quiet')"
-                  value="elementary"
+                  value="quiet"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="changing"
                   :label="$t('physiotherapy.changing')"
-                  value="mature"
+                  value="changing"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="aggressive"
                   :label="$t('physiotherapy.aggressive')"
-                  value="mature"
+                  value="aggressive"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1610,24 +1610,24 @@
                 :label="$t('physiotherapy.nutritionalStatus')"
                 v-model="formularioRegistro.alteracionesAsociadas.estadoNutricional">
                 <v-radio
-                  key="initial"
+                  key="normal"
                   :label="$t('physiotherapy.normal')"
-                  value="initial"
+                  value="normal"
                 ></v-radio>
                 <v-radio
-                  key="initial"
+                  key="overweight"
                   :label="$t('physiotherapy.overweight')"
-                  value="initial"
+                  value="overweight"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="obesity"
                   :label="$t('physiotherapy.obesity')"
-                  value="elementary"
+                  value="obesity"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="undernourished"
                   :label="$t('physiotherapy.undernourished')"
-                  value="mature"
+                  value="undernourished"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1643,19 +1643,19 @@
                 :label="$t('physiotherapy.sensitivity')"
                 v-model="formularioRegistro.alteracionesAsociadas.sensibilidad">
                 <v-radio
-                  key="initial"
+                  key="normal"
                   :label="$t('physiotherapy.normal')"
-                  value="initial"
+                  value="normal"
                 ></v-radio>
                 <v-radio
-                  key="elementary"
+                  key="hyposensitive"
                   :label="$t('physiotherapy.hyposensitive')"
-                  value="elementary"
+                  value="hyposensitive"
                 ></v-radio>
                 <v-radio
-                  key="mature"
+                  key="hypersensitive"
                   :label="$t('physiotherapy.hypersensitive')"
-                  value="mature"
+                  value="hypersensitive"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
