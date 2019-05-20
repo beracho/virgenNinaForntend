@@ -9,6 +9,7 @@ import AppNotFound from '@/common/layout/pages/AppNotFound';
 import AppForbidden from '@/common/layout/pages/AppForbidden';
 import AppError from '@/common/layout/pages/AppError';
 import Usuario from '@/components/admin/usuario/Usuario';
+import Configuracion from '@/components/admin/usuario/Configuracion';
 import ConfirmarCuenta from '@/components/admin/account/confirmarCuenta';
 import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
 import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
@@ -61,6 +62,11 @@ export default new VueRouter({
       path: '/usuarios',
       name: 'Usuario',
       component: Usuario
+    },
+    {
+      path: '/configuracion',
+      name: 'Configuracion',
+      component: Configuracion
     },
     {
       path: '/confirmarCuenta',
