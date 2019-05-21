@@ -33,7 +33,8 @@
                 </template>
                 <v-date-picker 
                   v-model="datosConsulta.fechaInicial" 
-                  locale="es" 
+                  locale="es"
+                  :allowed-dates="fechaInicialValida"
                   no-title scrollable actions>
                   <v-spacer></v-spacer>
                   <v-btn flat color="primary" @click="fechaInicio = false">{{$t('common.cancel')}}</v-btn>
@@ -67,9 +68,10 @@
                 <v-date-picker 
                   v-model="datosConsulta.fechaFinal" 
                   locale="es" 
+                  :allowed-dates="fechaFinalValida"
                   no-title scrollable actions>
                   <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="fechaInicio = false">{{$t('common.cancel')}}</v-btn>
+                  <v-btn flat color="primary" @click="fechaFinal = false">{{$t('common.cancel')}}</v-btn>
                   <v-btn flat color="primary" @click="$refs.menu.save(datosConsulta.fechaFinal)">{{$t('common.accept')}}</v-btn>
                 </v-date-picker>
               </v-menu>
@@ -210,10 +212,11 @@ export default {
   },
   data () {
     return {
+      headers: '',
       fechaInicio: false,
       fechaFinal: false,
       familyTypeSearch: null,
-      colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
+      colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange', 'pink', 'blue', 'red'],
       nonce: 1,
       areaItems: [
         { header: this.$t('socialWork.selectOrCreate') },
@@ -243,7 +246,7 @@ export default {
         },
         {
           text: this.$t('areas.phonoaudiology'),
-          color: 'blue'
+          color: 'teal'
         },
         {
           text: this.$t('areas.nutrition'),
@@ -259,7 +262,7 @@ export default {
         fechaInicial: '',
         fechaFinal: '',
         tipoInforme: 'followUp',
-        area: '',
+        area: [],
         frecuencia: ''
       },
       errors: {
@@ -272,15 +275,59 @@ export default {
   },
   mounted () {
     this.fillData();
+    this.datosConsulta.fechaFinal = this.dateFormat();
+    var d = new Date();
+    d.setDate(d.getDate() - 6);
+    this.datosConsulta.fechaInicial = this.dateFormat(d);
   },
   methods: {
+    fechaInicialValida (value) {
+      if (this.datosConsulta.fechaFinal) {
+        return new Date(value) < new Date(this.datosConsulta.fechaFinal);
+      }
+    },
+    fechaFinalValida (value) {
+      if (this.datosConsulta.fechaInicial) {
+        return new Date(value) > new Date(this.datosConsulta.fechaInicial);
+      }
+    },
     submit () {
       this.$v.datosConsulta.$touch();
       if (!this.$v.datosConsulta.$invalid) {
+        let areas = [];
+        this.datosConsulta.area.forEach(element => {
+          areas.push(element.text);
+        });
+        const datosEnvio = {
+          fechaInicial: this.datosConsulta.fechaInicial,
+          fechaFinal: this.datosConsulta.fechaFinal,
+          tipoInforme: this.datosConsulta.tipoInforme,
+          area: areas,
+          frecuencia: this.datosConsulta.frecuencia
+        };
+        this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
+        this.$service.post(`informesPorArea`, datosEnvio)
+        .then(respuesta => {
+        });
         this.GraphicView = true;
       } else {
         this.$message.error(this.$t('usuarios.errorFillForm'));
       }
+    },
+    dateFormat (fecha) {
+      if (!fecha) {
+        fecha = new Date();
+      }
+      let dd = fecha.getDate();
+      if (dd < 10) {
+        dd = '0' + dd;
+      }
+      let mm = fecha.getMonth() + 1;
+      if (mm < 10) {
+        mm = '0' + mm;
+      }
+      let nuevaFecha = fecha.getFullYear() + '-' + mm + '-' + dd;
+      return nuevaFecha;
     },
     fillData () {
       this.datacollection = {
@@ -316,6 +363,20 @@ export default {
       return text.toString()
         .toLowerCase()
         .indexOf(query.toString().toLowerCase()) > -1;
+    },
+    frecuenciaConDias (dias) {
+      if (dias < 10) {
+        this.datosConsulta.frecuencia = 'day';
+      }
+      if (dias >= 10 && dias < 120) {
+        this.datosConsulta.frecuencia = 'week';
+      }
+      if (dias >= 120 && dias < 600) {
+        this.datosConsulta.frecuencia = 'month';
+      }
+      if (dias >= 600) {
+        this.datosConsulta.frecuencia = 'year';
+      }
     }
   },
   validations: {
@@ -339,6 +400,14 @@ export default {
       if (this.datosConsulta.area.length !== datosValidos.length) {
         this.datosConsulta.area = datosValidos;
       }
+    },
+    'datosConsulta.fechaInicial': function (val) {
+      let dias = (new Date(this.datosConsulta.fechaFinal) - new Date(val)) / (24 * 60 * 60 * 1000);
+      frecuenciaConDias(dias);
+    },
+    'datosConsulta.fechaFinal': function (val) {
+      let dias = (new Date(val) - new Date(this.datosConsulta.fechaInicial)) / (24 * 60 * 60 * 1000);
+      frecuenciaConDias(dias);
     }
   }
 };
