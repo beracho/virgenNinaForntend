@@ -403,11 +403,11 @@ export default {
     },
     'datosConsulta.fechaInicial': function (val) {
       let dias = (new Date(this.datosConsulta.fechaFinal) - new Date(val)) / (24 * 60 * 60 * 1000);
-      frecuenciaConDias(dias);
+      this.frecuenciaConDias(dias);
     },
     'datosConsulta.fechaFinal': function (val) {
       let dias = (new Date(val) - new Date(this.datosConsulta.fechaInicial)) / (24 * 60 * 60 * 1000);
-      frecuenciaConDias(dias);
+      this.frecuenciaConDias(dias);
     }
   }
 };
