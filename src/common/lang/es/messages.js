@@ -71,6 +71,33 @@ export default {
     errorFieldMinLength: 'La contraseña debe tener como mínimo 8 caracteres.',
     errorFieldMaxLength: 'La contraseña debe tener como máximo 20 caracteres.'
   },
+  charts: {
+    reportPerArea: 'Reportes por área',
+    reportType: 'Tipo de informe',
+    fromDate: 'De fecha',
+    toDate: 'A fecha',
+    followUp: 'Seguimiento',
+    evaluation: 'Evaluación',
+    frecuency: 'Frecuencia',
+    day: 'Día',
+    week: 'Semana',
+    month: 'Mes',
+    year: 'Año',
+    followUpReport: 'Informe de seguimiento',
+    evaluationReport: 'Informe de evaluación',
+    noMatches: 'No hay resultados'
+  },
+  areas: {
+    medicalDoctor: 'Medicina general',
+    socialWork: 'Trabajo social',
+    occupationalTherapy: 'Terapia ocupacional',
+    psychomotor: 'Psicomotricidad',
+    physiotherapy: 'Fisioterapia',
+    psycology: 'Psicología',
+    phonoaudiology: 'Fonoaudiología',
+    nutrition: 'Nutrición',
+    education: 'Educación'
+  },
   courses: {
     newCourse: 'Nuevo curso',
     name: 'Nombre',
