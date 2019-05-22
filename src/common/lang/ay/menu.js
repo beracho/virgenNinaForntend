@@ -29,5 +29,8 @@ export default {
   registroEvaluacionPsicopedagogia: 'Hoja de evaluación',
   registroEvaluacionTerapiaOcupacional: 'Hoja de evaluación',
   registroEvaluacionTrabajoSocial: 'Hoja de evaluación',
-  registroSemestral: 'Registro semestral'
+  registroSemestral: 'Registro semestral',
+  stats: 'Estadísticas',
+  registrosPorArea: 'Informes por área',
+  registrosDireccion: 'Registros'
 };

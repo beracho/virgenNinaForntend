@@ -29,5 +29,8 @@ export default {
   registroEvaluacionPsicopedagogia: 'Evaluation page',
   registroEvaluacionTerapiaOcupacional: 'Evaluation page',
   registroEvaluacionTrabajoSocial: 'Evaluation page',
-  registroSemestral: 'Semester registration'
+  registroSemestral: 'Semester registration',
+  stats: 'Statistics',
+  registrosPorArea: 'Reports per area',
+  registrosDireccion: 'Child reports'
 };
