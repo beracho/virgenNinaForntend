@@ -11,6 +11,8 @@ import AppError from '@/common/layout/pages/AppError';
 import Usuario from '@/components/admin/usuario/Usuario';
 import Configuracion from '@/components/admin/usuario/Configuracion';
 import ConfirmarCuenta from '@/components/admin/account/confirmarCuenta';
+import RegistrosPorArea from '@/components/direccion/registrosPorArea';
+import RegistrosDireccion from '@/components/direccion/registrosDireccion';
 import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
 import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
 import Cursos from '@/components/inscripciones/Cursos';
@@ -72,6 +74,16 @@ export default new VueRouter({
       path: '/confirmarCuenta',
       name: 'ConfirmarCuenta',
       component: ConfirmarCuenta
+    },
+    {
+      path: '/registrosPorArea',
+      name: 'RegistrosPorArea',
+      component: RegistrosPorArea
+    },
+    {
+      path: '/registrosDireccion',
+      name: 'RegistrosDireccion',
+      component: RegistrosDireccion
     },
     {
       path: '/restaurar',

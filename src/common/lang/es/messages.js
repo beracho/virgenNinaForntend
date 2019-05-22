@@ -83,8 +83,8 @@ export default {
     week: 'Semana',
     month: 'Mes',
     year: 'Año',
-    followUpReport: 'Informe de seguimiento',
-    evaluationReport: 'Informe de evaluación',
+    followUpReport: 'Estadísticas de seguimiento por área',
+    evaluationReport: 'Estadísticas de evaluación por área',
     noMatches: 'No hay resultados'
   },
   areas: {
