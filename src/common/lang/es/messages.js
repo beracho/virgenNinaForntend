@@ -85,7 +85,14 @@ export default {
     year: 'Año',
     followUpReport: 'Estadísticas de seguimiento por área',
     evaluationReport: 'Estadísticas de evaluación por área',
-    noMatches: 'No hay resultados'
+    noMatches: 'No hay resultados',
+    disability: 'Discapacidad',
+    withDisability: 'Con discapacidad',
+    withoutDisability: 'Sin discapacidad',
+    both: 'ambos',
+    getStudentsBy: 'Obtener estudiantes por',
+    course: 'Curso',
+    maleOrFemale: 'Masculino o femenino'
   },
   areas: {
     medicalDoctor: 'Medicina general',
