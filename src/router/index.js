@@ -12,6 +12,7 @@ import Usuario from '@/components/admin/usuario/Usuario';
 import Configuracion from '@/components/admin/usuario/Configuracion';
 import ConfirmarCuenta from '@/components/admin/account/confirmarCuenta';
 import RegistrosPorArea from '@/components/direccion/registrosPorArea';
+import EstadisticasPorEstudiante from '@/components/direccion/estadisticasPorEstudiante';
 import RegistrosDireccion from '@/components/direccion/registrosDireccion';
 import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
 import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
@@ -79,6 +80,11 @@ export default new VueRouter({
       path: '/registrosPorArea',
       name: 'RegistrosPorArea',
       component: RegistrosPorArea
+    },
+    {
+      path: '/estadisticasPorEstudiante',
+      name: 'EstadisticasPorEstudiante',
+      component: EstadisticasPorEstudiante
     },
     {
       path: '/registrosDireccion',

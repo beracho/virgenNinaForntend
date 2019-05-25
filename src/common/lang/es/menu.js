@@ -32,5 +32,6 @@ export default {
   registroSemestral: 'Registro semestral',
   stats: 'Estadísticas',
   registrosPorArea: 'Informes por área',
+  estadisticasPorEstudiante: 'Estudiantes por curso',
   registrosDireccion: 'Registros'
 };
