@@ -19,7 +19,7 @@
       <td>{{ props.item.nombre }}</td>
       <td>{{ props.item.paralelo }}</td>
       <td>{{ props.item.gestion }}</td>
-      <td>{{ props.item.criterio_edad }}</td>
+      <td>{{ convierteAAños(props.item.edad_minima) + ' - ' + convierteAAños(props.item.edad_maxima) }}</td>
     </template>
   </v-data-table>
   </div>
@@ -130,10 +130,10 @@
                     <v-select :items="descripcionesCurso" v-model="formularioEdicionCurso.descripcion" :label="$t('entity.crud.description')"></v-select>
                   </v-flex>
                   <v-flex xs2>
-                    <v-text-field :label="$t('courses.minimalAge')" v-model="formularioEdicionCurso.edad_minima"></v-text-field>
+                    <v-text-field :label="$t('courses.minimalAge') + ' (' + $t('inscriptions.months') + ')'" v-model="formularioEdicionCurso.edad_minima" :hint="convierteAAños(formularioEdicionCurso.edad_minima)"></v-text-field>
                   </v-flex>
                   <v-flex xs2>
-                    <v-text-field :label="$t('courses.maximalAge')" v-model="formularioEdicionCurso.edad_maxima"></v-text-field>
+                    <v-text-field :label="$t('courses.maximalAge') + ' (' + $t('inscriptions.months') + ')'" v-model="formularioEdicionCurso.edad_maxima" :hint="convierteAAños(formularioEdicionCurso.edad_maxima)"></v-text-field>
                   </v-flex>
                   <v-flex xs4>
                     <v-select :items="discapacidadesCurso" :label="$t('inscriptionRegister.disability')" v-model="formularioEdicionCurso.tipo_discapacidad"></v-select>
@@ -212,11 +212,11 @@
           'tipo_discapacidad': '',
           'grado': ''
         },
-        nombresCurso: ['AT', 'INI 1', 'INI 2', 'PRI 1', 'PRI 2', 'PRI 3', 'PRI SOC'],
-        gradosCurso: ['ATENCION TEMPRANA', 'INDEPENDENCIA PERSONAL', 'INDEPENDENCIA SOCIAL', 'INICIAL', 'PRIMARIA', 'SECUNDARIA'],
+        nombresCurso: ['AT', 'INI 1', 'INI 2', 'PRI 1', 'PRI 2', 'PRI 3', 'PRI SOC', 'GUARDERIA', 'GUARDERIA 1', 'GUARDERIA 2'],
+        gradosCurso: ['ATENCION TEMPRANA', 'INDEPENDENCIA PERSONAL', 'INDEPENDENCIA SOCIAL', 'INICIAL', 'PRIMARIA', 'SECUNDARIA', 'GUARDERIA'],
         paralelosCurso: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
-        descripcionesCurso: ['APOYO LIMITADO EXTENSO', 'APOYO LIMITADO INTERMITENTE', 'APOYO EXTENSO GENERALIZADO', 'APOYO EXTENSO', 'APOYO LIMITADO'],
-        discapacidadesCurso: ['DISCAPACIDAD MULTIPLE', 'DISCAPACIDAD INTELECTUAL'],
+        descripcionesCurso: ['APOYO LIMITADO EXTENSO', 'APOYO LIMITADO INTERMITENTE', 'APOYO EXTENSO GENERALIZADO', 'APOYO EXTENSO', 'APOYO LIMITADO', 'GUARDERIA BEBES', 'GUARDERIA NIÑOS'],
+        discapacidadesCurso: ['DISCAPACIDAD MULTIPLE', 'DISCAPACIDAD INTELECTUAL', 'NINGUNA'],
         // Variables edición cursos
         dialogEdicion: false,
         formularioEdicionCurso: {
@@ -288,7 +288,7 @@
               sorting = `order=`;
             }
             if (this.pagination.sortBy === 'edades') {
-              sorting = `${sorting}criterio_edad`;
+              sorting = `${sorting}edad_minima`;
             } else {
               sorting = `${sorting}${this.pagination.sortBy}`;
             }
@@ -330,7 +330,8 @@
             'gestion': this.formularioCreacionCurso.gestion,
             'maestro': this.formularioCreacionCurso.maestro,
             'descripcion': this.formularioCreacionCurso.descripcion,
-            'criterio_edad': this.formularioCreacionCurso.edad_minima + '-' + this.formularioCreacionCurso.edad_maxima,
+            'edad_minima': this.formularioCreacionCurso.edad_minima,
+            'edad_maxima': this.formularioCreacionCurso.edad_maxima,
             'tipo_discapacidad': this.formularioCreacionCurso.tipo_discapacidad,
             'grado': this.formularioCreacionCurso.grado
           })
@@ -360,15 +361,25 @@
             this.formularioEdicionCurso.gestion = valor.gestion;
             this.formularioEdicionCurso.maestro = valor.maestro;
             this.formularioEdicionCurso.descripcion = valor.descripcion;
-            const edad = valor.criterio_edad.split('-');
-            console.log(edad[0]);
-            this.formularioEdicionCurso.edad_minima = edad[0];
-            this.formularioEdicionCurso.edad_maxima = edad[1];
+            this.formularioEdicionCurso.edad_minima = valor.edad_minima;
+            this.formularioEdicionCurso.edad_maxima = valor.edad_maxima;
             this.formularioEdicionCurso.tipo_discapacidad = valor.tipo_discapacidad;
             this.formularioEdicionCurso.grado = valor.grado;
             this.idCursoAEditar = valor.id_curso;
           }
         })
+      },
+      convierteAAños (edadEnMeses) {
+        const años = Math.floor(edadEnMeses / 12);
+        const meses = edadEnMeses % 12;
+        let edadConvertida = años ? años === 1 ? años + ' ' + this.$t('common.year') : años + ' ' + this.$t('common.years') : '';
+        if (meses) {
+          if (edadConvertida !== '') {
+            edadConvertida += ', ';
+          }
+          edadConvertida += meses + ' ' + this.$t('inscriptions.months');
+        }
+        return edadConvertida;
       },
       editarCurso (idCurso) { // Edita un curso existente
         // valida
@@ -381,7 +392,8 @@
             'gestion': this.formularioEdicionCurso.gestion,
             'maestro': this.formularioEdicionCurso.maestro,
             'descripcion': this.formularioEdicionCurso.descripcion,
-            'criterio_edad': this.formularioEdicionCurso.edad_minima + '-' + this.formularioEdicionCurso.edad_maxima,
+            'edad_minima': this.formularioEdicionCurso.edad_minima,
+            'edad_maxima': this.formularioEdicionCurso.edad_maxima,
             'tipo_discapacidad': this.formularioEdicionCurso.tipo_discapacidad,
             'grado': this.formularioEdicionCurso.grado
           }).then(respuesta => {
@@ -390,7 +402,8 @@
             this.formularioEdicionCurso.gestion = '';
             this.formularioEdicionCurso.maestro = '';
             this.formularioEdicionCurso.descripcion = '';
-            this.formularioEdicionCurso.criterio_edad = '';
+            this.formularioEdicionCurso.edad_minima = '';
+            this.formularioEdicionCurso.edad_maxima = '';
             this.formularioEdicionCurso.tipo_discapacidad = '';
             this.formularioEdicionCurso.grado = '';
             this.dialogEdicion = false;

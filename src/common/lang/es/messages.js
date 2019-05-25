@@ -130,7 +130,8 @@ export default {
     courseAssignation: 'Asignación de curso',
     studentData: 'Datos del estudiante',
     studentsPerPage: 'Estudiantes por página',
-    noData: 'Sin datos'
+    noData: 'Sin datos',
+    months: 'meses'
   },
   inscriptionRegister: {
     createNew: 'Crear nueva',
