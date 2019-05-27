@@ -2069,7 +2069,7 @@
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
       if (this.$route.query.registro) {
-        const socialWorkAux = this.$store.state.socialWorkRegisterEdit.registro_eval_trabajo_social;
+        const socialWorkAux = this.$store.state.socialWorkRegisterEdit.reg_tb;
         this.formularioRegistro = {
           tipoDeFamilia: socialWorkAux.tipo_de_familia ? socialWorkAux.tipo_de_familia : null,
           tipoDeFamiliaObject: socialWorkAux.tipo_de_familia ? {
@@ -2218,7 +2218,7 @@
           if (this.$route.query.registro) {
             // Edita registro Simple
             this.formularioRegistro.idRegistro = this.$route.query.registro;
-            this.formularioRegistro.idRegistroTrabajoSocial = this.$store.state.socialWorkRegisterEdit.registro_eval_trabajo_social.id_registro_eval_trabajo_social;
+            this.formularioRegistro.idRegistroTrabajoSocial = this.$store.state.socialWorkRegisterEdit.reg_tb.id_reg_tb;
             this.$service.put(`registroEvalTrabajoSocial`, this.formularioRegistro)
             .then(respuesta => {
               if (respuesta !== undefined) {

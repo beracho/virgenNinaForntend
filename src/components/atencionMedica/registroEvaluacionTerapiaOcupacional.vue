@@ -385,9 +385,6 @@
               <v-textarea
                 :label="$t('generalFollowUp.observation')"
                 v-model="formularioRegistro.observacionesMovilidadFuncional"
-                :error="$v.formularioRegistro.observacion.$error"
-                @input="$v.formularioRegistro.observacion.$touch()"
-                :error-messages="errors.observacion"
                 counter
               ></v-textarea>
             </v-flex>
@@ -445,9 +442,6 @@
               <v-textarea
                 :label="$t('generalFollowUp.observation')"
                 v-model="formularioRegistro.pinzaGruesa.observaciones"
-                :error="$v.formularioRegistro.observacion.$error"
-                @input="$v.formularioRegistro.observacion.$touch()"
-                :error-messages="errors.observacion"
                 counter
               ></v-textarea>
             </v-flex>
@@ -535,9 +529,6 @@
               <v-textarea
                 :label="$t('generalFollowUp.observation')"
                 v-model="formularioRegistro.pinzaFina.observaciones"
-                :error="$v.formularioRegistro.observacion.$error"
-                @input="$v.formularioRegistro.observacion.$touch()"
-                :error-messages="errors.observacion"
                 counter
               ></v-textarea>
             </v-flex>
@@ -558,9 +549,6 @@
             <v-flex xs12>
               <v-textarea
                 v-model="formularioRegistro.barrerasArquitectonicas"
-                :error="$v.formularioRegistro.observacion.$error"
-                @input="$v.formularioRegistro.observacion.$touch()"
-                :error-messages="errors.observacion"
                 counter
               ></v-textarea>
             </v-flex>
@@ -581,9 +569,9 @@
             <v-flex xs12>
               <v-textarea
                 v-model="formularioRegistro.objetivosIntervención.objetivos"
-                :error="$v.formularioRegistro.observacion.$error"
-                @input="$v.formularioRegistro.observacion.$touch()"
-                :error-messages="errors.observacion"
+                :error="$v.formularioRegistro.objetivosIntervención.objetivos.$error"
+                @input="$v.formularioRegistro.objetivosIntervención.objetivos.$touch()"
+                :error-messages="errors.objetivosIntervenciónObjetivos"
                 counter
               ></v-textarea>
             </v-flex>
@@ -591,9 +579,9 @@
               <v-textarea
                 :label="$t('generalFollowUp.observation')"
                 v-model="formularioRegistro.objetivosIntervención.observaciones"
-                :error="$v.formularioRegistro.observacion.$error"
-                @input="$v.formularioRegistro.observacion.$touch()"
-                :error-messages="errors.observacion"
+                :error="$v.formularioRegistro.objetivosIntervención.observaciones.$error"
+                @input="$v.formularioRegistro.objetivosIntervención.observaciones.$touch()"
+                :error-messages="errors.objetivosIntervenciónObservaciones"
                 counter
               ></v-textarea>
             </v-flex>
@@ -771,32 +759,169 @@
           }
         },
         errors: {
-          observacion: [],
-          intervencion: []
+          objetivosIntervenciónObjetivos: [],
+          objetivosIntervenciónObservaciones: []
         }
       }
     },
     components: {
     },
     watch: {
-      '$v.formularioRegistro.observacion.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.observacion, this.errors.observacion);
+      '$v.formularioRegistro.objetivosIntervención.objetivos.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.objetivosIntervención.objetivos, this.errors.observacion);
       },
-      '$v.formularioRegistro.intervencion.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.intervencion, this.errors.intervencion);
+      '$v.formularioRegistro.objetivosIntervención.observaciones.$error': function (val) {
+        this.errorHandler(this.$v.formularioRegistro.objetivosIntervención.observaciones, this.errors.intervencion);
       }
     },
     created () {
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
+      if (this.$route.query.registro) {
+        const occupationalTherapyAux = this.$store.state.occupationalTherapyRegisterEdit.reg_to;
+        this.formularioRegistro = {
+          ducha: {
+            realiza: occupationalTherapyAux.ducha_realiza ? occupationalTherapyAux.ducha_realiza : null,
+            observacion: occupationalTherapyAux.ducha_observacion ? occupationalTherapyAux.ducha_observacion : null
+          },
+          controlEsfinter: {
+            realiza: occupationalTherapyAux.controlEsfinter_realiza ? occupationalTherapyAux.controlEsfinter_realiza : null,
+            observacion: occupationalTherapyAux.controlEsfinter_observacion ? occupationalTherapyAux.controlEsfinter_observacion : null
+          },
+          vestidoDesvestido: {
+            realiza: occupationalTherapyAux.vestidoDesvestido_realiza ? occupationalTherapyAux.vestidoDesvestido_realiza : null,
+            observacion: occupationalTherapyAux.vestidoDesvestido_observacion ? occupationalTherapyAux.vestidoDesvestido_observacion : null
+          },
+          masticarTragar: {
+            realiza: occupationalTherapyAux.masticarTragar_realiza ? occupationalTherapyAux.masticarTragar_realiza : null,
+            observacion: occupationalTherapyAux.masticarTragar_observacion ? occupationalTherapyAux.masticarTragar_observacion : null
+          },
+          comerSolo: {
+            realiza: occupationalTherapyAux.comerSolo_realiza ? occupationalTherapyAux.comerSolo_realiza : null,
+            observacion: occupationalTherapyAux.comerSolo_observacion ? occupationalTherapyAux.comerSolo_observacion : null
+          },
+          movilidadFuncional: {
+            realiza: occupationalTherapyAux.movilidadFuncional_realiza ? occupationalTherapyAux.movilidadFuncional_realiza : null,
+            observacion: occupationalTherapyAux.movilidadFuncional_observacion ? occupationalTherapyAux.movilidadFuncional_observacion : null
+          },
+          higienePersonalAseo: {
+            realiza: occupationalTherapyAux.higienePersonalAseo_realiza ? occupationalTherapyAux.higienePersonalAseo_realiza : null,
+            observacion: occupationalTherapyAux.higienePersonalAseo_observacion ? occupationalTherapyAux.higienePersonalAseo_observacion : null
+          },
+          higieneInodoro: {
+            realiza: occupationalTherapyAux.higieneInodoro_realiza ? occupationalTherapyAux.higieneInodoro_realiza : null,
+            observacion: occupationalTherapyAux.higieneInodoro_observacion ? occupationalTherapyAux.higieneInodoro_observacion : null
+          },
+          comprension: {
+            realiza: occupationalTherapyAux.comprension_realiza ? occupationalTherapyAux.comprension_realiza : null,
+            observacion: occupationalTherapyAux.comprension_observacion ? occupationalTherapyAux.comprension_observacion : null
+          },
+          expresion: {
+            realiza: occupationalTherapyAux.expresion_realiza ? occupationalTherapyAux.expresion_realiza : null,
+            observacion: occupationalTherapyAux.expresion_observacion ? occupationalTherapyAux.expresion_observacion : null
+          },
+          interaccionSocial: {
+            realiza: occupationalTherapyAux.interaccionSocial_realiza ? occupationalTherapyAux.interaccionSocial_realiza : null,
+            observacion: occupationalTherapyAux.interaccionSocial_observacion ? occupationalTherapyAux.interaccionSocial_observacion : null
+          },
+          solProblemas: {
+            realiza: occupationalTherapyAux.solProblemas_realiza ? occupationalTherapyAux.solProblemas_realiza : null,
+            observacion: occupationalTherapyAux.solProblemas_observacion ? occupationalTherapyAux.solProblemas_observacion : null
+          },
+          memoria: {
+            realiza: occupationalTherapyAux.memoria_realiza ? occupationalTherapyAux.memoria_realiza : null,
+            observacion: occupationalTherapyAux.memoria_observacion ? occupationalTherapyAux.memoria_observacion : null
+          },
+          atencion: {
+            realiza: occupationalTherapyAux.atencion_realiza ? occupationalTherapyAux.atencion_realiza : null,
+            observacion: occupationalTherapyAux.atencion_observacion ? occupationalTherapyAux.atencion_observacion : null
+          },
+          orientacion: {
+            realiza: occupationalTherapyAux.orientacion_realiza ? occupationalTherapyAux.orientacion_realiza : null,
+            observacion: occupationalTherapyAux.orientacion_observacion ? occupationalTherapyAux.orientacion_observacion : null
+          },
+          reconocimiento: {
+            realiza: occupationalTherapyAux.reconocimiento_realiza ? occupationalTherapyAux.reconocimiento_realiza : null,
+            observacion: occupationalTherapyAux.reconocimiento_observacion ? occupationalTherapyAux.reconocimiento_observacion : null
+          },
+          secuenciacion: {
+            realiza: occupationalTherapyAux.secuenciacion_realiza ? occupationalTherapyAux.secuenciacion_realiza : null,
+            observacion: occupationalTherapyAux.secuenciacion_observacion ? occupationalTherapyAux.secuenciacion_observacion : null
+          },
+          calculo: {
+            realiza: occupationalTherapyAux.calculo_realiza ? occupationalTherapyAux.calculo_realiza : null,
+            observacion: occupationalTherapyAux.calculo_observacion ? occupationalTherapyAux.calculo_observacion : null
+          },
+          lenguaje: {
+            realiza: occupationalTherapyAux.lenguaje_realiza ? occupationalTherapyAux.lenguaje_realiza : null,
+            observacion: occupationalTherapyAux.lenguaje_observacion ? occupationalTherapyAux.lenguaje_observacion : null
+          },
+          escritura: {
+            realiza: occupationalTherapyAux.escritura_realiza ? occupationalTherapyAux.escritura_realiza : null,
+            observacion: occupationalTherapyAux.escritura_observacion ? occupationalTherapyAux.escritura_observacion : null
+          },
+          sedestacion: {
+            realiza: occupationalTherapyAux.sedestacion_realiza ? occupationalTherapyAux.sedestacion_realiza : null,
+            equilibrio: occupationalTherapyAux.sedestacion_equilibrio ? occupationalTherapyAux.sedestacion_equilibrio : null,
+            estatico: occupationalTherapyAux.sedestacion_estatico ? occupationalTherapyAux.sedestacion_estatico : null,
+            dinamico: occupationalTherapyAux.sedestacion_dinamico ? occupationalTherapyAux.sedestacion_dinamico : null
+          },
+          bipedestacion: {
+            realiza: occupationalTherapyAux.bipedestacion_realiza ? occupationalTherapyAux.bipedestacion_realiza : null,
+            equilibrio: occupationalTherapyAux.bipedestacion_equilibrio ? occupationalTherapyAux.bipedestacion_equilibrio : null,
+            estatico: occupationalTherapyAux.bipedestacion_estatico ? occupationalTherapyAux.bipedestacion_estatico : null,
+            dinamico: occupationalTherapyAux.bipedestacion_dinamico ? occupationalTherapyAux.bipedestacion_dinamico : null
+          },
+          marcha: {
+            realiza: occupationalTherapyAux.marcha_realiza ? occupationalTherapyAux.marcha_realiza : null,
+            observacion: occupationalTherapyAux.marcha_observacion ? occupationalTherapyAux.marcha_observacion : null,
+            dinamico: occupationalTherapyAux.marcha_dinamico ? occupationalTherapyAux.marcha_dinamico : null
+          },
+          observacionesMovilidadFuncional: occupationalTherapyAux.observacionesMovilidadFuncional ? occupationalTherapyAux.observacionesMovilidadFuncional : null,
+          pinzaGruesa: {
+            cilindricaDerecha: occupationalTherapyAux.pinzaGruesa_cilindricaDerecha ? occupationalTherapyAux.pinzaGruesa_cilindricaDerecha : null,
+            cilindricaIzquierda: occupationalTherapyAux.pinzaGruesa_cilindricaIzquierda ? occupationalTherapyAux.pinzaGruesa_cilindricaIzquierda : null,
+            esfericaDerecha: occupationalTherapyAux.pinzaGruesa_esfericaDerecha ? occupationalTherapyAux.pinzaGruesa_esfericaDerecha : null,
+            esfericaIzquierda: occupationalTherapyAux.pinzaGruesa_esfericaIzquierda ? occupationalTherapyAux.pinzaGruesa_esfericaIzquierda : null,
+            engancheDerecha: occupationalTherapyAux.pinzaGruesa_engancheDerecha ? occupationalTherapyAux.pinzaGruesa_engancheDerecha : null,
+            engancheIzquierda: occupationalTherapyAux.pinzaGruesa_engancheIzquierda ? occupationalTherapyAux.pinzaGruesa_engancheIzquierda : null,
+            observaciones: occupationalTherapyAux.pinzaGruesa_observaciones ? occupationalTherapyAux.pinzaGruesa_observaciones : null
+          },
+          pinzaFina: {
+            subTerminalDerecha: occupationalTherapyAux.pinzaFina_subTerminalDerecha ? occupationalTherapyAux.pinzaFina_subTerminalDerecha : null,
+            subTerminalIzquierda: occupationalTherapyAux.pinzaFina_subTerminalIzquierda ? occupationalTherapyAux.pinzaFina_subTerminalIzquierda : null,
+            terminoTerminalDerecha: occupationalTherapyAux.pinzaFina_terminoTerminalDerecha ? occupationalTherapyAux.pinzaFina_terminoTerminalDerecha : null,
+            terminoTerminalIzquierda: occupationalTherapyAux.pinzaFina_terminoTerminalIzquierda ? occupationalTherapyAux.pinzaFina_terminoTerminalIzquierda : null,
+            lateralDerecha: occupationalTherapyAux.pinzaFina_lateralDerecha ? occupationalTherapyAux.pinzaFina_lateralDerecha : null,
+            lateralIzquierda: occupationalTherapyAux.pinzaFina_lateralIzquierda ? occupationalTherapyAux.pinzaFina_lateralIzquierda : null,
+            tripodeDerecha: occupationalTherapyAux.pinzaFina_tripodeDerecha ? occupationalTherapyAux.pinzaFina_tripodeDerecha : null,
+            tripodeIzquierda: occupationalTherapyAux.pinzaFina_tripodeIzquierda ? occupationalTherapyAux.pinzaFina_tripodeIzquierda : null,
+            interdigitalDerecha: occupationalTherapyAux.pinzaFina_interdigitalDerecha ? occupationalTherapyAux.pinzaFina_interdigitalDerecha : null,
+            interdigitalIzquierda: occupationalTherapyAux.pinzaFina_interdigitalIzquierda ? occupationalTherapyAux.pinzaFina_interdigitalIzquierda : null,
+            lateroLateralDerecha: occupationalTherapyAux.pinzaFina_lateroLateralDerecha ? occupationalTherapyAux.pinzaFina_lateroLateralDerecha : null,
+            lateroLateralIzquierda: occupationalTherapyAux.pinzaFina_lateroLateralIzquierda ? occupationalTherapyAux.pinzaFina_lateroLateralIzquierda : null,
+            multipulparDerecha: occupationalTherapyAux.pinzaFina_multipulparDerecha ? occupationalTherapyAux.pinzaFina_multipulparDerecha : null,
+            multipulparIzquierda: occupationalTherapyAux.pinzaFina_multipulparIzquierda ? occupationalTherapyAux.pinzaFina_multipulparIzquierda : null,
+            observaciones: occupationalTherapyAux.pinzaFina_observaciones ? occupationalTherapyAux.pinzaFina_observaciones : null
+          },
+          barrerasArquitectonicas: occupationalTherapyAux.barrerasArquitectonicas ? occupationalTherapyAux.barrerasArquitectonicas : null,
+          objetivosIntervención: {
+            objetivos: occupationalTherapyAux.objetivosIntervención_objetivos ? occupationalTherapyAux.objetivosIntervención_objetivos : null,
+            observaciones: occupationalTherapyAux.objetivosIntervención_observaciones ? occupationalTherapyAux.objetivosIntervención_observaciones : null
+          }
+        }
+        // this.fechaCreacion = this.$store.state.socialWorkRegisterEdit._fecha_creacion;
+      }
     },
     validations: {
       formularioRegistro: {
-        observacion: {
-          required
-        },
-        intervencion: {
-          required
+        objetivosIntervención: {
+          objetivos: {
+            required
+          },
+          observaciones: {
+            required
+          }
         }
       }
     },
@@ -852,22 +977,48 @@
       submit () { // Envía datos de la nueva asignación
         this.$v.formularioRegistro.$touch();
         if (!this.$v.formularioRegistro.$invalid) {
-          this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
-          this.$service.post(`registroSimple`, this.formularioRegistro)
-          .then(respuesta => {
-            this.dialogAsignacionCurso = false
-            this.limpiarCampos();
-            this.$message.success('Registro creado exitosamente');
-            this.$router.push('registrosArchivados');
-          })
-          .catch(() => {
-            this.$message.error('Error an la creación del registro');
-          });
+          // this.formularioRegistro.tipoDeFamilia = this.formularioRegistro.tipoDeFamiliaObject.text;
+          if (this.$route.query.registro) {
+            // Edita registro Simple
+            this.formularioRegistro.idRegistro = this.$route.query.registro;
+            this.formularioRegistro.idRegistroTerapiaOcupacional = this.$store.state.occupationalTherapyRegisterEdit.reg_to.id_reg_to;
+            this.$service.put(`registroEvalTerapiaOcupacional`, this.formularioRegistro)
+            .then(respuesta => {
+              if (respuesta !== undefined) {
+                this.limpiarCampos();
+                this.$message.success(this.$t('generalFollowUp.registerEditionSuccessfull'));
+                this.$router.push('registrosArchivados');
+              } else {
+                this.$message.error(this.$t('generalFollowUp.registerEditionUnsuccessfull'));
+              }
+            })
+            .catch(() => {
+              this.$message.error(this.$t('generalFollowUp.registerEditionUnsuccessfull'));
+            });
+          } else {
+            // Crea registro simple
+            this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
+            this.$service.post(`registroEvalTerapiaOcupacional`, this.formularioRegistro)
+            .then(respuesta => {
+              if (respuesta !== undefined) {
+                this.limpiarCampos();
+                this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+                this.$router.push('registrosArchivados');
+              } else {
+                this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+              }
+            })
+            .catch(() => {
+              this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+            });
+          }
+        } else {
+          this.$message.error(this.$t('usuarios.errorFillForm'));
         }
       },
       limpiarCampos () {
-        this.formularioRegistro.observacion = '';
-        this.formularioRegistro.intervencion = '';
+        // this.formularioRegistro.observacion = '';
+        // this.formularioRegistro.intervencion = '';
       },
       cerrarCarpeta (userData) {
         if (this.$storage.exist('menu')) {

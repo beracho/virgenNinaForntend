@@ -41,7 +41,9 @@ const store = new Vuex.Store({
     simpleRegisterView: {},
     simpleRegisterEdit: {},
     socialWorkRegisterView: {},
-    socialWorkRegisterEdit: {}
+    socialWorkRegisterEdit: {},
+    occupationalTherapyRegisterView: {},
+    occupationalTherapyRegisterEdit: {}
   },
   mutations: {
     toggleSidenav (state) {
