@@ -239,7 +239,8 @@ export default {
     subtitle5: 'Aspectos sociales',
     messageSubtitle5: '',
     subtitle6: 'Datos del padre, madre o tutor del estudiante',
-    messageSubtitle6: ''
+    messageSubtitle6: '',
+    updateIdData: 'Actualizar CI'
   },
   parameters: {
     agricultureIndustry: 'Trabajó en agricultura o agroindustria',

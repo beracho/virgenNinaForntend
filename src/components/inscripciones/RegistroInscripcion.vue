@@ -37,18 +37,25 @@
                 <v-flex xs4 v-if="!codeChosen">
                   <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field>
                 </v-flex>
-                <v-flex xs6 v-if="codeChosen && searchRE">
-                  <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentNumber')" v-model="form.persona.documento_identidad"></v-text-field>
-                </v-flex>
-                <v-flex xs6 v-if="codeChosen && searchRE">
-                  <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field>
-                </v-flex>
+                <!-- <v-flex xs4 v-if="codeChosen && searchRE">
+                  <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentType')" v-model="form.persona.tipo_documento"></v-text-field>
+                </v-flex> -->
                 <v-flex sx4 offset-xs8>
                   <v-btn v-if="!searchRE" class="primary" block flat v-on:click="buscaEstudiante()">{{$t('common.search')}}
                     <v-icon right> search </v-icon>
                   </v-btn>
                   <v-btn v-if="searchRE" class="primary" block flat v-on:click="reiniciaBusqueda()">{{$t('common.change')}}
                     <v-icon right> cached </v-icon>
+                  </v-btn>
+                </v-flex>
+                <v-flex xs4 v-if="codeChosen && searchRE">
+                  <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentNumber')" v-model="form.persona.documento_identidad"></v-text-field>
+                </v-flex>
+                <v-flex xs4 v-if="codeChosen && searchRE">
+                  <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field>
+                </v-flex>
+                <v-flex sx4>
+                  <v-btn v-if="!ciLoaded" class="primary" block flat v-on:click="actualizarDocumento()">{{$t('inscriptionRegister.updateIdData')}}
                   </v-btn>
                 </v-flex>
                 <v-flex xs12>
@@ -804,6 +811,7 @@ export default {
       codeChosen: false,
       disableOptionsRE: true,
       searchRE: false,
+      ciLoaded: false,
       chargingRE: true,
       opcionesRE: [],
       // Registro Inscripcion
@@ -985,6 +993,18 @@ export default {
           this.opcionesUE = respuesta.datos;
         });
     },
+    actualizarDocumento () {
+      const carnetData = {
+        tipo_documento: this.form.persona.tipo_documento,
+        documento_identidad: this.form.persona.documento_identidad,
+        lugar_documento_identidad: this.form.persona.lugar_documento_identidad
+      };
+      const idPersona = 145;
+      this.$service.put(`actualizaPersona`, {idPersona, carnetData})
+        .then(respuesta => {
+          this.ciLoaded = true;
+        });
+    },
     buscaUnidadEducativa (action) {
       if (this.form.unidadEducativa.nombre) {
         if (action === 'search') {
@@ -1115,6 +1135,9 @@ export default {
             }
             // Jala datos al formulario
             // this.form.persona.carnet_discapacidad = consulta.carnet_discapacidad ? consulta.carnet_discapacidad : 'No cuenta con carnet';
+            if (this.form.persona.documento_identidad !== '' && this.form.persona.documento_identidad !== undefined) {
+              this.ciLoaded = true;
+            }
             this.form.persona.documento_identidad = consulta.documento_identidad;
             this.form.persona.lugar_documento_identidad = consulta.lugar_documento_identidad;
             this.form.persona.nombres = consulta.nombres;
