@@ -96,7 +96,8 @@ export default {
     maleOrFemale: 'Masculino o femenino',
     searchStudent: 'Buscar estudiante',
     studentsFound: 'Estudiantes encontrados',
-    noStudentsMatchSearchParams: 'No se encontraron estudiantes con los parámetros'
+    noStudentsMatchSearchParams: 'No se encontraron estudiantes con los parámetros',
+    view: 'Ver'
   },
   areas: {
     medicalDoctor: 'Medicina general',

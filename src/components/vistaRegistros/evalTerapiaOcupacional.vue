@@ -353,7 +353,7 @@
 </template>
 <script>
   export default {
-    name: 'vista-trabajo-social',
+    name: 'vista-terapia-ocupacional',
     // props: ['visibility'],
     data () {
       return {

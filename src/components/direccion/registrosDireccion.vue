@@ -39,7 +39,7 @@
             <v-flex xs12>
               <h4>{{$t('common.filters') }}</h4>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs10>
               <v-select
                 v-bind:items="estudiantes"
                 item-text="text"
@@ -47,6 +47,11 @@
                 v-model="search.estudiante"
                 :label="$t('charts.studentsFound')"
               ></v-select>
+            </v-flex>
+            <v-flex xs2>
+              <v-btn :disabled="search.estudiante === '' || search.estudiante === 'noData'" block color="primary" @click.native="mostrarDatos()">{{$t('charts.view')}}
+                <v-icon>visibility</v-icon>
+              </v-btn>
             </v-flex>
             <v-flex xs6>
               <v-select
@@ -163,6 +168,83 @@
     </div>
     <div>
       <v-layout row wrap align-center>
+        <!-- VENTANA DE VISTA DE DATOS -->
+        <v-dialog v-model="dialogVistaDatos" persistent width="1200px">
+          <v-card>
+            <v-card-title class="headline">
+              <v-icon right>subject</v-icon>
+              <h2 class="headline mb-0">{{$t('generalFollowUp.generalData')}}</h2>
+            </v-card-title>
+            <v-container fluid>
+              <v-layout row wrap>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.names') }}: </b> {{consulta.nombres ? consulta.nombres : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6></v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.firstLastName') }}: </b> {{consulta.primer_apellido ? consulta.primer_apellido : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.secondLastName') }}: </b> {{consulta.segundo_apellido ? consulta.segundo_apellido : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.ci') }}: </b> {{consulta.documento_identidad ? consulta.documento_identidad + ' ' +consulta.lugar_documento_identidad : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('entity.crud.code') }}: </b> {{consulta.estudiante && consulta.estudiante.codigo ? consulta.estudiante.codigo : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('usuarios.bornDate') }}: </b> {{consulta.fecha_nacimiento ? getDate(consulta.fecha_nacimiento) : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('generalFollowUp.age') }}: </b> {{consulta.fecha_nacimiento ? getAge(consulta.fecha_nacimiento) : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('usuarios.gender') }}: </b> {{consulta.genero ? consulta.genero : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.cellphone') }}: </b> {{consulta.telefono ? consulta.telefono : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.community') }}: </b> {{ consulta.direccion && consulta.direccion.comunidad ? consulta.direccion.comunidad : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.zona') }}: </b> {{ consulta.direccion && consulta.direccion.zona ? consulta.direccion.zona : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.street') }}: </b> {{ consulta.direccion && consulta.direccion.calle ? consulta.direccion.calle : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.number') }}: </b> {{ consulta.direccion && consulta.direccion.numero ? consulta.direccion.numero : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.telefon') }}: </b> {{ consulta.direccion && consulta.direccion.telefono ? consulta.direccion.telefono : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.cellphone') }}: </b> {{ consulta.direccion && consulta.direccion.celular ? consulta.direccion.celular : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.country') }}: </b> {{consulta.direccion && consulta.direccion.pais ? getPais(consulta.direccion.pais) : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.departamento') }}: </b> {{consulta.direccion && consulta.direccion.departamento ? getDepartamento(consulta.direccion.departamento) : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.provincia') }}: </b> {{consulta.direccion && consulta.direccion.provincia ? getProvincia(consulta.direccion.provincia) : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+                <v-flex xs6>
+                  <b>{{ this.$t('inscriptionRegister.municipio') }}: </b> {{consulta.direccion && consulta.direccion.municipio ? getMunicipio(consulta.direccion.municipio) : this.$t('generalFollowUp.notRegistered')}}
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="primary" flat v-on:click="dialogVistaDatos = false">{{$t('common.accept')}}
+                <v-icon right>done</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
         <!-- VENTANA DE REGISTRO DE SEGUIMIENTO -->
         <v-dialog v-model="dialogRegistroSeguimiento" persistent width="1200px">
           <v-card>
@@ -176,13 +258,24 @@
           </v-card>
         </v-dialog>
         <!-- VENTANA DE TRABAJO SOCIAL -->
-        <v-dialog v-model="dialogRegistroEspecialidad" persistent width="1200px">
+        <v-dialog v-model="dialogRegistroTrabajoSocial" persistent width="1200px">
           <v-card>
-            <vista-trabajo-social :v-if="areaView == 'Trabajo social'"></vista-trabajo-social>
-            <vista-terapia-ocupacional :v-if="areaView == 'Terapia Ocupacional'"></vista-terapia-ocupacional>
+            <vista-trabajo-social></vista-trabajo-social>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="primary" flat v-on:click="dialogRegistroEspecialidad = false">{{$t('common.accept')}}
+              <v-btn class="primary" flat v-on:click="dialogRegistroTrabajoSocial = false">{{$t('common.accept')}}
+                <v-icon right>done</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <!-- VENTANA DE TERAPIA OCUPACIONAL -->
+        <v-dialog v-model="dialogRegistroTerapiaOcupacional" persistent width="1200px">
+          <v-card>
+            <vista-terapia-ocupacional></vista-terapia-ocupacional>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="primary" flat v-on:click="dialogRegistroTerapiaOcupacional = false">{{$t('common.accept')}}
                 <v-icon right>done</v-icon>
               </v-btn>
             </v-card-actions>
@@ -197,7 +290,8 @@
   import Comps from '../comps';
   import RegistroSimple from '@/components/vistaRegistros/simple.vue';
   import RegistroEvalTrabajoSocial from '@/components/vistaRegistros/evalTrabajoSocial.vue';
-  import registroEvaluacionTerapiaOcupacional from '@/components/vistaRegistros/evalTerapiaOcupacional.vue';
+  import RegistroEvaluacionTerapiaOcupacional from '@/components/vistaRegistros/evalTerapiaOcupacional.vue';
+  import StudentData from '@/common/util/StudentData.vue';
   /* eslint-disable semi */
   export default {
     mixins: [ Comps ],
@@ -207,9 +301,17 @@
         generalDataPanel: true,
         deleteData: {},
         areaView: '',
+        // Vista Datos de Estudiante
+        consulta: {},
+        paisLista: [],
+        departamentoLista: [],
+        provinciaLista: [],
+        municipioLista: [],
         // Registro Seguimiento
+        dialogVistaDatos: false,
         dialogRegistroSeguimiento: false,
-        dialogRegistroEspecialidad: false,
+        dialogRegistroTrabajoSocial: false,
+        dialogRegistroTerapiaOcupacional: false,
         dialogRegistroSemestral: false,
         // Opciones de area
         areas: [
@@ -325,7 +427,8 @@
     components: {
       'vista-simple': RegistroSimple,
       'vista-trabajo-social': RegistroEvalTrabajoSocial,
-      'vista-terapia-ocupacional': registroEvaluacionTerapiaOcupacional
+      'vista-terapia-ocupacional': RegistroEvaluacionTerapiaOcupacional,
+      'student-data': StudentData
     },
     watch: {
       'search.estudiante': function () {
@@ -345,34 +448,6 @@
       },
       pagination: {
         handler () {
-          // let sorting = '';
-          // if (this.pagination.sortBy != null && this.pagination.descending != null) {
-          //   if (this.pagination.descending) {
-          //     sorting = `order=-`;
-          //   } else {
-          //     sorting = `order=`;
-          //   }
-          //   if (this.pagination.sortBy === 'codigo') {
-          //     sorting = `${sorting}codigo`;
-          //   } else {
-          //     sorting = `${sorting}${this.pagination.sortBy}`;
-          //   }
-          // }
-          // if()
-          // let rutaEstudiantes;
-          // if (this.pagination.rowsPerPage === -1) {
-          //   rutaEstudiantes = sorting === '' ? `registros` : `registros?${sorting}`;
-          // } else {
-          //   rutaEstudiantes = sorting === '' ? `registros?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}` : `estudiantes?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}&${sorting}`;
-          // }
-          // this.$service.get(rutaEstudiantes)
-          // .then(response => {
-          //   this.registros = response.datos.rows ? response.datos.rows : response.datos;
-          //   this.registros.forEach(function (element) {
-          //     element.ci = element.documento_identidad + ' ' + element.lugar_documento_identidad;
-          //   }, this);
-          //   this.totalItems = response.datos.count ? response.datos.count : response.datos.lenght;
-          // })
         },
         deep: true
       }
@@ -449,6 +524,35 @@
             this.search.estudiante = this.estudiantes[0].value;
           }
         })
+      },
+      mostrarDatos () {
+        this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
+        this.$service.get(`dpaNivel?nivel=1`)
+        .then(respuesta => {
+          this.paisLista = respuesta.datos;
+        });
+        this.$service.get(`dpaNivel?nivel=2`)
+        .then(respuesta => {
+          this.departamentoLista = respuesta.datos;
+        });
+        this.$service.get(`dpaNivel?nivel=3`)
+        .then(respuesta => {
+          this.provinciaLista = respuesta.datos;
+        });
+        this.$service.get(`dpaNivel?nivel=4`)
+        .then(respuesta => {
+          this.municipioLista = respuesta.datos;
+        });
+        this.$service.get(`estudiantes?codigo=${this.search.estudiante}`)
+        .then(respuesta => {
+          if (!respuesta) {
+            return;
+          }
+          if (respuesta.datos.length === 1) {
+            this.consulta = respuesta.datos[0];
+          }
+        });
+        this.dialogVistaDatos = true;
       },
       primeraLetraMayuscula (nombres) {
         nombres = nombres.trim();
@@ -528,6 +632,52 @@
         let date = dateString ? new Date(dateString) : new Date();
         return (date.getDate() + ' - ' + this.$t('months[' + date.getMonth() + ']') + ' - ' + date.getFullYear());
       },
+      getAge (dateString) {
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      },
+      getPais (itemPais) {
+        let response = 'No registrado';
+        this.paisLista.forEach(element => {
+          if (element.id_dpa === itemPais) {
+            response = element.nombre;
+          }
+        });
+        return response;
+      },
+      getDepartamento (itemDepartamento) {
+        let response = 'No registrado';
+        this.departamentoLista.forEach(element => {
+          if (element.id_dpa === itemDepartamento) {
+            response = element.nombre;
+          }
+        });
+        return response;
+      },
+      getProvincia (itemProvincia) {
+        let response = 'No registrado';
+        this.provinciaLista.forEach(element => {
+          if (element.id_dpa === itemProvincia) {
+            response = element.nombre;
+          }
+        });
+        return response;
+      },
+      getMunicipio (itemMunicipio) {
+        let response = 'No registrado';
+        this.municipioLista.forEach(element => {
+          if (element.id_dpa === itemMunicipio) {
+            response = element.nombre;
+          }
+        });
+        return response;
+      },
       dateFormat (fecha) {
         if (!fecha) {
           fecha = new Date();
@@ -577,9 +727,10 @@
                   conclusionSugerencia: item.reg_tb.conclusion_sugerencia
                 };
                 this.$store.state.socialWorkRegisterView = datosTrabajoSocial
+                this.dialogRegistroTrabajoSocial = true;
                 break;
               case 'Terapia Ocupacional':
-                this.areaView = 'Trabajo social';
+                this.areaView = 'Terapia ocupacional';
                 const datosTerapiaOcupacional = {
                   idRegistro: item.id_registro,
                   fecha: this.getDate(item._fecha_creacion),
@@ -664,11 +815,11 @@
                   objetivosIntervención_observaciones: item.reg_to.objetivosIntervención_observaciones
                 };
                 this.$store.state.occupationalTherapyRegisterView = datosTerapiaOcupacional;
+                this.dialogRegistroTerapiaOcupacional = true;
                 break;
               default:
                 break;
             }
-            this.dialogRegistroEspecialidad = true;
             break;
           case 'semestral':
             this.dialogRegistroSemestral = true;
