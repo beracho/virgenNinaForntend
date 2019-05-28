@@ -98,7 +98,7 @@
                 :filter="filter"
                 :items="areaItems"
                 hide-selected
-                :label="$t('socialWork.familyType')"
+                :label="$t('registerView.area')"
                 :error="$v.datosConsulta.area.$error"
                 @input="$v.datosConsulta.area.$touch()"
                 :error-messages="errors.area"

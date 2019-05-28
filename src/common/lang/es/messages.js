@@ -78,6 +78,7 @@ export default {
     toDate: 'A fecha',
     followUp: 'Seguimiento',
     evaluation: 'Evaluación',
+    all: 'Todos',
     frecuency: 'Frecuencia',
     day: 'Día',
     week: 'Semana',
@@ -92,7 +93,10 @@ export default {
     both: 'ambos',
     getStudentsBy: 'Obtener estudiantes por',
     course: 'Curso',
-    maleOrFemale: 'Masculino o femenino'
+    maleOrFemale: 'Masculino o femenino',
+    searchStudent: 'Buscar estudiante',
+    studentsFound: 'Estudiantes encontrados',
+    noStudentsMatchSearchParams: 'No se encontraron estudiantes con los parámetros'
   },
   areas: {
     medicalDoctor: 'Medicina general',
