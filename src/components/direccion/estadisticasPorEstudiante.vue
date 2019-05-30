@@ -260,7 +260,7 @@ export default {
       });
       datasetsReceiveData.forEach(dataElement => {
         const auxData = {
-          label: this.getCourseFromID(dataElement.label),
+          label: this.datosConsulta.buscarPor === 'course' ? this.getCourseFromID(dataElement.label) : dataElement.label,
           fill: false,
           borderColor: this.colors[colorCounter % 9],
           data: dataElement.data
