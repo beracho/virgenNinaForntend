@@ -1,10 +1,17 @@
 <template>
 <div>
   <div>
-  <v-btn dark @click.native="dialogNewCourse = true">
-    {{$t('courses.newCourse') }}
-    <v-icon right dark>add_circle</v-icon>
-  </v-btn>
+    <v-layout row>
+      <v-flex xs12>
+        <v-btn dark @click.native="dialogNewCourse = true">
+          {{$t('courses.newCourse') }}
+          <v-icon right dark>add_circle</v-icon>
+        </v-btn>
+      </v-flex>
+      <v-flex xs4>
+        <v-text-field :label="$t('courses.gestion')" v-model="buscaCurso.gestion"></v-text-field>
+      </v-flex>
+    </v-layout>
   <!-- TABLA DE DATOS -->
   <v-data-table v-bind:headers="headersAsinacion" v-bind:items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('courses.coursesPerPage')">
     <template slot="items" slot-scope="props">
@@ -199,6 +206,10 @@
     mixins: [ Comps ],
     data () {
       return {
+        // Variable busqueda de cursos
+        buscaCurso: {
+          gestion: (new Date()).getFullYear()
+        },
         // Variables creación cursos
         dialogNewCourse: false,
         formularioCreacionCurso: {
@@ -295,9 +306,9 @@
           }
           let rutaCursos;
           if (this.pagination.rowsPerPage === -1) {
-            rutaCursos = sorting === '' ? `cursos` : `cursos?${sorting}`;
+            rutaCursos = sorting === '' ? `cursos` : `cursos?gestion=${this.buscaCurso.gestion}&${sorting}`;
           } else {
-            rutaCursos = sorting === '' ? `cursos?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}` : `cursos?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}&${sorting}`;
+            rutaCursos = sorting === '' ? `cursos?gestion=${this.buscaCurso.gestion}&limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}` : `cursos?gestion=${this.buscaCurso.gestion}&limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}&${sorting}`;
           }
           this.$service.get(rutaCursos)
           .then(response => {
@@ -309,6 +320,9 @@
           })
         },
         deep: true
+      },
+      'buscaCurso.gestion': function (val) {
+        this.cargarAsignaciones();
       }
     },
     created () {
@@ -416,7 +430,7 @@
         }
       },
       cargarAsignaciones () { // Carga lista de cursos
-        this.$service.get(`cursos?limit=5&page=1`)
+        this.$service.get(`cursos?gestion=${this.buscaCurso.gestion}&limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}`)
           .then(response => {
             this.asignaciones = response.datos.rows;
             this.count = response.datos.count;
