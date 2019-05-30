@@ -40,5 +40,10 @@ export default {
   'invalidParalelFormat': 'Formato de paralelo incorrecto.',
   'noIdCourseSend': 'No se envió el id del curso.',
   // Registros medicos
-  'wrongUrl': 'Ruta incorrecta'
+  'wrongUrl': 'Ruta incorrecta',
+  'noRudeValue': 'Ingrese valor de RUDE',
+  'noNamesValue': 'Debe ingresar los nombres',
+  'nodocumentNumberValue': 'Debe ingresar documento de identidad',
+  'noDocumentPlaceValue': 'Debe ingresar lugar de expedición del documento de identidad',
+  'noCityValue': 'Debe ingresar ciudad de nacimiento'
 };

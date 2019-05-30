@@ -460,7 +460,7 @@
                     <strong>{{$t('inscriptionRegister.subtitle3') }}</strong><br>
                   </v-alert>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs3>
                   <v-select
                     v-bind:items="opcionesNivel"
                     item-text="name"
@@ -470,7 +470,7 @@
                     autocomplete
                   ></v-select>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs3>
                   <v-select
                   v-if="form.registroInscripcion.nivel !== ''"
                     v-bind:items="opcionesGrado"
@@ -481,7 +481,7 @@
                     autocomplete
                   ></v-select>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs3>
                   <v-select
                     v-bind:items="opcionesTurno"
                     item-text="name"
@@ -490,6 +490,9 @@
                     :label="$t('inscriptionRegister.turn')"
                     autocomplete
                   ></v-select>
+                </v-flex>
+                <v-flex xs3>
+                  <v-text-field :label="$t('courses.gestion')" v-model="form.registroInscripcion.gestion"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                   <v-radio-group v-model="form.registroInscripcion.paralelo" :label="$t('inscriptionRegister.paralel')" :mandatory="true" row>
@@ -768,7 +771,8 @@ export default {
           nivel: '',
           grado: '',
           paralelo: '',
-          turno: ''
+          turno: '',
+          gestion: (new Date()).getFullYear()
         },
         salud: {
           centro_salud: '',
@@ -1271,7 +1275,9 @@ export default {
             }, this);
             // Unidades educativas
             consulta.unidades_educativas.forEach(function (element) {
-              if (element.gestion === '2018') {
+              const fechaActual = new Date();
+              let mayor = 0;
+              if (element.gestion === fechaActual.getFullYear()) {
                 this.form.unidadEducativa.nombre = element.fid_unidad_educativa;
                 this.form.registroInscripcion.nivel = element.nivel;
                 this.form.registroInscripcion.grado = element.grado;
@@ -1280,11 +1286,13 @@ export default {
                 if (this.form.unidadEducativa.nombre !== '') {
                   this.buscaUnidadEducativa('search');
                 }
-              }
-              if (element.gestion === '2017') {
-                this.form.unidadEducativaAnterior.id = element.fid_unidad_educativa;
-                this.form.unidadEducativaAnterior.codSie = element.unidad_educativa.sie;
-                this.form.unidadEducativaAnterior.nombreUnidad = element.unidad_educativa.nombre;
+              } else {
+                if (element.gestion > mayor) {
+                  this.form.unidadEducativaAnterior.id = element.fid_unidad_educativa;
+                  this.form.unidadEducativaAnterior.codSie = element.unidad_educativa.sie;
+                  this.form.unidadEducativaAnterior.nombreUnidad = element.unidad_educativa.nombre;
+                  mayor = element.gestion;
+                }
               }
             }, this);
           });
@@ -1311,7 +1319,11 @@ export default {
       this.form.apoderados = this.padres;
       this.$service.put(`registroRude`, this.form)
       .then(respuesta => {
-        console.log(JSON.stringify(respuesta));
+        if (respuesta) {
+          this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+        } else {
+          this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
+        }
       });
     }
   },
