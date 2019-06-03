@@ -1617,7 +1617,7 @@
 </template>
 
 <script>
-  import { required } from 'vuelidate/lib/validators';
+  // import { required } from 'vuelidate/lib/validators';
   import errorsHandler from '@/common/mixins/errorsHandler';
   import FamilyMember from '@/common/util/FamilyMember.vue';
   import StudentData from '@/common/util/StudentData.vue';
@@ -1883,28 +1883,166 @@
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.formularioRegistro.areaMotora.headersPhoto = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
-      // if (this.$route.query.registro) {
-      //   const socialWorkAux = this.$store.state.socialWorkRegisterEdit.reg_tb;
-      //   this.formularioRegistro = {
-      //     tipoDeFamilia: socialWorkAux.tipo_de_familia ? socialWorkAux.tipo_de_familia : null,
-      //     tipoDeFamiliaObject: socialWorkAux.tipo_de_familia ? {
-      //       text: socialWorkAux.tipo_de_familia,
-      //       color: this.colors[this.nonce - 1]} : null,
-      //     observacionGrupoFamiliar: socialWorkAux.observacion_grupo_familiar ? socialWorkAux.observacion_grupo_familiar : null,
-      //     dinamicaFamiliar: socialWorkAux.dinamica_familiar ? socialWorkAux.dinamica_familiar : null,
-      //     procesoSocial: socialWorkAux.proceso_social ? socialWorkAux.proceso_social : null,
-      //     relatoDiscapacidad: socialWorkAux.relato_discapacidad ? socialWorkAux.relato_discapacidad : null,
-      //     diagnosticoSocial: socialWorkAux.diagnostico_social ? socialWorkAux.diagnostico_social : null,
-      //     conclusionSugerencia: socialWorkAux.conclusion_sugerencia ? socialWorkAux.conclusion_sugerencia : null
-      //   }
-      //   // this.fechaCreacion = this.$store.state.socialWorkRegisterEdit._fecha_creacion;
-      // }
+      if (this.$route.query.registro) {
+        const psychomotorAux = this.$store.state.psychomotorRegisterEdit.reg_pm;
+        this.formularioRegistro.anamnesia.antecedentesFamiliares = psychomotorAux.anam_antecedentesFamiliares ? psychomotorAux.anam_antecedentesFamiliares : null;
+        this.formularioRegistro.anamnesia.antecedentesPatologicos = psychomotorAux.anam_antecedentesPatologicos ? psychomotorAux.anam_antecedentesPatologicos : null;
+        this.formularioRegistro.anamnesia.perinatal = psychomotorAux.anam_perinatal ? psychomotorAux.anam_perinatal : null;
+        this.formularioRegistro.anamnesia.prenatal = psychomotorAux.anam_prenatal ? psychomotorAux.anam_prenatal : null;
+        this.formularioRegistro.anamnesia.postnatal = psychomotorAux.anam_postnatal ? psychomotorAux.anam_postnatal : null;
+        this.formularioRegistro.anamnesia.controlCefálico = psychomotorAux.anam_controlCefálico ? psychomotorAux.anam_controlCefálico : null;
+        this.formularioRegistro.anamnesia.Sedestación = psychomotorAux.anam_Sedestación ? psychomotorAux.anam_Sedestación : null;
+        this.formularioRegistro.anamnesia.Arrastre = psychomotorAux.anam_Arrastre ? psychomotorAux.anam_Arrastre : null;
+        this.formularioRegistro.anamnesia.Gateo = psychomotorAux.anam_Gateo ? psychomotorAux.anam_Gateo : null;
+        this.formularioRegistro.anamnesia.Bipedestación = psychomotorAux.anam_Bipedestación ? psychomotorAux.anam_Bipedestación : null;
+        this.formularioRegistro.anamnesia.Marcha = psychomotorAux.anam_Marcha ? psychomotorAux.anam_Marcha : null;
+        this.formularioRegistro.anamnesia.razonConsulta = psychomotorAux.anam_razonConsulta ? psychomotorAux.anam_razonConsulta : null;
+        this.formularioRegistro.evaluacionPsicomotriz.headUpright = psychomotorAux.psico_headUpright ? psychomotorAux.psico_headUpright : null;
+        this.formularioRegistro.evaluacionPsicomotriz.movesHead = psychomotorAux.psico_movesHead ? psychomotorAux.psico_movesHead : null;
+        this.formularioRegistro.evaluacionPsicomotriz.holdsObjects = psychomotorAux.psico_holdsObjects ? psychomotorAux.psico_holdsObjects : null;
+        this.formularioRegistro.evaluacionPsicomotriz.playsFeetAndHands = psychomotorAux.psico_playsFeetAndHands ? psychomotorAux.psico_playsFeetAndHands : null;
+        this.formularioRegistro.evaluacionPsicomotriz.locateSounds = psychomotorAux.psico_locateSounds ? psychomotorAux.psico_locateSounds : null;
+        this.formularioRegistro.evaluacionPsicomotriz.babbles = psychomotorAux.psico_babbles ? psychomotorAux.psico_babbles : null;
+        this.formularioRegistro.evaluacionPsicomotriz.gutturalSounds = psychomotorAux.psico_gutturalSounds ? psychomotorAux.psico_gutturalSounds : null;
+        this.formularioRegistro.evaluacionPsicomotriz.stimulusSmile = psychomotorAux.psico_stimulusSmile ? psychomotorAux.psico_stimulusSmile : null;
+        this.formularioRegistro.evaluacionPsicomotriz.recognicesMother = psychomotorAux.psico_recognicesMother ? psychomotorAux.psico_recognicesMother : null;
+        this.formularioRegistro.evaluacionPsicomotriz.mouthSounds = psychomotorAux.psico_mouthSounds ? psychomotorAux.psico_mouthSounds : null;
+        this.formularioRegistro.evaluacionPsicomotriz.liftHead = psychomotorAux.psico_liftHead ? psychomotorAux.psico_liftHead : null;
+        this.formularioRegistro.evaluacionPsicomotriz.ulnaChange = psychomotorAux.psico_ulnaChange ? psychomotorAux.psico_ulnaChange : null;
+        this.formularioRegistro.evaluacionPsicomotriz.picksCloseObjects = psychomotorAux.psico_picksCloseObjects ? psychomotorAux.psico_picksCloseObjects : null;
+        this.formularioRegistro.evaluacionPsicomotriz.makesSounds = psychomotorAux.psico_makesSounds ? psychomotorAux.psico_makesSounds : null;
+        this.formularioRegistro.evaluacionPsicomotriz.callsForAttention = psychomotorAux.psico_callsForAttention ? psychomotorAux.psico_callsForAttention : null;
+        this.formularioRegistro.evaluacionPsicomotriz.repeatsSyllables = psychomotorAux.psico_repeatsSyllables ? psychomotorAux.psico_repeatsSyllables : null;
+        this.formularioRegistro.evaluacionPsicomotriz.smilesToExtrangers = psychomotorAux.psico_smilesToExtrangers ? psychomotorAux.psico_smilesToExtrangers : null;
+        this.formularioRegistro.evaluacionPsicomotriz.recognicesCaretaker = psychomotorAux.psico_recognicesCaretaker ? psychomotorAux.psico_recognicesCaretaker : null;
+        this.formularioRegistro.evaluacionPsicomotriz.sitsWithoutSupport = psychomotorAux.psico_sitsWithoutSupport ? psychomotorAux.psico_sitsWithoutSupport : null;
+        this.formularioRegistro.evaluacionPsicomotriz.drags = psychomotorAux.psico_drags ? psychomotorAux.psico_drags : null;
+        this.formularioRegistro.evaluacionPsicomotriz.picksAndHitsObjects = psychomotorAux.psico_picksAndHitsObjects ? psychomotorAux.psico_picksAndHitsObjects : null;
+        this.formularioRegistro.evaluacionPsicomotriz.takesFoodToMouth = psychomotorAux.psico_takesFoodToMouth ? psychomotorAux.psico_takesFoodToMouth : null;
+        this.formularioRegistro.evaluacionPsicomotriz.likesSongs = psychomotorAux.psico_likesSongs ? psychomotorAux.psico_likesSongs : null;
+        this.formularioRegistro.evaluacionPsicomotriz.searchsSounds = psychomotorAux.psico_searchsSounds ? psychomotorAux.psico_searchsSounds : null;
+        this.formularioRegistro.evaluacionPsicomotriz.recognicesObjects = psychomotorAux.psico_recognicesObjects ? psychomotorAux.psico_recognicesObjects : null;
+        this.formularioRegistro.evaluacionPsicomotriz.criesBeforeExtrangers = psychomotorAux.psico_criesBeforeExtrangers ? psychomotorAux.psico_criesBeforeExtrangers : null;
+        this.formularioRegistro.evaluacionPsicomotriz.imitatesMovements = psychomotorAux.psico_imitatesMovements ? psychomotorAux.psico_imitatesMovements : null;
+        this.formularioRegistro.evaluacionPsicomotriz.sitsWithSupport = psychomotorAux.psico_sitsWithSupport ? psychomotorAux.psico_sitsWithSupport : null;
+        this.formularioRegistro.evaluacionPsicomotriz.crawl = psychomotorAux.psico_crawl ? psychomotorAux.psico_crawl : null;
+        this.formularioRegistro.evaluacionPsicomotriz.discoversObjects = psychomotorAux.psico_discoversObjects ? psychomotorAux.psico_discoversObjects : null;
+        this.formularioRegistro.evaluacionPsicomotriz.walksWithSupport = psychomotorAux.psico_walksWithSupport ? psychomotorAux.psico_walksWithSupport : null;
+        this.formularioRegistro.evaluacionPsicomotriz.wordsWithMeaning = psychomotorAux.psico_wordsWithMeaning ? psychomotorAux.psico_wordsWithMeaning : null;
+        this.formularioRegistro.evaluacionPsicomotriz.embraceAdultChild = psychomotorAux.psico_embraceAdultChild ? psychomotorAux.psico_embraceAdultChild : null;
+        this.formularioRegistro.evaluacionPsicomotriz.answersToName = psychomotorAux.psico_answersToName ? psychomotorAux.psico_answersToName : null;
+        this.formularioRegistro.evaluacionPsicomotriz.meetsSimpleOrders = psychomotorAux.psico_meetsSimpleOrders ? psychomotorAux.psico_meetsSimpleOrders : null;
+        this.formularioRegistro.evaluacionPsicomotriz.jumpsWithBothFeet = psychomotorAux.psico_jumpsWithBothFeet ? psychomotorAux.psico_jumpsWithBothFeet : null;
+        this.formularioRegistro.evaluacionPsicomotriz.throwsBall = psychomotorAux.psico_throwsBall ? psychomotorAux.psico_throwsBall : null;
+        this.formularioRegistro.evaluacionPsicomotriz.UndressHimself = psychomotorAux.psico_UndressHimself ? psychomotorAux.psico_UndressHimself : null;
+        this.formularioRegistro.evaluacionPsicomotriz.useForkCup = psychomotorAux.psico_useForkCup ? psychomotorAux.psico_useForkCup : null;
+        this.formularioRegistro.evaluacionPsicomotriz.makesNounVerbPhrases = psychomotorAux.psico_makesNounVerbPhrases ? psychomotorAux.psico_makesNounVerbPhrases : null;
+        this.formularioRegistro.evaluacionPsicomotriz.useNegatives = psychomotorAux.psico_useNegatives ? psychomotorAux.psico_useNegatives : null;
+        this.formularioRegistro.evaluacionPsicomotriz.answerQuestions = psychomotorAux.psico_answerQuestions ? psychomotorAux.psico_answerQuestions : null;
+        this.formularioRegistro.evaluacionPsicomotriz.bigAndSmallDifferences = psychomotorAux.psico_bigAndSmallDifferences ? psychomotorAux.psico_bigAndSmallDifferences : null;
+        this.formularioRegistro.evaluacionPsicomotriz.singChildrenSongs = psychomotorAux.psico_singChildrenSongs ? psychomotorAux.psico_singChildrenSongs : null;
+        this.formularioRegistro.evaluacionPsicomotriz.exploreEnvironment = psychomotorAux.psico_exploreEnvironment ? psychomotorAux.psico_exploreEnvironment : null;
+        this.formularioRegistro.evaluacionPsicomotriz.recognicesPhotographs = psychomotorAux.psico_recognicesPhotographs ? psychomotorAux.psico_recognicesPhotographs : null;
+        this.formularioRegistro.evaluacionPsicomotriz.playsSmallGroups = psychomotorAux.psico_playsSmallGroups ? psychomotorAux.psico_playsSmallGroups : null;
+        this.formularioRegistro.evaluacionPsicomotriz.greetsOnCommand = psychomotorAux.psico_greetsOnCommand ? psychomotorAux.psico_greetsOnCommand : null;
+        this.formularioRegistro.evaluacionPsicomotriz.performManualActivities = psychomotorAux.psico_performManualActivities ? psychomotorAux.psico_performManualActivities : null;
+        this.formularioRegistro.evaluacionPsicomotriz.runsJumps = psychomotorAux.psico_runsJumps ? psychomotorAux.psico_runsJumps : null;
+        this.formularioRegistro.evaluacionPsicomotriz.copyLinesAndCircles = psychomotorAux.psico_copyLinesAndCircles ? psychomotorAux.psico_copyLinesAndCircles : null;
+        this.formularioRegistro.evaluacionPsicomotriz.identifiesEspatialConcepts = psychomotorAux.psico_identifiesEspatialConcepts ? psychomotorAux.psico_identifiesEspatialConcepts : null;
+        this.formularioRegistro.evaluacionPsicomotriz.acknowledgeHisSex = psychomotorAux.psico_acknowledgeHisSex ? psychomotorAux.psico_acknowledgeHisSex : null;
+        this.formularioRegistro.evaluacionPsicomotriz.gerundPluralArticleDifference = psychomotorAux.psico_gerundPluralArticleDifference ? psychomotorAux.psico_gerundPluralArticleDifference : null;
+        this.formularioRegistro.evaluacionPsicomotriz.articlePhonemes = psychomotorAux.psico_articlePhonemes ? psychomotorAux.psico_articlePhonemes : null;
+        this.formularioRegistro.evaluacionPsicomotriz.gestureCommunication = psychomotorAux.psico_gestureCommunication ? psychomotorAux.psico_gestureCommunication : null;
+        this.formularioRegistro.evaluacionPsicomotriz.talksFirstPerson = psychomotorAux.psico_talksFirstPerson ? psychomotorAux.psico_talksFirstPerson : null;
+        this.formularioRegistro.evaluacionPsicomotriz.useOralLanguage = psychomotorAux.psico_useOralLanguage ? psychomotorAux.psico_useOralLanguage : null;
+        this.formularioRegistro.evaluacionPsicomotriz.showsPersonalPreferences = psychomotorAux.psico_showsPersonalPreferences ? psychomotorAux.psico_showsPersonalPreferences : null;
+        this.formularioRegistro.evaluacionPsicomotriz.likesChildAndAnimals = psychomotorAux.psico_likesChildAndAnimals ? psychomotorAux.psico_likesChildAndAnimals : null;
+        this.formularioRegistro.evaluacionPsicomotriz.joinsSmallTeams = psychomotorAux.psico_joinsSmallTeams ? psychomotorAux.psico_joinsSmallTeams : null;
+        this.formularioRegistro.areaMotora.run = psychomotorAux.motor_run ? psychomotorAux.motor_run : null;
+        this.formularioRegistro.areaMotora.jump = psychomotorAux.motor_jump ? psychomotorAux.motor_jump : null;
+        this.formularioRegistro.areaMotora.throw = psychomotorAux.motor_throw ? psychomotorAux.motor_throw : null;
+        this.formularioRegistro.areaMotora.kick = psychomotorAux.motor_kick ? psychomotorAux.motor_kick : null;
+        this.formularioRegistro.areaMotora.staticDinamicBalance = psychomotorAux.motor_staticDinamicBalance ? psychomotorAux.motor_staticDinamicBalance : null;
+        this.formularioRegistro.areaMotora.staticBalance = psychomotorAux.motor_staticBalance ? psychomotorAux.motor_staticBalance : null;
+        this.formularioRegistro.areaMotora.partialDisociation = psychomotorAux.motor_partialDisociation ? psychomotorAux.motor_partialDisociation : null;
+        this.formularioRegistro.areaMotora.generalCoordination = psychomotorAux.motor_generalCoordination ? psychomotorAux.motor_generalCoordination : null;
+        this.formularioRegistro.areaMotora.eye.right = psychomotorAux.motor_eye_right ? psychomotorAux.motor_eye_right : null;
+        this.formularioRegistro.areaMotora.eye.left = psychomotorAux.motor_eye_left ? psychomotorAux.motor_eye_left : null;
+        this.formularioRegistro.areaMotora.ear.right = psychomotorAux.motor_ear_right ? psychomotorAux.motor_ear_right : null;
+        this.formularioRegistro.areaMotora.ear.left = psychomotorAux.motor_ear_left ? psychomotorAux.motor_ear_left : null;
+        this.formularioRegistro.areaMotora.hand.right = psychomotorAux.motor_hand_right ? psychomotorAux.motor_hand_right : null;
+        this.formularioRegistro.areaMotora.hand.left = psychomotorAux.motor_hand_left ? psychomotorAux.motor_hand_left : null;
+        this.formularioRegistro.areaMotora.feet.right = psychomotorAux.motor_feet_right ? psychomotorAux.motor_feet_right : null;
+        this.formularioRegistro.areaMotora.feet.left = psychomotorAux.motor_feet_left ? psychomotorAux.motor_feet_left : null;
+        this.formularioRegistro.areaMotora.scrash = psychomotorAux.motor_scrash ? psychomotorAux.motor_scrash : null;
+        this.formularioRegistro.areaMotora.button = psychomotorAux.motor_button ? psychomotorAux.motor_button : null;
+        this.formularioRegistro.areaMotora.cut = psychomotorAux.motor_cut ? psychomotorAux.motor_cut : null;
+        this.formularioRegistro.areaMotora.makeTower = psychomotorAux.motor_makeTower ? psychomotorAux.motor_makeTower : null;
+        this.formularioRegistro.areaMotora.threadingNeedle = psychomotorAux.motor_threadingNeedle ? psychomotorAux.motor_threadingNeedle : null;
+        this.formularioRegistro.areaMotora.observaciones = psychomotorAux.motor_observaciones ? psychomotorAux.motor_observaciones : null;
+        this.formularioRegistro.areaCognitiva.drawsHumanFigure = psychomotorAux.cogni_drawsHumanFigure ? psychomotorAux.cogni_drawsHumanFigure : null;
+        this.formularioRegistro.areaCognitiva.nameHumanParts = psychomotorAux.cogni_nameHumanParts ? psychomotorAux.cogni_nameHumanParts : null;
+        this.formularioRegistro.areaCognitiva.compleateHumanFigure = psychomotorAux.cogni_compleateHumanFigure ? psychomotorAux.cogni_compleateHumanFigure : null;
+        this.formularioRegistro.areaCognitiva.bodyImage = psychomotorAux.cogni_bodyImage ? psychomotorAux.cogni_bodyImage : null;
+        this.formularioRegistro.areaCognitiva.urlPhoto = psychomotorAux.cogni_urlPhoto ? psychomotorAux.cogni_urlPhoto : null;
+        this.formularioRegistro.areaCognitiva.headersPhoto = psychomotorAux.cogni_headersPhoto ? psychomotorAux.cogni_headersPhoto : null;
+        this.formularioRegistro.areaCognitiva.arriba = psychomotorAux.cogni_arriba ? psychomotorAux.cogni_arriba : null;
+        this.formularioRegistro.areaCognitiva.abajo = psychomotorAux.cogni_abajo ? psychomotorAux.cogni_abajo : null;
+        this.formularioRegistro.areaCognitiva.delante = psychomotorAux.cogni_delante ? psychomotorAux.cogni_delante : null;
+        this.formularioRegistro.areaCognitiva.detras = psychomotorAux.cogni_detras ? psychomotorAux.cogni_detras : null;
+        this.formularioRegistro.areaCognitiva.dentro = psychomotorAux.cogni_dentro ? psychomotorAux.cogni_dentro : null;
+        this.formularioRegistro.areaCognitiva.fuera = psychomotorAux.cogni_fuera ? psychomotorAux.cogni_fuera : null;
+        this.formularioRegistro.areaCognitiva.izquierda = psychomotorAux.cogni_izquierda ? psychomotorAux.cogni_izquierda : null;
+        this.formularioRegistro.areaCognitiva.derecha = psychomotorAux.cogni_derecha ? psychomotorAux.cogni_derecha : null;
+        this.formularioRegistro.areaCognitiva.inflaGlobo = psychomotorAux.cogni_inflaGlobo ? psychomotorAux.cogni_inflaGlobo : null;
+        this.formularioRegistro.areaCognitiva.encubaHuevos = psychomotorAux.cogni_encubaHuevos ? psychomotorAux.cogni_encubaHuevos : null;
+        this.formularioRegistro.areaCognitiva.plantaFlores = psychomotorAux.cogni_plantaFlores ? psychomotorAux.cogni_plantaFlores : null;
+        this.formularioRegistro.areaCognitiva.undifferentiatedCrying = psychomotorAux.cogni_undifferentiatedCrying ? psychomotorAux.cogni_undifferentiatedCrying : null;
+        this.formularioRegistro.areaCognitiva.socialSmile = psychomotorAux.cogni_socialSmile ? psychomotorAux.cogni_socialSmile : null;
+        this.formularioRegistro.areaCognitiva.vocalGame = psychomotorAux.cogni_vocalGame ? psychomotorAux.cogni_vocalGame : null;
+        this.formularioRegistro.areaCognitiva.babbleReflection = psychomotorAux.cogni_babbleReflection ? psychomotorAux.cogni_babbleReflection : null;
+        this.formularioRegistro.areaCognitiva.gutturalSound = psychomotorAux.cogni_gutturalSound ? psychomotorAux.cogni_gutturalSound : null;
+        this.formularioRegistro.areaCognitiva.gestures = psychomotorAux.cogni_gestures ? psychomotorAux.cogni_gestures : null;
+        this.formularioRegistro.areaCognitiva.intentionalSyllable = psychomotorAux.cogni_intentionalSyllable ? psychomotorAux.cogni_intentionalSyllable : null;
+        this.formularioRegistro.areaCognitiva.juxtaposedWord = psychomotorAux.cogni_juxtaposedWord ? psychomotorAux.cogni_juxtaposedWord : null;
+        this.formularioRegistro.areaCognitiva.simplePhrase = psychomotorAux.cogni_simplePhrase ? psychomotorAux.cogni_simplePhrase : null;
+        this.formularioRegistro.areaCognitiva.phraseWord = psychomotorAux.cogni_phraseWord ? psychomotorAux.cogni_phraseWord : null;
+        this.formularioRegistro.areaCognitiva.languageInteriorization = psychomotorAux.cogni_languageInteriorization ? psychomotorAux.cogni_languageInteriorization : null;
+        this.formularioRegistro.areaCognitiva.waitTurn = psychomotorAux.cogni_waitTurn ? psychomotorAux.cogni_waitTurn : null;
+        this.formularioRegistro.areaCognitiva.completePhrase = psychomotorAux.cogni_completePhrase ? psychomotorAux.cogni_completePhrase : null;
+        this.formularioRegistro.areaCognitiva.gramaticalElemmentUse = psychomotorAux.cogni_gramaticalElemmentUse ? psychomotorAux.cogni_gramaticalElemmentUse : null;
+        this.formularioRegistro.areaCognitiva.makeComplexeSentences = psychomotorAux.cogni_makeComplexeSentences ? psychomotorAux.cogni_makeComplexeSentences : null;
+        this.formularioRegistro.areaCognitiva.fullfillComplexOrder = psychomotorAux.cogni_fullfillComplexOrder ? psychomotorAux.cogni_fullfillComplexOrder : null;
+        this.formularioRegistro.areaCognitiva.beginReadingWriting = psychomotorAux.cogni_beginReadingWriting ? psychomotorAux.cogni_beginReadingWriting : null;
+        this.formularioRegistro.areaCognitiva.usePreposition = psychomotorAux.cogni_usePreposition ? psychomotorAux.cogni_usePreposition : null;
+        this.formularioRegistro.areaCognitiva.useAdjectives = psychomotorAux.cogni_useAdjectives ? psychomotorAux.cogni_useAdjectives : null;
+        this.formularioRegistro.areaCognitiva.slangLanguage = psychomotorAux.cogni_slangLanguage ? psychomotorAux.cogni_slangLanguage : null;
+        this.formularioRegistro.areaCognitiva.useAdjectivesAdverbs = psychomotorAux.cogni_useAdjectivesAdverbs ? psychomotorAux.cogni_useAdjectivesAdverbs : null;
+        this.formularioRegistro.areaCognitiva.verbUse = psychomotorAux.cogni_verbUse ? psychomotorAux.cogni_verbUse : null;
+        this.formularioRegistro.areaCognitiva.fluidCommunication = psychomotorAux.cogni_fluidCommunication ? psychomotorAux.cogni_fluidCommunication : null;
+        this.formularioRegistro.areaCognitiva.observaciones = psychomotorAux.cogni_observaciones ? psychomotorAux.cogni_observaciones : null;
+        this.formularioRegistro.areaSocioAfectiva.plays = psychomotorAux.socio_plays ? psychomotorAux.socio_plays : null;
+        this.formularioRegistro.areaSocioAfectiva.proposeGame = psychomotorAux.socio_proposeGame ? psychomotorAux.socio_proposeGame : null;
+        this.formularioRegistro.areaSocioAfectiva.leaderInGames = psychomotorAux.socio_leaderInGames ? psychomotorAux.socio_leaderInGames : null;
+        this.formularioRegistro.areaSocioAfectiva.acceptAnothersGame = psychomotorAux.socio_acceptAnothersGame ? psychomotorAux.socio_acceptAnothersGame : null;
+        this.formularioRegistro.areaSocioAfectiva.otherGame = psychomotorAux.socio_otherGame ? psychomotorAux.socio_otherGame : null;
+        this.formularioRegistro.areaSocioAfectiva.acceptIt = psychomotorAux.socio_acceptIt ? psychomotorAux.socio_acceptIt : null;
+        this.formularioRegistro.areaSocioAfectiva.searchIt = psychomotorAux.socio_searchIt ? psychomotorAux.socio_searchIt : null;
+        this.formularioRegistro.areaSocioAfectiva.provokesIt = psychomotorAux.socio_provokesIt ? psychomotorAux.socio_provokesIt : null;
+        this.formularioRegistro.areaSocioAfectiva.thanksHim = psychomotorAux.socio_thanksHim ? psychomotorAux.socio_thanksHim : null;
+        this.formularioRegistro.areaSocioAfectiva.waitGrownUpApprovation = psychomotorAux.socio_waitGrownUpApprovation ? psychomotorAux.socio_waitGrownUpApprovation : null;
+        this.formularioRegistro.areaSocioAfectiva.waitOrders = psychomotorAux.socio_waitOrders ? psychomotorAux.socio_waitOrders : null;
+        this.formularioRegistro.areaSocioAfectiva.collaborateWithAdult = psychomotorAux.socio_collaborateWithAdult ? psychomotorAux.socio_collaborateWithAdult : null;
+        this.formularioRegistro.areaSocioAfectiva.otherAdult = psychomotorAux.socio_otherAdult ? psychomotorAux.socio_otherAdult : null;
+        this.formularioRegistro.areaSocioAfectiva.observaciones = psychomotorAux.socio_observaciones ? psychomotorAux.socio_observaciones : null;
+        this.formularioRegistro.diagnosticoPsicomotriz = psychomotorAux.diagnosticoPsicomotriz ? psychomotorAux.diagnosticoPsicomotriz : null;
+        this.formularioRegistro.recomendaciones = psychomotorAux.recomendaciones ? psychomotorAux.recomendaciones : null;
+        // this.fechaCreacion = this.$store.state.psychomotorRegisterEdit._fecha_creacion;
+      }
     },
     validations: {
       formularioRegistro: {
-        tipoDeFamiliaObject: {
-          required
-        },
+        tipoDeFamiliaObject: {},
         observacionGrupoFamiliar: {},
         dinamicaFamiliar: {},
         procesoSocial: {},
@@ -1963,12 +2101,11 @@
       submit () { // Envía datos de la nueva asignación
         this.$v.formularioRegistro.$touch();
         if (!this.$v.formularioRegistro.$invalid) {
-          this.formularioRegistro.tipoDeFamilia = this.formularioRegistro.tipoDeFamiliaObject.text;
-          if (this.$route.query.registro) {
+          if (this.$route.query.registro !== undefined) {
             // Edita registro Simple
             this.formularioRegistro.idRegistro = this.$route.query.registro;
-            this.formularioRegistro.idRegistroTrabajoSocial = this.$store.state.socialWorkRegisterEdit.reg_tb.id_reg_tb;
-            this.$service.put(`registroEvalTrabajoSocial`, this.formularioRegistro)
+            this.formularioRegistro.idRegistroPsicomotricidad = this.$store.state.psychomotorRegisterEdit.reg_pm.id_reg_pm;
+            this.$service.put(`registroEvalPsicomotricidad`, this.formularioRegistro)
             .then(respuesta => {
               if (respuesta !== undefined) {
                 this.limpiarCampos();
@@ -1984,7 +2121,7 @@
           } else {
             // Crea registro simple
             this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
-            this.$service.post(`registroEvalTrabajoSocial`, this.formularioRegistro)
+            this.$service.post(`registroEvalPsicomotricidad`, this.formularioRegistro)
             .then(respuesta => {
               if (respuesta !== undefined) {
                 this.limpiarCampos();

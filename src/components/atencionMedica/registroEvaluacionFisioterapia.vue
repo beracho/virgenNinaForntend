@@ -150,9 +150,6 @@
                 :search-input.sync="familyTypeSearch"
                 hide-selected
                 :label="$t('physiotherapy.position')"
-                :error="$v.formularioRegistro.tipoDeFamiliaObject.$error"
-                @input="$v.formularioRegistro.tipoDeFamiliaObject.$touch()"
-                :error-messages="errors.tipoDeFamiliaObject"
                 small-chips
               >
                 <template v-slot:no-data>
@@ -1042,9 +1039,6 @@
                 :search-input.sync="familyTypeSearch"
                 hide-selected
                 :label="$t('psicomotricity.laterality')"
-                :error="$v.formularioRegistro.tipoDeFamiliaObject.$error"
-                @input="$v.formularioRegistro.tipoDeFamiliaObject.$touch()"
-                :error-messages="errors.tipoDeFamiliaObject"
                 small-chips
               >
                 <template v-slot:no-data>
@@ -1801,7 +1795,7 @@
 </template>
 
 <script>
-  import { required } from 'vuelidate/lib/validators';
+  // import { required } from 'vuelidate/lib/validators';
   import errorsHandler from '@/common/mixins/errorsHandler';
   import FamilyMember from '@/common/util/FamilyMember.vue';
   import StudentData from '@/common/util/StudentData.vue';
@@ -1994,13 +1988,13 @@
           planTratamiento: ''
         },
         errors: {
-          tipoDeFamiliaObject: [],
-          observacionGrupoFamiliar: [],
-          dinamicaFamiliar: [],
-          procesoSocial: [],
-          relatoDiscapacidad: [],
-          diagnosticoSocial: [],
-          conclusionSugerencia: []
+          // tipoDeFamiliaObject: [],
+          // observacionGrupoFamiliar: [],
+          // dinamicaFamiliar: [],
+          // procesoSocial: [],
+          // relatoDiscapacidad: [],
+          // diagnosticoSocial: [],
+          // conclusionSugerencia: []
         },
         colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
         nonce: 1,
@@ -2031,65 +2025,197 @@
       'student-data': StudentData
     },
     watch: {
-      'formularioRegistro.tipoDeFamiliaObject': function (val, prev) {
-        if (typeof this.formularioRegistro.tipoDeFamiliaObject === 'string') {
-          this.formularioRegistro.tipoDeFamiliaObject = {
-            text: this.formularioRegistro.tipoDeFamiliaObject,
-            color: this.colors[this.nonce - 1]
-          };
-          this.familyTypeItems.push(this.formularioRegistro.tipoDeFamilia);
-          this.nonce++;
-        }
-        // this.formRelative.civil_state = this.formularioRegistro.tipoDeFamilia.text;
-        return this.formularioRegistro.tipoDeFamiliaObject;
-      },
-      '$v.formularioRegistro.tipoDeFamiliaObject.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.tipoDeFamiliaObject, this.errors.tipoDeFamiliaObject);
-      },
-      '$v.formularioRegistro.observacionGrupoFamiliar.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.observacionGrupoFamiliar, this.errors.observacionGrupoFamiliar);
-      },
-      '$v.formularioRegistro.dinamicaFamiliar.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.dinamicaFamiliar, this.errors.dinamicaFamiliar);
-      },
-      '$v.formularioRegistro.procesoSocial.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.procesoSocial, this.errors.procesoSocial);
-      },
-      '$v.formularioRegistro.relatoDiscapacidad.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.relatoDiscapacidad, this.errors.relatoDiscapacidad);
-      },
-      '$v.formularioRegistro.diagnosticoSocial.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.diagnosticoSocial, this.errors.diagnosticoSocial);
-      },
-      '$v.formularioRegistro.conclusionSugerencia.$error': function (val) {
-        this.errorHandler(this.$v.formularioRegistro.conclusionSugerencia, this.errors.conclusionSugerencia);
-      }
+      // 'formularioRegistro.tipoDeFamiliaObject': function (val, prev) {
+      //   if (typeof this.formularioRegistro.tipoDeFamiliaObject === 'string') {
+      //     this.formularioRegistro.tipoDeFamiliaObject = {
+      //       text: this.formularioRegistro.tipoDeFamiliaObject,
+      //       color: this.colors[this.nonce - 1]
+      //     };
+      //     this.familyTypeItems.push(this.formularioRegistro.tipoDeFamilia);
+      //     this.nonce++;
+      //   }
+      //   // this.formRelative.civil_state = this.formularioRegistro.tipoDeFamilia.text;
+      //   return this.formularioRegistro.tipoDeFamiliaObject;
+      // },
+      // '$v.formularioRegistro.tipoDeFamiliaObject.$error': function (val) {
+      //   this.errorHandler(this.$v.formularioRegistro.tipoDeFamiliaObject, this.errors.tipoDeFamiliaObject);
+      // },
+      // '$v.formularioRegistro.observacionGrupoFamiliar.$error': function (val) {
+      //   this.errorHandler(this.$v.formularioRegistro.observacionGrupoFamiliar, this.errors.observacionGrupoFamiliar);
+      // },
+      // '$v.formularioRegistro.dinamicaFamiliar.$error': function (val) {
+      //   this.errorHandler(this.$v.formularioRegistro.dinamicaFamiliar, this.errors.dinamicaFamiliar);
+      // },
+      // '$v.formularioRegistro.procesoSocial.$error': function (val) {
+      //   this.errorHandler(this.$v.formularioRegistro.procesoSocial, this.errors.procesoSocial);
+      // },
+      // '$v.formularioRegistro.relatoDiscapacidad.$error': function (val) {
+      //   this.errorHandler(this.$v.formularioRegistro.relatoDiscapacidad, this.errors.relatoDiscapacidad);
+      // },
+      // '$v.formularioRegistro.diagnosticoSocial.$error': function (val) {
+      //   this.errorHandler(this.$v.formularioRegistro.diagnosticoSocial, this.errors.diagnosticoSocial);
+      // },
+      // '$v.formularioRegistro.conclusionSugerencia.$error': function (val) {
+      //   this.errorHandler(this.$v.formularioRegistro.conclusionSugerencia, this.errors.conclusionSugerencia);
+      // }
     },
     created () {
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
       if (this.$route.query.registro) {
-        const socialWorkAux = this.$store.state.socialWorkRegisterEdit.reg_tb;
-        this.formularioRegistro = {
-          tipoDeFamilia: socialWorkAux.tipo_de_familia ? socialWorkAux.tipo_de_familia : null,
-          tipoDeFamiliaObject: socialWorkAux.tipo_de_familia ? {
-            text: socialWorkAux.tipo_de_familia,
-            color: this.colors[this.nonce - 1]} : null,
-          observacionGrupoFamiliar: socialWorkAux.observacion_grupo_familiar ? socialWorkAux.observacion_grupo_familiar : null,
-          dinamicaFamiliar: socialWorkAux.dinamica_familiar ? socialWorkAux.dinamica_familiar : null,
-          procesoSocial: socialWorkAux.proceso_social ? socialWorkAux.proceso_social : null,
-          relatoDiscapacidad: socialWorkAux.relato_discapacidad ? socialWorkAux.relato_discapacidad : null,
-          diagnosticoSocial: socialWorkAux.diagnostico_social ? socialWorkAux.diagnostico_social : null,
-          conclusionSugerencia: socialWorkAux.conclusion_sugerencia ? socialWorkAux.conclusion_sugerencia : null
-        }
-        // this.fechaCreacion = this.$store.state.socialWorkRegisterEdit._fecha_creacion;
+        const physiotherapyAux = this.$store.state.physiotherapyRegisterEdit.reg_ft;
+        this.formularioRegistro.diagnosticoMedico = physiotherapyAux.diagnosticoMedico ? physiotherapyAux.diagnosticoMedico : null;
+        this.formularioRegistro.motivoConsulta = physiotherapyAux.motivoConsulta ? physiotherapyAux.motivoConsulta : null;
+        this.formularioRegistro.antecedentesEnfermedadActual = physiotherapyAux.antecedentesEnfermedadActual ? physiotherapyAux.antecedentesEnfermedadActual : null;
+        this.formularioRegistro.antecedentesGestacionales.numeroEmbarazo = physiotherapyAux.ag_numeroEmbarazo ? physiotherapyAux.ag_numeroEmbarazo : null;
+        this.formularioRegistro.antecedentesGestacionales.numeroHijos = physiotherapyAux.ag_numeroHijos ? physiotherapyAux.ag_numeroHijos : null;
+        this.formularioRegistro.antecedentesGestacionales.controlPrenatal = physiotherapyAux.ag_controlPrenatal ? physiotherapyAux.ag_controlPrenatal : null;
+        this.formularioRegistro.antecedentesGestacionales.hospital = physiotherapyAux.ag_hospital ? physiotherapyAux.ag_hospital : null;
+        this.formularioRegistro.antecedentesGestacionales.problemasDuranteEmbarazo = physiotherapyAux.ag_problemasDuranteEmbarazo ? physiotherapyAux.ag_problemasDuranteEmbarazo : null;
+        this.formularioRegistro.antecedentesGestacionales.tiempoGestacional = physiotherapyAux.ag_tiempoGestacional ? physiotherapyAux.ag_tiempoGestacional : null;
+        this.formularioRegistro.antecedentesGestacionales.parto = physiotherapyAux.ag_parto ? physiotherapyAux.ag_parto : null;
+        this.formularioRegistro.antecedentesGestacionales.tipoParto = physiotherapyAux.ag_tipoParto ? physiotherapyAux.ag_tipoParto : null;
+        this.formularioRegistro.antecedentesGestacionales.posicion = physiotherapyAux.ag_posicion ? {
+          text: physiotherapyAux.ag_posicion,
+          color: this.colors[this.nonce - 1]} : null;
+        this.formularioRegistro.antecedentesGestacionales.llanto = physiotherapyAux.ag_llanto ? physiotherapyAux.ag_llanto : null;
+        this.formularioRegistro.antecedentesGestacionales.movimientos = physiotherapyAux.ag_movimientos ? physiotherapyAux.ag_movimientos : null;
+        this.formularioRegistro.antecedentesGestacionales.cianosis = physiotherapyAux.ag_cianosis ? physiotherapyAux.ag_cianosis : null;
+        this.formularioRegistro.antecedentesGestacionales.oxigeno = physiotherapyAux.ag_oxigeno ? physiotherapyAux.ag_oxigeno : null;
+        this.formularioRegistro.antecedentesGestacionales.incubadora = physiotherapyAux.ag_incubadora ? physiotherapyAux.ag_incubadora : null;
+        this.formularioRegistro.antecedentesGestacionales.tiempoIncubadora = physiotherapyAux.ag_tiempoIncubadora ? physiotherapyAux.ag_tiempoIncubadora : null;
+        this.formularioRegistro.antecedentesGestacionales.otros = physiotherapyAux.ag_otros ? physiotherapyAux.ag_otros : null;
+        this.formularioRegistro.exploracionPosturalFisica.planoAnterior = physiotherapyAux.epf_planoAnterior ? physiotherapyAux.epf_planoAnterior : null;
+        this.formularioRegistro.exploracionPosturalFisica.planoPosterior = physiotherapyAux.epf_planoPosterior ? physiotherapyAux.epf_planoPosterior : null;
+        this.formularioRegistro.exploracionPosturalFisica.planoLateral = physiotherapyAux.epf_planoLateral ? physiotherapyAux.epf_planoLateral : null;
+        this.formularioRegistro.exploracionPosturalFisica.otros = physiotherapyAux.epf_otros ? physiotherapyAux.epf_otros : null;
+        this.formularioRegistro.exploracionPosturalFisica.tipoRespiracion = physiotherapyAux.epf_tipoRespiracion ? physiotherapyAux.epf_tipoRespiracion : null;
+        this.formularioRegistro.exploracionPosturalFisica.patronRespiracion = physiotherapyAux.epf_patronRespiracion ? physiotherapyAux.epf_patronRespiracion : null;
+        this.formularioRegistro.exploracionPosturalFisica.marcha = physiotherapyAux.epf_marcha ? physiotherapyAux.epf_marcha : null;
+        this.formularioRegistro.exploracionPosturalFisica.pruebaOrtopedica.thomas = physiotherapyAux.epf_Po_thomas ? physiotherapyAux.epf_Po_thomas : null;
+        this.formularioRegistro.exploracionPosturalFisica.pruebaOrtopedica.galeazi = physiotherapyAux.epf_Po_galeazi ? physiotherapyAux.epf_Po_galeazi : null;
+        this.formularioRegistro.exploracionPosturalFisica.pruebaOrtopedica.ober = physiotherapyAux.epf_Po_ober ? physiotherapyAux.epf_Po_ober : null;
+        this.formularioRegistro.exploracionPosturalFisica.pruebaOrtopedica.ortolani = physiotherapyAux.epf_Po_ortolani ? physiotherapyAux.epf_Po_ortolani : null;
+        this.formularioRegistro.exploracionPosturalFisica.pruebaOrtopedica.barlow = physiotherapyAux.epf_Po_barlow ? physiotherapyAux.epf_Po_barlow : null;
+        this.formularioRegistro.exploracionPosturalFisica.pruebaOrtopedica.asimetriaPliegues = physiotherapyAux.epf_Po_asimetriaPliegues ? physiotherapyAux.epf_Po_asimetriaPliegues : null;
+        this.formularioRegistro.exploracionPosturalFisica.pruebaOrtopedica.otros = physiotherapyAux.epf_Po_otros ? physiotherapyAux.epf_Po_otros : null;
+        this.formularioRegistro.exploracionPosturalFisica.tono = physiotherapyAux.epf_tono ? physiotherapyAux.epf_tono : null;
+        this.formularioRegistro.exploracionPosturalFisica.trofismo = physiotherapyAux.epf_trofismo ? physiotherapyAux.epf_trofismo : null;
+        this.formularioRegistro.escalaAshworth = physiotherapyAux.escalaAshworth ? physiotherapyAux.escalaAshworth : null;
+        this.formularioRegistro.reflejos.suctionReflection = physiotherapyAux.ref_suctionReflection ? physiotherapyAux.ref_suctionReflection : null;
+        this.formularioRegistro.reflejos.suctionReflectionText = physiotherapyAux.ref_suctionReflectionText ? physiotherapyAux.ref_suctionReflectionText : null;
+        this.formularioRegistro.reflejos.TRIPLEEXTFLX = physiotherapyAux.ref_TRIPLEEXTFLX ? physiotherapyAux.ref_TRIPLEEXTFLX : null;
+        this.formularioRegistro.reflejos.TRIPLEEXTFLXText = physiotherapyAux.ref_TRIPLEEXTFLXText ? physiotherapyAux.ref_TRIPLEEXTFLXText : null;
+        this.formularioRegistro.reflejos.RTCA = physiotherapyAux.ref_RTCA ? physiotherapyAux.ref_RTCA : null;
+        this.formularioRegistro.reflejos.RTCAText = physiotherapyAux.ref_RTCAText ? physiotherapyAux.ref_RTCAText : null;
+        this.formularioRegistro.reflejos.RTCS = physiotherapyAux.ref_RTCS ? physiotherapyAux.ref_RTCS : null;
+        this.formularioRegistro.reflejos.RTCSText = physiotherapyAux.ref_RTCSText ? physiotherapyAux.ref_RTCSText : null;
+        this.formularioRegistro.reflejos.RTL = physiotherapyAux.ref_RTL ? physiotherapyAux.ref_RTL : null;
+        this.formularioRegistro.reflejos.RTLText = physiotherapyAux.ref_RTLText ? physiotherapyAux.ref_RTLText : null;
+        this.formularioRegistro.reflejos.RMORO = physiotherapyAux.ref_RMORO ? physiotherapyAux.ref_RMORO : null;
+        this.formularioRegistro.reflejos.RMOROText = physiotherapyAux.ref_RMOROText ? physiotherapyAux.ref_RMOROText : null;
+        this.formularioRegistro.reflejos.RBABINSKI = physiotherapyAux.ref_RBABINSKI ? physiotherapyAux.ref_RBABINSKI : null;
+        this.formularioRegistro.reflejos.RBABINSKIText = physiotherapyAux.ref_RBABINSKIText ? physiotherapyAux.ref_RBABINSKIText : null;
+        this.formularioRegistro.reflejos.REXTCRUZADA = physiotherapyAux.ref_REXTCRUZADA ? physiotherapyAux.ref_REXTCRUZADA : null;
+        this.formularioRegistro.reflejos.REXTCRUZADAText = physiotherapyAux.ref_REXTCRUZADAText ? physiotherapyAux.ref_REXTCRUZADAText : null;
+        this.formularioRegistro.reflejos.GALANT = physiotherapyAux.ref_GALANT ? physiotherapyAux.ref_GALANT : null;
+        this.formularioRegistro.reflejos.GALANTText = physiotherapyAux.ref_GALANTText ? physiotherapyAux.ref_GALANTText : null;
+        this.formularioRegistro.reflejos.LANDAU = physiotherapyAux.ref_LANDAU ? physiotherapyAux.ref_LANDAU : null;
+        this.formularioRegistro.reflejos.LANDAUText = physiotherapyAux.ref_LANDAUText ? physiotherapyAux.ref_LANDAUText : null;
+        this.formularioRegistro.reflejos.DEFENSA = physiotherapyAux.ref_DEFENSA ? physiotherapyAux.ref_DEFENSA : null;
+        this.formularioRegistro.reflejos.DEFENSAText = physiotherapyAux.ref_DEFENSAText ? physiotherapyAux.ref_DEFENSAText : null;
+        this.formularioRegistro.reflejos.RPALMAR = physiotherapyAux.ref_RPALMAR ? physiotherapyAux.ref_RPALMAR : null;
+        this.formularioRegistro.reflejos.RPALMARText = physiotherapyAux.ref_RPALMARText ? physiotherapyAux.ref_RPALMARText : null;
+        this.formularioRegistro.reflejos.RPLANTAR = physiotherapyAux.ref_RPLANTAR ? physiotherapyAux.ref_RPLANTAR : null;
+        this.formularioRegistro.reflejos.RPLANTARText = physiotherapyAux.ref_RPLANTARText ? physiotherapyAux.ref_RPLANTARText : null;
+        this.formularioRegistro.reflejos.RPOSITIVODEAPOYO = physiotherapyAux.ref_RPOSITIVODEAPOYO ? physiotherapyAux.ref_RPOSITIVODEAPOYO : null;
+        this.formularioRegistro.reflejos.RPOSITIVODEAPOYOText = physiotherapyAux.ref_RPOSITIVODEAPOYOText ? physiotherapyAux.ref_RPOSITIVODEAPOYOText : null;
+        this.formularioRegistro.reflejos.RPARACAIDAS = physiotherapyAux.ref_RPARACAIDAS ? physiotherapyAux.ref_RPARACAIDAS : null;
+        this.formularioRegistro.reflejos.RPARACAIDASText = physiotherapyAux.ref_RPARACAIDASText ? physiotherapyAux.ref_RPARACAIDASText : null;
+        this.formularioRegistro.reaccionesEnderezamiento.laberintico = physiotherapyAux.re_laberintico ? physiotherapyAux.re_laberintico : null;
+        this.formularioRegistro.reaccionesEnderezamiento.laberinticoText = physiotherapyAux.re_laberinticoText ? physiotherapyAux.re_laberinticoText : null;
+        this.formularioRegistro.reaccionesEnderezamiento.sobreOjos = physiotherapyAux.re_sobreOjos ? physiotherapyAux.re_sobreOjos : null;
+        this.formularioRegistro.reaccionesEnderezamiento.sobreOjosText = physiotherapyAux.re_sobreOjosText ? physiotherapyAux.re_sobreOjosText : null;
+        this.formularioRegistro.actividadMotoraEspontanea.decubitoDorsal = physiotherapyAux.ame_decubitoDorsal ? physiotherapyAux.ame_decubitoDorsal : null;
+        this.formularioRegistro.actividadMotoraEspontanea.decubitoVentral = physiotherapyAux.ame_decubitoVentral ? physiotherapyAux.ame_decubitoVentral : null;
+        this.formularioRegistro.actividadMotoraEspontanea.cambioPosicion = physiotherapyAux.ame_cambioPosicion ? physiotherapyAux.ame_cambioPosicion : null;
+        this.formularioRegistro.actividadMotoraEspontanea.rolido = physiotherapyAux.ame_rolido ? physiotherapyAux.ame_rolido : null;
+        this.formularioRegistro.actividadMotoraEspontanea.arrastre = physiotherapyAux.ame_arrastre ? physiotherapyAux.ame_arrastre : null;
+        this.formularioRegistro.actividadMotoraEspontanea.sedente = physiotherapyAux.ame_sedente ? physiotherapyAux.ame_sedente : null;
+        this.formularioRegistro.actividadMotoraEspontanea.gateo = physiotherapyAux.ame_gateo ? physiotherapyAux.ame_gateo : null;
+        this.formularioRegistro.actividadMotoraEspontanea.arrodillado = physiotherapyAux.ame_arrodillado ? physiotherapyAux.ame_arrodillado : null;
+        this.formularioRegistro.actividadMotoraEspontanea.bipedo = physiotherapyAux.ame_bipedo ? physiotherapyAux.ame_bipedo : null;
+        this.formularioRegistro.evaluacionPsicomotriz.esquemaCorporal = physiotherapyAux.ep_esquemaCorporal ? physiotherapyAux.ep_esquemaCorporal : null;
+        this.formularioRegistro.evaluacionPsicomotriz.esquemaCorporalText = physiotherapyAux.ep_esquemaCorporalText ? physiotherapyAux.ep_esquemaCorporalText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.imagenCorporal = physiotherapyAux.ep_imagenCorporal ? physiotherapyAux.ep_imagenCorporal : null;
+        this.formularioRegistro.evaluacionPsicomotriz.imagenCorporalText = physiotherapyAux.ep_imagenCorporalText ? physiotherapyAux.ep_imagenCorporalText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.conceptoCorporal = physiotherapyAux.ep_conceptoCorporal ? physiotherapyAux.ep_conceptoCorporal : null;
+        this.formularioRegistro.evaluacionPsicomotriz.conceptoCorporalText = physiotherapyAux.ep_conceptoCorporalText ? physiotherapyAux.ep_conceptoCorporalText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.estructuracionEspacial = physiotherapyAux.ep_estructuracionEspacial ? physiotherapyAux.ep_estructuracionEspacial : null;
+        this.formularioRegistro.evaluacionPsicomotriz.estructuracionEspacialText = physiotherapyAux.ep_estructuracionEspacialText ? physiotherapyAux.ep_estructuracionEspacialText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.estructuracionTemporal = physiotherapyAux.ep_estructuracionTemporal ? physiotherapyAux.ep_estructuracionTemporal : null;
+        this.formularioRegistro.evaluacionPsicomotriz.estructuracionTemporalText = physiotherapyAux.ep_estructuracionTemporalText ? physiotherapyAux.ep_estructuracionTemporalText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.equilibrioEstatico = physiotherapyAux.ep_equilibrioEstatico ? physiotherapyAux.ep_equilibrioEstatico : null;
+        this.formularioRegistro.evaluacionPsicomotriz.equilibrioEstaticoText = physiotherapyAux.ep_equilibrioEstaticoText ? physiotherapyAux.ep_equilibrioEstaticoText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.equilibrioDinamico = physiotherapyAux.ep_equilibrioDinamico ? physiotherapyAux.ep_equilibrioDinamico : null;
+        this.formularioRegistro.evaluacionPsicomotriz.equilibrioDinamicoText = physiotherapyAux.ep_equilibrioDinamicoText ? physiotherapyAux.ep_equilibrioDinamicoText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.coordinacionGruesa = physiotherapyAux.ep_coordinacionGruesa ? physiotherapyAux.ep_coordinacionGruesa : null;
+        this.formularioRegistro.evaluacionPsicomotriz.coordinacionGruesaText = physiotherapyAux.ep_coordinacionGruesaText ? physiotherapyAux.ep_coordinacionGruesaText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.coordinacionFina = physiotherapyAux.ep_coordinacionFina ? physiotherapyAux.ep_coordinacionFina : null;
+        this.formularioRegistro.evaluacionPsicomotriz.coordinacionFinaText = physiotherapyAux.ep_coordinacionFinaText ? physiotherapyAux.ep_coordinacionFinaText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.coordinacionOjoMano = physiotherapyAux.ep_coordinacionOjoMano ? physiotherapyAux.ep_coordinacionOjoMano : null;
+        this.formularioRegistro.evaluacionPsicomotriz.coordinacionOjoManoText = physiotherapyAux.ep_coordinacionOjoManoText ? physiotherapyAux.ep_coordinacionOjoManoText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.coordinacionOjoPie = physiotherapyAux.ep_coordinacionOjoPie ? physiotherapyAux.ep_coordinacionOjoPie : null;
+        this.formularioRegistro.evaluacionPsicomotriz.coordinacionOjoPieText = physiotherapyAux.ep_coordinacionOjoPieText ? physiotherapyAux.ep_coordinacionOjoPieText : null;
+        this.formularioRegistro.evaluacionPsicomotriz.lateralidad = physiotherapyAux.ep_lateralidad ? {
+          text: physiotherapyAux.ep_lateralidad,
+          color: this.colors[this.nonce - 1]} : null;
+        this.formularioRegistro.evaluacionPsicomotriz.observacion = physiotherapyAux.ep_observacion ? physiotherapyAux.ep_observacion : null;
+        this.formularioRegistro.actividadesVidaDiaria.higiene = physiotherapyAux.avd_higiene ? physiotherapyAux.avd_higiene : null;
+        this.formularioRegistro.actividadesVidaDiaria.higieneText = physiotherapyAux.avd_higieneText ? physiotherapyAux.avd_higieneText : null;
+        this.formularioRegistro.actividadesVidaDiaria.alimentacion = physiotherapyAux.avd_alimentacion ? physiotherapyAux.avd_alimentacion : null;
+        this.formularioRegistro.actividadesVidaDiaria.alimentacionText = physiotherapyAux.avd_alimentacionText ? physiotherapyAux.avd_alimentacionText : null;
+        this.formularioRegistro.actividadesVidaDiaria.vestimenta = physiotherapyAux.avd_vestimenta ? physiotherapyAux.avd_vestimenta : null;
+        this.formularioRegistro.actividadesVidaDiaria.vestimentaText = physiotherapyAux.avd_vestimentaText ? physiotherapyAux.avd_vestimentaText : null;
+        this.formularioRegistro.areaSocioAfectiva.muestrasAfectivas = physiotherapyAux.asa_muestrasAfectivas ? physiotherapyAux.asa_muestrasAfectivas : null;
+        this.formularioRegistro.areaSocioAfectiva.muestrasAfectivasText = physiotherapyAux.asa_muestrasAfectivasText ? physiotherapyAux.asa_muestrasAfectivasText : null;
+        this.formularioRegistro.areaSocioAfectiva.comunicacionOral = physiotherapyAux.asa_comunicacionOral ? physiotherapyAux.asa_comunicacionOral : null;
+        this.formularioRegistro.areaSocioAfectiva.comunicacionOralText = physiotherapyAux.asa_comunicacionOralText ? physiotherapyAux.asa_comunicacionOralText : null;
+        this.formularioRegistro.areaSocioAfectiva.comunicacionAlternativa = physiotherapyAux.asa_comunicacionAlternativa ? physiotherapyAux.asa_comunicacionAlternativa : null;
+        this.formularioRegistro.areaSocioAfectiva.comunicacionAlternativaText = physiotherapyAux.asa_comunicacionAlternativaText ? physiotherapyAux.asa_comunicacionAlternativaText : null;
+        this.formularioRegistro.areaSocioAfectiva.relacionamientoSocial = physiotherapyAux.asa_relacionamientoSocial ? physiotherapyAux.asa_relacionamientoSocial : null;
+        this.formularioRegistro.areaSocioAfectiva.relacionamientoSocialText = physiotherapyAux.asa_relacionamientoSocialText ? physiotherapyAux.asa_relacionamientoSocialText : null;
+        this.formularioRegistro.areaCognitiva = physiotherapyAux.areaCognitiva ? physiotherapyAux.areaCognitiva : null;
+        this.formularioRegistro.areaCognitivaText = physiotherapyAux.areaCognitivaText ? physiotherapyAux.areaCognitivaText : null;
+        this.formularioRegistro.alteracionesAsociadas.vision = physiotherapyAux.aa_vision ? physiotherapyAux.aa_vision : null;
+        this.formularioRegistro.alteracionesAsociadas.visionText = physiotherapyAux.aa_visionText ? physiotherapyAux.aa_visionText : null;
+        this.formularioRegistro.alteracionesAsociadas.audicion = physiotherapyAux.aa_audicion ? physiotherapyAux.aa_audicion : null;
+        this.formularioRegistro.alteracionesAsociadas.audicionText = physiotherapyAux.aa_audicionText ? physiotherapyAux.aa_audicionText : null;
+        this.formularioRegistro.alteracionesAsociadas.lenguaje = physiotherapyAux.aa_lenguaje ? physiotherapyAux.aa_lenguaje : null;
+        this.formularioRegistro.alteracionesAsociadas.lenguajeText = physiotherapyAux.aa_lenguajeText ? physiotherapyAux.aa_lenguajeText : null;
+        this.formularioRegistro.alteracionesAsociadas.sindromeConvulsivo = physiotherapyAux.aa_sindromeConvulsivo ? physiotherapyAux.aa_sindromeConvulsivo : null;
+        this.formularioRegistro.alteracionesAsociadas.sindromeConvulsivoText = physiotherapyAux.aa_sindromeConvulsivoText ? physiotherapyAux.aa_sindromeConvulsivoText : null;
+        this.formularioRegistro.alteracionesAsociadas.memoriaLargoPlazo = physiotherapyAux.aa_memoriaLargoPlazo ? physiotherapyAux.aa_memoriaLargoPlazo : null;
+        this.formularioRegistro.alteracionesAsociadas.memoriaLargoPlazoText = physiotherapyAux.aa_memoriaLargoPlazoText ? physiotherapyAux.aa_memoriaLargoPlazoText : null;
+        this.formularioRegistro.alteracionesAsociadas.memoriaCortoPlazo = physiotherapyAux.aa_memoriaCortoPlazo ? physiotherapyAux.aa_memoriaCortoPlazo : null;
+        this.formularioRegistro.alteracionesAsociadas.memoriaCortoPlazoText = physiotherapyAux.aa_memoriaCortoPlazoText ? physiotherapyAux.aa_memoriaCortoPlazoText : null;
+        this.formularioRegistro.alteracionesAsociadas.estadoEmocional = physiotherapyAux.aa_estadoEmocional ? physiotherapyAux.aa_estadoEmocional : null;
+        this.formularioRegistro.alteracionesAsociadas.estadoEmocionalText = physiotherapyAux.aa_estadoEmocionalText ? physiotherapyAux.aa_estadoEmocionalText : null;
+        this.formularioRegistro.alteracionesAsociadas.estadoNutricional = physiotherapyAux.aa_estadoNutricional ? physiotherapyAux.aa_estadoNutricional : null;
+        this.formularioRegistro.alteracionesAsociadas.estadoNutricionalText = physiotherapyAux.aa_estadoNutricionalText ? physiotherapyAux.aa_estadoNutricionalText : null;
+        this.formularioRegistro.alteracionesAsociadas.sensibilidad = physiotherapyAux.aa_sensibilidad ? physiotherapyAux.aa_sensibilidad : null;
+        this.formularioRegistro.alteracionesAsociadas.sensibilidadText = physiotherapyAux.aa_sensibilidadText ? physiotherapyAux.aa_sensibilidadText : null;
+        this.formularioRegistro.alteracionesAsociadas.estereotipos = physiotherapyAux.aa_estereotipos ? physiotherapyAux.aa_estereotipos : null;
+        this.formularioRegistro.conclusiones = physiotherapyAux.conclusiones ? physiotherapyAux.conclusiones : null;
+        this.formularioRegistro.diagnostico = physiotherapyAux.diagnostico ? physiotherapyAux.diagnostico : null;
+        this.formularioRegistro.objetivos = physiotherapyAux.objetivos ? physiotherapyAux.objetivos : null;
+        this.formularioRegistro.planTratamiento = physiotherapyAux.planTratamiento ? physiotherapyAux.planTratamiento : null;
+        // this.fechaCreacion = this.$store.state.physiotherapyRegisterEdit._fecha_creacion;
       }
     },
     validations: {
       formularioRegistro: {
-        tipoDeFamiliaObject: {
-          required
-        },
+        tipoDeFamiliaObject: {},
         observacionGrupoFamiliar: {},
         dinamicaFamiliar: {},
         procesoSocial: {},
@@ -2214,12 +2340,13 @@
       submit () { // Envía datos de la nueva asignación
         this.$v.formularioRegistro.$touch();
         if (!this.$v.formularioRegistro.$invalid) {
-          this.formularioRegistro.tipoDeFamilia = this.formularioRegistro.tipoDeFamiliaObject.text;
+          this.formularioRegistro.antecedentesGestacionales.posicion = this.formularioRegistro.antecedentesGestacionales.posicion.text;
+          this.formularioRegistro.evaluacionPsicomotriz.lateralidad = this.formularioRegistro.evaluacionPsicomotriz.lateralidad.text;
           if (this.$route.query.registro) {
             // Edita registro Simple
             this.formularioRegistro.idRegistro = this.$route.query.registro;
-            this.formularioRegistro.idRegistroTrabajoSocial = this.$store.state.socialWorkRegisterEdit.reg_tb.id_reg_tb;
-            this.$service.put(`registroEvalTrabajoSocial`, this.formularioRegistro)
+            this.formularioRegistro.idRegistroFisioterapia = this.$store.state.physiotherapyRegisterEdit.reg_ft.id_reg_ft;
+            this.$service.put(`registroEvalFisioterapia`, this.formularioRegistro)
             .then(respuesta => {
               if (respuesta !== undefined) {
                 this.limpiarCampos();
@@ -2235,7 +2362,7 @@
           } else {
             // Crea registro simple
             this.formularioRegistro.codigoEstudiante = this.datosEstudiante.codigo;
-            this.$service.post(`registroEvalTrabajoSocial`, this.formularioRegistro)
+            this.$service.post(`registroEvalFisioterapia`, this.formularioRegistro)
             .then(respuesta => {
               if (respuesta !== undefined) {
                 this.limpiarCampos();
@@ -2254,14 +2381,14 @@
         }
       },
       limpiarCampos () {
-        this.formularioRegistro.tipoDeFamilia = '';
-        this.formularioRegistro.tipoDeFamiliaObject = {};
-        this.formularioRegistro.observacionGrupoFamiliar = '';
-        this.formularioRegistro.dinamicaFamiliar = '';
-        this.formularioRegistro.procesoSocial = '';
-        this.formularioRegistro.relatoDiscapacidad = '';
-        this.formularioRegistro.diagnosticoSocial = '';
-        this.formularioRegistro.conclusionSugerencia = '';
+        // this.formularioRegistro.tipoDeFamilia = '';
+        // this.formularioRegistro.tipoDeFamiliaObject = {};
+        // this.formularioRegistro.observacionGrupoFamiliar = '';
+        // this.formularioRegistro.dinamicaFamiliar = '';
+        // this.formularioRegistro.procesoSocial = '';
+        // this.formularioRegistro.relatoDiscapacidad = '';
+        // this.formularioRegistro.diagnosticoSocial = '';
+        // this.formularioRegistro.conclusionSugerencia = '';
       },
       openView (numeroImagen) {
         this.ashworthView = true;

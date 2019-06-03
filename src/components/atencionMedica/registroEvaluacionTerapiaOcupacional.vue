@@ -910,7 +910,7 @@
             observaciones: occupationalTherapyAux.objetivosIntervención_observaciones ? occupationalTherapyAux.objetivosIntervención_observaciones : null
           }
         }
-        // this.fechaCreacion = this.$store.state.socialWorkRegisterEdit._fecha_creacion;
+        // this.fechaCreacion = this.$store.state.occupationalTherapyRegisterEdit._fecha_creacion;
       }
     },
     validations: {
