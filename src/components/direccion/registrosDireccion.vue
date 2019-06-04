@@ -155,7 +155,10 @@
             <td>{{ props.item.usuario.nombre_completo }}</td>
             <td>{{ props.item.tipo === 'simple' ? 'seguimiento' : props.item.tipo }}</td>
             <td class="text-xs-right">
-              <v-btn icon dark color="primary" @click.native="verRegistro(props.item)">
+              <!-- <v-btn icon dark color="primary" @click.native="verRegistro(props.item)">
+                <v-icon>filter_none</v-icon>
+              </v-btn> -->
+              <v-btn icon dark color="primary" @click.native="printFile(props.item)">
                 <v-icon>filter_none</v-icon>
               </v-btn>
               <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editarRegistro(props.item)">
@@ -524,6 +527,17 @@
             this.search.estudiante = this.estudiantes[0].value;
           }
         })
+      },
+      printFile (item) {
+        this.loading = true;
+        let datosEstudiante = this.$storage.get('nino');
+        this.$service.get(`imprimirRegistro?idRegistro=${item.id_registro}&estudiante=${datosEstudiante.codigo}`)
+        .then(response => {
+          if (response && response.datos) {
+            window.open('data:application/pdf;base64,' + response.datos);
+          }
+          this.loading = false;
+        });
       },
       mostrarDatos () {
         this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};

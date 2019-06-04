@@ -52,7 +52,10 @@
             <td>{{ props.item.usuario.nombre_completo }}</td>
             <td>{{ props.item.tipo === 'simple' ? 'seguimiento' : props.item.tipo }}</td>
             <td class="text-xs-right">
-              <v-btn icon dark color="primary" @click.native="verRegistro(props.item)">
+              <!-- <v-btn icon dark color="primary" @click.native="verRegistro(props.item)">
+                <v-icon>filter_none</v-icon>
+              </v-btn> -->
+              <v-btn icon dark color="primary" @click.native="printFile(props.item)">
                 <v-icon>filter_none</v-icon>
               </v-btn>
               <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editarRegistro(props.item)">
@@ -96,8 +99,6 @@
         <v-dialog v-model="dialogRegistroEspecialidadTO" persistent width="1200px">
           <v-card>
             <vista-terapia-ocupacional></vista-terapia-ocupacional>
-            <!-- <vista-psicomotricidad :v-if="areaView == 'Psicomotricidad'"></vista-psicomotricidad>
-            <vista-fisioterapia :v-if="areaView == 'Fisioterapia'"></vista-fisioterapia> -->
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn class="primary" flat v-on:click="dialogRegistroEspecialidadTO = false">{{$t('common.accept')}}
@@ -347,6 +348,17 @@
       confirmDelete (item) {
         this.deleteData = item;
         this.dialogDeleteConfirm = true;
+      },
+      printFile (item) {
+        this.loading = true;
+        let datosEstudiante = this.$storage.get('nino');
+        this.$service.get(`imprimirRegistro?idRegistro=${item.id_registro}&estudiante=${datosEstudiante.codigo}`)
+        .then(response => {
+          if (response && response.datos) {
+            window.open('data:application/pdf;base64,' + response.datos);
+          }
+          this.loading = false;
+        });
       },
       eliminarRegistro () {
         this.dialogDeleteConfirm = false

@@ -150,7 +150,7 @@
             </v-flex>
             <v-flex xs3>
               <v-text-field
-                v-model="formularioRegistro.ducha.comprension"
+                v-model="formularioRegistro.comprension.observacion"
                 hint="Observacion"
               ></v-text-field>
             </v-flex>
