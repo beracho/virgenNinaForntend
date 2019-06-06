@@ -884,7 +884,7 @@
                 ></v-radio>
               </v-radio-group>
             </v-flex>
-            <v-flex xs6 offset-xs3>
+            <!-- <v-flex xs6 offset-xs3>
               <file-upload
                 :url='formularioRegistro.areaCognitiva.urlPhoto'
                 :thumb-url='thumbUrl'
@@ -895,7 +895,7 @@
                 :btn-label="$t('psicomotricity.loadPhoto')"
                 :btn-uploading-label="$t('psicomotricity.uploadingPhoto')">
               </file-upload>
-            </v-flex>
+            </v-flex> -->
             <v-flex xs12>
               <h3 class="headline mb-0">{{$t('psicomotricity.spatialNotions')}}</h3>
               <v-btn icon dark color="primary" @click.native="openView(0)">
@@ -1184,24 +1184,24 @@
                 :label="$t('psicomotricity.plays')"
                 v-model="formularioRegistro.areaSocioAfectiva.plays">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1210,24 +1210,24 @@
                 :label="$t('psicomotricity.proposeGame')"
                 v-model="formularioRegistro.areaSocioAfectiva.proposeGame">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1236,24 +1236,24 @@
                 :label="$t('psicomotricity.leaderInGames')"
                 v-model="formularioRegistro.areaSocioAfectiva.leaderInGames">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1262,24 +1262,24 @@
                 :label="$t('psicomotricity.acceptAnothersGame')"
                 v-model="formularioRegistro.areaSocioAfectiva.acceptAnothersGame">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1288,24 +1288,24 @@
                 :label="$t('disability.other')"
                 v-model="formularioRegistro.areaSocioAfectiva.otherGame">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1317,24 +1317,24 @@
                 :label="$t('psicomotricity.acceptIt')"
                 v-model="formularioRegistro.areaSocioAfectiva.acceptIt">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1343,24 +1343,24 @@
                 :label="$t('psicomotricity.searchIt')"
                 v-model="formularioRegistro.areaSocioAfectiva.searchIt">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1369,24 +1369,24 @@
                 :label="$t('psicomotricity.provokesIt')"
                 v-model="formularioRegistro.areaSocioAfectiva.provokesIt">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1395,24 +1395,24 @@
                 :label="$t('psicomotricity.thanksHim')"
                 v-model="formularioRegistro.areaSocioAfectiva.thanksHim">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1421,24 +1421,24 @@
                 :label="$t('psicomotricity.waitGrownUpApprovation')"
                 v-model="formularioRegistro.areaSocioAfectiva.waitGrownUpApprovation">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1447,24 +1447,24 @@
                 :label="$t('psicomotricity.waitOrders')"
                 v-model="formularioRegistro.areaSocioAfectiva.waitOrders">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1473,24 +1473,24 @@
                 :label="$t('psicomotricity.collaborateWithAdult')"
                 v-model="formularioRegistro.areaSocioAfectiva.collaborateWithAdult">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
@@ -1499,24 +1499,24 @@
                 :label="$t('disability.other')"
                 v-model="formularioRegistro.areaSocioAfectiva.otherAdult">
                 <v-radio
-                  key="plays"
+                  key="always"
                   :label="$t('frecuency.always')"
-                  value="plays"
+                  value="always"
                 ></v-radio>
                 <v-radio
-                  key="proposeGame"
+                  key="frequently"
                   :label="$t('frecuency.frequently')"
-                  value="proposeGame"
+                  value="frequently"
                 ></v-radio>
                 <v-radio
-                  key="leaderInGames"
+                  key="ocasionally"
                   :label="$t('frecuency.ocasionally')"
-                  value="leaderInGames"
+                  value="ocasionally"
                 ></v-radio>
                 <v-radio
-                  key="acceptAnothersGame"
+                  key="never"
                   :label="$t('frecuency.never')"
-                  value="acceptAnothersGame"
+                  value="never"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
