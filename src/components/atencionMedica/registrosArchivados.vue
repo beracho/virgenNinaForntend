@@ -3,13 +3,19 @@
     <div>
       <v-container>
         <v-layout row wrap>
-          <v-flex xs1>
-          </v-flex>
-          <v-flex xs7>
+          <v-flex xs1></v-flex>
+          <v-flex xs9>
             <h3>{{this.datosEstudiante.nombres + ' ' +  this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
           </v-flex>
-          <v-flex xs4>
-            <v-btn dark block color="red" @click.native="closeFolder()">{{$t('socialWork.closeFolder')}}</v-btn>
+          <v-flex 1>
+            <v-btn icon color="primary" @click.native="personalData()">
+              <v-icon>visibility</v-icon>
+            </v-btn>
+          </v-flex>
+          <v-flex 1>
+            <v-btn icon dark color="red" @click.native="closeFolder()">
+              <v-icon>close</v-icon>
+            </v-btn>
           </v-flex>
         </v-layout>
       </v-container>

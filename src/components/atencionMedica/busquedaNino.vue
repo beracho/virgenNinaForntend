@@ -177,7 +177,7 @@
           nuevoMenu[1].visible = true;
           this.$storage.set('menu', nuevoMenu);
           this.$store.state.menu = nuevoMenu;
-          this.$router.push('datosEstudiante');
+          this.$router.push('registrosArchivados');
         } else {
           this.$message.error(this.$t('error.wrongUrl'));
         }

@@ -62,12 +62,21 @@
           <v-layout row wrap>
           </v-layout>
         </v-flex>
-        <v-flex xs12>
-          <b>Unidad educativa: </b> {{consulta.unidades_educativas && consulta.unidades_educativas.length ? consulta.unidades_educativas : this.$t('generalFollowUp.notRegistered')}}
+        <v-flex xs6
+          v-for="ue in consulta.unidades_educativas"
+          :key="ue.id_unidad_educativa_estudiante"
+        >
+          <h5>{{ $t('inscriptionRegister.tittle') }} </h5>
+          <b>{{ $t('courses.gestion') }}: </b> {{ue.gestion ? ue.gestion : $t('generalFollowUp.notRegistered')}}<br>
+          <b>{{ $t('inscriptionRegister.level') }}: </b> {{ue.nivel ? ue.nivel : $t('generalFollowUp.notRegistered')}}<br>
+          <b>{{ $t('inscriptionRegister.paralel') }}: </b> {{ue.paralelo ? ue.paralelo : $t('generalFollowUp.notRegistered')}}<br>
+          <b>{{ $t('inscriptionRegister.turn') }}: </b> {{ue.turno ? ue.turno : $t('generalFollowUp.notRegistered')}}<br>
+          <h5>{{ $t('inscriptionRegister.subtitle1') }} </h5>
+          <b>{{ $t('inscriptionRegister.sie') }}: </b> {{ue.unidad_educativa.sie ? ue.unidad_educativa.sie : $t('generalFollowUp.notRegistered')}}<br>
+          <b>{{ $t('inscriptionRegister.nameEducativeUnit') }}: </b> {{ue.unidad_educativa.nombre ? ue.unidad_educativa.nombre : $t('generalFollowUp.notRegistered')}}<br>
+          <b>{{ $t('inscriptionRegister.dependency') }}: </b> {{ue.unidad_educativa.dependencia ? $t('inscriptionRegister.' + ue.unidad_educativa.dependencia) : $t('generalFollowUp.notRegistered')}}<br>
+          <b>{{ $t('inscriptionRegister.educativeDistrit') }}: </b> {{ue.unidad_educativa.distrito ? ue.unidad_educativa.distrito : $t('generalFollowUp.notRegistered')}}<br>
         </v-flex>
-        <!-- <v-flex xs6>
-          <b>Curso: </b> {{consulta.unidades_educativas && consulta.unidades_educativas.length ? consulta.nombres : this.$t('generalFollowUp.notRegistered')}}
-        </v-flex> -->
       </v-layout>
     </v-container>
   </v-card>
