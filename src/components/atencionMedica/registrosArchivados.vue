@@ -3,7 +3,6 @@
     <div>
       <v-container>
         <v-layout row wrap>
-          <v-flex xs1></v-flex>
           <v-flex xs9>
             <h3>{{this.datosEstudiante.nombres + ' ' +  this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
           </v-flex>
