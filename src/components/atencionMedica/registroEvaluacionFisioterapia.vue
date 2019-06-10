@@ -388,10 +388,40 @@
         <v-container fluid v-if="ashworthScaleDataPanel">
           <v-layout row wrap>
             <v-flex xs12>
-              <v-text-field
+              <v-radio-group 
                 :label="$t('physiotherapy.modifiedAshworthScale')"
-                v-model="formularioRegistro.escalaAshworth"
-              ></v-text-field>
+                v-model="formularioRegistro.escalaAshworth">
+                <v-radio
+                  key="00"
+                  label="Tono muscular normal. No hay espasticidad."
+                  value="00"
+                ></v-radio>
+                <v-radio
+                  key="10"
+                  label="Leve incremento del tono muscular. Resistencia mínima al final del arco articular al estirar pasivamente el grupo muscular considerado."
+                  value="10"
+                ></v-radio>
+                <v-radio
+                  key="11"
+                  label="Leve incremento del tono muscular. Resistencia a la elongación en menos de la  mitad del arco."
+                  value="11"
+                ></v-radio>
+                <v-radio
+                  key="20"
+                  label="Incremento del tono mayor. Resistencia a la elongación en casi todo el arco articular. Extremidad movilizable fácilmente."
+                  value="20"
+                ></v-radio>
+                <v-radio
+                  key="30"
+                  label="Considerable incremento del tono. Es difícil la movilización pasiva de la extremidad."
+                  value="30"
+                ></v-radio>
+                <v-radio
+                  key="40"
+                  label="Hipertonía de las extremidades en flexión  o en extensión.(aducción, abducción etc.)"
+                  value="40"
+                ></v-radio>
+              </v-radio-group>
             </v-flex>
           </v-layout>
         </v-container>
@@ -1496,11 +1526,11 @@
                   :label="$t('physiotherapy.withoutTreatment')"
                   value="withoutTreatment"
                 ></v-radio>
-                <v-radio
+                <!-- <v-radio
                   key="type"
                   :label="$t('physiotherapy.type')"
                   value="type"
-                ></v-radio>
+                ></v-radio> -->
               </v-radio-group>
             </v-flex>
             <v-flex xs3>
