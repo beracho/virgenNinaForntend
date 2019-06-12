@@ -7,26 +7,25 @@
     <v-toolbar-side-icon @click.stop="$store.commit('toggleSidenav')" v-if="$store.state.sidenav"></v-toolbar-side-icon>
     <v-toolbar-title class="text--white"><router-link :to="'/'" class="white--text">{{$t('app.title') }}</router-link></v-toolbar-title>
     <v-spacer></v-spacer>
-    <!-- <v-btn icon>
-      <v-icon>search</v-icon>
-    </v-btn>
-    <v-btn icon>
-      <v-icon>apps</v-icon>
-    </v-btn> -->
-
     <app-lang></app-lang>
     <v-tooltip bottom>
-      <v-btn icon @click="reload()" slot="activator">
-        <v-icon>refresh</v-icon>
+      <v-btn icon @click="goHome()" slot="activator">
+        <v-icon>home</v-icon>
       </v-btn>
-      <span>Actualizar la página completa</span>
+      <span>{{$t('navbar.homePage')}}</span>
     </v-tooltip>
     <v-tooltip bottom>
       <v-btn icon @click="fullscreen()" class="btn-fullscreen" slot="activator">
         <v-icon>fullscreen</v-icon>
         <!-- <v-icon>fullscreen_exit</v-icon> -->
       </v-btn>
-      <span>Pantalla completa</span>
+      <span>{{$t('navbar.wideScreen')}}</span>
+    </v-tooltip>
+    <v-tooltip bottom>
+      <v-btn icon @click="reload()" slot="activator">
+        <v-icon>refresh</v-icon>
+      </v-btn>
+      <span>{{$t('navbar.refreshPage')}}</span>
     </v-tooltip>
     <v-menu
       origin="center center"
@@ -70,13 +69,15 @@ import AppLang from './AppLang';
 export default {
   mixins: [ Auth ],
   methods: {
+    goHome () {
+      this.$router.push('home');
+    },
     reload () {
       this.$store.commit('setMain', false);
       this.$nextTick(function () {
         this.$store.commit('setMain', true);
       });
     },
-
     fullscreen () {
       document.querySelector('body').classList.toggle('fullscreen');
       this.$util.fullscreen();

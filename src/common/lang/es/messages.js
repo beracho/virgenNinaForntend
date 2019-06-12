@@ -320,6 +320,11 @@ export default {
     confirmDeletion: 'Confirmar eliminación',
     deleteWarning: 'Está seguro que quiere eliminar este archivo, los datos no podrán ser recuperados'
   },
+  navbar: {
+    homePage: 'Pantalla de inicio',
+    wideScreen: 'Pantalla completa',
+    refreshPage: 'Actualizar la página completa'
+  },
   common: {
     add: 'Agregar',
     required: 'Campo obligatorio',
@@ -330,6 +335,7 @@ export default {
     close: 'Cerrar',
     yes: 'Sí',
     no: 'No',
+    welcome: 'Bienvenido',
     code: 'Código',
     rowsPage: 'Filas por página',
     updateList: 'Actualizar esta lista',

@@ -152,7 +152,7 @@
           this.$store.state.menu = nuevoMenu;
           this.$storage.set('menu', nuevoMenu);
           this.$storage.remove('nino');
-          this.$router.push('busquedaNino');
+          this.$router.push('home');
         } else {
           this.$message.error(this.$t('error.wrongUrl'));
         }

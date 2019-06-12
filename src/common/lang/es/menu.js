@@ -14,7 +14,8 @@ export default {
   medicalFollowUp: 'SEGUIMIENTO',
   controlMedico: 'Control Médico',
   listaNinos: 'LISTA DE NIÑOS',
-  busquedaNino: 'Búsqueda',
+  buscarArchivos: 'Buscar archivo',
+  misEstadisticas: 'Mis estadísticas',
   datosEstudiante: 'Datos personales',
   registrosArchivados: 'Folder de registros',
   registroSimple: 'Hoja de seguimiento',
@@ -33,5 +34,13 @@ export default {
   stats: 'Estadísticas',
   registrosPorArea: 'Informes por área',
   estadisticasPorEstudiante: 'Estudiantes por curso',
-  registrosDireccion: 'Registros'
+  registrosDireccion: 'Registros',
+  text: {
+    buscarArchivos: 'Buscar niño para ver sus registros asociados.',
+    misEstadisticas: 'Ver estadísticas de mis reportes generados.'
+  },
+  images: {
+    buscarArchivos: '../../../static/images/archivosMedicos.jpeg',
+    misEstadisticas: '../../../static/images/estadisticasMedicas.jpeg'
+  }
 };

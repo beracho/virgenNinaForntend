@@ -17,7 +17,8 @@ import RegistrosDireccion from '@/components/direccion/registrosDireccion';
 import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
 import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
 import Cursos from '@/components/inscripciones/Cursos';
-import busquedaNiños from '@/components/atencionMedica/busquedaNino';
+import Home from '@/components/atencionMedica/home';
+import BuscarArchivos from '@/components/atencionMedica/buscarArchivos';
 import DatosEstudiante from '@/components/atencionMedica/datosEstudiante';
 import RegistrosArchivados from '@/components/atencionMedica/registrosArchivados';
 import RegistroSimple from '@/components/atencionMedica/registroSimple';
@@ -107,6 +108,11 @@ export default new VueRouter({
       component: Cursos
     },
     {
+      path: '/home',
+      name: 'Home',
+      component: Home
+    },
+    {
       path: '/registroInscripcion',
       name: 'RegistroInscripcion',
       component: RegistroInscripcion
@@ -187,9 +193,9 @@ export default new VueRouter({
       component: RegistroEvaluacionTrabajoSocial
     },
     {
-      path: '/busquedaNino',
-      name: 'BusquedaNino',
-      component: busquedaNiños
+      path: '/buscarArchivos',
+      name: 'BuscarArchivos',
+      component: BuscarArchivos
     },
     {
       path: '/account',

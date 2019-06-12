@@ -26,7 +26,7 @@
       </div>
     </div>
     <v-list dense id="sidenav-menu">
-      <template v-for="(item, i) in menu" v-if="item.visible">
+      <template v-for="(item, i) in menu" v-if="item.visible && submenuVisible(item.submenu)">
         <v-list-group v-if="item.submenu" v-model="item.model" no-action>
           <template v-slot:activator>
             <v-list-tile slot="item" @click="send(item.url, item.submenu)" :data-url="item.url">
@@ -41,7 +41,7 @@
               </v-list-tile-content>
             </v-list-tile>
           </template>
-          <v-list-tile v-for="(child, i) in item.submenu" :key="i" @click="send(child.url)" :data-url="child.url">
+          <v-list-tile v-for="(child, i) in item.submenu" :key="i" @click="send(child.url)" :data-url="child.url" v-if="child.visible">
             <v-list-tile-action v-if="child.icon">
               <v-icon>{{ child.icon }}</v-icon>
             </v-list-tile-action>
@@ -123,6 +123,15 @@ export default {
       }
 
       return item.label;
+    },
+    submenuVisible (submenu) {
+      let isVisible = false;
+      submenu.forEach(submenuItem => {
+        if (submenuItem.visible) {
+          isVisible = true;
+        }
+      });
+      return isVisible;
     }
   }
 };
