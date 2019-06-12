@@ -3,8 +3,11 @@
   <v-layout justify-space-around>
     <v-flex xs12>
       <v-toolbar color="secondary" dark>
-        <v-icon>sentiment_satisfied_alt</v-icon>
-        <v-toolbar-title>{{$t('common.welcome') + ' ' + primeraLetraMayuscula(this.$store.state.user.nombres)}}</v-toolbar-title>
+        <v-icon>{{this.$storage.get('nino') !== null ? 'folder_shared' : 'sentiment_satisfied_alt'}}</v-icon>
+        <v-toolbar-title v-if="this.$storage.get('nino') !== null">{{$t('registerView.folderBelongs') + ': ' + primeraLetraMayuscula(this.datosEstudiante.nombre_completo)}}</v-toolbar-title>
+        <v-toolbar-title v-else>{{$t('common.welcome') + ' ' + primeraLetraMayuscula(this.$store.state.user.nombres)}}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <span class="grey--text">{{$t('user.crud.role') + ': ' + this.$store.state.user.rol.nombre}}</span>
       </v-toolbar>
       <v-card>
         <v-container
@@ -50,11 +53,8 @@
   export default {
     data () {
       return {
-        cards: []
-        // cards: [
-        //   { title: 'Buscar archivo', text: 'Buscar niño para ver sus registros asociados.', icon: 'search', src: '../../../static/images/archivosMedicos.jpeg', flex: 6 },
-        //   { title: 'Mis estadisticas', text: 'Ver estadísticas de mis reportes generados.', icon: 'trending_up', src: '../../../static/images/estadisticasMedicas.jpeg', flex: 6 }
-        // ]
+        cards: [],
+        datosEstudiante: {}
       }
     },
     components: {
@@ -64,6 +64,7 @@
       }
     },
     mounted () {
+      this.datosEstudiante = this.$storage.get('nino');
       this.$store.state.menu.forEach(menuItem => {
         if (menuItem.visible) {
           // let cardAux = {}
@@ -105,6 +106,19 @@
           this.$message.error(this.$t('error.mustAddSearchInformation'));
         }
       },
+      cerrarCarpeta (userData) {
+        if (this.$storage.exist('menu')) {
+          let nuevoMenu = this.$storage.get('menu');
+          nuevoMenu[0].visible = true;
+          nuevoMenu[1].visible = false;
+          this.$storage.set('menu', nuevoMenu);
+          this.$store.state.menu = nuevoMenu;
+          this.$storage.remove('nino');
+          this.$router.push('home');
+        } else {
+          this.$message.error(this.$t('error.wrongUrl'));
+        }
+      },
       primeraLetraMayuscula (nombres) {
         nombres = nombres.trim();
         const nombresSeparados = nombres.split(' ');
@@ -116,19 +130,6 @@
           nombresModificados += nombre.charAt(0).toUpperCase() + nombre.slice(1);
         });
         return nombresModificados;
-      },
-      abrirCarpeta (userData) {
-        if (this.$storage.exist('menu')) {
-          this.$storage.set('nino', userData);
-          let nuevoMenu = this.$storage.get('menu');
-          nuevoMenu[0].visible = false;
-          nuevoMenu[1].visible = true;
-          this.$storage.set('menu', nuevoMenu);
-          this.$store.state.menu = nuevoMenu;
-          this.$router.push('registrosArchivados');
-        } else {
-          this.$message.error(this.$t('error.wrongUrl'));
-        }
       }
     }
   }

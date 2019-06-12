@@ -37,10 +37,32 @@ export default {
   registrosDireccion: 'Registros',
   text: {
     buscarArchivos: 'Buscar niño para ver sus registros asociados.',
-    misEstadisticas: 'Ver estadísticas de mis reportes generados.'
+    misEstadisticas: 'Ver estadísticas de mis reportes generados.',
+    usuarios: 'Listado de los usuarios al sistema y su administración',
+    configuracion: 'Administra variables globales del sistema',
+    registrosPorArea: 'Ver número de estádisticas generadas por área, tipo de informe en un periodo determinado.',
+    estadisticasPorEstudiante: 'Ver número de niños inscritos en el centro por curso o gestión ordenados por edad.',
+    registrosDireccion: 'Búsqueda de registros en la institución.',
+    cursos: 'Listado de cursos por gestión con su listado de alumnos.',
+    bandejaInscritos: 'Lista de estudiantes inscritos y asignación a cursos.',
+    registroInscripcion: 'Llenado del registro RUDE completo con un nuevo estudiante.',
+    datosEstudiante: 'Datos personales del estudiante, familia y datos de unidades educativas registradas por gestión.',
+    registrosArchivados: 'Ver registros almacenados del estudiante.',
+    registroSimple: 'Crear nuevo registro de seguimiento.',
+    registroEvaluacionTrabajoSocial: 'Crea nuevo registro de evaluación de trabajo social.'
   },
   images: {
-    buscarArchivos: '../../../static/images/archivosMedicos.jpeg',
-    misEstadisticas: '../../../static/images/estadisticasMedicas.jpeg'
+    buscarArchivos: '../../../static/images/homeFiles.jpeg',
+    misEstadisticas: '../../../static/images/homeStats.jpeg',
+    usuarios: '../../../static/images/homeStaff.jpg',
+    configuracion: '../../../static/images/homeSettings.jpeg',
+    registrosPorArea: '../../../static/images/homeStats.jpeg',
+    estadisticasPorEstudiante: '../../../static/images/homeChildren.jpg',
+    registrosDireccion: '../../../static/images/homeFiles.jpeg',
+    cursos: '../../../static/images/homeCourse.jpg',
+    bandejaInscritos: '../../../static/images/homeInscription.jpeg',
+    registroInscripcion: '../../../static/images/homeRude.jpeg',
+    datosEstudiante: '../../../static/images/homePersonal.jpg',
+    registrosArchivados: '../../../static/images/homeFile.jpg'
   }
 };
