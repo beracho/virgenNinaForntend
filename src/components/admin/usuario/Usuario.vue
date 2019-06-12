@@ -1,9 +1,14 @@
 <template>
 <div>
-  <v-btn dark @click.native="dialog = true">
-    {{$t('usuarios.newUser') }}
-    <v-icon right dark>add_circle</v-icon>
-  </v-btn>
+  <v-toolbar color="secondary" dark>
+      <v-icon right>group</v-icon>
+      <v-toolbar-title>{{$t('menu.usuarios')}}</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-btn color='primary' dark @click.native="dialog = true">
+      {{$t('usuarios.newUser') }}
+      <v-icon right dark>add_circle</v-icon>
+    </v-btn>
+  </v-toolbar>
   <!-- TABLA DE DATOS -->
   <v-data-table v-bind:headers="headersAsinacion" v-bind:items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('usuarios.usersPerPage')">
     <!-- <template slot="headerCell" scope="props">
@@ -176,9 +181,10 @@
 </template>
 
 <script>
+  import Comps from '../../comps';
   /* eslint-disable semi */
   export default {
-    // name: 'bandeja-tecnicos',
+    mixins: [ Comps ],
     data () {
       return {
         // Variables creación usuarios

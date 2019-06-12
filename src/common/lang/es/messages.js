@@ -369,6 +369,7 @@ export default {
     }
   },
   registerView: {
+    folderBelongs: 'Folder de',
     searchParams: 'Parámetros de búsqueda',
     files: 'Documentos',
     creationDate: 'Fecha de creación',

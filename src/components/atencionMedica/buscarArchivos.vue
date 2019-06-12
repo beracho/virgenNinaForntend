@@ -1,29 +1,42 @@
 <template>
 <div>
   <div>
-  <v-container fluid>
-    <v-layout row wrap>
-      <v-flex xs3></v-flex>
-      <v-flex xs3>
-        <v-select 
-          v-bind:items="tiposBusqueda" 
-          v-model="busqueda.tipo" 
-          :label="$t('generalFollowUp.searchBy')" 
-          item-text="busqueda" 
-          item-value="valor"
-        ></v-select>
-      </v-flex>
-      <v-flex xs3>
-        <v-text-field
-          v-model="busqueda.aBuscar"
-          :label="$t('generalFollowUp.searchText')"
-        ></v-text-field>
-      </v-flex>
-      <v-flex xs3>
-        <v-btn dark block color="primary" @click.native="buscaEstudiante()">{{$t('common.search')}}</v-btn>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-toolbar color="secondary" dark>
+    <v-icon right>book</v-icon>
+    <v-toolbar-title>{{$t('menu.buscarArchivos')}}</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <span class="grey--text">{{$t('user.crud.role') + ': ' + this.$store.state.user.rol.nombre}}</span>
+  </v-toolbar>
+  <v-card>
+    <v-card-title class="headline">
+      <v-icon right>search</v-icon>
+      <h2 class="headline mb-0">{{$t('registerView.searchParams')}}</h2>
+      <v-spacer></v-spacer>
+    </v-card-title>
+    <v-container fluid>
+      <v-layout row wrap>
+        <v-flex xs3></v-flex>
+        <v-flex xs3>
+          <v-select 
+            v-bind:items="tiposBusqueda" 
+            v-model="busqueda.tipo" 
+            :label="$t('generalFollowUp.searchBy')" 
+            item-text="busqueda" 
+            item-value="valor"
+          ></v-select>
+        </v-flex>
+        <v-flex xs3>
+          <v-text-field
+            v-model="busqueda.aBuscar"
+            :label="$t('generalFollowUp.searchText')"
+          ></v-text-field>
+        </v-flex>
+        <v-flex xs3>
+          <v-btn dark block color="primary" @click.native="buscaEstudiante()">{{$t('common.search')}}</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-card>
   <!-- TABLA DE DATOS -->
   <v-data-table :headers="headersAsinacion" :items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
     <template v-slot:items="props">

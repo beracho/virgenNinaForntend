@@ -1,17 +1,16 @@
 <template>
   <div>
-    <v-container fluid>
-      <v-layout row wrap>
-        <v-flex xs1>
-        </v-flex>
-        <v-flex xs7>
-          <h3>{{this.datosEstudiante.nombres}} <br> {{this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
-        </v-flex>
-        <v-flex xs4>
-          <v-btn dark block color="red" @click.native="cerrarCarpeta()">{{$t('socialWork.closeFolder')}}</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <v-toolbar color="secondary" dark>
+      <v-icon>folder_shared</v-icon>
+      <v-toolbar-title>{{$t('registerView.folderBelongs') + ': ' + primeraLetraMayuscula(this.datosEstudiante.nombre_completo)}}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon color="primary" @click.native="$router.push('datosEstudiante')">
+        <v-icon>visibility</v-icon>
+      </v-btn>
+      <v-btn icon dark color="red" @click.native="cerrarCarpeta()">
+        <v-icon>close</v-icon>
+      </v-btn>
+    </v-toolbar>
     <form @submit.prevent="submit">
       <v-card>
         <v-card-title class="headline">

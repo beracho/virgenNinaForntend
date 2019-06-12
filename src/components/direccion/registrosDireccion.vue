@@ -1,6 +1,12 @@
 <template>
   <div>
     <div>
+      <v-toolbar color="secondary" dark>
+      <v-icon right>folder_shared</v-icon>
+      <v-toolbar-title>{{$t('menu.registrosDireccion')}}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <span class="grey--text">{{$t('user.crud.role') + ': ' + this.$store.state.user.rol.nombre}}</span>
+      </v-toolbar>
       <v-card>
         <v-card-title class="headline">
           <v-icon right>search</v-icon>
@@ -567,18 +573,6 @@
           }
         });
         this.dialogVistaDatos = true;
-      },
-      primeraLetraMayuscula (nombres) {
-        nombres = nombres.trim();
-        const nombresSeparados = nombres.split(' ');
-        let nombresModificados = '';
-        nombresSeparados.forEach(nombre => {
-          if (nombresModificados !== '') {
-            nombresModificados += ' ';
-          }
-          nombresModificados += nombre.charAt(0).toUpperCase() + nombre.slice(1);
-        });
-        return nombresModificados;
       },
       fechaInicialValida (value) {
         if (this.search.fechaFinal) {

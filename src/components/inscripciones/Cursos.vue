@@ -1,17 +1,29 @@
 <template>
 <div>
   <div>
-    <v-layout row>
-      <v-flex xs12>
-        <v-btn dark @click.native="dialogNewCourse = true">
-          {{$t('courses.newCourse') }}
-          <v-icon right dark>add_circle</v-icon>
-        </v-btn>
-      </v-flex>
-      <v-flex xs4>
-        <v-text-field :label="$t('courses.gestion')" v-model="buscaCurso.gestion"></v-text-field>
-      </v-flex>
-    </v-layout>
+  <v-toolbar color="secondary" dark>
+    <v-icon right>book</v-icon>
+    <v-toolbar-title>{{$t('menu.cursos')}}</v-toolbar-title>
+    <v-spacer></v-spacer>
+      <v-btn color='primary' dark @click.native="dialogNewCourse = true">
+        {{$t('courses.newCourse') }}
+        <v-icon right dark>add_circle</v-icon>
+      </v-btn>
+  </v-toolbar>
+  <v-card>
+    <v-card-title class="headline">
+      <v-icon right>search</v-icon>
+      <h2 class="headline mb-0">{{$t('registerView.searchParams')}}</h2>
+      <v-spacer></v-spacer>
+    </v-card-title>
+    <v-container fluid>
+      <v-layout row wrap>
+        <v-flex xs6>
+          <v-text-field :label="$t('courses.gestion')" v-model="buscaCurso.gestion"></v-text-field>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-card>
   <!-- TABLA DE DATOS -->
   <v-data-table v-bind:headers="headersAsinacion" v-bind:items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('courses.coursesPerPage')">
     <template slot="items" slot-scope="props">

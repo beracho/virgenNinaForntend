@@ -1,12 +1,14 @@
 <template>
   <div>
+  <v-toolbar color="secondary" dark>
+    <v-icon right>account_circle</v-icon>
+    <v-toolbar-title>{{$t('inscriptionRegister.tittle')}}</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <span class="grey--text">{{$t('user.crud.role') + ': ' + this.$store.state.user.rol.nombre}}</span>
+  </v-toolbar>
   <v-layout row wrap align-center>
       <v-flex xs12>
       <v-card>
-        <v-card-title class="headline">
-          <v-icon right>account_circle</v-icon>
-          {{$t('inscriptionRegister.tittle') }}
-        </v-card-title>
         <v-container fluid>
         <v-layout row>
           <v-flex xs10 offset-xs1>

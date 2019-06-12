@@ -1,14 +1,32 @@
 <template>
 <div>
   <div>
-  <v-btn dark @click.native="nuevaInscripcion">
-    {{$t('inscriptions.newStudent') }}
-    <v-icon right dark>add_circle</v-icon>
-  </v-btn>
   <v-btn dark @click.native="csvWindow= true">
     {{$t('inscriptions.csv') }}
     <v-icon right dark>file_upload</v-icon>
   </v-btn>
+  <v-toolbar color="secondary" dark>
+    <v-icon right>group</v-icon>
+    <v-toolbar-title>{{$t('menu.bandejaInscritos')}}</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-btn color='primary' dark @click.native="nuevaInscripcion">
+      {{$t('inscriptions.newStudent') }}
+      <v-icon right dark>add_circle</v-icon>
+    </v-btn>
+  </v-toolbar>
+  <!-- <v-card>
+    <v-card-title class="headline">
+      <v-icon right>search</v-icon>
+      <h2 class="headline mb-0">{{$t('registerView.searchParams')}}</h2>
+      <v-spacer></v-spacer>
+    </v-card-title>
+    <v-container fluid>
+      <v-layout row wrap>
+        <v-flex xs6>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-card> -->
   <!-- TABLA DE DATOS -->
   <v-data-table v-bind:headers="headersAsinacion" v-bind:items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
     <template slot="items" slot-scope="props">

@@ -1,11 +1,13 @@
 <template>
   <div>
+    <v-toolbar color="secondary" dark>
+      <v-icon right>assessment</v-icon>
+      <v-toolbar-title>{{$t('menu.registrosPorArea')}}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <span class="grey--text">{{$t('user.crud.role') + ': ' + this.$store.state.user.rol.nombre}}</span>
+    </v-toolbar>
     <form @submit.prevent="submit">
       <v-card>
-        <v-card-title class="headline">
-          <v-icon right>subject</v-icon>
-          <h2 class="headline mb-0">{{$t('charts.reportPerArea')}}</h2>
-        </v-card-title>
         <v-container fluid>
           <v-layout row wrap>
             <v-flex xs4>
@@ -205,8 +207,9 @@
 import { required } from 'vuelidate/lib/validators';
 import errorsHandler from '@/common/mixins/errorsHandler';
 import LineChart from '@/common/util/charts/LineChart.js';
+import Comps from '../comps';
 export default {
-  mixins: [ errorsHandler ],
+  mixins: [ errorsHandler, Comps ],
   components: {
     'line-chart': LineChart
   },

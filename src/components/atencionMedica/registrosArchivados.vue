@@ -1,24 +1,17 @@
 <template>
   <div>
     <div>
-      <v-container>
-        <v-layout row wrap>
-          <v-flex xs9>
-            <h3>{{this.datosEstudiante.nombres + ' ' +  this.datosEstudiante.primer_apellido + ' ' +  this.datosEstudiante.segundo_apellido}}</h3>
-          </v-flex>
-          <v-flex 1>
-            <v-btn icon color="primary" @click.native="personalData()">
-              <v-icon>visibility</v-icon>
-            </v-btn>
-          </v-flex>
-          <v-flex 1>
-            <v-btn icon dark color="red" @click.native="closeFolder()">
-              <v-icon>close</v-icon>
-            </v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
-      <br>
+      <v-toolbar color="secondary" dark>
+        <v-icon>folder_shared</v-icon>
+        <v-toolbar-title>{{$t('registerView.folderBelongs') + ': ' + primeraLetraMayuscula(this.datosEstudiante.nombre_completo)}}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon color="primary" @click.native="$router.push('datosEstudiante')">
+          <v-icon>visibility</v-icon>
+        </v-btn>
+        <v-btn icon dark color="red" @click.native="cerrarCarpeta()">
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-toolbar>
       <v-card>
         <v-card-title class="headline">
           <v-icon right>search</v-icon>
@@ -44,7 +37,6 @@
           </v-layout>
         </v-container>
       </v-card>
-      <br>
       <!-- TABLA DE DATOS -->
       <v-card>
         <v-card-title class="headline">
@@ -333,7 +325,7 @@
       maximize () {
         this.generalDataPanel = true;
       },
-      closeFolder (userData) {
+      cerrarCarpeta (userData) {
         if (this.$storage.exist('menu')) {
           let nuevoMenu = this.$storage.get('menu');
           nuevoMenu[0].visible = true;

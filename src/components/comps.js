@@ -23,6 +23,18 @@ export default {
           // logout
         }
       }
+    },
+    primeraLetraMayuscula (nombres) {
+      nombres = nombres.trim();
+      const nombresSeparados = nombres.split(' ');
+      let nombresModificados = '';
+      nombresSeparados.forEach(nombre => {
+        if (nombresModificados !== '') {
+          nombresModificados += ' ';
+        }
+        nombresModificados += nombre.charAt(0).toUpperCase() + nombre.slice(1);
+      });
+      return nombresModificados;
     }
   }
 };

@@ -50,7 +50,9 @@
 
 <script>
   /* eslint-disable semi */
+  import Comps from '../comps';
   export default {
+    mixins: [ Comps ],
     data () {
       return {
         cards: [],
@@ -118,18 +120,6 @@
         } else {
           this.$message.error(this.$t('error.wrongUrl'));
         }
-      },
-      primeraLetraMayuscula (nombres) {
-        nombres = nombres.trim();
-        const nombresSeparados = nombres.split(' ');
-        let nombresModificados = '';
-        nombresSeparados.forEach(nombre => {
-          if (nombresModificados !== '') {
-            nombresModificados += ' ';
-          }
-          nombresModificados += nombre.charAt(0).toUpperCase() + nombre.slice(1);
-        });
-        return nombresModificados;
       }
     }
   }
