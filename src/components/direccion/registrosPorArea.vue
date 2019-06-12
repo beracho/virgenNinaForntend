@@ -190,7 +190,7 @@
         </v-card-title>
         <v-layout row>
           <v-flex xs8 offset-xs2>
-            <line-chart :chart-data="datacollection"></line-chart>
+            <bar-chart :chart-data="datacollection"></bar-chart>
           </v-flex>
         </v-layout>
         <v-card-actions>
@@ -206,12 +206,12 @@
 <script>
 import { required } from 'vuelidate/lib/validators';
 import errorsHandler from '@/common/mixins/errorsHandler';
-import LineChart from '@/common/util/charts/LineChart.js';
+import BarChart from '@/common/util/charts/BarChart.js';
 import Comps from '../comps';
 export default {
   mixins: [ errorsHandler, Comps ],
   components: {
-    'line-chart': LineChart
+    'bar-chart': BarChart
   },
   data () {
     return {
@@ -373,8 +373,9 @@ export default {
       datasetsReceiveData.forEach(dataElement => {
         const auxData = {
           label: dataElement.label,
-          fill: false,
-          borderColor: this.colors[colorCounter % 9],
+          // fill: false,
+          // borderColor: this.colors[colorCounter % 9],
+          backgroundColor: this.colors[colorCounter % 9],
           data: dataElement.data
         };
         colorCounter++;
