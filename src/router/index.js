@@ -18,6 +18,7 @@ import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
 import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
 import Cursos from '@/components/inscripciones/Cursos';
 import Home from '@/components/atencionMedica/home';
+import MisEstadisticas from '@/components/atencionMedica/misEstadisticas';
 import BuscarArchivos from '@/components/atencionMedica/buscarArchivos';
 import DatosEstudiante from '@/components/atencionMedica/datosEstudiante';
 import RegistrosArchivados from '@/components/atencionMedica/registrosArchivados';
@@ -191,6 +192,11 @@ export default new VueRouter({
       path: '/registroEvaluacionTrabajoSocial',
       name: 'RegistroEvaluacionTrabajoSocial',
       component: RegistroEvaluacionTrabajoSocial
+    },
+    {
+      path: '/misEstadisticas',
+      name: 'MisEstadisticas',
+      component: MisEstadisticas
     },
     {
       path: '/buscarArchivos',
