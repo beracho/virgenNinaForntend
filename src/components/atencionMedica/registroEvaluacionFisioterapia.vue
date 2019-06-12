@@ -2371,7 +2371,7 @@
         if (!this.$v.formularioRegistro.$invalid) {
           this.formularioRegistro.antecedentesGestacionales.posicion = this.formularioRegistro.antecedentesGestacionales.posicion.text;
           this.formularioRegistro.evaluacionPsicomotriz.lateralidad = this.formularioRegistro.evaluacionPsicomotriz.lateralidad.text;
-          if (this.$route.query.registro) {
+          if (this.$route.query.registro && !this.$route.query.createNew) {
             // Edita registro Simple
             this.formularioRegistro.idRegistro = this.$route.query.registro;
             this.formularioRegistro.idRegistroFisioterapia = this.$store.state.physiotherapyRegisterEdit.reg_ft.id_reg_ft;

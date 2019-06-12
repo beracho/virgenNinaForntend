@@ -2100,7 +2100,7 @@
       submit () { // Envía datos de la nueva asignación
         this.$v.formularioRegistro.$touch();
         if (!this.$v.formularioRegistro.$invalid) {
-          if (this.$route.query.registro !== undefined) {
+          if (this.$route.query.registro !== undefined && !this.$route.query.createNew) {
             // Edita registro Simple
             this.formularioRegistro.idRegistro = this.$route.query.registro;
             this.formularioRegistro.idRegistroPsicomotricidad = this.$store.state.psychomotorRegisterEdit.reg_pm.id_reg_pm;

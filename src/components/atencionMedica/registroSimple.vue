@@ -125,7 +125,7 @@
       submit () { // Envía datos de la nueva asignación
         this.$v.formularioRegistro.$touch();
         if (!this.$v.formularioRegistro.$invalid) {
-          if (this.$route.query.registro) {
+          if (this.$route.query.registro && !this.$route.query.createNew) {
             // Edita registro Simple
             this.formularioRegistro.idRegistro = this.$route.query.registro;
             this.formularioRegistro.idRegistroSimple = this.$store.state.simpleRegisterEdit.registros_simple.id_registro_simple;

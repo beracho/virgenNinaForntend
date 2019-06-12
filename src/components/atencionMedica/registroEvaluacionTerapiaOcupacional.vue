@@ -977,7 +977,7 @@
         this.$v.formularioRegistro.$touch();
         if (!this.$v.formularioRegistro.$invalid) {
           // this.formularioRegistro.tipoDeFamilia = this.formularioRegistro.tipoDeFamiliaObject.text;
-          if (this.$route.query.registro) {
+          if (this.$route.query.registro && !this.$route.query.createNew) {
             // Edita registro Simple
             this.formularioRegistro.idRegistro = this.$route.query.registro;
             this.formularioRegistro.idRegistroTerapiaOcupacional = this.$store.state.occupationalTherapyRegisterEdit.reg_to.id_reg_to;

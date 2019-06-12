@@ -55,8 +55,11 @@
               <v-btn icon dark color="primary" @click.native="printFile(props.item)">
                 <v-icon>filter_none</v-icon>
               </v-btn>
-              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editarRegistro(props.item)">
+              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editarRegistro(props.item, false)">
                 <v-icon>edit</v-icon>
+              </v-btn>
+              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon color="primary" @click.native="editarRegistro(props.item, true)">
+                <v-icon>fast_forward</v-icon>
               </v-btn>
               <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="red" @click.native="confirmDelete(props.item)">
                 <v-icon>delete</v-icon>
@@ -402,29 +405,33 @@
             break;
         }
       },
-      editarRegistro (item) {
+      editarRegistro (item, createFrom) {
+        let rutaCreaNuevo = '';
+        if (createFrom) {
+          rutaCreaNuevo = '&createNew=true'
+        }
         switch (item.tipo) {
           case 'simple':
             this.$store.state.simpleRegisterEdit = item;
-            this.$router.push('registroSImple?registro=' + item.id_registro);
+            this.$router.push('registroSImple?registro=' + item.id_registro + rutaCreaNuevo);
             break;
           case 'especialidad':
             switch (item.area) {
               case 'Trabajo social':
                 this.$store.state.socialWorkRegisterEdit = item;
-                this.$router.push('registroEvaluacionTrabajoSocial?registro=' + item.id_registro);
+                this.$router.push('registroEvaluacionTrabajoSocial?registro=' + item.id_registro + rutaCreaNuevo);
                 break;
               case 'Terapia Ocupacional':
                 this.$store.state.occupationalTherapyRegisterEdit = item;
-                this.$router.push('registroEvaluacionTerapiaOcupacional?registro=' + item.id_registro);
+                this.$router.push('registroEvaluacionTerapiaOcupacional?registro=' + item.id_registro + rutaCreaNuevo);
                 break;
               case 'Psicomotricidad':
                 this.$store.state.psychomotorRegisterEdit = item;
-                this.$router.push('registroEvaluacionPsicomotricidad?registro=' + item.id_registro);
+                this.$router.push('registroEvaluacionPsicomotricidad?registro=' + item.id_registro + rutaCreaNuevo);
                 break;
               case 'Fisioterapia':
                 this.$store.state.physiotherapyRegisterEdit = item;
-                this.$router.push('registroEvaluacionFisioterapia?registro=' + item.id_registro);
+                this.$router.push('registroEvaluacionFisioterapia?registro=' + item.id_registro + rutaCreaNuevo);
                 break;
               default:
                 break;
