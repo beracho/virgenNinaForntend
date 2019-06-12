@@ -2,7 +2,7 @@
   <v-app id="app" :class="{ 'app-login': !auth }">
     <app-sidenav v-if="auth && sidenav" :key="watchMenu"></app-sidenav>
     <app-navbar v-if="auth"></app-navbar>
-    <v-content v-if="main">
+    <v-content v-if="main" class="body-background">
       <app-breadcrumbs v-if="auth"></app-breadcrumbs>
       <v-container fluid fill-height>
         <v-layout justify-center>
@@ -139,4 +139,10 @@
 
 <style lang="scss">
 @import './assets/scss/main.scss';
+  .body-background {
+    background: transparent url(../static/images/background.jpeg);
+    background-size: cover;
+    background-repeat: repeat;
+    height: 100%;
+  }
 </style>

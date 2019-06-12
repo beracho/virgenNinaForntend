@@ -26,8 +26,10 @@ import FileUpload from 'v-file-upload';
 Vue.use(FileUpload);
 Vue.use(Vuetify, {
   theme: {
-    primary: '#00A36F',
-    secondary: '#571606',
+    primary: '#006666',
+    // primary: '#00A36F',
+    secondary: '#555555',
+    // secondary: '#571606',
     third: '#FFB300',
     accent: '#8c9eff',
     success: '#09B629',
