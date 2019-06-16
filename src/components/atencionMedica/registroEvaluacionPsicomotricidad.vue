@@ -2148,19 +2148,6 @@
         this.formularioRegistro.diagnosticoSocial = '';
         this.formularioRegistro.conclusionSugerencia = '';
       },
-      cerrarCarpeta (userData) {
-        if (this.$storage.exist('menu')) {
-          let nuevoMenu = this.$storage.get('menu');
-          nuevoMenu[0].visible = true;
-          nuevoMenu[1].visible = false;
-          this.$store.state.menu = nuevoMenu;
-          this.$storage.set('menu', nuevoMenu);
-          this.$storage.remove('nino');
-          this.$router.push('home');
-        } else {
-          this.$message.error(this.$t('error.wrongUrl'));
-        }
-      },
       openView (numeroImagen) {
         this.imageView = true;
         switch (numeroImagen) {
