@@ -306,6 +306,7 @@ export default {
     generalData: 'Datos generales',
     standartRegistry: 'Registro de seguimiento',
     print: 'Imprimir',
+    workOn: 'Trabajando',
     observation: 'Observación',
     intervention: 'Intervención',
     notRegistered: 'No registrado',
