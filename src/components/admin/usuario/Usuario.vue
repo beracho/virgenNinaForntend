@@ -323,12 +323,10 @@
         let rolUsuario = '';
         let estadoUsuario = false;
         this.asignaciones.map(valor => {
-          console.log('--------------------------');
-          console.log(JSON.stringify(valor));
           if (valor.id_usuario === idUser) {
             emailUsuario = valor.email;
             rolUsuario = valor.fid_rol;
-            estadoUsuario = valor.estado;
+            estadoUsuario = valor.estado === 'ACTIVO';
           }
         })
         this.form1.email = emailUsuario;
