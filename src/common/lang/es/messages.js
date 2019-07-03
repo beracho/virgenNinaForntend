@@ -345,6 +345,7 @@ export default {
     search: 'Buscar',
     change: 'Cambiar',
     active: 'Activo',
+    inactive: 'Inactivo',
     edit: 'Editar',
     status: 'Estado',
     actions: 'Acciones',

@@ -155,11 +155,17 @@
               </v-alert>
               <form @submit.prevent="editaUsuario">
                 <v-layout row wrap>
-                  <v-flex xs6>
+                  <v-flex xs4>
                     <v-text-field :label="$t('usuarios.email')" v-model="form1.email"></v-text-field>
                   </v-flex>
-                  <v-flex xs6>
+                  <v-flex xs4>
                     <v-select v-bind:items="roles" v-model="form1.tipo" :label="$t('usuarios.rol')" item-text="nombre" item-value="id_rol"></v-select>
+                  </v-flex>
+                  <v-flex xs4>
+                    <v-switch
+                      v-model="form1.estado"
+                      :label="form1.estado?$t('common.active'):$t('common.inactive')"
+                    ></v-switch>
                   </v-flex>
                 </v-layout>
               </form>
@@ -207,7 +213,8 @@
         dialogEdicion: false,
         form1: {
           'email': '',
-          'tipo': ''
+          'tipo': '',
+          'estado': false
         },
         idusuario: '',
         // Variables lista tabla
@@ -314,14 +321,19 @@
         this.dialogEdicion = !this.dialogEdicion;
         let emailUsuario = '';
         let rolUsuario = '';
+        let estadoUsuario = false;
         this.asignaciones.map(valor => {
+          console.log('--------------------------');
+          console.log(JSON.stringify(valor));
           if (valor.id_usuario === idUser) {
             emailUsuario = valor.email;
             rolUsuario = valor.fid_rol;
+            estadoUsuario = valor.estado;
           }
         })
         this.form1.email = emailUsuario;
         this.form1.tipo = rolUsuario;
+        this.form1.estado = estadoUsuario;
       },
       editarUsuario (idUsuario) { // Edita un usuario existente
         // valida
@@ -330,7 +342,8 @@
           this.$service.put(`usuarios/${idUsuario}`, {
             'usuario': {
               'fid_rol': this.form1.tipo,
-              'email': this.form1.email
+              'email': this.form1.email,
+              'estado': this.form1.estado
             }
           }).then(respuesta => {
             this.form1.email = '';
