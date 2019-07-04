@@ -48,6 +48,59 @@ export default {
       } else {
         this.$message.error(this.$t('error.wrongUrl'));
       }
+    },
+    obtieneArea (nombreRol) {
+      let literal = '';
+      switch (nombreRol) {
+        case 'ADMINISTRADOR':
+          literal = 'administracion';
+          break;
+        case 'DIRECTOR':
+          literal = 'direccion';
+          break;
+        case 'ADMINISTRADOR_INSCRIPCIONES':
+          literal = 'inscripcion';
+          break;
+        case 'PROF_PSICOMOTRICIDAD':
+          literal = 'psicomotricidad';
+          break;
+        case 'PROF_FISIOTERAPIA':
+          literal = 'fisioterapia';
+          break;
+        case 'PROF_FONOAUDIOLOGIA':
+          literal = 'fonoaudiologia';
+          break;
+        case 'PROF_NUTRICION':
+          literal = 'nutricion';
+          break;
+        case 'PROF_PSICOLOGIA':
+          literal = 'psicologia';
+          break;
+        case 'PROF_ODONTOLOGIA':
+          literal = 'odontologia';
+          break;
+        case 'PROF_PSICOPEDAGOGIA':
+          literal = 'psicopedagogia';
+          break;
+        case 'PROF_TRABAJO_SOCIAL':
+          literal = 'trabajo social';
+          break;
+        case 'PROF_MEDICINA_GENERAL':
+          literal = 'medicina general';
+          break;
+        case 'PROF_TERAPIA_OCUPACIONAL':
+          literal = 'terapia ocupacional';
+          break;
+        case 'PROF_EDUCACION':
+          literal = 'educacion';
+          break;
+        case 'PROF_AUTISMO':
+          literal = 'autismo';
+          break;
+        default:
+          break;
+      }
+      return literal;
     }
   }
 };

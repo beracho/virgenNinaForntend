@@ -185,7 +185,7 @@
             };
             const paramsCategoria = {
               descripcion: trabajoObject.text,
-              area: this.$store.state.user.rol.area
+              area: this.obtieneArea(this.$store.state.user.rol.nombre)
             };
             // Carga categoria nueva a la base de datos a la base de datos
             this.$service.post(`categoria`, paramsCategoria)
@@ -287,7 +287,7 @@
     created () {
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
-      this.$service.get(`categoria?area=${this.$store.state.user.rol.area}`)
+      this.$service.get(`categoria?area=${this.obtieneArea(this.$store.state.user.rol.nombre)}`)
       .then(response => {
         this.workTypeItems = [];
         this.workTypeItems.push({ header: this.$t('socialWork.selectOrCreate') })
@@ -390,7 +390,7 @@
           const paramsCategoria = {
             idCategoria: item.id,
             descripcion: item.text,
-            area: this.$store.state.user.rol.area
+            area: this.obtieneArea(this.$store.state.user.rol.nombre)
           };
           this.$service.put(`categoria`, paramsCategoria)
           .then(response => {
