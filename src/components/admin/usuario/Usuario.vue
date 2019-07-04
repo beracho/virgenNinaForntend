@@ -84,31 +84,31 @@
                   </v-flex>
                   <v-flex xs4>
                     <v-menu
-                      lazy
+                      ref="menu"
+                      v-model="menu"
                       :close-on-content-click="false"
+                      :nudge-right="40"
+                      lazy
                       transition="scale-transition"
                       offset-y
                       full-width
-                      :nudge-right="40"
-                      max-width="290px"
                       min-width="290px"
                     >
-                      <v-text-field
-                        slot="activator"
-                        :label="$t('usuarios.bornDate')"
-                        v-model="form.persona.fecha_nacimiento"
-                        prepend-icon="event"
-                        readonly
-                      ></v-text-field>
-                      <v-date-picker v-model="form.persona.fecha_nacimiento" locale="es" no-title scrollable actions>
-                        <template slot-scope="{ save, cancel }">
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="cancel">Cancelar</v-btn>
-                            <v-btn flat color="primary" @click="save">Seleccionar</v-btn>
-                          </v-card-actions>
-                        </template>
-                      </v-date-picker>
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="form.persona.fecha_nacimiento"
+                          :label="$t('usuarios.bornDate')"
+                          prepend-icon="event"
+                          readonly
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        ref="picker"
+                        v-model="date"
+                        :max="new Date().toISOString().substr(0, 10)"
+                        @change="save"
+                      ></v-date-picker>
                     </v-menu>
                   </v-flex>
                   <v-flex xs12>
@@ -121,7 +121,7 @@
                     <v-text-field :label="$t('usuarios.email')" v-model="form.email" :rules="emailRules"></v-text-field>
                   </v-flex>
                   <v-flex xs6>
-                    <v-select v-bind:items="roles" v-model="form.tipo" :label="$t('usuarios.rol')" item-text="nombre" item-value="id_rol"></v-select>
+                    <v-select v-bind:items="roles" v-model="form.tipo" :label="$t('usuarios.rol')" item-text="descripcion" item-value="id_rol"></v-select>
                   </v-flex>
                 </v-layout>
               </v-form>
@@ -159,7 +159,7 @@
                     <v-text-field :label="$t('usuarios.email')" v-model="form1.email"></v-text-field>
                   </v-flex>
                   <v-flex xs4>
-                    <v-select v-bind:items="roles" v-model="form1.tipo" :label="$t('usuarios.rol')" item-text="nombre" item-value="id_rol"></v-select>
+                    <v-select v-bind:items="roles" v-model="form1.tipo" :label="$t('usuarios.rol')" item-text="descripcion" item-value="id_rol"></v-select>
                   </v-flex>
                   <v-flex xs4>
                     <v-switch
@@ -196,6 +196,7 @@
         // Variables creación usuarios
         dialog: false,
         validForm: true,
+        menu: false,
         form: {
           persona: {
             'ci': '',
@@ -246,6 +247,9 @@
       }
     },
     watch: {
+      menu (val) {
+        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+      },
       pagination: {
         handler () {
           let sorting = '';
@@ -370,6 +374,10 @@
             this.asignaciones = response.datos.rows;
             this.count = response.datos.count;
           })
+      },
+      save (date) {
+        this.$refs.menu.save(date)
+        this.form.persona.fecha_nacimiento = date;
       }
     }
   }
