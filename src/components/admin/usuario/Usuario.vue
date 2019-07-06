@@ -146,7 +146,7 @@
         <v-card>
           <v-card-title class="headline">
             <v-icon right>account_circle</v-icon>
-            {{$t('usuarios.adding')}}
+            {{$t('usuarios.modifying')}}
           </v-card-title>
           <v-layout row>
             <v-flex xs10 offset-xs1>

@@ -42,6 +42,7 @@ export default {
     newUser: 'Nuevo Usuario',
     usersPerPage: 'Usuarios por página',
     adding: 'Agregando usuario',
+    modifying: 'Editando usuario',
     personalData: 'Datos Personales.',
     enterPersonalData: 'Ingrese los datos personales para agregarlo al sistema.',
     id: 'Cédula de identidad',

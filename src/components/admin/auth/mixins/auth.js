@@ -57,7 +57,7 @@ export default {
       store.commit('setDefault');
       let route = this.$router.currentRoute.path;
       let redirect = 'login';
-      if (['/', '/newPassword', '/loginAdmin', '/confirmarCuenta', '/restaurar'].indexOf(route) !== -1) {
+      if (['/newPassword', '/loginAdmin', '/confirmarCuenta', '/restaurar'].indexOf(route) !== -1) {
         if (this.$router.currentRoute.query !== {}) {
           redirect = this.$router.currentRoute.fullPath;
         } else {
