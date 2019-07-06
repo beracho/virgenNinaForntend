@@ -98,6 +98,7 @@ export default {
     submit () {
       this.$v.form.$touch();
       if (!this.$v.form.$invalid) {
+        this.$storage.remove('nino');
         this.login(this.form);
       }
     }
