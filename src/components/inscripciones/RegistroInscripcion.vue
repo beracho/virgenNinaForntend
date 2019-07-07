@@ -54,7 +54,8 @@
                   <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentNumber')" v-model="form.persona.documento_identidad"></v-text-field>
                 </v-flex>
                 <v-flex xs4 v-if="codeChosen && searchRE">
-                  <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field>
+                  <!-- <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field> -->
+                  <v-select :disabled="ciLoaded" v-bind:items="lugarCi" v-model="form.persona.lugar_documento_identidad" :label="$t('inscriptionRegister.documentPlace')" item-text="codigo_ine" item-value="abreviacion"></v-select>
                 </v-flex>
                 <v-flex sx4>
                   <v-btn v-if="!ciLoaded" class="primary" block flat v-on:click="actualizarDocumento()">{{$t('inscriptionRegister.updateIdData')}}
@@ -700,6 +701,7 @@ export default {
   data () {
     return {
       validForm: true,
+      lugarCi: [],
       formUE: {
         sie: '',
         nombre: '',
@@ -889,6 +891,11 @@ export default {
           this.opcionesUE.push(element);
         }
       }, this);
+      // Carga ubicaciones de documento
+      return this.$service.get(`codigoDeptos`);
+    })
+    .then(response => {
+      this.lugarCi = response.datos;
       // Carga los pioc
       return this.$service.get(`piocs`);
     })
