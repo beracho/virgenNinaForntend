@@ -2,7 +2,7 @@
   <div>
   <v-toolbar color="secondary" dark>
     <v-icon>folder_shared</v-icon>
-    <v-toolbar-title>{{$t('registerView.folderBelongs') + ': ' + primeraLetraMayuscula(this.datosEstudiante.nombre_completo)}}</v-toolbar-title>
+    <v-toolbar-title>{{$t('registerView.folderBelongs') + ': ' + obtenerNombreNino()}}</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn dark color="red" @click.native="cerrarCarpeta()">{{$t('socialWork.closeFolder')}}</v-btn>
   </v-toolbar>

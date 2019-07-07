@@ -4,7 +4,7 @@
     <v-flex xs12>
       <v-toolbar color="secondary" dark>
         <v-icon>{{this.$storage.get('nino') !== null ? 'folder_shared' : 'sentiment_satisfied_alt'}}</v-icon>
-        <v-toolbar-title v-if="this.$storage.get('nino') !== null">{{$t('registerView.folderBelongs') + ': ' + primeraLetraMayuscula(this.datosEstudiante.nombre_completo)}}</v-toolbar-title>
+        <v-toolbar-title v-if="this.$storage.get('nino') !== null">{{$t('registerView.folderBelongs') + ': ' + obtenerNombreNino()}}</v-toolbar-title>
         <v-toolbar-title v-else>{{$t('common.welcome') + ' ' + primeraLetraMayuscula(this.$store.state.user.nombres)}}</v-toolbar-title>
         <v-spacer></v-spacer>
         <span class="grey--text">{{$t('user.crud.role') + ': ' + this.$store.state.user.rol.nombre}}</span>
@@ -67,6 +67,8 @@
     },
     mounted () {
       this.datosEstudiante = this.$storage.get('nino');
+      console.log('..--------------------------------------------');
+      console.log(this.obtenerNombreNino());
       this.$store.state.menu.forEach(menuItem => {
         if (menuItem.visible) {
           // let cardAux = {}

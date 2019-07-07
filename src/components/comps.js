@@ -36,6 +36,19 @@ export default {
       });
       return nombresModificados;
     },
+    obtenerNombreNino () {
+      const datosEstudiante = this.$storage.get('nino');
+      console.log(JSON.stringify(datosEstudiante));
+      let nombreCompleto = '';
+      nombreCompleto += datosEstudiante.nombres;
+      if (datosEstudiante.primer_apellido) {
+        nombreCompleto += ' ' + datosEstudiante.primer_apellido;
+      }
+      if (datosEstudiante.segundo_apellido) {
+        nombreCompleto += ' ' + datosEstudiante.segundo_apellido;
+      }
+      return this.primeraLetraMayuscula(nombreCompleto);
+    },
     cerrarCarpeta (userData) {
       if (this.$storage.exist('menu')) {
         let nuevoMenu = this.$storage.get('menu');
