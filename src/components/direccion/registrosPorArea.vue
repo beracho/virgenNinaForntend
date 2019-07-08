@@ -190,7 +190,7 @@
         </v-card-title>
         <v-layout row>
           <v-flex xs8 offset-xs2>
-            <bar-chart :chart-data="datacollection"></bar-chart>
+            <bar-chart :height="300" :chart-data="datacollection"></bar-chart>
           </v-flex>
         </v-layout>
         <v-card-actions>
