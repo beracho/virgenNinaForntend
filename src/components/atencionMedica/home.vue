@@ -67,8 +67,6 @@
     },
     mounted () {
       this.datosEstudiante = this.$storage.get('nino');
-      console.log('..--------------------------------------------');
-      console.log(this.obtenerNombreNino());
       this.$store.state.menu.forEach(menuItem => {
         if (menuItem.visible) {
           // let cardAux = {}

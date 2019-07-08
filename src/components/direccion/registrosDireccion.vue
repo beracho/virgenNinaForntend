@@ -167,9 +167,6 @@
               <v-btn icon dark color="primary" @click.native="printFile(props.item)">
                 <v-icon>filter_none</v-icon>
               </v-btn>
-              <v-btn v-if="props.item._usuario_creacion == $storage.getUser().id_usuario" icon dark color="primary" @click.native="editarRegistro(props.item)">
-                <v-icon>edit</v-icon>
-              </v-btn>
             </td>
           </template>
         </v-data-table>
