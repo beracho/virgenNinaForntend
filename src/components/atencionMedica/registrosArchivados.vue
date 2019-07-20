@@ -33,6 +33,62 @@
               ></v-select>
             </v-flex>
             <v-flex xs4>
+              <v-menu
+                ref="initialMenu"
+                v-model="initialMenu"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                lazy
+                transition="scale-transition"
+                offset-y
+                full-width
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="search.initialDate"
+                    :label="$t('charts.fromDate')"
+                    prepend-icon="event"
+                    readonly
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  ref="picker"
+                  v-model="date"
+                  :allowed-dates="fechaInicialValida"
+                  @change="saveInitialDate"
+                ></v-date-picker>
+              </v-menu>
+            </v-flex>
+            <v-flex xs4>
+              <v-menu
+                ref="finalMenu"
+                v-model="finalMenu"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                lazy
+                transition="scale-transition"
+                offset-y
+                full-width
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="search.finalDate"
+                    :label="$t('charts.toDate')"
+                    prepend-icon="event"
+                    readonly
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  ref="picker"
+                  v-model="date"
+                  :allowed-dates="fechaFinalValida"
+                  @change="saveFinalDate"
+                ></v-date-picker>
+              </v-menu>
             </v-flex>
           </v-layout>
         </v-container>
@@ -187,54 +243,55 @@
         areaView: '',
         areas: [
           {
+            value: 'all',
+            text: this.$t('charts.all')
+          },
+          {
             value: 'psicomotricidad',
-            text: 'Psicomotricidad'
+            text: this.$t('areas.psychomotor')
           },
           {
             value: 'fisioterapia',
-            text: 'Fisioterapia'
+            text: this.$t('areas.physiotherapy')
           },
           {
             value: 'fonoaudiologia',
-            text: 'Fonoaudiología'
+            text: this.$t('areas.phonoaudiology')
           },
           {
             value: 'nutricion',
-            text: 'Nutrición'
+            text: this.$t('areas.nutrition')
           },
           {
             value: 'psicologia',
-            text: 'Psicología'
-          },
-          {
-            value: 'odontologia',
-            text: 'Odontología'
-          },
-          {
-            value: 'psicopedagogia',
-            text: 'Psicopedagogía'
+            text: this.$t('areas.psycology')
           },
           {
             value: 'medicina general',
-            text: 'Medicina General'
+            text: this.$t('areas.medicalDoctor')
           },
           {
             value: 'trabajo social',
-            text: 'Trabajo Social'
+            text: this.$t('areas.socialWork')
           },
           {
             value: 'educacion',
-            text: 'Educación'
+            text: this.$t('areas.education')
           },
           {
             value: 'terapia ocupacional',
-            text: 'Terapia ocupacional'
+            text: this.$t('areas.occupationalTherapy')
           }
         ],
         search: {
-          area: ''
+          area: '',
+          initialDate: '',
+          finalDate: ''
         },
         deleteData: {},
+        // DatePicker
+        initialMenu: false,
+        finalMenu: false,
         // Listado de estudiantes
         datosEstudiante: {},
         registros: [],
@@ -268,6 +325,12 @@
       'vista-fisioterapia': RegistroEvaluacionFisioterapia
     },
     watch: {
+      initialMenu (val) {
+        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'));
+      },
+      finalMenu (val) {
+        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'));
+      },
       'search.area': function () {
         this.getTableData();
       },
@@ -308,6 +371,13 @@
     created () {
       this.headers = {'Authorization': `Bearer ${this.$storage.get('token')}`};
       this.datosEstudiante = this.$storage.get('nino');
+      // Fechas
+      var d = new Date();
+      d.setDate(d.getDate() + 1);
+      this.search.finalDate = this.dateFormat(d);
+      d.setDate(d.getDate() - 6);
+      this.search.initialDate = this.dateFormat(d);
+      // Areas
       let areaActual = this.$storage.get('user');
       this.areas.forEach(area => {
         if (area.text.toLowerCase() === areaActual.rol.area.toLowerCase()) {
@@ -317,7 +387,17 @@
     },
     methods: {
       getTableData () {
-        this.$service.get(`registros?area=${this.search.area}&estudiante=${this.datosEstudiante.codigo}`)
+        let search = `?estudiante=${this.datosEstudiante.codigo}`
+        if (this.search.area !== 'all') {
+          search += `&area=${this.search.area}`
+        }
+        if (this.search.initialDate !== '') {
+          search += `&fechaInicial=${this.search.initialDate}`
+        }
+        if (this.search.finalDate !== '') {
+          search += `&fechaFinal=${this.search.finalDate}`
+        }
+        this.$service.get(`registros${search}`)
         .then(response => {
           this.registros = response.datos.rows ? response.datos.rows : response.datos;
         })
@@ -430,6 +510,26 @@
           default:
             break;
         }
+      },
+      fechaInicialValida (value) {
+        if (this.search.finalDate) {
+          return new Date(value) < new Date(this.search.finalDate);
+        }
+      },
+      fechaFinalValida (value) {
+        if (this.search.initialDate) {
+          return new Date(value) > new Date(this.search.initialDate);
+        }
+      },
+      saveInitialDate (date) {
+        this.$refs.initialMenu.save(date)
+        this.search.initialDate = date;
+        this.getTableData();
+      },
+      saveFinalDate (date) {
+        this.$refs.finalMenu.save(date)
+        this.search.finalDate = date;
+        this.getTableData();
       },
       verRegistro (item) {
         switch (item.tipo) {

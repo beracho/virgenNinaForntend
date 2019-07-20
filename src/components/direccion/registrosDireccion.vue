@@ -105,9 +105,6 @@
                   locale="es"
                   :allowed-dates="fechaInicialValida"
                   no-title scrollable actions>
-                  <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="fechaInicio = false">{{$t('common.cancel')}}</v-btn>
-                  <v-btn flat color="primary" @click="$refs.menu.save(search.fechaInicial)">{{$t('common.accept')}}</v-btn>
                 </v-date-picker>
               </v-menu>
             </v-flex>
@@ -139,9 +136,6 @@
                   locale="es" 
                   :allowed-dates="fechaFinalValida"
                   no-title scrollable actions>
-                  <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="fechaFinal = false">{{$t('common.cancel')}}</v-btn>
-                  <v-btn flat color="primary" @click="$refs.menu.save(search.fechaFinal)">{{$t('common.accept')}}</v-btn>
                 </v-date-picker>
               </v-menu>
             </v-flex>
@@ -682,23 +676,6 @@
           }
         });
         return response;
-      },
-      dateFormat (fecha) {
-        if (!fecha) {
-          fecha = new Date();
-        } else {
-          fecha = new Date(fecha);
-        }
-        let dd = fecha.getDate();
-        if (dd < 10) {
-          dd = '0' + dd;
-        }
-        let mm = fecha.getMonth() + 1;
-        if (mm < 10) {
-          mm = '0' + mm;
-        }
-        let nuevaFecha = fecha.getFullYear() + '-' + mm + '-' + dd;
-        return nuevaFecha;
       },
       verRegistro (item) {
         switch (item.tipo) {

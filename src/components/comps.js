@@ -49,6 +49,23 @@ export default {
       }
       return this.primeraLetraMayuscula(nombreCompleto);
     },
+    dateFormat (fecha) {
+      if (!fecha) {
+        fecha = new Date();
+      } else {
+        fecha = new Date(fecha);
+      }
+      let dd = fecha.getDate();
+      if (dd < 10) {
+        dd = '0' + dd;
+      }
+      let mm = fecha.getMonth() + 1;
+      if (mm < 10) {
+        mm = '0' + mm;
+      }
+      let nuevaFecha = fecha.getFullYear() + '-' + mm + '-' + dd;
+      return nuevaFecha;
+    },
     cerrarCarpeta (userData) {
       if (this.$storage.exist('menu')) {
         let nuevoMenu = this.$storage.get('menu');
