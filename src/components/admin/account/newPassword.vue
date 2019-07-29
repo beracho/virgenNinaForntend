@@ -15,7 +15,7 @@
                   append-icon="email"
                   v-model="form.email"
                   autofocus
-                  maxlength="25"
+                  maxlength="50"
                   :error="$v.form.email.$error"
                   @input="$v.form.email.$touch()"
                   :error-messages="errors.email"
