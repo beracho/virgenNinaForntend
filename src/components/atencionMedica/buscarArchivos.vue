@@ -63,6 +63,7 @@
         // Busqueda de estudiante
         tiposBusqueda: [],
         busqueda: {},
+        globalSort: '',
         // Variables asignación de curso
         dialogAsignacionCurso: false,
         csvWindow: false,
@@ -100,26 +101,19 @@
     watch: {
       pagination: {
         handler () {
-          let sorting = '';
           if (this.pagination.sortBy != null && this.pagination.descending != null) {
             if (this.pagination.descending) {
-              sorting = `order=-`;
+              this.globalSort = `order=-`;
             } else {
-              sorting = `order=`;
+              this.globalSort = `order=`;
             }
             if (this.pagination.sortBy === 'codigo') {
-              sorting = `${sorting}codigo`;
+              this.globalSort = `${this.globalSort}codigo`;
             } else {
-              sorting = `${sorting}${this.pagination.sortBy}`;
+              this.globalSort = `${this.globalSort}${this.pagination.sortBy}`;
             }
           }
-          // if()
-          let rutaEstudiantes;
-          if (this.pagination.rowsPerPage === -1) {
-            rutaEstudiantes = sorting === '' ? `estudiantes` : `estudiantes?${sorting}`;
-          } else {
-            rutaEstudiantes = sorting === '' ? `estudiantes?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}` : `estudiantes?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}&${sorting}`;
-          }
+          let rutaEstudiantes = this.crearRutaEstudiante();
           this.$service.get(rutaEstudiantes)
           .then(response => {
             this.asignaciones = response.datos.rows ? response.datos.rows : response.datos;
@@ -158,21 +152,12 @@
         {valor: 'ci', busqueda: this.$t('inscriptionRegister.ci')},
         {valor: 'nombres', busqueda: this.$t('common.names')}
       ];
-      this.busqueda.tipo = 0;
+      this.busqueda.tipo = 'nombres';
     },
     methods: {
       buscaEstudiante () {
         if (this.busqueda.aBuscar !== undefined && this.busqueda.aBuscar !== '') {
-          let rutaEstudiantes = '';
-          if (this.pagination.rowsPerPage === -1) {
-            rutaEstudiantes = `estudiantes?tipobusqueda=${JSON.stringify(this.tiposBusqueda[this.busqueda.tipo].valor)}&buscar=${this.busqueda.aBuscar}`;
-          } else {
-            if (this.busqueda.tipo === 'nombres') {
-              rutaEstudiantes = `estudiantes?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}&nombres=${this.busqueda.aBuscar}`;
-            } else {
-              rutaEstudiantes = `estudiantes?limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}&tipobusqueda=${this.busqueda.tipo}&buscar=${this.busqueda.aBuscar}`;
-            }
-          }
+          let rutaEstudiantes = this.crearRutaEstudiante();
           this.$service.get(rutaEstudiantes)
           .then(response => {
             this.asignaciones = response.datos.rows;
@@ -181,6 +166,48 @@
         } else {
           this.$message.error(this.$t('error.mustAddSearchInformation'));
         }
+      },
+      crearRutaEstudiante () {
+        let rutaEstudiantes = 'estudiantes';
+        let addedOne = false;
+        if (this.globalSort !== '') {
+          if (!addedOne) {
+            rutaEstudiantes += '?';
+            addedOne = true;
+          } else {
+            rutaEstudiantes += '&';
+          }
+          rutaEstudiantes += this.globalSort;
+        }
+        if (this.pagination.rowsPerPage !== -1) {
+          if (!addedOne) {
+            rutaEstudiantes += '?';
+            addedOne = true;
+          } else {
+            rutaEstudiantes += '&';
+          }
+          rutaEstudiantes += `limit=${this.pagination.rowsPerPage}&page=${this.pagination.page}`;
+        }
+        if (this.busqueda.aBuscar !== '' && this.busqueda.aBuscar !== undefined) {
+          if (this.busqueda.tipo === 'nombres') {
+            if (!addedOne) {
+              rutaEstudiantes += '?';
+              addedOne = true;
+            } else {
+              rutaEstudiantes += '&';
+            }
+            rutaEstudiantes += `nombres=${this.busqueda.aBuscar}`;
+          } else {
+            if (!addedOne) {
+              rutaEstudiantes += '?';
+              addedOne = true;
+            } else {
+              rutaEstudiantes += '&';
+            }
+            rutaEstudiantes += `tipobusqueda=${this.busqueda.tipo}&buscar=${this.busqueda.aBuscar}`;
+          }
+        }
+        return rutaEstudiantes;
       },
       abrirCarpeta (userData) {
         if (this.$storage.exist('menu')) {
