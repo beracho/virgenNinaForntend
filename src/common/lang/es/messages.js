@@ -109,7 +109,8 @@ export default {
     psycology: 'Psicología',
     phonoaudiology: 'Fonoaudiología',
     nutrition: 'Nutrición',
-    education: 'Educación'
+    education: 'Educación',
+    autism: 'Autismo'
   },
   courses: {
     newCourse: 'Nuevo curso',

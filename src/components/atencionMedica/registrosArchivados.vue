@@ -281,6 +281,10 @@
           {
             value: 'terapia ocupacional',
             text: this.$t('areas.occupationalTherapy')
+          },
+          {
+            value: 'autismo',
+            text: this.$t('areas.autism')
           }
         ],
         search: {
