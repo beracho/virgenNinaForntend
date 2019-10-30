@@ -39,9 +39,9 @@
         </v-btn>
       </td>
       <td>{{ props.item.codigo }}</td>
-      <td>{{ props.item.nombres }}</td>
-      <td>{{ props.item.primer_apellido }}</td>
-      <td>{{ props.item.segundo_apellido }}</td>
+      <td>{{ primeraLetraMayuscula(props.item.nombres) }}</td>
+      <td>{{ primeraLetraMayuscula(props.item.primer_apellido) }}</td>
+      <td>{{ primeraLetraMayuscula(props.item.segundo_apellido) }}</td>
       <td>{{ props.item.estado}} </td>
     </template>
   </v-data-table>
