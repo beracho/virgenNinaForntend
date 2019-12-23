@@ -7,6 +7,7 @@ export default {
   cpt: 'Códigos de Pago de Trámites',
   tramite: 'Trámites',
   bandejaInscritos: 'Lista de estudiantes',
+  bandejaProfesores: 'Lista de Profesores',
   cursos: 'Administración de Cursos',
   registroInscripcion: 'Registro RUDE de Estudiante',
   inscriptions: 'Inscripciones',
@@ -45,6 +46,7 @@ export default {
     registrosDireccion: 'Búsqueda de registros en la institución.',
     cursos: 'Listado de cursos por gestión con su listado de alumnos.',
     bandejaInscritos: 'Lista de estudiantes inscritos y asignación a cursos.',
+    bandejaProfesores: 'Lista de profesores y administración de nuevos profesores.',
     registroInscripcion: 'Llenado del registro RUDE completo con un nuevo estudiante.',
     datosEstudiante: 'Datos personales del estudiante, familia y datos de unidades educativas registradas por gestión.',
     registrosArchivados: 'Ver registros almacenados del estudiante.',
@@ -61,6 +63,7 @@ export default {
     registrosDireccion: '../../../static/images/homeFiles.jpeg',
     cursos: '../../../static/images/homeCourse.jpg',
     bandejaInscritos: '../../../static/images/homeInscription.jpeg',
+    bandejaProfesores: '../../../static/images/profesores.jpeg',
     registroInscripcion: '../../../static/images/homeRude.jpeg',
     datosEstudiante: '../../../static/images/homePersonal.jpg',
     registrosArchivados: '../../../static/images/homeFile.jpg'

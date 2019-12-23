@@ -15,6 +15,7 @@ import RegistrosPorArea from '@/components/direccion/registrosPorArea';
 import EstadisticasPorEstudiante from '@/components/direccion/estadisticasPorEstudiante';
 import RegistrosDireccion from '@/components/direccion/registrosDireccion';
 import BandejaInscritos from '@/components/inscripciones/BandejaInscritos';
+import BandejaProfesores from '@/components/inscripciones/BandejaProfesores';
 import RegistroInscripcion from '@/components/inscripciones/RegistroInscripcion';
 import Cursos from '@/components/inscripciones/Cursos';
 import Home from '@/components/atencionMedica/home';
@@ -102,6 +103,11 @@ export default new VueRouter({
       path: '/bandejaInscritos',
       name: 'BandejaInscritos',
       component: BandejaInscritos
+    },
+    {
+      path: '/bandejaProfesores',
+      name: 'BandejaProfesores',
+      component: BandejaProfesores
     },
     {
       path: '/cursos',
