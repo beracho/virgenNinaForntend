@@ -140,32 +140,32 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-menu
-                      lazy
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      offset-y
-                      full-width
-                      :nudge-right="40"
-                      max-width="290px"
-                      min-width="290px"
-                    >
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
                       <v-text-field
-                        slot="activator"
-                        :label="$t('inscriptionRegister.bornDate')"
                         v-model="form.nacimiento.fecha_nacimiento"
+                        :label="$t('inscriptionRegister.bornDate')"
                         prepend-icon="event"
                         readonly
+                        v-on="on"
                       ></v-text-field>
-                      <v-date-picker v-model="form.persona.fecha_nacimiento" locale="es" no-title scrollable actions>
-                        <template slot-scope="{ save, cancel }">
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="cancel">{{$t('common.cancel')}}</v-btn>
-                            <v-btn flat color="primary" @click="save">{{$t('common.select')}}</v-btn>
-                          </v-card-actions>
-                        </template>
-                      </v-date-picker>
-                    </v-menu>
+                    </template>
+                    <v-date-picker
+                      ref="picker"
+                      v-model="form.nacimiento.fecha_nacimiento"
+                      :max="new Date().toISOString().substr(0, 10)"
+                      @change="save"
+                    ></v-date-picker>
+                  </v-menu>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.bornCertificate') }}</h4>
@@ -630,32 +630,32 @@
               </v-flex>
                 <v-flex xs4>
                   <v-menu
-                      lazy
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      offset-y
-                      full-width
-                      :nudge-right="40"
-                      max-width="290px"
-                      min-width="290px"
-                    >
+                    ref="menuPerson"
+                    v-model="menuPerson"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
                       <v-text-field
-                        slot="activator"
-                        :label="$t('inscriptionRegister.bornDate')"
                         v-model="formA.fecha_nacimiento"
+                        :label="$t('inscriptionRegister.bornDate')"
                         prepend-icon="event"
                         readonly
+                        v-on="on"
                       ></v-text-field>
-                      <v-date-picker v-model="formA.fecha_nacimiento" locale="es" no-title scrollable actions>
-                        <template slot-scope="{ save, cancel }">
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="cancel">{{$t('common.cancel')}}</v-btn>
-                            <v-btn flat color="primary" @click="save">{{$t('common.select')}}</v-btn>
-                          </v-card-actions>
-                        </template>
-                      </v-date-picker>
-                    </v-menu>
+                    </template>
+                    <v-date-picker
+                      ref="pickerPerson"
+                      v-model="formA.fecha_nacimiento"
+                      :max="new Date().toISOString().substr(0, 10)"
+                      @change="savePerson"
+                    ></v-date-picker>
+                  </v-menu>
               </v-flex>
               <v-flex xs4>
                 <v-radio-group v-model="formA.genero" :label="$t('usuarios.gender')" row>
@@ -722,6 +722,8 @@ export default {
         genero: '',
         fecha_nacimiento: ''
       },
+      menu: false,
+      menuPerson: false,
       form: {
         unidadEducativa: {
           dependencia: '',
@@ -741,6 +743,7 @@ export default {
           tipo_documento: '',
           documento_identidad: '',
           lugar_documento_identidad: '',
+          genero: 'M',
           codigo: '',
           carnet_discapacidad: '',
           pioc: '',
@@ -1334,6 +1337,10 @@ export default {
           this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
         }
       });
+    },
+    save (date) {
+      this.$refs.menu.save(date);
+      this.form.nacimiento.fecha_nacimiento = date;
     }
   },
   components: { AppLang },
@@ -1353,6 +1360,12 @@ export default {
     }
   },
   watch: {
+    menu (val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'));
+    },
+    menuPerson (val) {
+      val && setTimeout(() => (this.$refs.pickerPerson.activePicker = 'YEAR'));
+    },
     'form.persona.tipo_documento': function () {
       if (this.form.persona.tipo_documento === 'CODIGO') {
         this.codeChosen = true;
