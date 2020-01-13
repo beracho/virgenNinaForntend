@@ -63,6 +63,14 @@ Se obtiene como respuesta que el proyecto se sitúa en el branch elegido:
 ```sh
 - On branch nombre_del_branch
 ```
+
+En caso de trabajar con windows, se debe instalar:
+
+Instalar Python 2.7.16 y herramientas de windows con:
+```sh
+$ npm install -g --production windows-build-tools
+```
+
 Para instalar la aplicación, se tienen las siguientes opciones:
 
 #### Instalando dependencias npm, se recomienda usar `yarn` para una instalación correcta
