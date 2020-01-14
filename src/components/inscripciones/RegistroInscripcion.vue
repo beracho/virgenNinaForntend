@@ -86,14 +86,20 @@
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.subNames') }}</h4>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.firstLastName')" v-model="form.persona.primer_apellido"></v-text-field>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.secondLastName')" v-model="form.persona.segundo_apellido"></v-text-field>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.names')" v-model="form.persona.nombres"></v-text-field>
+                </v-flex>
+                <v-flex xs6>
+                  <v-radio-group v-model="form.persona.genero" :label="$t('usuarios.gender')" :mandatory="true" row>
+                    <v-radio :label="$t('usuarios.male')" value="M"></v-radio>
+                    <v-radio :label="$t('usuarios.female')" value="F"></v-radio>
+                  </v-radio-group>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.subBorn') }}</h4>
@@ -743,7 +749,7 @@ export default {
           tipo_documento: '',
           documento_identidad: '',
           lugar_documento_identidad: '',
-          genero: 'M',
+          genero: '',
           codigo: '',
           carnet_discapacidad: '',
           pioc: '',
@@ -1341,6 +1347,10 @@ export default {
     save (date) {
       this.$refs.menu.save(date);
       this.form.nacimiento.fecha_nacimiento = date;
+    },
+    savePerson (date) {
+      this.$refs.menuPerson.save(date);
+      this.formA.fecha_nacimiento = date;
     }
   },
   components: { AppLang },
