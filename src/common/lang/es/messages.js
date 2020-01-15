@@ -211,6 +211,8 @@ export default {
     threeToFive: 'Tres a cinco veces',
     fiveOrMore: 'Seis o más veces',
     never: 'Nunca',
+    hasDisability: 'Tiene discapacidad?',
+    disabilityCard: 'Carnet de discapacidad',
     disability: 'Tipo de discapacidad',
     subDisability: 'Subtipo de discapacidad',
     disabilityTipe: 'La discapacidad es:',

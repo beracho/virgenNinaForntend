@@ -272,7 +272,16 @@
                 <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.frecuency')" v-model="form.salud.frecuencia_medica"></v-text-field>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs6>
+                  <v-radio-group v-model="form.salud.tiene_discapacidad" :label="$t('inscriptionRegister.hasDisability')" :mandatory="true" row>
+                    <v-radio :label="$t('common.yes')" :value="true"></v-radio>
+                    <v-radio :label="$t('common.no')" :value="false"></v-radio>
+                  </v-radio-group>
+                </v-flex>
+                <v-flex xs6 v-if="form.salud.tiene_discapacidad === true">
+                  <v-text-field :label="$t('inscriptionRegister.disabilityCard')" v-model="form.salud.carnet_discapacidad"></v-text-field>
+                </v-flex>
+                <v-flex xs4 v-if="form.salud.tiene_discapacidad === true">
                   <v-select
                     v-bind:items="tipoDiscapacidad"
                     item-text="nombre"
@@ -284,7 +293,7 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-select
-                    v-if="form.salud.tipo_discapacidad !== ''"
+                    v-if="form.salud.tipo_discapacidad !== '' && form.salud.tiene_discapacidad === true"
                     v-bind:items="subtipoDiscapacidad"
                     item-text="nombre"
                     item-value="id_parametro"
@@ -293,7 +302,7 @@
                     autocomplete
                   ></v-select>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs4 v-if="form.salud.tiene_discapacidad === true">
                   <v-select
                     v-bind:items="discapacidadOrigen"
                     item-text="name"
@@ -795,7 +804,9 @@ export default {
           frecuencia_medica: '',
           tipo_discapacidad: '',
           subtipo_discapacidad: '',
-          discapacidad_origen: ''
+          discapacidad_origen: '',
+          tiene_discapacidad: false,
+          carnet_discapacidad: ''
         },
         servicios_basicos: {
           origen_agua: '',
@@ -1172,6 +1183,8 @@ export default {
             this.form.persona.segundo_apellido = consulta.segundo_apellido;
             this.form.persona.casada_apellido = consulta.casada_apellido;
             this.form.persona.genero = consulta.genero;
+            this.form.salud.tiene_discapacidad = consulta.tiene_discapacidad;
+            this.form.salud.carnet_discapacidad = consulta.carnet_discapacidad;
             this.form.persona.discapacidad = consulta.discapacidad ? consulta.discapacidad : '';
             // registroInscripcion
             this.form.registroInscripcion.idioma = consulta.idioma_materno ? consulta.idioma_materno : '';
