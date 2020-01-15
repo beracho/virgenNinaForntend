@@ -63,7 +63,7 @@ export default {
     registrosDireccion: '../../../static/images/homeFiles.jpeg',
     cursos: '../../../static/images/homeCourse.jpg',
     bandejaInscritos: '../../../static/images/homeInscription.jpeg',
-    bandejaProfesores: '../../../static/images/profesores.jpeg',
+    bandejaProfesores: '../../../static/images/profesores.jpg',
     registroInscripcion: '../../../static/images/homeRude.jpeg',
     datosEstudiante: '../../../static/images/homePersonal.jpg',
     registrosArchivados: '../../../static/images/homeFile.jpg'

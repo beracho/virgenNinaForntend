@@ -1,32 +1,19 @@
 <template>
 <div>
   <div>
-  <v-btn dark @click.native="csvWindow= true">
-    {{$t('inscriptions.csv') }}
-    <v-icon right dark>file_upload</v-icon>
-  </v-btn>
   <v-toolbar color="secondary" dark>
     <v-icon right>group</v-icon>
     <v-toolbar-title>{{$t('menu.bandejaInscritos')}}</v-toolbar-title>
     <v-spacer></v-spacer>
+    <v-btn dark @click.native="csvWindow= true">
+      {{$t('inscriptions.csv') }}
+      <v-icon right dark>file_upload</v-icon>
+    </v-btn>
     <v-btn color='primary' dark @click.native="nuevaInscripcion">
       {{$t('inscriptions.newStudent') }}
       <v-icon right dark>add_circle</v-icon>
     </v-btn>
   </v-toolbar>
-  <!-- <v-card>
-    <v-card-title class="headline">
-      <v-icon right>search</v-icon>
-      <h2 class="headline mb-0">{{$t('registerView.searchParams')}}</h2>
-      <v-spacer></v-spacer>
-    </v-card-title>
-    <v-container fluid>
-      <v-layout row wrap>
-        <v-flex xs6>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-card> -->
   <!-- TABLA DE DATOS -->
   <v-data-table v-bind:headers="headersAsinacion" v-bind:items="asignaciones" v-bind:pagination.sync="pagination" :total-items="totalItems" class="elevation-1" :rows-per-page-text="$t('inscriptions.studentsPerPage')">
     <template slot="items" slot-scope="props">
@@ -111,14 +98,30 @@
       <v-dialog v-model="csvWindow" width="700px">
         <v-card>
           <v-card-title class="headline">
-            <v-icon right>account_circle</v-icon>
+            <v-icon right>cloud_upload</v-icon>
             {{$t('inscriptions.loadCsv')}}
+            <v-spacer></v-spacer>
+            <v-btn dark icon color="green">
+              <v-icon>insert_chart</v-icon>
+            </v-btn>
+            <v-btn dark icon color="red" @click.native="abrirManual">
+              <v-icon>info</v-icon>
+            </v-btn>
           </v-card-title>
           <v-layout row>
             <v-flex xs10 offset-xs1>
               <v-alert color="primary" icon="label" value="true">
                 {{$t('inscriptions.stepLoad')}}
-              </v-alert>
+              </v-alert><br>
+              <ol>
+                <li>{{$t('csvLoadSteps.0')}}</li>
+                <li>{{$t('csvLoadSteps.1')}}</li>
+                <li>{{$t('csvLoadSteps.2')}}</li>
+                <li>{{$t('csvLoadSteps.3')}}</li>
+                <li>{{$t('csvLoadSteps.4')}}</li>
+                <li>{{$t('csvLoadSteps.5')}}</li>
+                <li>{{$t('csvLoadSteps.6')}}</li>
+              </ol><br>
               <v-layout row wrap>
                 <v-flex xs6 offset-xs3>
                   <file-upload
@@ -297,6 +300,23 @@
             this.asignaciones = response.datos.rows;
             this.count = response.datos.count;
           })
+      },
+      abrirManual () {
+        // window.open('data:application/pdf;base64,' + response.datos);
+        // window.open('data:application/pdf;base64,' + filePDF.toString('base64'));
+        // window.open('data:application/pdf;base64,' + await toBase64("../../../static/docs/csvAlumnos.pdf"));
+        // console.log(await toBase64(file));
+        const toBase64 = file => new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          console.log('file');
+          console.log(file);
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        }).then(filePDF => {
+          window.open('data:application/pdf;base64,' + filePDF);
+        });
+        return toBase64('../../../static/docs/csvAlumnos.pdf');
       }
     }
   }

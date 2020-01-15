@@ -98,6 +98,26 @@ export default {
     studentsPerPage: 'Students per page',
     noData: 'No data'
   },
+  inscriptionsTeachers: {
+    newTeacher: 'New teacher',
+    loadCsv: 'Load CSV file',
+    stepLoad: 'Steps to load a CSV file',
+    csv: 'Load CSV',
+    uploadingCsv: 'Uploading file.',
+    courseAssignation: 'Course assignment',
+    studentData: 'Teacher information',
+    studentsPerPage: 'Teachers per page',
+    noData: 'No data'
+  },
+  csvLoadSteps: [
+    'Download the Excel template for loading data (Modifying or adding new headers will return errors from the server).',
+    'Fill the student\'s data you wish to add.',
+    'Once filled, use the option “save as" in File and chose “CSV text (.csv)” in the format selection label.',
+    '(Linux) In the “Field separator” field chose ‘;’ and check the “save cell content” box.',
+    '(Windows)',
+    'Click on the Load CSV button and chose the .csv file created, for example: “load_data.csv”.',
+    'Data will be loaded into the system and a confirmation message shall appear.'
+  ],
   inscriptionRegister: {
     createNew: 'Create new',
     createNewSchool: 'Create new educational unit',
