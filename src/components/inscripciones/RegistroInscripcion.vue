@@ -663,13 +663,13 @@
                     ></v-date-picker>
                   </v-menu>
               </v-flex>
-              <v-flex xs4>
+              <v-flex xs6>
                 <v-radio-group v-model="formA.genero" :label="$t('usuarios.gender')" row>
                   <v-radio :label="$t('usuarios.male')" :value="'M'"></v-radio>
                   <v-radio :label="$t('usuarios.female')" :value="'F'"></v-radio>
                 </v-radio-group>
               </v-flex>
-              <v-flex xs4>
+              <v-flex xs6>
                 <v-text-field :label="$t('inscriptionRegister.relation')" v-model="formA.relation"></v-text-field>
               </v-flex>
               <v-flex xs4>
@@ -681,6 +681,9 @@
               <v-flex xs4>
                 <v-text-field :label="$t('inscriptionRegister.maxEducation')" v-model="formA.grado_instruccion"></v-text-field>
               </v-flex>
+              <v-flex xs6>
+                <v-text-field :label="$t('inscriptionRegister.telefon')" v-model="formA.telefono"></v-text-field>
+              </v-flex> 
             </v-layout>
           </v-card-text>
         <v-card-actions>
@@ -1094,7 +1097,7 @@ export default {
         this.padres.forEach(function (element) {
           if (this.formA.id === element.id_parentezco) {
             element.id = this.formA.id;
-            element.cargado = true;
+            element.estadoApoderado = element.estadoApoderado !== 'nuevo' ? 'editado' : element.estadoApoderado;
             element.relation = this.formA.relation;
             element.descripcion = null;
             element.tipo_documento = 'CARNET_IDENTIDAD';
@@ -1106,6 +1109,7 @@ export default {
             element.segundo_apellido = this.formA.segundo_apellido;
             element.casada_apellido = null;
             element.genero = this.formA.genero;
+            element.telefono = this.formA.telefono;
             element.idioma_materno = this.formA.idioma_materno;
             element.ocupacion_actual = this.formA.ocupacion_actual;
             element.grado_instruccion = this.formA.grado_instruccion;
@@ -1117,7 +1121,7 @@ export default {
       };
       if (accion === 'nuevo') {
         obj = {
-          cargado: false,
+          estadoApoderado: 'nuevo',
           relation: this.formA.relation,
           tipo_documento: 'CARNET_IDENTIDAD',
           documento_identidad: this.formA.documento_identidad,
@@ -1130,6 +1134,7 @@ export default {
           idioma_materno: this.formA.idioma_materno,
           ocupacion_actual: this.formA.ocupacion_actual,
           grado_instruccion: this.formA.grado_instruccion,
+          telefono: this.formA.telefono,
           src: '/static/images/' + (this.formA.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg')
         };
         this.padres.push(obj);
@@ -1266,7 +1271,7 @@ export default {
               const obj = {
                 id: tutor.id_parentezco,
                 id_persona: tutor.fid_persona_es,
-                cargado: true,
+                estadoApoderado: 'cargado',
                 relation: tutor.relacion,
                 descripcion: tutor.descripcion,
                 tipo_documento: tutor.persona_es.tipo_documento,
@@ -1287,6 +1292,7 @@ export default {
                 ocupacion_actual: tutor.persona_es.ocupacion_actual,
                 grado_instruccion: tutor.persona_es.grado_instruccion,
                 discapacidad: tutor.persona_es.discapacidad,
+                telefono: tutor.persona_es.telefono,
                 src: '/static/images/' + (tutor.persona_es.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg')
               };
               this.padres.push(obj);
