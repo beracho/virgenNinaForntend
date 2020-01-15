@@ -961,12 +961,8 @@ export default {
     .then(respuesta => {
       this.opcionesProvinciaNacimiento = respuesta.datos;
       this.opcionesProvinciaDireccion = respuesta.datos;
-      // Carga los municipios
-      return this.$service.get(`dpaNivel?nivel=4`);
-    })
-    .then(respuesta => {
-      this.opcionesMunicipioNacimiento = respuesta.datos;
-      this.opcionesMunicipioDireccion = respuesta.datos;
+      this.form.nacimiento.provincia = 86;
+      this.form.direccion.provincia = 86;
       // Carga las opciones de paramétricas
       return this.$service.get(`parametrosRude`);
     })
