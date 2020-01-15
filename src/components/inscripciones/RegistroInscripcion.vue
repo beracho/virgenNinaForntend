@@ -37,7 +37,15 @@
                   <v-text-field :disabled="searchRE" :label="$t('common.code')" v-model="form.persona.codigo"></v-text-field>
                 </v-flex>
                 <v-flex xs4 v-if="!codeChosen">
-                  <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field>
+                  <v-select
+                    :disabled="searchRE"
+                    v-bind:items="lugarCi"
+                    item-text="codigo_ine"
+                    item-value="abreviacion"
+                    v-model="form.persona.lugar_documento_identidad"
+                    :label="$t('inscriptionRegister.documentPlace')"
+                    autocomplete
+                  ></v-select>
                 </v-flex>
                 <!-- <v-flex xs4 v-if="codeChosen && searchRE">
                   <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentType')" v-model="form.persona.tipo_documento"></v-text-field>
@@ -644,7 +652,15 @@
                 <v-text-field :disabled="edita" :label="$t('inscriptionRegister.ci')" v-model="formA.documento_identidad"></v-text-field>
               </v-flex>
               <v-flex xs4>
-                <v-text-field :disabled="edita" :label="$t('inscriptionRegister.documentPlace')" v-model="formA.lugar_documento_identidad"></v-text-field>
+                  <v-select
+                    :disabled="edita"
+                    v-bind:items="lugarCi"
+                    item-text="codigo_ine"
+                    item-value="abreviacion"
+                    v-model="formA.lugar_documento_identidad"
+                    :label="$t('inscriptionRegister.documentPlace')"
+                    autocomplete
+                  ></v-select>
               </v-flex>
                 <v-flex xs4>
                   <v-menu
