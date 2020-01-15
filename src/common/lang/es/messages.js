@@ -182,6 +182,7 @@ export default {
     bornCertificate: 'Certificado de nacimiento',
     codRude: 'RUDE',
     codSie: 'Código SIE',
+    codeNameEducativeUnit: 'Código y nombre de la unidad educativa',
     nameEducativeUnit: 'Nombre de la unidad educativa',
     civilRegistryNumber: 'Oficialia N°',
     bookNumber: 'Libro N°',

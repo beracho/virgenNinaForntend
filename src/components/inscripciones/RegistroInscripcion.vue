@@ -535,18 +535,18 @@
                     <strong>{{$t('inscriptionRegister.subtitle1') }}</strong><br>
                   </v-alert>
                 </v-flex>
-                  <v-flex sx6>
-                    <v-select
-                      v-bind:items="opcionesUE"
-                      v-model="form.unidadEducativa.nombre"
-                      item-text="nombre"
-                      item-value="id_unidad_educativa"
-                      :label="$t('inscriptionRegister.nameEducativeUnit')"
-                      :disabled="searchUE"
-                      autocomplete
-                    ></v-select>
-                  </v-flex>
-                <v-flex sx4 offset-xs1>
+                <v-flex xs8>
+                  <v-select
+                    v-bind:items="opcionesUE"
+                    v-model="form.unidadEducativa.nombre"
+                    item-text="codigoNombre"
+                    item-value="id_unidad_educativa"
+                    :label="$t('inscriptionRegister.codeNameEducativeUnit')"
+                    :disabled="searchUE"
+                    autocomplete
+                  ></v-select>
+                </v-flex>
+                <v-flex xs4>
                   <v-btn v-if="!searchUE" class="primary" block flat v-on:click="buscaUnidadEducativa('search')">{{$t('common.search')}}
                     <v-icon right> search </v-icon>
                   </v-btn>
@@ -562,12 +562,15 @@
                     <v-radio :disabled="disableOptionsUE" :label="$t('inscriptionRegister.private')" value="private"></v-radio>
                   </v-radio-group>
                 </v-flex>
+                <!-- <v-flex sx4>
+                  <v-text-field :label="$t('inscriptionRegister.nameEducativeUnit')" :disabled="disableOptionsUE" v-model="form.unidadEducativa.nombre"></v-text-field>
+                </v-flex> -->
                 <v-flex sx6>
                   <v-text-field :label="$t('inscriptionRegister.sie')" :disabled="disableOptionsUE" v-model="form.unidadEducativa.sie"></v-text-field>
                 </v-flex>
-                  <v-flex sx6>
-                    <v-text-field :label="$t('inscriptionRegister.educativeDistrit')" :disabled="disableOptionsUE" v-model="form.unidadEducativa.distrito"></v-text-field>
-                  </v-flex>
+                <v-flex sx6>
+                  <v-text-field :label="$t('inscriptionRegister.educativeDistrit')" :disabled="disableOptionsUE" v-model="form.unidadEducativa.distrito"></v-text-field>
+                </v-flex>
               </v-layout>
             </v-form>
           </v-flex>
@@ -910,7 +913,9 @@ export default {
       this.todosUE = respuesta.datos;
       this.todosUE.forEach(function (element) {
         element.resumen = (element.sie ? 'Sie: ' + element.sie : '') + (element.nombre ? ' Nombre: ' + element.nombre : '');
-        if (element.id_unidad_educativa === 1 || element.id_unidad_educativa === 2 || element.id_unidad_educativa === 3) {
+        element.codigoNombre = 'Cod: ' + element.codigo + ', Nombre: ' + element.nombre;
+        if (element.id_unidad_educativa === 1 || element.id_unidad_educativa === 2 || element.id_unidad_educativa === 3 ||
+          element.id_unidad_educativa === 4 || element.id_unidad_educativa === 5) {
           this.opcionesUE.push(element);
         }
       }, this);
