@@ -201,6 +201,8 @@ export default {
     afternoon: 'Tarde',
     evening: 'Noche',
     tutorData: 'Datos del padre o tutor',
+    livesWith: 'Vive con',
+    livesWithKid: 'Vive con el niño',
     language: 'Idioma',
     motherLanguage: 'Idioma materno',
     originaryPopulation: 'Pueblo indígena originario campesino',

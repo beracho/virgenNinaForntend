@@ -418,6 +418,9 @@
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.tutorData') }}</h4>
                 </v-flex>
+                <v-flex xs12>
+                  <v-text-field disabled :label="$t('inscriptionRegister.livesWith')" v-model="form.vive_con"></v-text-field>
+                </v-flex>
                 <v-flex xs3
                   v-for="padre in padres"
                   :key="padre.relacion"
@@ -712,6 +715,13 @@
               <v-flex xs6>
                 <v-text-field :label="$t('inscriptionRegister.telefon')" v-model="formA.telefono"></v-text-field>
               </v-flex> 
+              <v-flex xs6>
+                <!-- <v-text-field :label="$t('inscriptionRegister.livesWithKid')" v-model="formA.vive_con_ninio"></v-text-field> -->
+                <v-radio-group v-model="formA.vive_con_ninio" :label="$t('inscriptionRegister.livesWithKid')" row>
+                  <v-radio :label="$t('common.yes')" :value="true"></v-radio>
+                  <v-radio :label="$t('common.no')" :value="false"></v-radio>
+                </v-radio-group>
+              </v-flex> 
             </v-layout>
           </v-card-text>
         <v-card-actions>
@@ -757,11 +767,13 @@ export default {
         ocupacion_actual: '',
         grado_instruccion: '',
         genero: '',
-        fecha_nacimiento: ''
+        fecha_nacimiento: '',
+        vive_con_ninio: false
       },
       menu: false,
       menuPerson: false,
       form: {
+        vive_con: '',
         unidadEducativa: {
           dependencia: '',
           nombre: '',
@@ -1163,9 +1175,20 @@ export default {
           ocupacion_actual: this.formA.ocupacion_actual,
           grado_instruccion: this.formA.grado_instruccion,
           telefono: this.formA.telefono,
+          vive_con_ninio: this.formA.vive_con_ninio,
           src: '/static/images/' + (this.formA.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg')
         };
         this.padres.push(obj);
+      }
+      if (this.formA.vive_con_ninio) {
+        let relacion = 'tutor';
+        if (this.formA.relation.toLowerCase() === 'padre') {
+          relacion = 'padre';
+        }
+        if (this.formA.relation.toLowerCase() === 'madre') {
+          relacion = 'madre';
+        }
+        this.form.vive_con += this.form.vive_con === '' ? relacion : ', ' + relacion;
       }
       this.windowA = false;
     },
