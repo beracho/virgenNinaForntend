@@ -148,6 +148,8 @@ export default {
     dependency: 'Dependencia de la unidad educativa',
     sie: 'Código SIE',
     errorNameField: 'Debe llenar el campo de "Nombre"',
+    existentDocument: 'Documento de identidad existente',
+    loadData: 'Cargar datos',
     public: 'pública',
     comunitary: 'comunitaria',
     convein: 'de convenio',

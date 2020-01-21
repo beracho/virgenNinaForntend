@@ -621,15 +621,6 @@
           <v-card-text>
             <v-layout row wrap>
               <v-flex xs4>
-                <v-text-field :label="$t('inscriptionRegister.firstLastName')" v-model="formA.primer_apellido"></v-text-field>
-              </v-flex>
-              <v-flex xs4>
-                <v-text-field :label="$t('inscriptionRegister.secondLastName')" v-model="formA.segundo_apellido"></v-text-field>
-              </v-flex>
-              <v-flex xs4>
-                <v-text-field :label="$t('inscriptionRegister.names')" v-model="formA.nombres"></v-text-field>
-              </v-flex>
-              <v-flex xs4>
                 <v-text-field :disabled="edita" :label="$t('inscriptionRegister.ci')" v-model="formA.documento_identidad"></v-text-field>
               </v-flex>
               <v-flex xs4>
@@ -642,34 +633,54 @@
                     :label="$t('inscriptionRegister.documentPlace')"
                   ></v-autocomplete>
               </v-flex>
-                <v-flex xs4>
-                  <v-menu
-                    ref="menuPerson"
-                    v-model="menuPerson"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    lazy
-                    transition="scale-transition"
-                    offset-y
-                    full-width
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field
-                        v-model="formA.fecha_nacimiento"
-                        :label="$t('inscriptionRegister.bornDate')"
-                        prepend-icon="event"
-                        readonly
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker
-                      ref="pickerPerson"
+              <v-flex xs4 v-if="existePersona">
+                {{this.$t('inscriptionRegister.existentDocument')}}
+              </v-flex>
+              <v-flex xs4 v-if="!existePersona">
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.firstLastName')" v-model="formA.primer_apellido"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.secondLastName')" v-model="formA.segundo_apellido"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.names')" v-model="formA.nombres"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-menu
+                  ref="menuPerson"
+                  v-model="menuPerson"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  lazy
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
                       v-model="formA.fecha_nacimiento"
-                      :max="new Date().toISOString().substr(0, 10)"
-                      @change="savePerson"
-                    ></v-date-picker>
-                  </v-menu>
+                      :label="$t('inscriptionRegister.bornDate')"
+                      prepend-icon="event"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    ref="pickerPerson"
+                    v-model="formA.fecha_nacimiento"
+                    :max="new Date().toISOString().substr(0, 10)"
+                    @change="savePerson"
+                  ></v-date-picker>
+                </v-menu>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.telefon')" v-model="formA.telefono"></v-text-field>
+              </v-flex> 
+              <v-flex xs4>
+                <v-text-field :label="$t('inscriptionRegister.relation')" v-model="formA.relation"></v-text-field>
               </v-flex>
               <v-flex xs6>
                 <v-radio-group v-model="formA.genero" :label="$t('usuarios.gender')" row>
@@ -678,8 +689,11 @@
                 </v-radio-group>
               </v-flex>
               <v-flex xs6>
-                <v-text-field :label="$t('inscriptionRegister.relation')" v-model="formA.relation"></v-text-field>
-              </v-flex>
+                <v-radio-group v-model="formA.vive_con_ninio" :label="$t('inscriptionRegister.livesWithKid')" row>
+                  <v-radio :label="$t('common.yes')" :value="true"></v-radio>
+                  <v-radio :label="$t('common.no')" :value="false"></v-radio>
+                </v-radio-group>
+              </v-flex> 
               <v-flex xs4>
                 <v-text-field :label="$t('inscriptionRegister.language')" v-model="formA.idioma_materno"></v-text-field>
               </v-flex>
@@ -689,16 +703,6 @@
               <v-flex xs4>
                 <v-text-field :label="$t('inscriptionRegister.maxEducation')" v-model="formA.grado_instruccion"></v-text-field>
               </v-flex>
-              <v-flex xs6>
-                <v-text-field :label="$t('inscriptionRegister.telefon')" v-model="formA.telefono"></v-text-field>
-              </v-flex> 
-              <v-flex xs6>
-                <!-- <v-text-field :label="$t('inscriptionRegister.livesWithKid')" v-model="formA.vive_con_ninio"></v-text-field> -->
-                <v-radio-group v-model="formA.vive_con_ninio" :label="$t('inscriptionRegister.livesWithKid')" row>
-                  <v-radio :label="$t('common.yes')" :value="true"></v-radio>
-                  <v-radio :label="$t('common.no')" :value="false"></v-radio>
-                </v-radio-group>
-              </v-flex> 
             </v-layout>
           </v-card-text>
         <v-card-actions>
@@ -912,6 +916,8 @@ export default {
       tipoDiscapacidad: [],
       subtipoDiscapacidad: [],
       // Apoderados
+      existePersona: false,
+      existeApoderado: false,
       edita: false,
       windowA: false,
       padres: [],
@@ -1141,7 +1147,7 @@ export default {
     },
     cierraMensaje () {
       this.windowFin = false;
-      this.$router.push('home');
+      this.$router.push('bandejaInscritos');
     },
     agregaTutor (accion) {
       let obj = {};
@@ -1431,6 +1437,43 @@ export default {
     savePerson (date) {
       this.$refs.menuPerson.save(date);
       this.formA.fecha_nacimiento = date;
+    },
+    buscaPersona (ci, lugarCi) {
+      if (this.formA.documento_identidad !== '' && this.formA.documento_identidad !== undefined && this.formA.lugar_documento_identidad !== '' && this.formA.lugar_documento_identidad !== undefined) {
+        this.$service.get(`existePersona?ci=${this.formA.documento_identidad}&lugarCi=${this.formA.lugar_documento_identidad}`)
+        .then(respuesta => {
+          if (!this.edita) {
+            if (respuesta.datos !== null) {
+              this.formA.existeApoderado = true;
+              this.existePersona = true;
+              this.formA.primer_apellido = respuesta.datos.primer_apellido;
+              this.formA.segundo_apellido = respuesta.datos.segundo_apellido;
+              this.formA.nombres = respuesta.datos.nombres;
+              this.formA.relation = respuesta.datos.relation;
+              this.formA.telefono = respuesta.datos.telefono;
+              this.formA.idioma_materno = respuesta.datos.idioma_materno;
+              this.formA.ocupacion_actual = respuesta.datos.ocupacion_actual;
+              this.formA.grado_instruccion = respuesta.datos.grado_instruccion;
+              this.formA.genero = respuesta.datos.genero;
+              this.formA.fecha_nacimiento = respuesta.datos.fecha_nacimiento.substring(0, 10);
+              this.formA.vive_con_ninio = respuesta.datos.vive_con_ninio;
+            } else {
+              this.formA.existeApoderado = false;
+              this.existePersona = false;
+              this.formA.primer_apellido = undefined;
+              this.formA.segundo_apellido = undefined;
+              this.formA.nombres = undefined;
+              this.formA.relation = undefined;
+              this.formA.idioma_materno = undefined;
+              this.formA.ocupacion_actual = undefined;
+              this.formA.grado_instruccion = undefined;
+              this.formA.genero = undefined;
+              this.formA.fecha_nacimiento = undefined;
+              this.formA.vive_con_ninio = undefined;
+            }
+          }
+        });
+      }
     }
   },
   components: { AppLang },
@@ -1462,6 +1505,12 @@ export default {
       } else {
         this.codeChosen = false;
       }
+    },
+    'formA.documento_identidad': function () {
+      this.buscaPersona(this.formA.documento_identidad, this.formA.lugar_documento_identidad);
+    },
+    'formA.lugar_documento_identidad': function () {
+      this.buscaPersona(this.formA.documento_identidad, this.formA.lugar_documento_identidad);
     },
     'form.nacimiento.departamento': function () {
       this.$service.get(`dpaHijos?id_dpa=${this.form.nacimiento.departamento}`)
