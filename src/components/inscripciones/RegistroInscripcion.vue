@@ -37,15 +37,14 @@
                   <v-text-field :disabled="searchRE" :label="$t('common.code')" v-model="form.persona.codigo"></v-text-field>
                 </v-flex>
                 <v-flex xs4 v-if="!codeChosen">
-                  <v-select
+                  <v-autocomplete
                     :disabled="searchRE"
                     v-bind:items="lugarCi"
                     item-text="codigo_ine"
                     item-value="abreviacion"
                     v-model="form.persona.lugar_documento_identidad"
                     :label="$t('inscriptionRegister.documentPlace')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <!-- <v-flex xs4 v-if="codeChosen && searchRE">
                   <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentType')" v-model="form.persona.tipo_documento"></v-text-field>
@@ -63,7 +62,7 @@
                 </v-flex>
                 <v-flex xs4 v-if="codeChosen && searchRE">
                   <!-- <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field> -->
-                  <v-select :disabled="ciLoaded" v-bind:items="lugarCi" v-model="form.persona.lugar_documento_identidad" :label="$t('inscriptionRegister.documentPlace')" item-text="codigo_ine" item-value="abreviacion"></v-select>
+                  <v-autocomplete :disabled="ciLoaded" v-bind:items="lugarCi" v-model="form.persona.lugar_documento_identidad" :label="$t('inscriptionRegister.documentPlace')" item-text="codigo_ine" item-value="abreviacion"></v-autocomplete>
                 </v-flex>
                 <v-flex sx4>
                   <v-btn v-if="!ciLoaded" class="primary" block flat v-on:click="actualizarDocumento()">{{$t('inscriptionRegister.updateIdData')}}
@@ -79,14 +78,13 @@
                   <h4>{{$t('inscriptionRegister.procedenceUnit') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="todosUE"
                     item-text="resumen"
                     item-value="id_unidad_educativa"
                     v-model="form.unidadEducativaAnterior.id"
                     :label="$t('inscriptionRegister.codSie')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
                   <v-btn block color="primary" @click="windowUE = true">{{$t('inscriptionRegister.createNew')}}</v-btn>
@@ -113,44 +111,40 @@
                   <h4>{{$t('inscriptionRegister.subBorn') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesPaisNacimiento"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.nacimiento.pais"
                     :label="$t('inscriptionRegister.country')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesDepartamentoNacimiento"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.nacimiento.departamento"
                     :label="$t('inscriptionRegister.departamento')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesProvinciaNacimiento"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.nacimiento.provincia"
                     :label="$t('inscriptionRegister.provincia')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesMunicipioNacimiento"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.nacimiento.municipio"
                     :label="$t('inscriptionRegister.localidad')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
                   <v-menu
@@ -205,24 +199,22 @@
                   </v-alert>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesProvinciaDireccion"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.direccion.provincia"
                     :label="$t('inscriptionRegister.provincia')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesMunicipioDireccion"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.direccion.municipio"
                     :label="$t('inscriptionRegister.municipio')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
                   <v-text-field :label="$t('inscriptionRegister.localidad')" v-model="form.direccion.localidad"></v-text-field>
@@ -259,14 +251,13 @@
                   <v-text-field :label="$t('inscriptionRegister.language')" v-model="form.registroInscripcion.idiomas"></v-text-field>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesPIOC"
                     item-text="nombre"
                     item-value="id_pioc"
                     v-model="form.persona.pioc"
                     :label="$t('inscriptionRegister.originaryPopulation')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.health') }}</h4>
@@ -290,58 +281,53 @@
                   <v-text-field :label="$t('inscriptionRegister.disabilityCard')" v-model="form.salud.carnet_discapacidad"></v-text-field>
                 </v-flex>
                 <v-flex xs4 v-if="form.salud.tiene_discapacidad === true">
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="tipoDiscapacidad"
                     item-text="nombre"
                     item-value="id_parametro"
                     v-model="form.salud.tipo_discapacidad"
                     :label="$t('inscriptionRegister.disability')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-if="form.salud.tipo_discapacidad !== '' && form.salud.tiene_discapacidad === true"
                     v-bind:items="subtipoDiscapacidad"
                     item-text="nombre"
                     item-value="id_parametro"
                     v-model="form.salud.subtipo_discapacidad"
                     :label="$t('inscriptionRegister.subDisability')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4 v-if="form.salud.tiene_discapacidad === true">
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="discapacidadOrigen"
                     item-text="name"
                     item-value="value"
                     v-model="form.salud.discapacidad_origen"
                     :label="$t('inscriptionRegister.disabilityTipe')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.basicServicesAcces') }}</h4>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesWaterOrigin"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.servicios_basicos.origen_agua"
                     :label="$t('inscriptionRegister.waterProcedence')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesWaterDestiny"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.servicios_basicos.destino_agua"
                     :label="$t('inscriptionRegister.drain')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs8 offset-xs2>
                   <v-radio-group v-model="form.servicios_basicos.acceso_electricidad" :label="$t('inscriptionRegister.electricityService')" :mandatory="true" row>
@@ -353,14 +339,13 @@
                   <h4>{{$t('inscriptionRegister.work') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesActividad"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.empleo.actividad_laboral"
                     :label="$t('inscriptionRegister.workActivity')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
                   <v-text-field :label="$t('inscriptionRegister.workDays')" v-model="form.empleo.dias_trabajo"></v-text-field>
@@ -379,34 +364,31 @@
                   <v-text-field :label="$t('inscriptionRegister.internetAccess')" v-model="form.comunicacion_transporte.acceso_internet"></v-text-field>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesInternetFrecuencia"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.comunicacion_transporte.frecuencia_internet"
                     :label="$t('inscriptionRegister.internetFrecuency')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesTransporte"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.comunicacion_transporte.medio_transporte"
                     :label="$t('inscriptionRegister.transportWay')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesTiempoTransporte"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.comunicacion_transporte.duracion_transporte"
                     :label="$t('inscriptionRegister.transportTime')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
@@ -426,7 +408,7 @@
                   :key="padre.relacion"
                 >
                   <v-card>
-                    <v-card-media 
+                    <v-responsive 
                     :src="padre.src" 
                     height="200px">
                       <v-container fill-height fluid>
@@ -436,7 +418,7 @@
                           </v-flex>
                         </v-layout>
                       </v-container>
-                    </v-card-media>
+                    </v-responsive>
                     <v-card-actions class="white">
                       <v-spacer></v-spacer>
                       <!-- <v-btn icon>
@@ -456,7 +438,7 @@
                   justify-center
                 >
                   <v-card>
-                    <v-card-media
+                    <v-responsive
                     align-center
                     height="200px">
                       <v-container fill-height fluid>
@@ -472,7 +454,7 @@
                           </v-flex>
                         </v-layout>
                       </v-container>
-                    </v-card-media>
+                    </v-responsive>
                     <v-card-actions class="white">
                       <v-spacer></v-spacer>
                       <v-btn icon v-on:click="windowA = true, formA = formAux">
@@ -490,35 +472,32 @@
                   </v-alert>
                 </v-flex>
                 <v-flex xs3>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesNivel"
                     item-text="name"
                     item-value="value"
                     v-model="form.registroInscripcion.nivel"
                     :label="$t('inscriptionRegister.level')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs3>
-                  <v-select
+                  <v-autocomplete
                   v-if="form.registroInscripcion.nivel !== ''"
                     v-bind:items="opcionesGrado"
                     item-text="name"
                     item-value="value"
                     v-model="form.registroInscripcion.grado"
                     :label="$t('inscriptionRegister.grade')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs3>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesTurno"
                     item-text="name"
                     item-value="value"
                     v-model="form.registroInscripcion.turno"
                     :label="$t('inscriptionRegister.turn')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs3>
                   <v-text-field :label="$t('courses.gestion')" v-model="form.registroInscripcion.gestion"></v-text-field>
@@ -547,15 +526,14 @@
                   </v-alert>
                 </v-flex>
                 <v-flex xs8>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesUE"
                     v-model="form.unidadEducativa.nombre"
                     item-text="codigoNombre"
                     item-value="id_unidad_educativa"
                     :label="$t('inscriptionRegister.codeNameEducativeUnit')"
                     :disabled="searchUE"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
                   <v-btn v-if="!searchUE" class="primary" block flat v-on:click="buscaUnidadEducativa('search')">{{$t('common.search')}}
@@ -613,14 +591,14 @@
                 <v-text-field :label="$t('inscriptionRegister.nameEducativeUnit')" v-model="formUE.nombre"></v-text-field>
               </v-flex>
               <v-flex xs6>
-                <v-select
+                <v-autocomplete
                   v-bind:items="dependency"
                   item-text="name"
                   item-value="value"
                   v-model="formUE.dependencia"
                   :label="$t('inscriptionRegister.dependency')"
                   autocomplete
-                ></v-select>
+                ></v-autocomplete>
               </v-flex>
               <v-flex xs6>
                 <v-text-field :label="$t('inscriptionRegister.educativeDistrit')" v-model="formUE.distrito"></v-text-field>
@@ -655,15 +633,14 @@
                 <v-text-field :disabled="edita" :label="$t('inscriptionRegister.ci')" v-model="formA.documento_identidad"></v-text-field>
               </v-flex>
               <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     :disabled="edita"
                     v-bind:items="lugarCi"
                     item-text="codigo_ine"
                     item-value="abreviacion"
                     v-model="formA.lugar_documento_identidad"
                     :label="$t('inscriptionRegister.documentPlace')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
               </v-flex>
                 <v-flex xs4>
                   <v-menu
