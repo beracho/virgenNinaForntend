@@ -732,6 +732,30 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <!-- VENTANA DE RESULTADOS -->
+      <v-dialog v-model="windowFin" max-width="500px" persistent>
+        <v-card>
+          <v-card-title>
+            <b>{{this.creado}}</b>
+          </v-card-title>
+          <v-card-text>
+            <v-layout row wrap>
+              <v-flex xs4>
+                <b>{{$t('common.code') + ': '}}</b>{{this.codigoCreado}}
+              </v-flex>
+              <v-flex xs8>
+                <b>{{$t('common.names') + ': '}}</b>{{this.nombreCreado}}
+                {{this.apellidoPaternoCreado}}
+                {{this.apellidoMaternoCreado}}
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click.stop="cierraMensaje()">{{$t('common.accept')}}</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </div>
 </template>
@@ -869,6 +893,13 @@ export default {
       opcionesUE: [],
       windowUE: false,
       dependency: [],
+      // Resumen de Creación
+      windowFin: false,
+      creado: false,
+      codigoCreado: '',
+      nombreCreado: '',
+      apellidoPaternoCreado: '',
+      apellidoMaternoCreado: '',
       // Registro Estudiante
       codeChosen: false,
       disableOptionsRE: true,
@@ -1130,6 +1161,10 @@ export default {
         this.formAux = this.formA;
       }
       this.edita = false;
+    },
+    cierraMensaje () {
+      this.windowFin = false;
+      this.$router.push('home');
     },
     agregaTutor (accion) {
       let obj = {};
@@ -1396,8 +1431,17 @@ export default {
       this.form.apoderados = this.padres;
       this.$service.put(`registroRude`, this.form)
       .then(respuesta => {
-        if (respuesta) {
-          this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+        if (respuesta.finalizado) {
+          if (respuesta.datos.creado) {
+            this.creado = this.$t('generalFollowUp.registerCreationSuccessfull').toUpperCase();
+          } else {
+            this.creado = this.$t('generalFollowUp.registerEditionSuccessfull').toUpperCase();
+          }
+          this.codigoCreado = respuesta.datos.codigo;
+          this.nombreCreado = respuesta.datos.nombre;
+          this.apellidoPaternoCreado = respuesta.datos.primerApellido;
+          this.apellidoMaternoCreado = respuesta.datos.segundoApellido;
+          this.windowFin = true;
         } else {
           this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
         }
