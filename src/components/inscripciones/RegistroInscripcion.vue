@@ -421,9 +421,9 @@
                     </v-responsive>
                     <v-card-actions class="white">
                       <v-spacer></v-spacer>
-                      <!-- <v-btn icon>
-                        <v-icon>visibility</v-icon>
-                      </v-btn> -->
+                      <v-btn icon v-on:click="eliminaApoderado(padre)">
+                        <v-icon>delete</v-icon>
+                      </v-btn>
                       <v-btn icon v-on:click="windowA = true, formA = padre, edita = true">
                         <v-icon>edit</v-icon>
                       </v-btn>
@@ -1198,17 +1198,46 @@ export default {
         };
         this.padres.push(obj);
       }
-      if (this.formA.vive_con_ninio) {
-        let relacion = 'tutor';
-        if (this.formA.relation.toLowerCase() === 'padre') {
-          relacion = 'padre';
-        }
-        if (this.formA.relation.toLowerCase() === 'madre') {
-          relacion = 'madre';
-        }
-        this.form.vive_con += this.form.vive_con === '' ? relacion : ', ' + relacion;
-      }
+      // Vacia datos de persona
+      this.formA.relation = '';
+      this.formA.documento_identidad = '';
+      this.formA.lugar_documento_identidad = '';
+      this.formA.fecha_nacimiento = '';
+      this.formA.nombres = '';
+      this.formA.primer_apellido = '';
+      this.formA.segundo_apellido = '';
+      this.formA.genero = '';
+      this.formA.idioma_materno = '';
+      this.formA.ocupacion_actual = '';
+      this.formA.grado_instruccion = '';
+      this.formA.telefono = '';
+      this.formA.vive_con_ninio = '';
+      this.formA.genero = '';
+      this.actualizaConQuienVive();
       this.windowA = false;
+    },
+    actualizaConQuienVive () {
+      this.form.vive_con = '';
+      this.padres.forEach(element => {
+        if (element.vive_con_ninio) {
+          let relacion = 'tutor';
+          if (element.relation.toLowerCase() === 'padre') {
+            relacion = 'padre';
+          }
+          if (element.relation.toLowerCase() === 'madre') {
+            relacion = 'madre';
+          }
+          this.form.vive_con += this.form.vive_con === '' ? relacion : ', ' + relacion;
+        }
+      });
+    },
+    eliminaApoderado (elementoPadre) {
+      for (let index = 0; index < this.padres.length; index++) {
+        if (this.padres[index].id === elementoPadre.id) {
+          this.padres.splice(index, 1);
+        }
+      }
+      this.actualizaConQuienVive();
     },
     buscaEstudiante () {
       let searchIDQuery = this.form.persona.documento_identidad && this.form.persona.lugar_documento_identidad && this.form.persona.tipo_documento !== 'CODIGO';
