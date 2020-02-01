@@ -105,7 +105,7 @@
                       </template>
                       <v-date-picker
                         ref="picker"
-                        v-model="date"
+                        v-model="form.persona.fecha_nacimiento"
                         :max="new Date().toISOString().substr(0, 10)"
                         @change="save"
                       ></v-date-picker>

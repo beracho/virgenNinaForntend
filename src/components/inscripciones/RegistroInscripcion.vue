@@ -37,7 +37,14 @@
                   <v-text-field :disabled="searchRE" :label="$t('common.code')" v-model="form.persona.codigo"></v-text-field>
                 </v-flex>
                 <v-flex xs4 v-if="!codeChosen">
-                  <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field>
+                  <v-autocomplete
+                    :disabled="searchRE"
+                    v-bind:items="lugarCi"
+                    item-text="codigo_ine"
+                    item-value="abreviacion"
+                    v-model="form.persona.lugar_documento_identidad"
+                    :label="$t('inscriptionRegister.documentPlace')"
+                  ></v-autocomplete>
                 </v-flex>
                 <!-- <v-flex xs4 v-if="codeChosen && searchRE">
                   <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentType')" v-model="form.persona.tipo_documento"></v-text-field>
@@ -55,7 +62,7 @@
                 </v-flex>
                 <v-flex xs4 v-if="codeChosen && searchRE">
                   <!-- <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field> -->
-                  <v-select :disabled="ciLoaded" v-bind:items="lugarCi" v-model="form.persona.lugar_documento_identidad" :label="$t('inscriptionRegister.documentPlace')" item-text="codigo_ine" item-value="abreviacion"></v-select>
+                  <v-autocomplete :disabled="ciLoaded" v-bind:items="lugarCi" v-model="form.persona.lugar_documento_identidad" :label="$t('inscriptionRegister.documentPlace')" item-text="codigo_ine" item-value="abreviacion"></v-autocomplete>
                 </v-flex>
                 <v-flex sx4>
                   <v-btn v-if="!ciLoaded" class="primary" block flat v-on:click="actualizarDocumento()">{{$t('inscriptionRegister.updateIdData')}}
@@ -71,14 +78,13 @@
                   <h4>{{$t('inscriptionRegister.procedenceUnit') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="todosUE"
                     item-text="resumen"
                     item-value="id_unidad_educativa"
                     v-model="form.unidadEducativaAnterior.id"
                     :label="$t('inscriptionRegister.codSie')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
                   <v-btn block color="primary" @click="windowUE = true">{{$t('inscriptionRegister.createNew')}}</v-btn>
@@ -86,86 +92,88 @@
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.subNames') }}</h4>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.firstLastName')" v-model="form.persona.primer_apellido"></v-text-field>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.secondLastName')" v-model="form.persona.segundo_apellido"></v-text-field>
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.names')" v-model="form.persona.nombres"></v-text-field>
+                </v-flex>
+                <v-flex xs6>
+                  <v-radio-group v-model="form.persona.genero" :label="$t('usuarios.gender')" :mandatory="true" row>
+                    <v-radio :label="$t('usuarios.male')" value="M"></v-radio>
+                    <v-radio :label="$t('usuarios.female')" value="F"></v-radio>
+                  </v-radio-group>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.subBorn') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesPaisNacimiento"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.nacimiento.pais"
                     :label="$t('inscriptionRegister.country')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesDepartamentoNacimiento"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.nacimiento.departamento"
                     :label="$t('inscriptionRegister.departamento')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesProvinciaNacimiento"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.nacimiento.provincia"
                     :label="$t('inscriptionRegister.provincia')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesMunicipioNacimiento"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.nacimiento.municipio"
                     :label="$t('inscriptionRegister.localidad')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
                   <v-menu
-                      lazy
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      offset-y
-                      full-width
-                      :nudge-right="40"
-                      max-width="290px"
-                      min-width="290px"
-                    >
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
                       <v-text-field
-                        slot="activator"
-                        :label="$t('inscriptionRegister.bornDate')"
                         v-model="form.nacimiento.fecha_nacimiento"
+                        :label="$t('inscriptionRegister.bornDate')"
                         prepend-icon="event"
                         readonly
+                        v-on="on"
                       ></v-text-field>
-                      <v-date-picker v-model="form.persona.fecha_nacimiento" locale="es" no-title scrollable actions>
-                        <template slot-scope="{ save, cancel }">
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="cancel">{{$t('common.cancel')}}</v-btn>
-                            <v-btn flat color="primary" @click="save">{{$t('common.select')}}</v-btn>
-                          </v-card-actions>
-                        </template>
-                      </v-date-picker>
-                    </v-menu>
+                    </template>
+                    <v-date-picker
+                      ref="picker"
+                      v-model="form.nacimiento.fecha_nacimiento"
+                      :max="new Date().toISOString().substr(0, 10)"
+                      @change="save"
+                    ></v-date-picker>
+                  </v-menu>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.bornCertificate') }}</h4>
@@ -191,24 +199,22 @@
                   </v-alert>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesProvinciaDireccion"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.direccion.provincia"
                     :label="$t('inscriptionRegister.provincia')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesMunicipioDireccion"
                     item-text="nombre"
                     item-value="id_dpa"
                     v-model="form.direccion.municipio"
                     :label="$t('inscriptionRegister.municipio')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
                   <v-text-field :label="$t('inscriptionRegister.localidad')" v-model="form.direccion.localidad"></v-text-field>
@@ -245,14 +251,13 @@
                   <v-text-field :label="$t('inscriptionRegister.language')" v-model="form.registroInscripcion.idiomas"></v-text-field>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesPIOC"
                     item-text="nombre"
                     item-value="id_pioc"
                     v-model="form.persona.pioc"
                     :label="$t('inscriptionRegister.originaryPopulation')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.health') }}</h4>
@@ -266,59 +271,63 @@
                 <v-flex xs6>
                   <v-text-field :label="$t('inscriptionRegister.frecuency')" v-model="form.salud.frecuencia_medica"></v-text-field>
                 </v-flex>
-                <v-flex xs4>
-                  <v-select
+                <v-flex xs6>
+                  <v-radio-group v-model="form.salud.tiene_discapacidad" :label="$t('inscriptionRegister.hasDisability')" :mandatory="true" row>
+                    <v-radio :label="$t('common.yes')" :value="true"></v-radio>
+                    <v-radio :label="$t('common.no')" :value="false"></v-radio>
+                  </v-radio-group>
+                </v-flex>
+                <v-flex xs6 v-if="form.salud.tiene_discapacidad === true">
+                  <v-text-field :label="$t('inscriptionRegister.disabilityCard')" v-model="form.salud.carnet_discapacidad"></v-text-field>
+                </v-flex>
+                <v-flex xs4 v-if="form.salud.tiene_discapacidad === true">
+                  <v-autocomplete
                     v-bind:items="tipoDiscapacidad"
                     item-text="nombre"
                     item-value="id_parametro"
                     v-model="form.salud.tipo_discapacidad"
                     :label="$t('inscriptionRegister.disability')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
-                    v-if="form.salud.tipo_discapacidad !== ''"
+                  <v-autocomplete
+                    v-if="form.salud.tipo_discapacidad !== '' && form.salud.tiene_discapacidad === true"
                     v-bind:items="subtipoDiscapacidad"
                     item-text="nombre"
                     item-value="id_parametro"
                     v-model="form.salud.subtipo_discapacidad"
                     :label="$t('inscriptionRegister.subDisability')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
-                <v-flex xs4>
-                  <v-select
+                <v-flex xs4 v-if="form.salud.tiene_discapacidad === true">
+                  <v-autocomplete
                     v-bind:items="discapacidadOrigen"
                     item-text="name"
                     item-value="value"
                     v-model="form.salud.discapacidad_origen"
                     :label="$t('inscriptionRegister.disabilityTipe')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.basicServicesAcces') }}</h4>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesWaterOrigin"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.servicios_basicos.origen_agua"
                     :label="$t('inscriptionRegister.waterProcedence')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesWaterDestiny"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.servicios_basicos.destino_agua"
                     :label="$t('inscriptionRegister.drain')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs8 offset-xs2>
                   <v-radio-group v-model="form.servicios_basicos.acceso_electricidad" :label="$t('inscriptionRegister.electricityService')" :mandatory="true" row>
@@ -330,14 +339,13 @@
                   <h4>{{$t('inscriptionRegister.work') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesActividad"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.empleo.actividad_laboral"
                     :label="$t('inscriptionRegister.workActivity')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs4>
                   <v-text-field :label="$t('inscriptionRegister.workDays')" v-model="form.empleo.dias_trabajo"></v-text-field>
@@ -356,34 +364,31 @@
                   <v-text-field :label="$t('inscriptionRegister.internetAccess')" v-model="form.comunicacion_transporte.acceso_internet"></v-text-field>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesInternetFrecuencia"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.comunicacion_transporte.frecuencia_internet"
                     :label="$t('inscriptionRegister.internetFrecuency')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesTransporte"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.comunicacion_transporte.medio_transporte"
                     :label="$t('inscriptionRegister.transportWay')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs6>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesTiempoTransporte"
                     item-text="nombre"
                     item-value="value"
                     v-model="form.comunicacion_transporte.duracion_transporte"
                     :label="$t('inscriptionRegister.transportTime')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
@@ -395,12 +400,15 @@
                 <v-flex xs12>
                   <h4>{{$t('inscriptionRegister.tutorData') }}</h4>
                 </v-flex>
+                <v-flex xs12>
+                  <v-text-field disabled :label="$t('inscriptionRegister.livesWith')" v-model="form.vive_con"></v-text-field>
+                </v-flex>
                 <v-flex xs3
                   v-for="padre in padres"
                   :key="padre.relacion"
                 >
                   <v-card>
-                    <v-card-media 
+                    <v-responsive 
                     :src="padre.src" 
                     height="200px">
                       <v-container fill-height fluid>
@@ -410,7 +418,7 @@
                           </v-flex>
                         </v-layout>
                       </v-container>
-                    </v-card-media>
+                    </v-responsive>
                     <v-card-actions class="white">
                       <v-spacer></v-spacer>
                       <!-- <v-btn icon>
@@ -430,7 +438,7 @@
                   justify-center
                 >
                   <v-card>
-                    <v-card-media
+                    <v-responsive
                     align-center
                     height="200px">
                       <v-container fill-height fluid>
@@ -446,7 +454,7 @@
                           </v-flex>
                         </v-layout>
                       </v-container>
-                    </v-card-media>
+                    </v-responsive>
                     <v-card-actions class="white">
                       <v-spacer></v-spacer>
                       <v-btn icon v-on:click="windowA = true, formA = formAux">
@@ -464,35 +472,32 @@
                   </v-alert>
                 </v-flex>
                 <v-flex xs3>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesNivel"
                     item-text="name"
                     item-value="value"
                     v-model="form.registroInscripcion.nivel"
                     :label="$t('inscriptionRegister.level')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs3>
-                  <v-select
+                  <v-autocomplete
                   v-if="form.registroInscripcion.nivel !== ''"
                     v-bind:items="opcionesGrado"
                     item-text="name"
                     item-value="value"
                     v-model="form.registroInscripcion.grado"
                     :label="$t('inscriptionRegister.grade')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs3>
-                  <v-select
+                  <v-autocomplete
                     v-bind:items="opcionesTurno"
                     item-text="name"
                     item-value="value"
                     v-model="form.registroInscripcion.turno"
                     :label="$t('inscriptionRegister.turn')"
-                    autocomplete
-                  ></v-select>
+                  ></v-autocomplete>
                 </v-flex>
                 <v-flex xs3>
                   <v-text-field :label="$t('courses.gestion')" v-model="form.registroInscripcion.gestion"></v-text-field>
@@ -520,18 +525,17 @@
                     <strong>{{$t('inscriptionRegister.subtitle1') }}</strong><br>
                   </v-alert>
                 </v-flex>
-                  <v-flex sx6>
-                    <v-select
-                      v-bind:items="opcionesUE"
-                      v-model="form.unidadEducativa.nombre"
-                      item-text="nombre"
-                      item-value="id_unidad_educativa"
-                      :label="$t('inscriptionRegister.nameEducativeUnit')"
-                      :disabled="searchUE"
-                      autocomplete
-                    ></v-select>
-                  </v-flex>
-                <v-flex sx4 offset-xs1>
+                <v-flex xs8>
+                  <v-autocomplete
+                    v-bind:items="opcionesUE"
+                    v-model="form.unidadEducativa.nombre"
+                    item-text="codigoNombre"
+                    item-value="id_unidad_educativa"
+                    :label="$t('inscriptionRegister.codeNameEducativeUnit')"
+                    :disabled="searchUE"
+                  ></v-autocomplete>
+                </v-flex>
+                <v-flex xs4>
                   <v-btn v-if="!searchUE" class="primary" block flat v-on:click="buscaUnidadEducativa('search')">{{$t('common.search')}}
                     <v-icon right> search </v-icon>
                   </v-btn>
@@ -547,12 +551,15 @@
                     <v-radio :disabled="disableOptionsUE" :label="$t('inscriptionRegister.private')" value="private"></v-radio>
                   </v-radio-group>
                 </v-flex>
+                <!-- <v-flex sx4>
+                  <v-text-field :label="$t('inscriptionRegister.nameEducativeUnit')" :disabled="disableOptionsUE" v-model="form.unidadEducativa.nombre"></v-text-field>
+                </v-flex> -->
                 <v-flex sx6>
                   <v-text-field :label="$t('inscriptionRegister.sie')" :disabled="disableOptionsUE" v-model="form.unidadEducativa.sie"></v-text-field>
                 </v-flex>
-                  <v-flex sx6>
-                    <v-text-field :label="$t('inscriptionRegister.educativeDistrit')" :disabled="disableOptionsUE" v-model="form.unidadEducativa.distrito"></v-text-field>
-                  </v-flex>
+                <v-flex sx6>
+                  <v-text-field :label="$t('inscriptionRegister.educativeDistrit')" :disabled="disableOptionsUE" v-model="form.unidadEducativa.distrito"></v-text-field>
+                </v-flex>
               </v-layout>
             </v-form>
           </v-flex>
@@ -584,14 +591,14 @@
                 <v-text-field :label="$t('inscriptionRegister.nameEducativeUnit')" v-model="formUE.nombre"></v-text-field>
               </v-flex>
               <v-flex xs6>
-                <v-select
+                <v-autocomplete
                   v-bind:items="dependency"
                   item-text="name"
                   item-value="value"
                   v-model="formUE.dependencia"
                   :label="$t('inscriptionRegister.dependency')"
                   autocomplete
-                ></v-select>
+                ></v-autocomplete>
               </v-flex>
               <v-flex xs6>
                 <v-text-field :label="$t('inscriptionRegister.educativeDistrit')" v-model="formUE.distrito"></v-text-field>
@@ -626,44 +633,51 @@
                 <v-text-field :disabled="edita" :label="$t('inscriptionRegister.ci')" v-model="formA.documento_identidad"></v-text-field>
               </v-flex>
               <v-flex xs4>
-                <v-text-field :disabled="edita" :label="$t('inscriptionRegister.documentPlace')" v-model="formA.lugar_documento_identidad"></v-text-field>
+                  <v-autocomplete
+                    :disabled="edita"
+                    v-bind:items="lugarCi"
+                    item-text="codigo_ine"
+                    item-value="abreviacion"
+                    v-model="formA.lugar_documento_identidad"
+                    :label="$t('inscriptionRegister.documentPlace')"
+                  ></v-autocomplete>
               </v-flex>
                 <v-flex xs4>
                   <v-menu
-                      lazy
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      offset-y
-                      full-width
-                      :nudge-right="40"
-                      max-width="290px"
-                      min-width="290px"
-                    >
+                    ref="menuPerson"
+                    v-model="menuPerson"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
                       <v-text-field
-                        slot="activator"
-                        :label="$t('inscriptionRegister.bornDate')"
                         v-model="formA.fecha_nacimiento"
+                        :label="$t('inscriptionRegister.bornDate')"
                         prepend-icon="event"
                         readonly
+                        v-on="on"
                       ></v-text-field>
-                      <v-date-picker v-model="formA.fecha_nacimiento" locale="es" no-title scrollable actions>
-                        <template slot-scope="{ save, cancel }">
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="cancel">{{$t('common.cancel')}}</v-btn>
-                            <v-btn flat color="primary" @click="save">{{$t('common.select')}}</v-btn>
-                          </v-card-actions>
-                        </template>
-                      </v-date-picker>
-                    </v-menu>
+                    </template>
+                    <v-date-picker
+                      ref="pickerPerson"
+                      v-model="formA.fecha_nacimiento"
+                      :max="new Date().toISOString().substr(0, 10)"
+                      @change="savePerson"
+                    ></v-date-picker>
+                  </v-menu>
               </v-flex>
-              <v-flex xs4>
+              <v-flex xs6>
                 <v-radio-group v-model="formA.genero" :label="$t('usuarios.gender')" row>
                   <v-radio :label="$t('usuarios.male')" :value="'M'"></v-radio>
                   <v-radio :label="$t('usuarios.female')" :value="'F'"></v-radio>
                 </v-radio-group>
               </v-flex>
-              <v-flex xs4>
+              <v-flex xs6>
                 <v-text-field :label="$t('inscriptionRegister.relation')" v-model="formA.relation"></v-text-field>
               </v-flex>
               <v-flex xs4>
@@ -675,6 +689,16 @@
               <v-flex xs4>
                 <v-text-field :label="$t('inscriptionRegister.maxEducation')" v-model="formA.grado_instruccion"></v-text-field>
               </v-flex>
+              <v-flex xs6>
+                <v-text-field :label="$t('inscriptionRegister.telefon')" v-model="formA.telefono"></v-text-field>
+              </v-flex> 
+              <v-flex xs6>
+                <!-- <v-text-field :label="$t('inscriptionRegister.livesWithKid')" v-model="formA.vive_con_ninio"></v-text-field> -->
+                <v-radio-group v-model="formA.vive_con_ninio" :label="$t('inscriptionRegister.livesWithKid')" row>
+                  <v-radio :label="$t('common.yes')" :value="true"></v-radio>
+                  <v-radio :label="$t('common.no')" :value="false"></v-radio>
+                </v-radio-group>
+              </v-flex> 
             </v-layout>
           </v-card-text>
         <v-card-actions>
@@ -682,6 +706,30 @@
           <v-btn color="primary" @click.stop="cerrarTutor()">{{$t('common.close')}}</v-btn>
           <v-btn v-if="edita" color="primary" @click.stop="agregaTutor('edita')">{{$t('common.save')}}</v-btn>
           <v-btn v-if="!edita" color="primary" @click.stop="agregaTutor('nuevo')">{{$t('common.save')}}</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <!-- VENTANA DE RESULTADOS -->
+      <v-dialog v-model="windowFin" max-width="500px" persistent>
+        <v-card>
+          <v-card-title>
+            <b>{{this.creado}}</b>
+          </v-card-title>
+          <v-card-text>
+            <v-layout row wrap>
+              <v-flex xs4>
+                <b>{{$t('common.code') + ': '}}</b>{{this.codigoCreado}}
+              </v-flex>
+              <v-flex xs8>
+                <b>{{$t('common.names') + ': '}}</b>{{this.nombreCreado}}
+                {{this.apellidoPaternoCreado}}
+                {{this.apellidoMaternoCreado}}
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click.stop="cierraMensaje()">{{$t('common.accept')}}</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -720,9 +768,13 @@ export default {
         ocupacion_actual: '',
         grado_instruccion: '',
         genero: '',
-        fecha_nacimiento: ''
+        fecha_nacimiento: '',
+        vive_con_ninio: false
       },
+      menu: false,
+      menuPerson: false,
       form: {
+        vive_con: '',
         unidadEducativa: {
           dependencia: '',
           nombre: '',
@@ -741,6 +793,7 @@ export default {
           tipo_documento: '',
           documento_identidad: '',
           lugar_documento_identidad: '',
+          genero: '',
           codigo: '',
           carnet_discapacidad: '',
           pioc: '',
@@ -783,7 +836,9 @@ export default {
           frecuencia_medica: '',
           tipo_discapacidad: '',
           subtipo_discapacidad: '',
-          discapacidad_origen: ''
+          discapacidad_origen: '',
+          tiene_discapacidad: false,
+          carnet_discapacidad: ''
         },
         servicios_basicos: {
           origen_agua: '',
@@ -815,6 +870,13 @@ export default {
       opcionesUE: [],
       windowUE: false,
       dependency: [],
+      // Resumen de Creación
+      windowFin: false,
+      creado: false,
+      codigoCreado: '',
+      nombreCreado: '',
+      apellidoPaternoCreado: '',
+      apellidoMaternoCreado: '',
       // Registro Estudiante
       codeChosen: false,
       disableOptionsRE: true,
@@ -887,7 +949,9 @@ export default {
       this.todosUE = respuesta.datos;
       this.todosUE.forEach(function (element) {
         element.resumen = (element.sie ? 'Sie: ' + element.sie : '') + (element.nombre ? ' Nombre: ' + element.nombre : '');
-        if (element.id_unidad_educativa === 1 || element.id_unidad_educativa === 2 || element.id_unidad_educativa === 3) {
+        element.codigoNombre = 'Cod: ' + element.codigo + ', Nombre: ' + element.nombre;
+        if (element.id_unidad_educativa === 1 || element.id_unidad_educativa === 2 || element.id_unidad_educativa === 3 ||
+          element.id_unidad_educativa === 4 || element.id_unidad_educativa === 5) {
           this.opcionesUE.push(element);
         }
       }, this);
@@ -917,12 +981,8 @@ export default {
     .then(respuesta => {
       this.opcionesProvinciaNacimiento = respuesta.datos;
       this.opcionesProvinciaDireccion = respuesta.datos;
-      // Carga los municipios
-      return this.$service.get(`dpaNivel?nivel=4`);
-    })
-    .then(respuesta => {
-      this.opcionesMunicipioNacimiento = respuesta.datos;
-      this.opcionesMunicipioDireccion = respuesta.datos;
+      this.form.nacimiento.provincia = 86;
+      this.form.direccion.provincia = 86;
       // Carga las opciones de paramétricas
       return this.$service.get(`parametrosRude`);
     })
@@ -1079,13 +1139,17 @@ export default {
       }
       this.edita = false;
     },
+    cierraMensaje () {
+      this.windowFin = false;
+      this.$router.push('home');
+    },
     agregaTutor (accion) {
       let obj = {};
       if (accion === 'edita') {
         this.padres.forEach(function (element) {
           if (this.formA.id === element.id_parentezco) {
             element.id = this.formA.id;
-            element.cargado = true;
+            element.estadoApoderado = element.estadoApoderado !== 'nuevo' ? 'editado' : element.estadoApoderado;
             element.relation = this.formA.relation;
             element.descripcion = null;
             element.tipo_documento = 'CARNET_IDENTIDAD';
@@ -1097,6 +1161,7 @@ export default {
             element.segundo_apellido = this.formA.segundo_apellido;
             element.casada_apellido = null;
             element.genero = this.formA.genero;
+            element.telefono = this.formA.telefono;
             element.idioma_materno = this.formA.idioma_materno;
             element.ocupacion_actual = this.formA.ocupacion_actual;
             element.grado_instruccion = this.formA.grado_instruccion;
@@ -1108,7 +1173,7 @@ export default {
       };
       if (accion === 'nuevo') {
         obj = {
-          cargado: false,
+          estadoApoderado: 'nuevo',
           relation: this.formA.relation,
           tipo_documento: 'CARNET_IDENTIDAD',
           documento_identidad: this.formA.documento_identidad,
@@ -1121,9 +1186,21 @@ export default {
           idioma_materno: this.formA.idioma_materno,
           ocupacion_actual: this.formA.ocupacion_actual,
           grado_instruccion: this.formA.grado_instruccion,
+          telefono: this.formA.telefono,
+          vive_con_ninio: this.formA.vive_con_ninio,
           src: '/static/images/' + (this.formA.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg')
         };
         this.padres.push(obj);
+      }
+      if (this.formA.vive_con_ninio) {
+        let relacion = 'tutor';
+        if (this.formA.relation.toLowerCase() === 'padre') {
+          relacion = 'padre';
+        }
+        if (this.formA.relation.toLowerCase() === 'madre') {
+          relacion = 'madre';
+        }
+        this.form.vive_con += this.form.vive_con === '' ? relacion : ', ' + relacion;
       }
       this.windowA = false;
     },
@@ -1158,6 +1235,8 @@ export default {
             this.form.persona.segundo_apellido = consulta.segundo_apellido;
             this.form.persona.casada_apellido = consulta.casada_apellido;
             this.form.persona.genero = consulta.genero;
+            this.form.salud.tiene_discapacidad = consulta.tiene_discapacidad;
+            this.form.salud.carnet_discapacidad = consulta.carnet_discapacidad;
             this.form.persona.discapacidad = consulta.discapacidad ? consulta.discapacidad : '';
             // registroInscripcion
             this.form.registroInscripcion.idioma = consulta.idioma_materno ? consulta.idioma_materno : '';
@@ -1257,7 +1336,7 @@ export default {
               const obj = {
                 id: tutor.id_parentezco,
                 id_persona: tutor.fid_persona_es,
-                cargado: true,
+                estadoApoderado: 'cargado',
                 relation: tutor.relacion,
                 descripcion: tutor.descripcion,
                 tipo_documento: tutor.persona_es.tipo_documento,
@@ -1278,6 +1357,7 @@ export default {
                 ocupacion_actual: tutor.persona_es.ocupacion_actual,
                 grado_instruccion: tutor.persona_es.grado_instruccion,
                 discapacidad: tutor.persona_es.discapacidad,
+                telefono: tutor.persona_es.telefono,
                 src: '/static/images/' + (tutor.persona_es.genero === 'M' ? 'hombre.jpg' : 'mujer.jpg')
               };
               this.padres.push(obj);
@@ -1328,12 +1408,29 @@ export default {
       this.form.apoderados = this.padres;
       this.$service.put(`registroRude`, this.form)
       .then(respuesta => {
-        if (respuesta) {
-          this.$message.success(this.$t('generalFollowUp.registerCreationSuccessfull'));
+        if (respuesta.finalizado) {
+          if (respuesta.datos.creado) {
+            this.creado = this.$t('generalFollowUp.registerCreationSuccessfull').toUpperCase();
+          } else {
+            this.creado = this.$t('generalFollowUp.registerEditionSuccessfull').toUpperCase();
+          }
+          this.codigoCreado = respuesta.datos.codigo;
+          this.nombreCreado = respuesta.datos.nombre;
+          this.apellidoPaternoCreado = respuesta.datos.primerApellido;
+          this.apellidoMaternoCreado = respuesta.datos.segundoApellido;
+          this.windowFin = true;
         } else {
           this.$message.error(this.$t('generalFollowUp.registerCreationUnsuccessfull'));
         }
       });
+    },
+    save (date) {
+      this.$refs.menu.save(date);
+      this.form.nacimiento.fecha_nacimiento = date;
+    },
+    savePerson (date) {
+      this.$refs.menuPerson.save(date);
+      this.formA.fecha_nacimiento = date;
     }
   },
   components: { AppLang },
@@ -1353,6 +1450,12 @@ export default {
     }
   },
   watch: {
+    menu (val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'));
+    },
+    menuPerson (val) {
+      val && setTimeout(() => (this.$refs.pickerPerson.activePicker = 'YEAR'));
+    },
     'form.persona.tipo_documento': function () {
       if (this.form.persona.tipo_documento === 'CODIGO') {
         this.codeChosen = true;
