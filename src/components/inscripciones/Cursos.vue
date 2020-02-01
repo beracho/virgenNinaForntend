@@ -5,6 +5,10 @@
     <v-icon right>book</v-icon>
     <v-toolbar-title>{{$t('menu.cursos')}}</v-toolbar-title>
     <v-spacer></v-spacer>
+     <v-btn dark @click.native="csvWindow= true">
+    {{$t('inscriptions.csv') }}
+    <v-icon right dark>file_upload</v-icon>
+  </v-btn>
       <v-btn color='primary' dark @click.native="dialogNewCourse = true">
         {{$t('courses.newCourse') }}
         <v-icon right dark>add_circle</v-icon>
@@ -205,6 +209,44 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+    </v-layout> 
+    <!-- VENTANA DE CARGA DE CSV -->
+    <v-layout row>
+      <v-dialog v-model="csvWindow" width="700px">
+        <v-card>
+          <v-card-title class="headline">
+            <v-icon right>account_circle</v-icon>
+            {{$t('inscriptions.loadCsv')}}
+          </v-card-title>
+          <v-layout row>
+            <v-flex xs10 offset-xs1>
+              <v-alert color="primary" icon="label" value="true">
+                {{$t('inscriptions.stepLoad')}}
+              </v-alert>
+              <v-layout row wrap>
+                <v-flex xs6 offset-xs3>
+                  <file-upload
+                    :url='urlCsv'
+                    :thumb-url='thumbUrl'
+                    :headers="headersCsv"
+                    @success="onSuccess"
+                    @error="onError"
+                    accept='.csv'
+                    :btn-label="$t('inscriptions.csv')"
+                    :btn-uploading-label="$t('inscriptions.uploadingCsv')">
+                  </file-upload>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn v-if="true" class="seccion" dark @click.native="csvWindow = false">{{$t('common.cancel')}}
+              <v-icon right>cancel</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </div>
   </div>
@@ -218,6 +260,7 @@
     mixins: [ Comps ],
     data () {
       return {
+        csvWindow: false,
         // Variable busqueda de cursos
         buscaCurso: {
           gestion: (new Date()).getFullYear()

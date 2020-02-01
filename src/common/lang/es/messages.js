@@ -128,6 +128,30 @@ export default {
     ageRange: 'Rango de edad',
     thisYearCourses: 'Cursos de la gestión actual'
   },
+  addTeachers: {
+    newTeacher: 'Nuevo profesor',
+    names: 'Nombres',
+    firstLastName: 'Primer apellido',
+    secondLastName: 'Segundo apellido',
+    status: 'Estado',
+    telefon: 'Teléfono',
+    cellphone: 'Celular',
+    ciudad: 'Ciudad',
+    zona: 'Villa / Zona',
+    street: 'Calle / Avenida',
+    number: 'N° de domicilio',
+    email: 'Correo Electrónico',
+    carnet: 'Carnet',
+    birthDate: 'Fecha de nacimento',
+    gender: 'Género',
+    teachersPerPage: 'Profesores por página',
+    creatingNewTeacher: 'Creando profesor nuevo',
+    editTeache: 'Editando profesor',
+    courseData: 'Datos del profesor',
+    minimalAge: 'Edad mínima',
+    maximalAge: 'Edad máxima',
+    ageRange: 'Rango de edad'
+  },
   inscriptions: {
     newStudent: 'Nuevo estudiante',
     loadCsv: 'Carga archivo CSV',
@@ -140,6 +164,26 @@ export default {
     noData: 'Sin datos',
     months: 'meses'
   },
+  inscriptionsTeachers: {
+    newTeacher: 'Nuevo Profesor',
+    loadCsv: 'Carga archivo CSV',
+    stepLoad: 'Pasos para subir el archivo CSV',
+    csv: 'Cargar CSV',
+    uploadingCsv: 'Subiendo archivo.',
+    teacherData: 'Datos del profesor',
+    teacherPerPage: 'Profesor por página',
+    noData: 'Sin datos',
+    months: 'meses'
+  },
+  csvLoadSteps: [
+    'Descargué el modelo de excel para el cargado de datos (Modificar los nombres de las cabeceras o agregar nuevas columnas devolverá error por parte del sistema).',
+    'Llene los datos de los estudiantes que quiera agregar al sistema sin modificar el orden de las columnas o crear nuevas.',
+    'Una vez llenado, usar la opción “guardar como” en Archivo y en formato seleccionar la opción “Texto CSV (.csv)”.',
+    '(Linux) En opción de “Delimitador de campos” elegir ‘;’ y marcar la casilla de “Guardar contenido de celdas”.',
+    '(Windows)',
+    'Hacer clic en el botón Cargar CSV y navegar al archivo creado con extensión csv, por ejemplo: “datos_a_cargar.csv”.',
+    'Los datos se cargarán al sistema y aparecerá un mensaje de confirmación.'
+  ],
   inscriptionRegister: {
     createNew: 'Crear nueva',
     createNewSchool: 'Crear nueva Unidad Educativa',

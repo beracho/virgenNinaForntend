@@ -144,6 +144,18 @@ export default {
     actions: `Lurañanaka`,
     clear: 'Limpiar'
   },
+  inscriptionsTeachers: {
+    newTeacher: 'Nuevo Profesor',
+    loadCsv: 'Carga archivo CSV',
+    stepLoad: 'Pasos para subir el archivo CSV',
+    csv: 'Cargar CSV',
+    uploadingCsv: 'Subiendo archivo.',
+    courseAssignation: 'Asignación de curso',
+    studentData: 'Datos del profesor',
+    studentsPerPage: 'Profesor por página',
+    noData: 'Sin datos',
+    months: 'meses'
+  },
   entity: {
     title: `Jach'a utanaka`,
     add: `Machaqa jach'a uta yapt'aña`,
