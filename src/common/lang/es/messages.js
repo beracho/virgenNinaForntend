@@ -192,6 +192,7 @@ export default {
     dependency: 'Dependencia de la unidad educativa',
     sie: 'Código SIE',
     errorNameField: 'Debe llenar el campo de "Nombre"',
+    noCodeLoaded: 'No se cargó el código a buscar',
     existentDocument: 'Documento de identidad existente',
     loadData: 'Cargar datos',
     public: 'pública',
@@ -293,6 +294,7 @@ export default {
     messageSubtitle5: '',
     subtitle6: 'Datos del padre, madre o tutor del estudiante',
     messageSubtitle6: '',
+    saveIdData: 'Guardar CI',
     updateIdData: 'Actualizar CI'
   },
   parameters: {

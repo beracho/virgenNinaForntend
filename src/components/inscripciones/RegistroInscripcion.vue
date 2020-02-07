@@ -13,7 +13,6 @@
         <v-layout row>
           <v-flex xs10 offset-xs1>
             <v-form v-model="validForm" ref="form" lazy-validation>
-
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-alert color="primary" icon="school" value="true">
@@ -24,21 +23,17 @@
                   <h4>{{$t('inscriptionRegister.identity') }}</h4>
                 </v-flex>
                 <v-flex xs4>
-                  <v-radio-group :disabled="searchRE" v-model="form.persona.tipo_documento" :label="$t('inscriptionRegister.documentTipe')" :mandatory="true" column>
-                    <v-radio :label="$t('inscriptionRegister.ci')" :disabled="searchRE" value="CARNET_IDENTIDAD"></v-radio>
-                    <v-radio :label="$t('inscriptionRegister.passport')" :disabled="searchRE" value="PASAPORTE"></v-radio>
-                    <v-radio :label="$t('common.code')" :disabled="searchRE" value="CODIGO"></v-radio>
+                  <v-radio-group v-model="form.persona.tipo_documento" :label="$t('inscriptionRegister.documentTipe')" :mandatory="true" column>
+                    <v-radio :label="$t('inscriptionRegister.ci')" :disabled="setCI" value="CARNET_IDENTIDAD"></v-radio>
+                    <v-radio :label="$t('inscriptionRegister.passport')" :disabled="setCI" value="PASAPORTE"></v-radio>
                   </v-radio-group>
                 </v-flex>
-                <v-flex xs4 v-if="!codeChosen">
-                  <v-text-field :disabled="searchRE" :label="$t('inscriptionRegister.documentNumber')" v-model="form.persona.documento_identidad"></v-text-field>
+                <v-flex xs4>
+                  <v-text-field :disabled="setCI" :label="$t('inscriptionRegister.documentNumber')" v-model="form.persona.documento_identidad"></v-text-field>
                 </v-flex>
-                <v-flex xs8 v-else>
-                  <v-text-field :disabled="searchRE" :label="$t('common.code')" v-model="form.persona.codigo"></v-text-field>
-                </v-flex>
-                <v-flex xs4 v-if="!codeChosen">
+                <v-flex xs4>
                   <v-autocomplete
-                    :disabled="searchRE"
+                    :disabled="setCI"
                     v-bind:items="lugarCi"
                     item-text="codigo_ine"
                     item-value="abreviacion"
@@ -46,26 +41,11 @@
                     :label="$t('inscriptionRegister.documentPlace')"
                   ></v-autocomplete>
                 </v-flex>
-                <!-- <v-flex xs4 v-if="codeChosen && searchRE">
-                  <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentType')" v-model="form.persona.tipo_documento"></v-text-field>
-                </v-flex> -->
-                <v-flex sx4 offset-xs8>
-                  <v-btn v-if="!searchRE" class="primary" block flat v-on:click="buscaEstudiante()">{{$t('common.search')}}
-                    <v-icon right> search </v-icon>
-                  </v-btn>
-                  <v-btn v-if="searchRE" class="primary" block flat v-on:click="reiniciaBusqueda()">{{$t('common.change')}}
-                    <v-icon right> cached </v-icon>
-                  </v-btn>
-                </v-flex>
-                <v-flex xs4 v-if="codeChosen && searchRE">
-                  <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentNumber')" v-model="form.persona.documento_identidad"></v-text-field>
-                </v-flex>
-                <v-flex xs4 v-if="codeChosen && searchRE">
-                  <!-- <v-text-field :disabled="ciLoaded" :label="$t('inscriptionRegister.documentPlace')" v-model="form.persona.lugar_documento_identidad"></v-text-field> -->
-                  <v-autocomplete :disabled="ciLoaded" v-bind:items="lugarCi" v-model="form.persona.lugar_documento_identidad" :label="$t('inscriptionRegister.documentPlace')" item-text="codigo_ine" item-value="abreviacion"></v-autocomplete>
+                <v-flex xs8>
+                  <v-text-field disabled :label="$t('common.code')" v-model="form.persona.codigo"></v-text-field>
                 </v-flex>
                 <v-flex sx4>
-                  <v-btn v-if="!ciLoaded" class="primary" block flat v-on:click="actualizarDocumento()">{{$t('inscriptionRegister.updateIdData')}}
+                  <v-btn v-if="dataLoaded" class="primary" block flat v-on:click="actualizarDocumento()">{{setCI?$t('inscriptionRegister.updateIdData'):$t('inscriptionRegister.saveIdData')}}
                   </v-btn>
                 </v-flex>
                 <v-flex xs12>
@@ -882,10 +862,9 @@ export default {
       apellidoPaternoCreado: '',
       apellidoMaternoCreado: '',
       // Registro Estudiante
-      codeChosen: false,
       disableOptionsRE: true,
-      searchRE: false,
-      ciLoaded: false,
+      setCI: false,
+      dataLoaded: false,
       chargingRE: true,
       opcionesRE: [],
       // Registro Inscripcion
@@ -1059,7 +1038,6 @@ export default {
     })
     .then(() => {
       if (this.$route.query.codigo) {
-        this.form.persona.tipo_documento = 'CODIGO';
         this.form.persona.codigo = this.$route.query.codigo;
         this.buscaEstudiante();
       }
@@ -1073,16 +1051,22 @@ export default {
         });
     },
     actualizarDocumento () {
-      const carnetData = {
-        tipo_documento: this.form.persona.tipo_documento,
-        documento_identidad: this.form.persona.documento_identidad,
-        lugar_documento_identidad: this.form.persona.lugar_documento_identidad
-      };
-      const idPersona = 145;
-      this.$service.put(`actualizaPersona`, {idPersona, carnetData})
-        .then(respuesta => {
-          this.ciLoaded = true;
-        });
+      if (this.setCI) {
+        this.setCI = false;
+      } else {
+        if (this.dataLoaded) {
+          const carnetData = {
+            tipo_documento: this.form.persona.tipo_documento,
+            documento_identidad: this.form.persona.documento_identidad,
+            lugar_documento_identidad: this.form.persona.lugar_documento_identidad
+          };
+          const idPersona = this.form.persona.id_persona;
+          this.$service.put(`actualizaPersona`, {idPersona, carnetData})
+            .then(respuesta => {
+              this.setCI = true;
+            });
+        }
+      }
     },
     buscaUnidadEducativa (action) {
       if (this.form.unidadEducativa.nombre) {
@@ -1240,14 +1224,9 @@ export default {
       this.actualizaConQuienVive();
     },
     buscaEstudiante () {
-      let searchIDQuery = this.form.persona.documento_identidad && this.form.persona.lugar_documento_identidad && this.form.persona.tipo_documento !== 'CODIGO';
-      let searchCodeQuery = this.form.persona.codigo && this.form.persona.tipo_documento === 'CODIGO';
-      if (searchIDQuery || searchCodeQuery) {
-        let ruta = `estudiantes?tipo_documento=${this.form.persona.tipo_documento}&documento_identidad=${this.form.persona.documento_identidad}&lugar_documento_identidad=${this.form.persona.lugar_documento_identidad}`;
-        if (searchCodeQuery) {
-          ruta = `estudiantes?codigo=${this.$route.query.codigo}`;
-        }
-        // if (this.form.unidadEducativa.nombre !== -1) {
+      let searchCodeQuery = this.form.persona.codigo;
+      if (searchCodeQuery) {
+        let ruta = `estudiantes?codigo=${this.$route.query.codigo}`;
         this.$service.get(ruta)
           .then(respuesta => {
             var consulta = {};
@@ -1256,13 +1235,15 @@ export default {
             }
             if (respuesta.datos.length === 1) {
               consulta = respuesta.datos[0];
-              this.searchRE = true;
+              this.dataLoaded = true;
+              if (consulta.documento_identidad !== '' && consulta.documento_identidad !== null) {
+                this.setCI = true;
+              }
             }
             // Jala datos al formulario
             // this.form.persona.carnet_discapacidad = consulta.carnet_discapacidad ? consulta.carnet_discapacidad : 'No cuenta con carnet';
-            if (this.form.persona.documento_identidad !== '' && this.form.persona.documento_identidad !== undefined) {
-              this.ciLoaded = true;
-            }
+            this.form.persona.id_persona = consulta.id_persona;
+            this.form.persona.tipo_documento = consulta.tipo_documento;
             this.form.persona.documento_identidad = consulta.documento_identidad;
             this.form.persona.lugar_documento_identidad = consulta.lugar_documento_identidad;
             this.form.persona.nombres = consulta.nombres;
@@ -1421,11 +1402,10 @@ export default {
             }, this);
           });
       } else {
-        this.$message.error(this.$t('inscriptionRegister.errorNameField'));
+        this.$message.error(this.$t('inscriptionRegister.noCodeLoaded'));
       }
     },
     reiniciaBusqueda () {
-      this.searchRE = false;
       if (!this.disableOptionsUE) {
         this.disableOptionsUE = true;
       }
@@ -1527,13 +1507,6 @@ export default {
     },
     menuPerson (val) {
       val && setTimeout(() => (this.$refs.pickerPerson.activePicker = 'YEAR'));
-    },
-    'form.persona.tipo_documento': function () {
-      if (this.form.persona.tipo_documento === 'CODIGO') {
-        this.codeChosen = true;
-      } else {
-        this.codeChosen = false;
-      }
     },
     'formA.documento_identidad': function () {
       this.buscaPersona(this.formA.documento_identidad, this.formA.lugar_documento_identidad);
