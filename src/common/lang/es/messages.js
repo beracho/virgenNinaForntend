@@ -851,5 +851,37 @@ export default {
       editUser: 'Editar usuario'
     }
   },
+  rol: {
+    admin: 'Administrador del sistema',
+    inscripciones: 'Administrador de inscripciones',
+    director: 'Dirección',
+    psicomotricidad: 'Profesional en Psicomotricidad',
+    fisioterapia: 'Profesional en Fisioterapia',
+    fonoaudiologia: 'Profesional en Fonoaudiologia',
+    nutricion: 'Profesional en Nutricion',
+    psicologia: 'Profesional en Psicologia',
+    odontologia: 'Profesional en Odontologia',
+    psicopedagogia: 'Profesional en Psicopedagogia',
+    trabajosocial: 'Profesional en Trabajo Social',
+    medicinaGeneral: 'Profesional en Medicina General',
+    profesor: 'Profesional en Educación',
+    terapiaocupacional: 'Profesional en Terapia Ocupacional'
+  },
+  descripcionRol: {
+    admin: 'Encargado de la creación y administración de usuarios del sistema, así como de la configuración de variables globales',
+    inscripciones: 'Registro y administración de nuevos estudiantes, creación y gestión de cursos, administración de profesores',
+    director: 'Listado y vista de documentos de estudiantes, cursos, profesores y gráficas de reportes',
+    psicomotricidad: 'Registro sencillo de estudiantes y diagnosis inicial',
+    fisioterapia: 'Registro sencillo de estudiantes y diagnosis inicial',
+    fonoaudiologia: 'Registro sencillo de estudiantes',
+    nutricion: 'Registro sencillo de estudiantes',
+    psicologia: 'Registro sencillo de estudiantes y diagnosis inicial',
+    odontologia: 'Registro sencillo de estudiantes',
+    psicopedagogia: 'Registro sencillo de estudiantes y diagnosis inicial',
+    trabajosocial: 'Registro sencillo de estudiantes y diagnosis inicial',
+    medicinaGeneral: 'Registro sencillo de estudiantes',
+    profesor: 'Listado de estudiantes asignados con documentación adjunta de cada uno, asignación de notas',
+    terapiaocupacional: 'Registro sencillo de estudiantes'
+  },
   months: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
 };

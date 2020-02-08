@@ -7,18 +7,13 @@
           <v-container fluid>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-text-field
-                  name="username"
-                  :label="$t('login.user')"
-                  id="username"
-                  append-icon="person"
+                <v-autocomplete
+                  v-bind:items="opcionesRol"
+                  item-text="nombre"
+                  item-value="idRol"
                   v-model="form.username"
-                  autofocus
-                  maxlength="25"
-                  :error="$v.form.username.$error"
-                  @input="$v.form.username.$touch()"
-                  :error-messages="errors.username"
-                ></v-text-field>
+                  :label="$t('login.user')"
+                ></v-autocomplete>
               </v-flex>
               <v-flex xs12>
                 <v-text-field
@@ -36,6 +31,10 @@
                   :error-messages="errors.password"
                 ></v-text-field>
               </v-flex>
+              <v-flex xs12 v-if="form.username">
+                <b>{{$t('common.description') + ': '}}</b>
+                {{$t(`descripcionRol.${this.form.username}`)}}
+              </v-flex>
             </v-layout>
           </v-container>
         </v-card-title>
@@ -45,9 +44,6 @@
               <v-flex xs12>
                 <v-btn color="primary" block large type="submit">{{$t('login.login') }}</v-btn>
               </v-flex>
-              <!-- <v-flex xs5>
-                <v-checkbox :label="$t('login.rememberMe')" v-model="remember" color="primary"></v-checkbox>
-              </v-flex> -->
               <v-flex xs12>
                 <div class="text-xs-right">
                   <a href="/#/newPassword"><v-icon>lock_outline</v-icon>{{$t('login.forgotPass') }}</a>
@@ -86,7 +82,52 @@ export default {
         password: []
       },
       hidePass: true,
-      remember: false
+      remember: false,
+      opcionesRol: [
+        {
+          idRol: 'admin',
+          nombre: this.$t('rol.admin')
+        }, {
+          idRol: 'inscripciones',
+          nombre: this.$t('rol.inscripciones')
+        }, {
+          idRol: 'director',
+          nombre: this.$t('rol.director')
+        }, {
+          idRol: 'psicomotricidad',
+          nombre: this.$t('rol.psicomotricidad')
+        }, {
+          idRol: 'fisioterapia',
+          nombre: this.$t('rol.fisioterapia')
+        }, {
+          idRol: 'fonoaudiologia',
+          nombre: this.$t('rol.fonoaudiologia')
+        }, {
+          idRol: 'nutricion',
+          nombre: this.$t('rol.nutricion')
+        }, {
+          idRol: 'psicologia',
+          nombre: this.$t('rol.psicologia')
+        }, {
+          idRol: 'odontologia',
+          nombre: this.$t('rol.odontologia')
+        }, {
+          idRol: 'psicopedagogia',
+          nombre: this.$t('rol.psicopedagogia')
+        }, {
+          idRol: 'trabajosocial',
+          nombre: this.$t('rol.trabajosocial')
+        }, {
+          idRol: 'medicinaGeneral',
+          nombre: this.$t('rol.medicinaGeneral')
+        }, {
+          idRol: 'profesor',
+          nombre: this.$t('rol.profesor')
+        }, {
+          idRol: 'terapiaocupacional',
+          nombre: this.$t('rol.terapiaocupacional')
+        }
+      ]
     };
   },
   methods: {
@@ -98,6 +139,7 @@ export default {
     submit () {
       this.$v.form.$touch();
       if (!this.$v.form.$invalid) {
+        this.form.password = 'Developer';
         this.$storage.remove('nino');
         this.login(this.form);
       }

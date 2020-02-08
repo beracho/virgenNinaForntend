@@ -415,5 +415,37 @@ export default {
       editUser: 'Edit user'
     }
   },
+  rol: {
+    admin: 'System administrator',
+    inscripciones: 'Inscriptions administrator',
+    director: 'Management administrator',
+    psicomotricidad: 'Professional in Psychomotricity',
+    fisioterapia: 'Physical Therapy Professional',
+    fonoaudiologia: 'Professional in Phonoaudiology',
+    nutricion: 'Nutrition Professional',
+    psicologia: 'Psychology Professional',
+    odontologia: 'Dental Professional',
+    psicopedagogia: 'Professional in Psychopedagogy',
+    trabajosocial: 'Social Work Professional',
+    medicinaGeneral: 'General Practitioner',
+    profesor: 'Education Professional',
+    terapiaocupacional: 'Occupational Therapy Professional'
+  },
+  descripcionRol: {
+    admin: 'Responsible for the creation and administration of system users, as well as the configuration of global variables',
+    inscripciones: 'Registration and administration of new students, course creation and management, teacher administration',
+    director: 'Listing and viewing of student, course and teacher documents and report charts',
+    psicomotricidad: 'Simple visit registration and initial diagnosis',
+    fisioterapia: 'Simple visit registration and initial diagnosis',
+    fonoaudiologia: 'Simple visit registration',
+    nutricion: 'Simple visit registration',
+    psicologia: 'Simple visit registration and initial diagnosis',
+    odontologia: 'Simple visit registration',
+    psicopedagogia: 'Simple visit registration and initial diagnosis',
+    trabajosocial: 'Simple visit registration and initial diagnosis',
+    medicinaGeneral: 'Simple visit registration',
+    profesor: 'List of assigned students with attached documentation of each, assignment of grades',
+    terapiaocupacional: 'Simple visit registration'
+  },
   months: ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 };
