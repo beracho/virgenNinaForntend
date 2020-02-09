@@ -1483,6 +1483,25 @@ export default {
           }
         });
       }
+    },
+    generaCodigo () {
+      if (!this.dataLoaded) {
+        if (this.form.persona.primer_apellido !== '' && this.form.persona.segundo_apellido !== '' && this.form.persona.nombres !== '' && this.form.persona.genero !== '' && this.form.nacimiento.fecha_nacimiento !== '') {
+          const datosCodigo = {
+            primer_apellido: this.form.persona.primer_apellido,
+            segundo_apellido: this.form.persona.segundo_apellido,
+            nombres: this.form.persona.nombres,
+            genero: this.form.persona.genero,
+            fecha_nacimiento: this.form.nacimiento.fecha_nacimiento
+          };
+          this.$service.put(`generaCodigo`, datosCodigo)
+          .then(respuesta => {
+            if (respuesta.finalizado) {
+              this.form.persona.codigo = respuesta.datos;
+            }
+          });
+        }
+      }
     }
   },
   components: { AppLang },
@@ -1507,6 +1526,21 @@ export default {
     },
     menuPerson (val) {
       val && setTimeout(() => (this.$refs.pickerPerson.activePicker = 'YEAR'));
+    },
+    'form.persona.primer_apellido': function () {
+      this.generaCodigo();
+    },
+    'form.persona.segundo_apellido': function () {
+      this.generaCodigo();
+    },
+    'form.persona.nombres': function () {
+      this.generaCodigo();
+    },
+    'form.persona.genero': function () {
+      this.generaCodigo();
+    },
+    'form.nacimiento.fecha_nacimiento': function () {
+      this.generaCodigo();
     },
     'formA.documento_identidad': function () {
       this.buscaPersona(this.formA.documento_identidad, this.formA.lugar_documento_identidad);
